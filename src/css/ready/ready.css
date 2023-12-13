@@ -18,7 +18,7 @@
   /* 2 */
   border-style: solid;
   /* 2 */
-  border-color: currentColor;
+  border-color: #e5e7eb;
   /* 2 */
 }
 
@@ -452,37 +452,40 @@ body{
   height: 100%;
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+#app[page=login_register]{
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-#app > .left-side > .content,
-#app > .right-side{
+#app[page=login_register] > .left-side > .content,
+#app[page=login_register] > .right-side{
   padding-left: 2.5rem;
   padding-right: 2.5rem;
 }
 
-#app > .left-side{
+#app[page=login_register] > .left-side{
   position: relative;
   background-image: url("/src/images/festival_illustration.jpeg");
   background-size: cover;
   background-position: center;
 }
 
-#app > .left-side > .bg-filter,
-#app > .left-side > .content{
+#app[page=login_register] > .left-side > .bg-filter,
+#app[page=login_register] > .left-side > .content{
   position: absolute;
   inset: 0px;
 }
 
-#app > .left-side > .bg-filter{
+#app[page=login_register] > .left-side > .bg-filter{
   z-index: 0;
   --tw-bg-opacity: 1;
   background-color: rgb(255 122 0 / var(--tw-bg-opacity));
   opacity: 0.5;
 }
 
-#app > .left-side > .content{
+#app[page=login_register] > .left-side > .content{
   z-index: 10;
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
@@ -490,30 +493,76 @@ body{
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-#app > .left-side > .content > h1.logo{
+#app[page=login_register] > .left-side > .content > h1.logo{
   margin-bottom: 14rem;
   font-size: 4.5rem;
   line-height: 1;
 }
 
-#app > .left-side > .content > p.slogan{
+#app[page=login_register] > .left-side > .content > p.slogan{
   font-size: 3rem;
   line-height: 1;
   font-weight: 700;
 }
 
-#app > .right-side{
+#app[page=login_register] > .left-side > footer{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 10;
+  padding: 1.25rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+#app[page=login_register] > .right-side{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 2.5rem;
   padding-top: 6rem;
   padding-bottom: 6rem;
 }
 
-#app > .right-side > h2.title{
-  margin-bottom: 5rem;
+#app[page=login_register] > .right-side > h2.title{
   width: 100%;
+  flex: none;
   text-align: center;
   font-size: 3rem;
   line-height: 1;
   font-weight: 900;
+}
+
+#app[page=login_register] > .right-side > .form-container{
+  display: flex;
+  width: 50%;
+  flex: 1 1 0%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#app[page=login_register] > .right-side > .form-container > form{
+  display: flex;
+  flex-direction: column;
+  row-gap: 2.5rem;
+}
+
+#app[page=dashboard] #main{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  -moz-column-gap: 2.5rem;
+       column-gap: 2.5rem;
+  padding: 6rem;
+}
+
+#app[page=dashboard] #main section#latest_festivals > .festivals-list{
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.25rem;
 }
 
 *, ::before, ::after{
@@ -618,13 +667,243 @@ body{
 
 .logo{
   font-family: "Kaushan Script";
-  font-size: 3rem;
-  line-height: 1;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .logo::before{
   --tw-content: "Festiplan";
   content: var(--tw-content);
+}
+
+form .form-duo{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+form .form-component > label{
+  display: block;
+  width: 100%;
+}
+
+form .form-component > label > p{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+}
+
+form .form-buttons,
+form .form-buttons-column{
+  display: flex;
+  gap: 1.25rem;
+}
+
+form .form-buttons{
+  flex-wrap: wrap;
+}
+
+form .form-buttons-column{
+  flex-direction: column;
+}
+
+input,
+select,
+textarea,
+button{
+  display: block;
+  width: 100%;
+  border-radius: 0.75rem;
+  border-width: 0px;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+input,
+select,
+textarea{
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 230 230 / var(--tw-bg-opacity));
+}
+
+button:hover{
+  opacity: 0.8;
+}
+
+button:active{
+  opacity: 0.6;
+}
+
+button.button-blue, button.button-grey{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+button.button-blue{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 148 255 / var(--tw-bg-opacity));
+}
+
+button.button-grey{
+  --tw-bg-opacity: 1;
+  background-color: rgb(104 104 104 / var(--tw-bg-opacity));
+}
+
+hr{
+  --tw-border-opacity: 1;
+  border-color: rgb(230 230 230 / var(--tw-border-opacity));
+}
+
+nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  -moz-column-gap: 5rem;
+       column-gap: 5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 122 0 / var(--tw-bg-opacity));
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+nav > h1.logo,
+nav > .user-menu{
+  flex: none;
+}
+
+nav > .links,
+nav > .user-menu > .user-name{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+nav > .links{
+  display: flex;
+  flex: 1 1 0%;
+  -moz-column-gap: 2.5rem;
+       column-gap: 2.5rem;
+}
+
+nav > .links > a:hover{
+  opacity: 0.8;
+}
+
+nav > .links > a:active{
+  opacity: 0.6;
+}
+
+nav > .user-menu{
+  position: relative;
+  min-width: 250px;
+}
+
+nav > .user-menu:hover > .menu-dropdown-container{
+  display: block;
+}
+
+nav > .user-menu > .user-name{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+nav > .user-menu > .user-name i{
+  margin-right: 0.25rem;
+}
+
+nav > .user-menu > .menu-dropdown-container{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  display: none;
+  padding-top: 1.25rem;
+}
+
+nav > .user-menu > .menu-dropdown-container > .menu-dropdown{
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.25rem;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 212 / var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 230 230 / var(--tw-bg-opacity));
+  padding: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+section > h2.title{
+  margin-bottom: 2.5rem;
+  font-size: 3rem;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.festival-preview{
+  display: flex;
+  -moz-column-gap: 1.25rem;
+       column-gap: 1.25rem;
+}
+
+.festival-preview > .festival-picture{
+  height: 8rem;
+  width: 8rem;
+  flex: none;
+  border-radius: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 148 255 / var(--tw-bg-opacity));
+}
+
+.festival-preview > .festival-identity{
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.festival-preview > .festival-identity > h3.festival-name{
+  margin-bottom: 0.25rem;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 900;
+}
+
+.festival-preview > .festival-duration{
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 0.25rem;
+}
+
+.festival-preview > .festival-duration > .beginning-date,
+.festival-preview > .festival-duration > .ending-date{
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 300;
+  --tw-text-opacity: 1;
+  color: rgb(104 104 104 / var(--tw-text-opacity));
+}
+
+.festival-preview > .festival-duration > .duration-arrow{
+  display: flex;
+  justify-content: center;
 }
 
 .absolute{
@@ -633,6 +912,15 @@ body{
 
 .relative{
   position: relative;
+}
+
+.inset-x-0{
+  left: 0px;
+  right: 0px;
+}
+
+.bottom-0{
+  bottom: 0px;
 }
 
 .z-0{
@@ -647,8 +935,24 @@ body{
   margin-bottom: 14rem;
 }
 
+.block{
+  display: block;
+}
+
+.flex{
+  display: flex;
+}
+
 .grid{
   display: grid;
+}
+
+.hidden{
+  display: none;
+}
+
+.h-32{
+  height: 8rem;
 }
 
 .h-full{
@@ -659,12 +963,93 @@ body{
   height: 100vh;
 }
 
+.w-1\/2{
+  width: 50%;
+}
+
+.w-32{
+  width: 8rem;
+}
+
 .w-full{
   width: 100%;
 }
 
+.min-w-\[250px\]{
+  min-width: 250px;
+}
+
+.flex-1{
+  flex: 1 1 0%;
+}
+
+.flex-none{
+  flex: none;
+}
+
+.grid-cols-2{
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.flex-col{
+  flex-direction: column;
+}
+
+.items-center{
+  align-items: center;
+}
+
+.justify-center{
+  justify-content: center;
+}
+
+.justify-between{
+  justify-content: space-between;
+}
+
+.gap-x-10{
+  -moz-column-gap: 2.5rem;
+       column-gap: 2.5rem;
+}
+
 .overflow-x-hidden{
   overflow-x: hidden;
+}
+
+.rounded-lg{
+  border-radius: 0.5rem;
+}
+
+.rounded-xl{
+  border-radius: 0.75rem;
+}
+
+.border{
+  border-width: 1px;
+}
+
+.border-0{
+  border-width: 0px;
+}
+
+.border-neutral-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(212 212 212 / var(--tw-border-opacity));
+}
+
+.bg-blue{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 148 255 / var(--tw-bg-opacity));
+}
+
+.bg-grey-light{
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 230 230 / var(--tw-bg-opacity));
+}
+
+.bg-orange{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 122 0 / var(--tw-bg-opacity));
 }
 
 .bg-\[url\(\"\/src\/images\/festival_illustration\.jpeg\"\)\]{
@@ -679,6 +1064,33 @@ body{
   background-position: center;
 }
 
+.p-3{
+  padding: 0.75rem;
+}
+
+.p-5{
+  padding: 1.25rem;
+}
+
+.px-10{
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.py-24{
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+.py-5{
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.pt-5{
+  padding-top: 1.25rem;
+}
+
 .text-center{
   text-align: center;
 }
@@ -691,13 +1103,50 @@ body{
   font-family: "Kaushan Script";
 }
 
+.text-2xl{
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
 .text-5xl{
   font-size: 3rem;
   line-height: 1;
 }
 
+.text-base{
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .font-black{
   font-weight: 900;
+}
+
+.font-bold{
+  font-weight: 700;
+}
+
+.font-light{
+  font-weight: 300;
+}
+
+.font-medium{
+  font-weight: 500;
+}
+
+.text-black{
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .text-white{
@@ -707,6 +1156,12 @@ body{
 
 .opacity-50{
   opacity: 0.5;
+}
+
+.shadow{
+  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .content-\[\"Festiplan\"\]{
