@@ -1,5 +1,6 @@
 @import "../global.css";
 @import "../login-register.css";
+@import "../dashboard.css";
 
 @tailwind base;
 @tailwind components;
