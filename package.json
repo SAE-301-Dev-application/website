@@ -10,7 +10,8 @@
   "author": "IUT Rodez",
   "license": "ISC",
   "dependencies": {
-    "gsap": "^3.12.3"
+    "gsap": "^3.12.3",
+    "jquery": "^3.7.1"
   },
   "devDependencies": {
     "tailwindcss": "^3.3.6"
