@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Kaushan+Script&display=swap");
+@layer base {
+  body {
+    @apply h-screen overflow-x-hidden font-["Inter"];
+  }
+  #app {
+    @apply h-full bg-white;
+  }
+}
+@layer components {
+  .logo {
+    @apply font-["Kaushan_Script"] text-5xl;
+  }
+  .logo::before {
+    @apply content-["Festiplan"];
+  }
+}
+
+/*# sourceMappingURL=global.css.map */

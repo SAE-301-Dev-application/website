@@ -1,0 +1,46 @@
+$orange: #FF7A00;
+
+@layer base {
+  #app {
+    @apply grid grid-cols-2;
+
+    > .left-side > .content,
+    > .right-side {
+      @apply px-10;
+    }
+
+    > .left-side {
+      @apply bg-[url("/src/images/festival_illustration.jpeg")] bg-center bg-cover relative;
+
+      > .bg-filter,
+      > .content {
+        @apply absolute inset-0;
+      }
+
+      > .bg-filter {
+        @apply z-0 opacity-50 bg-orange;
+      }
+
+      > .content {
+        @apply z-10 text-white py-10;
+
+        > h1.logo {
+          @apply mb-56 text-7xl;
+        }
+
+        > p.slogan {
+          @apply text-5xl font-bold;
+        }
+      }
+    }
+
+    > .right-side {
+      @apply py-24;
+
+      > h2.title {
+        @apply font-black text-5xl text-center w-full mb-20;
+      }
+    }
+  }
+
+}

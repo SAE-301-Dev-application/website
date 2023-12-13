@@ -1,0 +1,7 @@
+@import "../global.css";
+@import "../login-register.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+

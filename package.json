@@ -1,0 +1,18 @@
+{
+  "name": "festiplan-statique",
+  "version": "1.0.0",
+  "description": "Cette version a pour objectif de concrétiser l'interface modélisée sur  **Figma** avec les librairies et technologies qui seront utilisées sur le  produit final. --- 🔗 **Maquettes Figma :** [cliquer ici](https://www.figma.com/file/cLVqCZBhZ2x1X67TSpMvsY/Maquette-Festiplan?type=design&node-id=0%3A1&mode=design&t=UZZhdu5YVisIvoPA-1)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx tailwindcss -i src/css/tailwindcss/tailwind.css -o ./src/css/ready/ready.css --watch"
+  },
+  "author": "IUT Rodez",
+  "license": "ISC",
+  "dependencies": {
+    "gsap": "^3.12.3"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.6"
+  }
+}
