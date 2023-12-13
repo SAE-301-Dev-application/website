@@ -1,35 +1,45 @@
 @layer base {
-  #app {
+  #app[page=login_register] {
     @apply grid grid-cols-2;
   }
-  #app > .left-side > .content,
-#app > .right-side {
+  #app[page=login_register] > .left-side > .content,
+#app[page=login_register] > .right-side {
     @apply px-10;
   }
-  #app > .left-side {
+  #app[page=login_register] > .left-side {
     @apply bg-[url("/src/images/festival_illustration.jpeg")] bg-center bg-cover relative;
   }
-  #app > .left-side > .bg-filter,
-#app > .left-side > .content {
+  #app[page=login_register] > .left-side > .bg-filter,
+#app[page=login_register] > .left-side > .content {
     @apply absolute inset-0;
   }
-  #app > .left-side > .bg-filter {
+  #app[page=login_register] > .left-side > .bg-filter {
     @apply z-0 opacity-50 bg-orange;
   }
-  #app > .left-side > .content {
+  #app[page=login_register] > .left-side > .content {
     @apply z-10 text-white py-10;
   }
-  #app > .left-side > .content > h1.logo {
+  #app[page=login_register] > .left-side > .content > h1.logo {
     @apply mb-56 text-7xl;
   }
-  #app > .left-side > .content > p.slogan {
+  #app[page=login_register] > .left-side > .content > p.slogan {
     @apply text-5xl font-bold;
   }
-  #app > .right-side {
-    @apply py-24;
+  #app[page=login_register] > .left-side > footer {
+    @apply absolute bottom-0 inset-x-0 z-10 text-center text-white p-5
+               text-sm;
   }
-  #app > .right-side > h2.title {
-    @apply font-black text-5xl text-center w-full mb-20;
+  #app[page=login_register] > .right-side {
+    @apply py-24 flex flex-col items-center gap-y-10;
+  }
+  #app[page=login_register] > .right-side > h2.title {
+    @apply font-black text-5xl text-center w-full flex-none;
+  }
+  #app[page=login_register] > .right-side > .form-container {
+    @apply w-1/2 flex-1 flex flex-col justify-center;
+  }
+  #app[page=login_register] > .right-side > .form-container > form {
+    @apply flex flex-col gap-y-10;
   }
 }
 

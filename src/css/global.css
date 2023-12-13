@@ -9,10 +9,123 @@
 }
 @layer components {
   .logo {
-    @apply font-["Kaushan_Script"] text-5xl;
+    @apply font-["Kaushan_Script"] text-4xl;
   }
   .logo::before {
     @apply content-["Festiplan"];
+  }
+  form .form-duo {
+    @apply grid grid-cols-2 gap-5;
+  }
+  form .form-component > label {
+    @apply block w-full;
+  }
+  form .form-component > label > p {
+    @apply text-sm font-bold;
+  }
+  form .form-buttons,
+form .form-buttons-column {
+    @apply flex gap-5;
+  }
+  form .form-buttons {
+    @apply flex-wrap;
+  }
+  form .form-buttons-column {
+    @apply flex-col;
+  }
+  input,
+select,
+textarea,
+button {
+    @apply border-0 rounded-xl p-3 text-sm block w-full;
+  }
+  input,
+select,
+textarea {
+    @apply bg-grey-light;
+  }
+  button:hover {
+    @apply opacity-80;
+  }
+  button:active {
+    @apply opacity-60;
+  }
+  button.button-blue, button.button-grey {
+    @apply text-white;
+  }
+  button.button-blue {
+    @apply bg-blue;
+  }
+  button.button-grey {
+    @apply bg-grey;
+  }
+  hr {
+    @apply border-grey-light;
+  }
+  nav {
+    @apply bg-orange px-10 py-5 flex justify-between items-center
+           text-white gap-x-20;
+  }
+  nav > h1.logo,
+nav > .user-menu {
+    @apply flex-none;
+  }
+  nav > .links,
+nav > .user-menu > .user-name {
+    @apply font-bold text-lg;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25);
+  }
+  nav > .links {
+    @apply flex gap-x-10 flex-1;
+  }
+  nav > .links > a:hover {
+    @apply opacity-80;
+  }
+  nav > .links > a:active {
+    @apply opacity-60;
+  }
+  nav > .user-menu {
+    @apply relative min-w-[250px];
+  }
+  nav > .user-menu:hover > .menu-dropdown-container {
+    @apply block;
+  }
+  nav > .user-menu > .user-name {
+    @apply flex items-center justify-end;
+  }
+  nav > .user-menu > .user-name i {
+    @apply mr-1;
+  }
+  nav > .user-menu > .menu-dropdown-container {
+    @apply absolute pt-5 inset-x-0 hidden;
+  }
+  nav > .user-menu > .menu-dropdown-container > .menu-dropdown {
+    @apply border border-neutral-300 bg-grey-light rounded-lg shadow text-black text-base font-medium p-3 flex flex-col gap-y-1;
+  }
+  section > h2.title {
+    @apply text-5xl font-black mb-10;
+  }
+  .festival-preview {
+    @apply flex gap-x-5;
+  }
+  .festival-preview > .festival-picture {
+    @apply w-32 h-32 rounded-lg bg-blue flex-none;
+  }
+  .festival-preview > .festival-identity {
+    @apply flex-1 flex flex-col justify-between;
+  }
+  .festival-preview > .festival-identity > h3.festival-name {
+    @apply font-black text-4xl mb-1;
+  }
+  .festival-preview > .festival-duration {
+    @apply flex-none flex flex-col justify-center gap-y-1;
+  }
+  .festival-preview > .festival-duration > .beginning-date,
+.festival-preview > .festival-duration > .ending-date {
+    @apply text-2xl font-light text-center text-grey;
+  }
+  .festival-preview > .festival-duration > .duration-arrow {
+    @apply flex justify-center;
   }
 }
 
