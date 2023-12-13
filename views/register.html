@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Inscription - Festiplan</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../src/css/ready/ready.css" />
+
+  <!-- JS -->
+  <script src="../node_modules/jquery/dist/jquery.min.js" defer></script>
+  <script src="../node_modules/gsap/dist/gsap.min.js" defer></script>
+  <script src="../src/js/login-register/animations.js" defer></script>
+</head>
+<body>
+<div id="app" page="login_register">
+  <div class="left-side">
+    <div class="bg-filter"></div>
+
+    <div class="content">
+      <h1 class="logo"></h1>
+
+      <p class="slogan">
+        Créer un festival n'a jamais été aussi simple.
+      </p>
+    </div>
+
+    <footer>
+      2023 © Festiplan. IUT de Rodez.
+    </footer>
+  </div>
+
+  <div class="right-side">
+    <h2 class="title">
+      Créer mon compte
+    </h2>
+
+    <div class="form-container">
+      <form action="dashboard.html" method="post">
+        <div class="form-duo">
+          <div class="form-component">
+            <label for="firstname">
+              <p>
+                Prénom:
+              </p>
+
+              <input type="text" name="firstname" id="firstname" />
+            </label>
+          </div>
+
+          <div class="form-component">
+            <label for="lastname">
+              <p>
+                Nom de famille:
+              </p>
+
+              <input type="text" name="lastname" id="lastname" />
+            </label>
+          </div>
+        </div>
+
+        <div class="form-component">
+          <label for="login">
+            <p>
+              Login:
+            </p>
+
+            <input type="text" name="login" id="login" />
+          </label>
+        </div>
+
+        <div class="form-component">
+          <label for="email">
+            <p>
+              Adresse e-mail:
+            </p>
+
+            <input type="email" name="email" id="email" />
+          </label>
+        </div>
+
+        <div class="form-duo">
+          <div class="form-component">
+            <label for="password">
+              <p>
+                Mot de passe:
+              </p>
+
+              <input type="password" name="password" id="password" />
+            </label>
+          </div>
+
+          <div class="form-component">
+            <label for="password_confirmation">
+              <p>
+                Confirmation :
+              </p>
+
+              <input type="password"
+                     name="password_confirmation"
+                     id="password_confirmation" />
+            </label>
+          </div>
+        </div>
+
+        <div class="form-buttons-column">
+          <button class="button-blue" type="submit">
+            S'inscrire
+          </button>
+
+          <hr />
+
+          <a href="index.html">
+            <button class="button-grey" type="button">
+              J'ai déjà un compte
+            </button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
