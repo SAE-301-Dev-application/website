@@ -1,6 +1,7 @@
 @import "../global.css";
 @import "../login-register.css";
 @import "../dashboard.css";
+@import "../festivals.css";
 
 @tailwind base;
 @tailwind components;
