@@ -6,6 +6,9 @@
   #app {
     @apply h-full bg-white;
   }
+  #main {
+    @apply p-24;
+  }
 }
 @layer components {
   .logo {
@@ -72,20 +75,26 @@ nav > .user-menu {
   }
   nav > .links,
 nav > .user-menu > .user-name {
-    @apply font-bold text-lg;
+    @apply font-bold text-lg cursor-pointer;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25);
   }
   nav > .links {
     @apply flex gap-x-10 flex-1;
   }
-  nav > .links > a:hover {
+  nav > .links > a:not(.active-link):hover {
     @apply opacity-80;
   }
-  nav > .links > a:active {
+  nav > .links > a:not(.active-link):active {
     @apply opacity-60;
   }
+  nav > .links > a.active-link {
+    @apply text-orange-light;
+  }
+  nav > .links > a > i {
+    @apply mr-1;
+  }
   nav > .user-menu {
-    @apply relative min-w-[250px];
+    @apply relative;
   }
   nav > .user-menu:hover > .menu-dropdown-container {
     @apply block;
@@ -97,13 +106,23 @@ nav > .user-menu > .user-name {
     @apply mr-1;
   }
   nav > .user-menu > .menu-dropdown-container {
-    @apply absolute pt-5 inset-x-0 hidden;
+    @apply absolute pt-5 hidden min-w-[250px] right-0;
   }
   nav > .user-menu > .menu-dropdown-container > .menu-dropdown {
-    @apply border border-neutral-300 bg-grey-light rounded-lg shadow text-black text-base font-medium p-3 flex flex-col gap-y-1;
+    @apply border border-neutral-300 bg-grey-light rounded-lg shadow
+                 text-black text-base font-medium p-3 flex flex-col gap-y-1;
   }
-  section > h2.title {
-    @apply text-5xl font-black mb-10;
+  nav > .user-menu > .menu-dropdown-container > .menu-dropdown > a > i {
+    @apply mr-1;
+  }
+  section > .title-container {
+    @apply flex flex-wrap items-center gap-10 mb-10;
+  }
+  section > .title-container > h2.title {
+    @apply text-5xl font-black;
+  }
+  section > .title-container > button {
+    width: auto;
   }
   .festival-preview {
     @apply flex gap-x-5;
@@ -126,6 +145,27 @@ nav > .user-menu > .user-name {
   }
   .festival-preview > .festival-duration > .duration-arrow {
     @apply flex justify-center;
+  }
+  .pagination {
+    @apply flex justify-between items-center text-grey text-3xl;
+  }
+  .pagination > .previous-links,
+.pagination > .next-links {
+    @apply flex gap-x-2;
+  }
+  .pagination > .previous-links > a:hover,
+.pagination > .next-links > a:hover {
+    @apply opacity-80;
+  }
+  .pagination > .previous-links > a:active,
+.pagination > .next-links > a:active {
+    @apply opacity-60;
+  }
+  .pagination > .previous-links {
+    @apply justify-start;
+  }
+  .pagination > .next-links {
+    @apply justify-end;
   }
 }
 

@@ -10,6 +10,10 @@
     @apply h-full bg-white;
   }
 
+  #main {
+    @apply p-24;
+  }
+
 }
 
 @layer components {
@@ -101,7 +105,7 @@
 
     > .links,
     > .user-menu > .user-name {
-      @apply font-bold text-lg;
+      @apply font-bold text-lg cursor-pointer;
 
       text-shadow: 1px 1px 0 rgba(0 0 0 / .25);
     }
@@ -110,18 +114,28 @@
       @apply flex gap-x-10 flex-1;
 
       > a {
-        &:hover {
-          @apply opacity-80
+        &:not(.active-link) {
+          &:hover {
+            @apply opacity-80
+          }
+
+          &:active {
+            @apply opacity-60;
+          }
         }
 
-        &:active {
-          @apply opacity-60;
+        &.active-link {
+          @apply text-orange-light;
+        }
+
+        > i {
+          @apply mr-1;
         }
       }
     }
 
     > .user-menu {
-      @apply relative min-w-[250px];
+      @apply relative;
 
       &:hover {
         > .menu-dropdown-container {
@@ -138,18 +152,33 @@
       }
 
       > .menu-dropdown-container {
-        @apply absolute pt-5 inset-x-0 hidden;
+        @apply absolute pt-5 hidden min-w-[250px] right-0;
 
         > .menu-dropdown {
-          @apply border border-neutral-300 bg-grey-light rounded-lg shadow text-black text-base font-medium p-3 flex flex-col gap-y-1;
+          @apply border border-neutral-300 bg-grey-light rounded-lg shadow
+                 text-black text-base font-medium p-3 flex flex-col gap-y-1;
+
+          > a {
+            > i {
+              @apply mr-1;
+            }
+          }
         }
       }
     }
   }
 
   section {
-    > h2.title {
-      @apply text-5xl font-black mb-10;
+    > .title-container {
+      @apply flex flex-wrap items-center gap-10 mb-10;
+
+      > h2.title {
+        @apply text-5xl font-black;
+      }
+
+      > button {
+        width: auto;
+      }
     }
   }
 
@@ -179,6 +208,33 @@
       > .duration-arrow {
         @apply flex justify-center;
       }
+    }
+  }
+
+  .pagination {
+    @apply flex justify-between items-center text-grey text-3xl;
+
+    > .previous-links,
+    > .next-links {
+      @apply flex gap-x-2;
+
+      > a {
+        &:hover {
+          @apply opacity-80;
+        }
+
+        &:active {
+          @apply opacity-60;
+        }
+      }
+    }
+
+    > .previous-links {
+      @apply justify-start;
+    }
+
+    > .next-links {
+      @apply justify-end;
     }
   }
 }

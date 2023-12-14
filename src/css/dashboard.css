@@ -1,6 +1,6 @@
 @layer base {
   #app[page=dashboard] #main {
-    @apply grid grid-cols-2 gap-x-10 p-24;
+    @apply grid grid-cols-2 gap-x-10;
   }
   #app[page=dashboard] #main section#latest_festivals > .festivals-list {
     @apply flex flex-col gap-y-5;

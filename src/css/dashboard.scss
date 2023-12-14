@@ -3,7 +3,7 @@ $orange: #FF7A00;
 @layer base {
   #app[page="dashboard"] {
     #main {
-      @apply grid grid-cols-2 gap-x-10 p-24;
+      @apply grid grid-cols-2 gap-x-10;
 
       section {
         &#latest_festivals {
