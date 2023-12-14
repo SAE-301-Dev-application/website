@@ -1,0 +1,15 @@
+$orange: #FF7A00;
+
+@layer base {
+  #app[page="festivals"] {
+    #main {
+      section {
+        &#all_festivals {
+          > .festivals-grid {
+            @apply grid grid-cols-2 gap-x-20 gap-y-10 mb-5;
+          }
+        }
+      }
+    }
+  }
+}
