@@ -454,6 +454,10 @@ body{
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+#main{
+  padding: 6rem;
+}
+
 #app[page=login_register]{
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -556,13 +560,21 @@ body{
   grid-template-columns: repeat(2, minmax(0, 1fr));
   -moz-column-gap: 2.5rem;
        column-gap: 2.5rem;
-  padding: 6rem;
 }
 
 #app[page=dashboard] #main section#latest_festivals > .festivals-list{
   display: flex;
   flex-direction: column;
   row-gap: 1.25rem;
+}
+
+#app[page=festivals] #main section#all_festivals > .festivals-grid{
+  margin-bottom: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  -moz-column-gap: 5rem;
+       column-gap: 5rem;
+  row-gap: 2.5rem;
 }
 
 *, ::before, ::after{
@@ -778,6 +790,7 @@ nav > .user-menu{
 
 nav > .links,
 nav > .user-menu > .user-name{
+  cursor: pointer;
   font-size: 1.125rem;
   line-height: 1.75rem;
   font-weight: 700;
@@ -791,17 +804,25 @@ nav > .links{
        column-gap: 2.5rem;
 }
 
-nav > .links > a:hover{
+nav > .links > a:not(.active-link):hover{
   opacity: 0.8;
 }
 
-nav > .links > a:active{
+nav > .links > a:not(.active-link):active{
   opacity: 0.6;
+}
+
+nav > .links > a.active-link{
+  --tw-text-opacity: 1;
+  color: rgb(255 206 161 / var(--tw-text-opacity));
+}
+
+nav > .links > a > i{
+  margin-right: 0.25rem;
 }
 
 nav > .user-menu{
   position: relative;
-  min-width: 250px;
 }
 
 nav > .user-menu:hover > .menu-dropdown-container{
@@ -820,9 +841,9 @@ nav > .user-menu > .user-name i{
 
 nav > .user-menu > .menu-dropdown-container{
   position: absolute;
-  left: 0px;
   right: 0px;
   display: none;
+  min-width: 250px;
   padding-top: 1.25rem;
 }
 
@@ -847,11 +868,26 @@ nav > .user-menu > .menu-dropdown-container > .menu-dropdown{
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-section > h2.title{
+nav > .user-menu > .menu-dropdown-container > .menu-dropdown > a > i{
+  margin-right: 0.25rem;
+}
+
+section > .title-container{
   margin-bottom: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+section > .title-container > h2.title{
   font-size: 3rem;
   line-height: 1;
   font-weight: 900;
+}
+
+section > .title-container > button {
+  width: auto;
 }
 
 .festival-preview{
@@ -904,6 +940,41 @@ section > h2.title{
 .festival-preview > .festival-duration > .duration-arrow{
   display: flex;
   justify-content: center;
+}
+
+.pagination{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(104 104 104 / var(--tw-text-opacity));
+}
+
+.pagination > .previous-links,
+.pagination > .next-links{
+  display: flex;
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+}
+
+.pagination > .previous-links > a:hover,
+.pagination > .next-links > a:hover{
+  opacity: 0.8;
+}
+
+.pagination > .previous-links > a:active,
+.pagination > .next-links > a:active{
+  opacity: 0.6;
+}
+
+.pagination > .previous-links{
+  justify-content: flex-start;
+}
+
+.pagination > .next-links{
+  justify-content: flex-end;
 }
 
 .absolute{
@@ -987,12 +1058,20 @@ section > h2.title{
   flex: none;
 }
 
+.resize{
+  resize: both;
+}
+
 .grid-cols-2{
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .flex-col{
   flex-direction: column;
+}
+
+.flex-wrap{
+  flex-wrap: wrap;
 }
 
 .items-center{
@@ -1007,9 +1086,22 @@ section > h2.title{
   justify-content: space-between;
 }
 
+.gap-10{
+  gap: 2.5rem;
+}
+
 .gap-x-10{
   -moz-column-gap: 2.5rem;
        column-gap: 2.5rem;
+}
+
+.gap-x-20{
+  -moz-column-gap: 5rem;
+       column-gap: 5rem;
+}
+
+.gap-y-10{
+  row-gap: 2.5rem;
 }
 
 .overflow-x-hidden{
@@ -1123,6 +1215,11 @@ section > h2.title{
   line-height: 1.5rem;
 }
 
+.text-lg{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .text-sm{
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -1147,6 +1244,11 @@ section > h2.title{
 .text-black{
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.text-grey{
+  --tw-text-opacity: 1;
+  color: rgb(104 104 104 / var(--tw-text-opacity));
 }
 
 .text-white{
