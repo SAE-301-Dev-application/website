@@ -2,3 +2,4 @@ node_modules/
 .idea/
 .vscode/
 festiplan/lib/vendor/
+.DS_Store/
