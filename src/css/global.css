@@ -36,13 +36,13 @@ form .form-buttons-column {
   form .form-buttons-column {
     @apply flex-col;
   }
-  input,
+  input:not([type=checkbox]):not([type=radio]),
 select,
 textarea,
 button {
     @apply border-0 rounded-xl p-3 text-sm block w-full;
   }
-  input,
+  input:not([type=checkbox]):not([type=radio]),
 select,
 textarea {
     @apply bg-grey-light;
@@ -66,8 +66,7 @@ textarea {
     @apply border-grey-light;
   }
   nav {
-    @apply bg-orange px-10 py-5 flex justify-between items-center
-           text-white gap-x-20;
+    @apply bg-orange text-white justify-between;
   }
   nav > h1.logo,
 nav > .user-menu {
@@ -166,6 +165,31 @@ nav > .user-menu > .user-name {
   }
   .pagination > .next-links {
     @apply justify-end;
+  }
+  nav,
+footer.grey-footer {
+    @apply px-10 py-5 flex items-center
+           gap-x-20;
+  }
+  footer.grey-footer {
+    @apply bg-grey-light text-grey;
+  }
+  footer.grey-footer > h1.logo {
+    @apply flex-none;
+  }
+  footer.grey-footer > h1.logo:last-child {
+    @apply opacity-0;
+  }
+  footer.grey-footer > .copyrights {
+    @apply text-center flex-1 font-bold;
+  }
+  label.checkbox,
+label.radio {
+    @apply font-medium text-sm flex items-center gap-x-3;
+  }
+  label.checkbox > input,
+label.radio > input {
+    @apply h-5 w-5;
   }
 }
 

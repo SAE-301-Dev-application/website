@@ -1,0 +1,41 @@
+@layer base {
+  #app[page=create-festival] #main .form-grid {
+    @apply grid grid-cols-3 gap-x-10 mb-7;
+  }
+  #app[page=create-festival] #main .form-grid > section#general_information {
+    @apply flex flex-col gap-y-10;
+  }
+  #app[page=create-festival] #main .form-grid > section#categories {
+    @apply flex flex-col;
+  }
+  #app[page=create-festival] #main .form-grid > section#categories > .categories-label {
+    @apply font-bold text-sm flex-none;
+  }
+  #app[page=create-festival] #main .form-grid > section#categories > .choices-container {
+    @apply bg-grey-light rounded-xl p-7 flex-1 flex flex-col gap-y-3;
+  }
+  #app[page=create-festival] #main .form-grid > section#picture {
+    @apply flex flex-col gap-y-10 justify-center items-center
+                   text-center;
+  }
+  #app[page=create-festival] #main .form-grid > section#picture > .picture-preview {
+    @apply w-40 h-40 bg-grey-light rounded-xl;
+  }
+  #app[page=create-festival] #main .form-grid > section#picture > .picture-disclaimers {
+    @apply text-sm text-grey;
+  }
+  #app[page=create-festival] #main .form-grid > section#picture > .buttons > label > button {
+    @apply py-2 px-10 rounded-full;
+  }
+  #app[page=create-festival] #main .form-grid > section#picture > .buttons > input {
+    @apply hidden;
+  }
+  #app[page=create-festival] #main .buttons {
+    @apply flex gap-x-5 flex-wrap;
+  }
+  #app[page=create-festival] #main .buttons > button {
+    @apply w-auto;
+  }
+}
+
+/*# sourceMappingURL=create-festival.css.map */
