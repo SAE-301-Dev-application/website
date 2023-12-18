@@ -3,3 +3,5 @@
 /node_modules/
 index.php
 .htaccess
+.idea/
+.vscode/
