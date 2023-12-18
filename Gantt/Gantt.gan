@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Gantt" company="IUT de Rodez" webLink="http://" view-date="2023-12-10" view-index="0" gantt-divider-location="440" resource-divider-location="300" version="3.2.3247" locale="fr_FR">
+    <description/>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="Nom" width="226" order="0"/>
+        <field id="tpd4" name="Date de début" width="98" order="1"/>
+        <field id="tpd5" name="Date de fin" width="100" order="2"/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="color.recent">
+            <![CDATA[#666666 #999999 #ff9900 #ffff33 #000000 #ff0000 #ff3333 #ff9999]]>
+        </option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nom" width="210" order="0"/>
+        <field id="1" name="Rôle par défaut" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="true"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="41" name="Début projet" color="#ff0000" meeting="true" start="2023-12-11" duration="0" complete="0" thirdDate="2023-12-11" thirdDate-constraint="0" expand="true"/>
+        <task id="21" name="Sprint 0" color="#000000" meeting="false" start="2023-12-11" duration="7" complete="0" thirdDate="2023-12-13" thirdDate-constraint="0" expand="true">
+            <depend id="46" type="2" difference="0" hardness="Strong"/>
+            <task id="19" name="Maquettage" color="#8cb6ce" meeting="false" start="2023-12-11" duration="5" complete="0" thirdDate="2023-12-13" thirdDate-constraint="0" expand="true"/>
+            <task id="0" name="Ecriture tests d'acceptation" color="#8cb6ce" meeting="false" start="2023-12-11" duration="3" complete="0" thirdDate="2023-12-13" thirdDate-constraint="0" expand="true"/>
+            <task id="2" name="Préparation dossiers livrables" color="#8cb6ce" meeting="false" start="2023-12-11" duration="1" complete="0" thirdDate="2023-12-13" thirdDate-constraint="0" expand="true"/>
+            <task id="5" name="Ecriture plan projet, excels" color="#8cb6ce" meeting="false" start="2023-12-11" duration="1" complete="0" thirdDate="2023-12-13" thirdDate-constraint="0" expand="true"/>
+            <task id="9" name="Conception base de données" color="#8cb6ce" meeting="false" start="2023-12-12" duration="2" complete="0" thirdDate="2023-12-13" thirdDate-constraint="0" expand="true"/>
+            <task id="102" name="Script création base de données" color="#8cb6ce" meeting="false" start="2023-12-13" duration="2" complete="0" thirdDate="2023-12-12" thirdDate-constraint="0" expand="true"/>
+            <task id="40" name="Début site" color="#8cb6ce" meeting="false" start="2023-12-13" duration="5" complete="0" thirdDate="2023-12-13" thirdDate-constraint="0" expand="true"/>
+            <task id="39" name="Prise en main tailwind" color="#8cb6ce" meeting="false" start="2023-12-14" duration="4" complete="0" thirdDate="2023-12-13" thirdDate-constraint="0" expand="true"/>
+            <task id="12" name="Configuration espaces travail" color="#8cb6ce" meeting="false" start="2023-12-14" duration="1" complete="0" thirdDate="2023-12-13" thirdDate-constraint="0" expand="true"/>
+            <task id="15" name="Valorisation US" color="#8cb6ce" meeting="false" start="2023-12-15" duration="1" complete="0" thirdDate="2023-12-13" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="46" name="Sprint 1" color="#000000" meeting="false" start="2023-12-18" duration="13" complete="0" thirdDate="2023-12-11" thirdDate-constraint="0" expand="false">
+            <depend id="76" type="2" difference="0" hardness="Strong"/>
+            <task id="45" name="Début sprint 1" color="#ff9900" meeting="true" start="2023-12-18" duration="0" complete="0" thirdDate="2024-01-15" thirdDate-constraint="0" expand="true"/>
+            <task id="55" name="Procédures base de données" color="#8cb6ce" meeting="false" start="2023-12-18" duration="6" complete="0" thirdDate="2023-12-18" thirdDate-constraint="0" expand="true"/>
+            <task id="53" name="Index" color="#666666" meeting="false" start="2023-12-18" duration="3" complete="0" thirdDate="2023-12-18" thirdDate-constraint="0" expand="false">
+                <task id="54" name="Inscription utilisateur" color="#8cb6ce" meeting="false" start="2023-12-18" duration="2" complete="0" thirdDate="2023-12-18" thirdDate-constraint="0" expand="true"/>
+                <task id="56" name="Connexion utilisateur" color="#8cb6ce" meeting="false" start="2023-12-19" duration="2" complete="0" thirdDate="2023-12-18" thirdDate-constraint="0" expand="true"/>
+            </task>
+            <task id="57" name="Création festival" color="#8cb6ce" meeting="false" start="2023-12-18" duration="6" complete="0" thirdDate="2023-12-18" thirdDate-constraint="0" expand="true"/>
+            <task id="58" name="Création spectacle" color="#8cb6ce" meeting="false" start="2023-12-21" duration="3" complete="0" thirdDate="2023-12-18" thirdDate-constraint="0" expand="true"/>
+            <task id="59" name="Création scène" color="#8cb6ce" meeting="false" start="2023-12-22" duration="2" complete="0" thirdDate="2023-12-21" thirdDate-constraint="0" expand="true"/>
+            <task id="70" name="Modification festival" color="#8cb6ce" meeting="false" start="2023-12-26" duration="2" complete="0" thirdDate="2023-12-18" thirdDate-constraint="0" expand="true"/>
+            <task id="73" name="Suppression festival" color="#8cb6ce" meeting="false" start="2023-12-27" duration="1" complete="0" thirdDate="2023-12-18" thirdDate-constraint="0" expand="true"/>
+            <task id="71" name="Modification spectacle" color="#8cb6ce" meeting="false" start="2023-12-28" duration="2" complete="0" thirdDate="2023-12-21" thirdDate-constraint="0" expand="true"/>
+            <task id="74" name="Suppression spectacle" color="#8cb6ce" meeting="false" start="2023-12-29" duration="1" complete="0" thirdDate="2023-12-21" thirdDate-constraint="0" expand="true"/>
+            <task id="72" name="Modification scène" color="#8cb6ce" meeting="false" start="2023-12-30" duration="1" complete="0" thirdDate="2023-12-23" thirdDate-constraint="0" expand="true"/>
+            <task id="75" name="Suppression scène" color="#8cb6ce" meeting="false" start="2023-12-30" duration="1" complete="0" thirdDate="2023-12-23" thirdDate-constraint="0" expand="true"/>
+        </task>
+        <task id="76" name="Sprint 2" color="#000000" meeting="false" start="2024-01-02" duration="12" complete="0" thirdDate="2023-12-18" thirdDate-constraint="0" expand="false">
+            <task id="77" name="Début sprint 2" color="#ff9900" meeting="true" start="2024-01-02" duration="0" complete="0" thirdDate="2023-12-31" thirdDate-constraint="0" expand="true"/>
+            <task id="91" name="Création GriJ" color="#8cb6ce" meeting="false" start="2024-01-02" duration="1" complete="0" thirdDate="2024-01-02" thirdDate-constraint="0" expand="true"/>
+            <task id="92" name="Modification GriJ" color="#8cb6ce" meeting="false" start="2024-01-02" duration="1" complete="0" thirdDate="2024-01-02" thirdDate-constraint="0" expand="true"/>
+            <task id="93" name="Génération planification" color="#8cb6ce" meeting="false" start="2024-01-03" duration="3" complete="0" thirdDate="2024-01-03" thirdDate-constraint="0" expand="true"/>
+            <task id="94" name="Consultation planification" color="#8cb6ce" meeting="false" start="2024-01-05" duration="2" complete="0" thirdDate="2024-01-04" thirdDate-constraint="0" expand="true"/>
+            <task id="95" name="Création + ajout intervenant" color="#8cb6ce" meeting="false" start="2024-01-06" duration="1" complete="0" thirdDate="2024-01-05" thirdDate-constraint="0" expand="true"/>
+            <task id="96" name="Modification intervenant" color="#8cb6ce" meeting="false" start="2024-01-07" duration="1" complete="0" thirdDate="2024-01-05" thirdDate-constraint="0" expand="true"/>
+            <task id="97" name="Suppression intervenant" color="#8cb6ce" meeting="false" start="2024-01-07" duration="1" complete="0" thirdDate="2024-01-05" thirdDate-constraint="0" expand="true"/>
+            <task id="98" name="Dossiers" color="#8cb6ce" meeting="false" start="2024-01-08" duration="6" complete="0" thirdDate="2024-01-07" thirdDate-constraint="0" expand="true">
+                <task id="99" name="Plan de management projet" color="#8cb6ce" meeting="false" start="2024-01-08" duration="4" complete="0" thirdDate="2024-01-08" thirdDate-constraint="0" expand="true"/>
+                <task id="100" name="Ergonomie" color="#8cb6ce" meeting="false" start="2024-01-08" duration="5" complete="0" thirdDate="2024-01-08" thirdDate-constraint="0" expand="true"/>
+                <task id="101" name="Technique" color="#8cb6ce" meeting="false" start="2024-01-08" duration="6" complete="0" thirdDate="2024-01-08" thirdDate-constraint="0" expand="true"/>
+            </task>
+        </task>
+        <task id="42" name="Rendu projet" color="#ff0000" meeting="true" start="2024-01-15" duration="0" complete="0" thirdDate="2023-12-11" thirdDate-constraint="0" expand="true"/>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+    <roles>
+        <role id="1" name="Product Owner"/>
+        <role id="2" name="Scrum Master"/>
+        <role id="3" name="Développeur"/>
+    </roles>
+</project>
