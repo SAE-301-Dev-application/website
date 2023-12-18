@@ -3,6 +3,7 @@
 namespace MvcLite\Controllers;
 
 use MvcLite\Controllers\Engine\Controller;
+use MvcLite\Router\Engine\Redirect;
 use MvcLite\Views\Engine\View;
 
 class IndexController extends Controller
@@ -12,6 +13,11 @@ class IndexController extends Controller
         parent::__construct();
 
         // Empty constructor.
+    }
+
+    public function redirectionIndex()
+    {
+        Redirect::route("index");
     }
 
     public function render(): void

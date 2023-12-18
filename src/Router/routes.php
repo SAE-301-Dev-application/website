@@ -10,6 +10,8 @@ use MvcLite\Controllers\IndexController;
 use MvcLite\Controllers\RegisterController;
 use MvcLite\Router\Engine\Router;
 
+Router::get("/",IndexController::class, "redirectionIndex");
+
 Router::get("/index", IndexController::class, "render")
     ->setName("index");
 
