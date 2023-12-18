@@ -16,8 +16,8 @@ const DATABASE_CREDENTIALS = [
     "dbms"          =>  "mysql",
 
     "host"          =>  "localhost",
-    "port"          =>  "8889",
-    "name"          =>  "Festiplan",
+    "port"          =>  "3306",
+    "name"          =>  "festiplan",
     "user"          =>  "root",
     "password"      =>  "root"
 
