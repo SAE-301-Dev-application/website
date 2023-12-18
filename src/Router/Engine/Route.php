@@ -32,8 +32,12 @@ class Route
                                 string $controller,
                                 string $method)
     {
+        $pathPrefix = substr(ROUTE_PATH_PREFIX,
+                             0,
+                             strlen(ROUTE_PATH_PREFIX) - 1);
+
         $this->httpMethod = $httpMethod;
-        $this->path = $path;
+        $this->path = $pathPrefix . $path;
         $this->controller = $controller;
         $this->method = $method;
         $this->name = null;
