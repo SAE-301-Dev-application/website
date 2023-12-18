@@ -78,7 +78,7 @@ class User
      * @param string $prenom
      * @param string $email
      * @param string $login
-     * @param string $password
+     * @param string $hash
      * @return bool If the account is being created
      */
     public static function create(string $nom,
@@ -88,8 +88,8 @@ class User
                                   string $hash): bool
     {
         $query = "INSERT INTO utilisateur 
-                              (nom_uti, prenom_uti, email_uti, login_uti, mdp_uti) 
-                              VALUES (?, ?, ?, ?, ?)";
+                  (nom_uti, prenom_uti, email_uti, login_uti, mdp_uti) 
+                  VALUES (?, ?, ?, ?, ?)";
 
         $user = Database::query($query,
                                 $nom,

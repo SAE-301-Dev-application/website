@@ -6,6 +6,8 @@ use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Engine\Security\Validator;
+use MvcLite\Middlewares\GuestMiddleware;
 use MvcLite\Models\User;
 use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
@@ -16,7 +18,7 @@ class RegisterController extends Controller
     {
         parent::__construct();
 
-        // Empty constructor.
+        $this->middleware(GuestMiddleware::class);
     }
 
     /**
@@ -34,6 +36,15 @@ class RegisterController extends Controller
      */
     public function register(Request $request): void
     {
+        $hasFilledRequiredFields = (new Validator())
+            ->required($request->getInputs());
+
+        if (!$hasFilledRequiredFields)
+        {
+            echo "You have not filled all required inputs.";
+            die;
+        }
+
         $samePasswords = $request->getInput("password")
                          == $request->getInput("password_confirmation");
 
@@ -55,9 +66,9 @@ class RegisterController extends Controller
         $hash = Password::hash($request->getInput("password"));
 
         User::create($request->getInput("firstname"),
-            $request->getInput("lastname"),
-            $request->getInput("email"),
-            $request->getInput("login"),
-            $hash);
+                     $request->getInput("lastname"),
+                     $request->getInput("email"),
+                     $request->getInput("login"),
+                     $hash);
     }
 }
