@@ -6,6 +6,7 @@ use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Engine\Security\Validator;
 use MvcLite\Models\User;
 use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
@@ -34,23 +35,20 @@ class RegisterController extends Controller
      */
     public function register(Request $request): void
     {
-        $samePasswords = $request->getInput("password")
-                         == $request->getInput("password_confirmation");
+        $validation = (new Validator($request))
+            ->required([
+                "firstname", "lastname", "email",
+                "login", "password", "password_confirmation"
+            ])
+            ->confirmation(
+                $request->getInput("password"),
+                $request->getInput("password_confirmation")
+            );
 
-        $loginOrEmailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"))
-                                    || User::loginAlreadyTaken($request->getInput("login"));
+        Debug::dd($validation->hasFailed(), $validation->getErrors());
 
-        if (!$samePasswords)
-        {
-            echo "Passwords must be the same.";
-            die;
-        }
-
-        if ($loginOrEmailAlreadyTaken)
-        {
-            echo "Login or email already taken.";
-            die;
-        }
+        $emailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"));
+        $loginAlreadyTaken = User::loginAlreadyTaken($request->getInput("login"));
 
         $hash = Password::hash($request->getInput("password"));
 
