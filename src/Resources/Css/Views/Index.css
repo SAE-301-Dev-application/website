@@ -4,7 +4,7 @@
 }
 #index_main > .left-side,
 #register_main > .left-side {
-  @apply bg-[url("/src/Resources/Medias/Images/festival_illustration.jpeg")]
+  @apply bg-[url("/website/src/Resources/Medias/Images/festival_illustration.jpeg")]
            bg-cover bg-no-repeat relative;
 }
 #index_main > .left-side > .background-filter,

@@ -14,16 +14,20 @@ class Storage
 
     public static function getEnginePath(): string
     {
-        return $_SERVER['DOCUMENT_ROOT'] . "/src/Engine";
+        return $_SERVER['DOCUMENT_ROOT'] . ROUTE_PATH_PREFIX . "/src/Engine";
     }
 
     public static function getResourcesPath(): string
     {
-        return $_SERVER['DOCUMENT_ROOT'] . "/src/Resources";
+        return $_SERVER['DOCUMENT_ROOT'] . ROUTE_PATH_PREFIX . "/src/Resources";
     }
 
     public static function include(string $relativePath, string $type = ""): string
     {
+        $pathPrefix = ROUTE_PATH_PREFIX[strlen(ROUTE_PATH_PREFIX) - 1] == '/'
+            ? substr(ROUTE_PATH_PREFIX, 0, strlen(ROUTE_PATH_PREFIX) - 1)
+            : ROUTE_PATH_PREFIX;
+
         $relativePath = $relativePath[0] == '/'
             ? $relativePath
             : '/' . $relativePath;
@@ -40,11 +44,11 @@ class Storage
 
         if ($type == "css" || preg_match(self::REGEX_CSS_FILE, $relativePath))
         {
-            $html = "<link rel='stylesheet' href='/src/Resources$relativePath' />";
+            $html = "<link rel='stylesheet' href='$pathPrefix/src/Resources$relativePath' />";
         }
         else if ($type == "js" || preg_match(self::REGEX_JS_FILE, $relativePath))
         {
-            $html = "<script src='/src/Resources/$relativePath'></script>";
+            $html = "<script src='$pathPrefix/src/Resources/$relativePath'></script>";
         }
         else
         {

@@ -4,7 +4,8 @@
   "description": "Festiplan",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tailwindcss": "npx tailwindcss -i ./src/Resources/Css/tailwind.css -o ./src/Resources/Css/ready.css --watch"
   },
   "author": "belicfr",
   "license": "MIT",
