@@ -1,0 +1,48 @@
+#index_main,
+#register_main {
+  @apply grid grid-cols-1 lg:grid-cols-2 h-screen;
+}
+#index_main > .left-side,
+#register_main > .left-side {
+  @apply bg-[url("/src/Resources/Medias/Images/festival_illustration.jpeg")]
+           bg-cover bg-no-repeat relative;
+}
+#index_main > .left-side > .background-filter,
+#register_main > .left-side > .background-filter {
+  @apply bg-orange bg-opacity-50 absolute inset-0;
+}
+#index_main > .left-side > .side-contents,
+#register_main > .left-side > .side-contents {
+  @apply absolute inset-0 z-10 p-10 text-white;
+}
+#index_main > .left-side > .side-contents > h1.logo,
+#register_main > .left-side > .side-contents > h1.logo {
+  @apply text-7xl mb-56;
+}
+#index_main > .left-side > .side-contents > p.slogan,
+#register_main > .left-side > .side-contents > p.slogan {
+  @apply text-5xl font-bold w-2/3;
+}
+#index_main > .left-side > .side-contents > footer,
+#register_main > .left-side > .side-contents > footer {
+  @apply absolute bottom-0 inset-x-0 z-10 text-center text-white p-5
+        text-sm;
+}
+#index_main > .right-side,
+#register_main > .right-side {
+  @apply px-10 py-24 flex flex-col items-center gap-y-10;
+}
+#index_main > .right-side > h2.section-title,
+#register_main > .right-side > h2.section-title {
+  @apply font-black text-5xl text-center;
+}
+#index_main > .right-side > .form-container,
+#register_main > .right-side > .form-container {
+  @apply w-1/2 flex-1 flex flex-col justify-center;
+}
+#index_main > .right-side > .form-container > form,
+#register_main > .right-side > .form-container > form {
+  @apply flex flex-col gap-y-10;
+}
+
+/*# sourceMappingURL=Index.css.map */

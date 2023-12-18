@@ -1,0 +1,46 @@
+#index_main,
+#register_main {
+  @apply grid grid-cols-1 lg:grid-cols-2 h-screen;
+
+  > .left-side {
+    @apply bg-[url("/src/Resources/Medias/Images/festival_illustration.jpeg")]
+           bg-cover bg-no-repeat relative;
+
+    > .background-filter {
+      @apply bg-orange bg-opacity-50 absolute inset-0;
+    }
+
+    > .side-contents {
+      @apply absolute inset-0 z-10 p-10 text-white;
+
+      > h1.logo {
+        @apply text-7xl mb-56;
+      }
+
+      > p.slogan {
+        @apply text-5xl font-bold w-2/3;
+      }
+
+      > footer {
+        @apply absolute bottom-0 inset-x-0 z-10 text-center text-white p-5
+        text-sm;
+      }
+    }
+  }
+
+  > .right-side {
+    @apply px-10 py-24 flex flex-col items-center gap-y-10;
+
+    > h2.section-title {
+      @apply font-black text-5xl text-center;
+    }
+
+    > .form-container {
+      @apply w-1/2 flex-1 flex flex-col justify-center;
+
+      > form {
+        @apply flex flex-col gap-y-10;
+      }
+    }
+  }
+}
