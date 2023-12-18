@@ -54,8 +54,8 @@ class RegisterController extends Controller
 
         $hash = Password::hash($request->getInput("password"));
 
-        User::create($request->getInput("firstname"),
-            $request->getInput("lastname"),
+        User::create($request->getInput("lastname"),
+            $request->getInput("firstname"),
             $request->getInput("email"),
             $request->getInput("login"),
             $hash);
