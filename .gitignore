@@ -11,3 +11,7 @@ index.php
 
 .idea/
 .vscode/
+
+
+# Fichiers macOS
+.DS_Store
