@@ -8,7 +8,7 @@ use MvcLite\Router\Engine\Router;
 
 require_once "vendor/autoload.php";
 
-const ROUTE_PATH_PREFIX = '/';
+const ROUTE_PATH_PREFIX = '/website/';
 
 $debugCss = file_get_contents(Storage::getEnginePath()
     . "/DevelopmentUtilities/DebugRendering/rendering.css");
