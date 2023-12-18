@@ -3,7 +3,7 @@
   @apply grid grid-cols-1 lg:grid-cols-2 h-screen;
 
   > .left-side {
-    @apply bg-[url("/website/src/Resources/Medias/Images/festival_illustration.jpeg")]
+    @apply bg-[url("/src/Resources/Medias/Images/festival_illustration.jpeg")]
            bg-cover bg-no-repeat relative;
 
     > .background-filter {
