@@ -5,3 +5,4 @@ index.php
 .htaccess
 .idea/
 .vscode/
+/src/Resources/Css/ready.css
