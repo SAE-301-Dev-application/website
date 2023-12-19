@@ -83,8 +83,6 @@ class Validator
         $inputValue = $this->request->getInput($input);
         $confirmationValue = $this->request->getInput($input . "_confirmation");
 
-        Debug::dd($inputValue, $confirmationValue);
-
         $isConfirmed = $inputValue == $confirmationValue;
 
         if (!$isConfirmed)
@@ -110,7 +108,39 @@ class Validator
      */
     public function hasFailed(): bool
     {
-        return count($this->getErrors());
+        $errorsCount = 0;
+        
+        foreach ($this->errors as $rule)
+        {
+            $errorsCount += count($rule);
+        }
+        
+        return $errorsCount;
+    }
+
+    /**
+     * Add a custom error to validator object.
+     *
+     * @param string $rule Rule name
+     * @param string $input Input name
+     * @param string $message Error message
+     * @return $this Current validator object
+     */
+    public function addError(string $rule, string $input, string $message): Validator
+    {
+        if (!in_array($rule, array_keys($this->errors)))
+        {
+            $this->errors[$rule] = [];
+        }
+
+        if (!in_array($input, array_keys($this->errors[$rule])))
+        {
+            $this->errors[$rule][$input] = [];
+        }
+
+        $this->errors[$rule][$input][] = $message;
+
+        return $this;
     }
 
     /**
