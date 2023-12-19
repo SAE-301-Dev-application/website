@@ -27,7 +27,7 @@ use MvcLite\Engine\InternalResources\Storage;
                     Créer un festival n'a jamais été aussi simple.
                 </p>
 
-                <footer>
+                <footer class="computer">
                     2023 © Festiplan. IUT de Rodez.
                 </footer>
             </div>
@@ -85,7 +85,11 @@ use MvcLite\Engine\InternalResources\Storage;
                     </div>
                 </form>
             </div>
+            <footer class="mobile">
+                2023 © Festiplan. IUT de Rodez.
+            </footer>
         </div>
+
     </div>
 </body>
 </html>
