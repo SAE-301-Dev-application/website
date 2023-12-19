@@ -43,4 +43,6 @@
 #index_main > .right-side > .form-container > form,
 #register_main > .right-side > .form-container > form {
   @apply flex flex-col gap-y-10;
-}/*# sourceMappingURL=Index.css.map */
+}
+
+/*# sourceMappingURL=Index.css.map */
