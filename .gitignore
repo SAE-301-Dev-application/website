@@ -1,8 +1,20 @@
 /vendor/
+
+# Informations de connexion à la base de données
 /src/Database/connection.php
+
+# Modules à installer via la commande npm i
 /node_modules/
+
 index.php
 .htaccess
+
 .idea/
 .vscode/
-/src/Resources/Css/ready.css
+
+# Fichiers CSS compilés
+/src/Resources/Css/**/*.css
+
+
+# Fichiers macOS
+.DS_Store
