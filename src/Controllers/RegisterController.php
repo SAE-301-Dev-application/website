@@ -6,7 +6,9 @@ use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Engine\Security\Validator;
 use MvcLite\Models\User;
+use MvcLite\Router\Engine\Redirect;
 use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
 
@@ -34,30 +36,39 @@ class RegisterController extends Controller
      */
     public function register(Request $request): void
     {
-        $samePasswords = $request->getInput("password")
-                         == $request->getInput("password_confirmation");
+        $validation = (new Validator($request))
+            ->required([
+                "firstname", "lastname", "email",
+                "login", "password", "password_confirmation"
+            ])
+            ->confirmation("password");
 
-        $loginOrEmailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"))
-                                    || User::loginAlreadyTaken($request->getInput("login"));
+        $emailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"));
 
-        if (!$samePasswords)
+        if ($emailAlreadyTaken)
         {
-            echo "Passwords must be the same.";
-            die;
+            $validation->addError("unique", "email", "This email address is already taken.");
         }
 
-        if ($loginOrEmailAlreadyTaken)
+        $loginAlreadyTaken = User::loginAlreadyTaken($request->getInput("login"));
+
+        if ($loginAlreadyTaken)
         {
-            echo "Login or email already taken.";
-            die;
+            $validation->addError("unique", "login", "This login is already taken.");
         }
 
-        $hash = Password::hash($request->getInput("password"));
+        if (!$validation->hasFailed())
+        {
+            $hash = Password::hash($request->getInput("password"));
 
-        User::create($request->getInput("lastname"),
-            $request->getInput("firstname"),
-            $request->getInput("email"),
-            $request->getInput("login"),
-            $hash);
+            User::create($request->getInput("lastname"),
+                         $request->getInput("firstname"),
+                         $request->getInput("email"),
+                         $request->getInput("login"),
+                         $hash);
+        }
+
+        Redirect::route("register")
+            ->redirect();
     }
 }
