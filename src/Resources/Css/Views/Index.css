@@ -1,11 +1,11 @@
 #index_main,
 #register_main {
-  @apply grid grid-cols-1 lg:grid-cols-2 h-screen;
+  @apply flex flex-col xl:grid xl:grid-cols-2 h-screen;
 }
 #index_main > .left-side,
 #register_main > .left-side {
-  @apply bg-[url("/src/Resources/Medias/Images/festival_illustration.jpeg")]
-           bg-cover bg-no-repeat relative;
+  @apply bg-[url("/website/src/Resources/Medias/Images/festival_illustration.jpeg")]
+           bg-cover bg-no-repeat relative h-32 xl:h-auto flex-none;
 }
 #index_main > .left-side > .background-filter,
 #register_main > .left-side > .background-filter {
@@ -13,36 +13,44 @@
 }
 #index_main > .left-side > .side-contents,
 #register_main > .left-side > .side-contents {
-  @apply absolute inset-0 z-10 p-10 text-white;
+  @apply absolute inset-0 z-10 p-5 xl:p-10 text-white flex justify-center items-center gap-x-20;
 }
 #index_main > .left-side > .side-contents > h1.logo,
 #register_main > .left-side > .side-contents > h1.logo {
-  @apply text-7xl mb-56;
+  @apply text-6xl xl:text-7xl xl:mb-56;
 }
 #index_main > .left-side > .side-contents > p.slogan,
 #register_main > .left-side > .side-contents > p.slogan {
-  @apply text-5xl font-bold w-2/3;
-}
-#index_main > .left-side > .side-contents > footer,
-#register_main > .left-side > .side-contents > footer {
-  @apply absolute bottom-0 inset-x-0 z-10 text-center text-white p-5
-        text-sm;
+  @apply mt-3 text-xl hidden xl:block xl:text-5xl font-bold w-2/3;
 }
 #index_main > .right-side,
 #register_main > .right-side {
-  @apply px-10 py-24 flex flex-col items-center gap-y-10;
+  @apply xl:p-10 xl:py-24 flex flex-col items-center gap-y-10 flex-1;
 }
 #index_main > .right-side > h2.section-title,
 #register_main > .right-side > h2.section-title {
-  @apply font-black text-5xl text-center;
+  @apply font-black text-4xl xl:text-5xl mt-5 text-center xl:mb-0;
 }
 #index_main > .right-side > .form-container,
 #register_main > .right-side > .form-container {
-  @apply w-1/2 flex-1 flex flex-col justify-center;
+  @apply w-auto xl:w-1/2 flex-1 flex flex-col  xl:justify-center;
 }
 #index_main > .right-side > .form-container > form,
 #register_main > .right-side > .form-container > form {
   @apply flex flex-col gap-y-10;
+}
+#index_main footer,
+#register_main footer {
+  @apply absolute bottom-0 inset-x-0 z-10 text-center p-5
+    text-sm;
+}
+#index_main footer.computer,
+#register_main footer.computer {
+  @apply text-white hidden xl:block;
+}
+#index_main footer.mobile,
+#register_main footer.mobile {
+  @apply text-grey block xl:hidden;
 }
 
 /*# sourceMappingURL=Index.css.map */
