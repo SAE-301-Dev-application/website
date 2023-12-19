@@ -8,6 +8,7 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Models\User;
+use MvcLite\Router\Engine\Redirect;
 use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
 
@@ -40,22 +41,34 @@ class RegisterController extends Controller
                 "firstname", "lastname", "email",
                 "login", "password", "password_confirmation"
             ])
-            ->confirmation(
-                $request->getInput("password"),
-                $request->getInput("password_confirmation")
-            );
-
-        Debug::dd($validation->hasFailed(), $validation->getErrors());
+            ->confirmation("password");
 
         $emailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"));
+
+        if ($emailAlreadyTaken)
+        {
+            $validation->addError("unique", "email", "This email address is already taken.");
+        }
+
         $loginAlreadyTaken = User::loginAlreadyTaken($request->getInput("login"));
 
-        $hash = Password::hash($request->getInput("password"));
+        if ($loginAlreadyTaken)
+        {
+            $validation->addError("unique", "login", "This login is already taken.");
+        }
 
-        User::create($request->getInput("lastname"),
-            $request->getInput("firstname"),
-            $request->getInput("email"),
-            $request->getInput("login"),
-            $hash);
+        if (!$validation->hasFailed())
+        {
+            $hash = Password::hash($request->getInput("password"));
+
+            User::create($request->getInput("lastname"),
+                         $request->getInput("firstname"),
+                         $request->getInput("email"),
+                         $request->getInput("login"),
+                         $hash);
+        }
+
+        Redirect::route("register")
+            ->redirect();
     }
 }
