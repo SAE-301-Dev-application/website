@@ -81,7 +81,7 @@ class Delivery
      *
      * @return Delivery Current delivery object
      */
-    public function make(): Delivery
+    public function save(): Delivery
     {
         $_SESSION[self::DELIVER_POST_KEY] = serialize($this);
 
