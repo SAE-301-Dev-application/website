@@ -1,0 +1,15 @@
+$orange: #FF7A00;
+
+#dashboard_main {
+    #main {
+        @apply grid grid-cols-2 gap-x-10;
+
+        section {
+            &#latest_festivals {
+                > .festivals-list {
+                    @apply flex flex-col gap-y-5;
+                }
+            }
+        }
+    }
+}

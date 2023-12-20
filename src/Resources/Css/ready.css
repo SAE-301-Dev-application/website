@@ -106,6 +106,19 @@
   row-gap: 2.5rem;
 }
 
+#dashboard_main #main{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  -moz-column-gap: 2.5rem;
+       column-gap: 2.5rem;
+}
+
+#dashboard_main #main section#latest_festivals > .festivals-list{
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.25rem;
+}
+
 /*
 ! tailwindcss v3.3.6 | MIT License | https://tailwindcss.com
 */
@@ -550,6 +563,10 @@ video {
 
 body {
   font-family: "Inter", sans-serif;
+}
+
+#main{
+  padding: 6rem;
 }
 
 *, ::before, ::after{
