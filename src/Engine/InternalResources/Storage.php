@@ -14,9 +14,6 @@ class Storage
     /** RegEx for .js files. */
     private const REGEX_JS_FILE = "/(.*).js$/";
 
-    /** RegEx for .php files. */
-    private const REGEX_PHP_COMPONENT_FILE = "/(.*).php$/";
-
     /**
      * @return string /src/Engine/ folder path
      */
@@ -78,10 +75,6 @@ class Storage
         {
             $html = "<script src='$pathPrefix/src/Resources/$relativePath'></script>";
         }
-        else if ($type == "php" || preg_match(self::REGEX_PHP_COMPONENT_FILE, $relativePath))
-        {
-            include "";
-        }
         else
         {
             $error = new InvalidResourceTypeException();
@@ -91,5 +84,10 @@ class Storage
         echo $html;
 
         return $html;
+    }
+
+    public static function component(string $name): void
+    {
+        include "src/Views/Components/$name.php";
     }
 }
