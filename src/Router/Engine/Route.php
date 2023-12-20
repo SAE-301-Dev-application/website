@@ -15,6 +15,9 @@ class Route
     /** HTTP request method: POST | GET */
     private string $httpMethod;
 
+    /** Complete URL relative path linked to current route. */
+    private string $completePath;
+
     /** URL path linked to current route. */
     private string $path;
 
@@ -37,7 +40,8 @@ class Route
                              strlen(ROUTE_PATH_PREFIX) - 1);
 
         $this->httpMethod = $httpMethod;
-        $this->path = $pathPrefix . $path;
+        $this->completePath = $pathPrefix . $path;
+        $this->path = $path;
         $this->controller = $controller;
         $this->method = $method;
         $this->name = null;
@@ -49,6 +53,14 @@ class Route
     public function getHttpMethod(): string
     {
         return $this->httpMethod;
+    }
+
+    /**
+     * @return string Defined complete path
+     */
+    public function getCompletePath(): string
+    {
+        return $this->completePath;
     }
 
     /**
