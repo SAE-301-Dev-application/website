@@ -39,8 +39,6 @@ use MvcLite\Engine\InternalResources\Storage;
             Storage::component("HeaderComponent");
         ?>
 
-        
-
         <div id="main">
             <section id="latest_festivals">
             <div class="title-container">
