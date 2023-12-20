@@ -17,7 +17,6 @@ use MvcLite\Engine\InternalResources\Storage;
 </head>
 <body>
     <div id="register_main">
-
         <div class="left-side">
             <div class="background-filter"></div>
 
