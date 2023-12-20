@@ -5,6 +5,7 @@ namespace MvcLite\Controllers;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\InternalResources\Delivery;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Models\User;
@@ -44,13 +45,12 @@ class RegisterController extends Controller
             ->confirmation("password");
 
         $emailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"));
+        $loginAlreadyTaken = User::loginAlreadyTaken($request->getInput("login"));
 
         if ($emailAlreadyTaken)
         {
             $validation->addError("unique", "email", "This email address is already taken.");
         }
-
-        $loginAlreadyTaken = User::loginAlreadyTaken($request->getInput("login"));
 
         if ($loginAlreadyTaken)
         {
@@ -69,6 +69,7 @@ class RegisterController extends Controller
         }
 
         Redirect::route("register")
+            ->withValidator($validation)
             ->redirect();
     }
 }
