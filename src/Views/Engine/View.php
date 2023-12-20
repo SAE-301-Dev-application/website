@@ -24,6 +24,6 @@ class View
 
         include_once $absoluteViewPath;
 
-        (new Delivery())->make();
+        (new Delivery())->save();
     }
 }

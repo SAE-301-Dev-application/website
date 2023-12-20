@@ -24,7 +24,7 @@ class RedirectResponse
     public function withValidator(Validator $validator): RedirectResponse
     {
         (new Delivery($validator))
-            ->make();
+            ->save();
 
         return $this;
     }

@@ -22,7 +22,7 @@ echo "<style>$exceptionsCss $debugCss</style>";
 if (!isset($_SESSION[Delivery::DELIVER_POST_KEY]))
 {
     (new Delivery())
-        ->make();
+        ->save();
 }
 
 require_once "src/Database/connection.php";
