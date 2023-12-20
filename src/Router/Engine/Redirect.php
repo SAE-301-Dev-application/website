@@ -2,6 +2,8 @@
 
 namespace MvcLite\Router\Engine;
 
+use MvcLite\Engine\DevelopmentUtilities\Debug;
+
 /**
  * Redirection management class.
  *
@@ -35,6 +37,7 @@ class Redirect
     {
         $route = Router::getRouteByName($name);
 
-        return new RedirectResponse($route);
+        $redirection = new RedirectResponse($route);
+        $redirection->redirect();
     }
 }
