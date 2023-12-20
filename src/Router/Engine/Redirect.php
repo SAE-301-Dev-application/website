@@ -35,9 +35,6 @@ class Redirect
     {
         $route = Router::getRouteByName($name);
 
-        $redirection = new RedirectResponse($route);
-        $redirection->redirect();
-
-        return $redirection;
+        return new RedirectResponse($route);
     }
 }
