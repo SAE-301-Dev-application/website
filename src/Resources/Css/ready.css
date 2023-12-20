@@ -199,11 +199,21 @@
 
 #index_main footer,
 #register_main footer{
-  flex: none;
+  display: flex;
   padding: 1.25rem;
   text-align: center;
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+@media (min-width: 1280px){
+  #index_main footer,
+#register_main footer{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+  }
 }
 
 #index_main footer.computer,
@@ -1361,6 +1371,15 @@ label.checkbox,
   inset: 0px;
 }
 
+.inset-x-0{
+  left: 0px;
+  right: 0px;
+}
+
+.bottom-0{
+  bottom: 0px;
+}
+
 .z-10{
   z-index: 10;
 }
@@ -1736,6 +1755,19 @@ label.checkbox,
 }
 
 @media (min-width: 1280px){
+  .xl\:absolute{
+    position: absolute;
+  }
+
+  .xl\:inset-x-0{
+    left: 0px;
+    right: 0px;
+  }
+
+  .xl\:bottom-0{
+    bottom: 0px;
+  }
+
   .xl\:block{
     display: block;
   }

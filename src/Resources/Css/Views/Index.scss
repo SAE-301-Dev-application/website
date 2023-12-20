@@ -41,10 +41,10 @@
   }
 
   footer {
-    @apply text-center p-5 text-sm flex-none;
+    @apply flex text-center p-5 text-sm;
 
     &.computer {
-      @apply text-white hidden xl:block;
+      @apply absolute bottom-0 inset-x-0 text-white hidden xl:block;
     }
 
     &.mobile {

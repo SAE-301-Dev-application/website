@@ -41,11 +41,11 @@
 }
 #index_main footer,
 #register_main footer {
-  @apply text-center p-5 text-sm flex-none;
+  @apply flex text-center p-5 text-sm;
 }
 #index_main footer.computer,
 #register_main footer.computer {
-  @apply text-white hidden xl:block;
+  @apply absolute bottom-0 inset-x-0 text-white hidden xl:block;
 }
 #index_main footer.mobile,
 #register_main footer.mobile {
