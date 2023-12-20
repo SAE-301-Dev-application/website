@@ -2,6 +2,10 @@
 
 namespace MvcLite\Router\Engine;
 
+use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\InternalResources\Delivery;
+use MvcLite\Engine\Security\Validator;
+
 /**
  * Redirection management class.
  *
@@ -15,6 +19,14 @@ class RedirectResponse
     public function __construct(Route $route)
     {
         $this->route = $route;
+    }
+
+    public function withValidator(Validator $validator): RedirectResponse
+    {
+        (new Delivery($validator))
+            ->make();
+
+        return $this;
     }
 
     public function redirect(): void
