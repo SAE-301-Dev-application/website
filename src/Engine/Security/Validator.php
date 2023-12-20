@@ -29,8 +29,10 @@ class Validator
         $this->validationState = true;
         $this->errors = [];
 
+        /*
         $this->initializeRule("required");
         $this->initializeRule("confirmation");
+        */
     }
 
     /**
@@ -60,7 +62,7 @@ class Validator
 
             if (!$isFilled)
             {
-                $this->errors["required"][$input] = $error ?? $defaultError;
+                $this->addError("required", $input, $error ?? $defaultError);
             }
 
             $this->validationState &= $isFilled;
@@ -87,7 +89,7 @@ class Validator
 
         if (!$isConfirmed)
         {
-            $this->errors["confirmation"][$input] = $error ?? $defaultError;
+            $this->addError("confirmation", $input, $error ?? $defaultError);
         }
 
         $this->validationState &= $isConfirmed;
@@ -128,6 +130,18 @@ class Validator
      */
     public function addError(string $rule, string $input, string $message): Validator
     {
+        /*
+        if (!in_array($input, array_keys($this->errors)))
+        {
+            $this->errors[$input] = [];
+        }
+
+        if (!in_array($rule, array_keys($this->errors[$input])))
+        {
+            $this->errors[$rule] = [];
+        }
+        */
+        /*
         if (!in_array($rule, array_keys($this->errors)))
         {
             $this->errors[$rule] = [];
@@ -137,8 +151,9 @@ class Validator
         {
             $this->errors[$rule][$input] = [];
         }
+        */
 
-        $this->errors[$rule][$input][] = $message;
+        $this->errors[$input][$rule][] = $message;
 
         return $this;
     }
