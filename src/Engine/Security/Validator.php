@@ -144,4 +144,12 @@ class Validator
     {
         $this->errors[$rule] = [];
     }
+
+    /**
+     * @return Request Stored Request object
+     */
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
 }
