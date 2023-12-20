@@ -30,7 +30,7 @@ use MvcLite\Engine\InternalResources\Storage;
 <body>
   <div id="create-festival">
     <?php
-      $currentView = CreateFestival.php;  
+      $currentView = "CreateFestival.php";  
       Storage::component("HeaderComponent");
     ?>
 

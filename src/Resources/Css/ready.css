@@ -886,9 +886,16 @@ body {
 }
 
 .logo {
+  &::before{
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+  &::before{
+    --tw-content: "Festiplan";
+    content: var(--tw-content);
+  }
   &::before {
     font-family: "Kaushan Script", sans-serif;
-    content: "Festiplan";
   }
 }
 
@@ -1718,6 +1725,11 @@ label.checkbox,
 
 .outline{
   outline-style: solid;
+}
+
+.content-\[\"Festiplan\"\]{
+  --tw-content: "Festiplan";
+  content: var(--tw-content);
 }
 
 @media (min-width: 768px){

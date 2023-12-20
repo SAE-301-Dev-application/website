@@ -3,17 +3,17 @@
     <h1 class="logo"></h1>
 
     <div class="links">
-        <a href="dashboard.html" class="active-link">
+        <a href="Dashboard.php" <?php echo $currentView; echo isset($currentView) && $currentView == "Dashboard.php" ? "class=\"active-link\"" : "" ?>>
         <i class="fa-solid fa-home"></i>
         Tableau de bord
         </a>
 
-        <a href="festivals.html">
+        <a href="Festivals.php"<?php echo isset($currentView) && $currentView == "Festivals.php" ? "class=\"active-link\"" : "" ?>>
         <i class="fa-solid fa-champagne-glasses"></i>
         Festivals
         </a>
 
-        <a href="#">
+        <a href="#" <?php echo isset($currentView) && $currentView == "#" ? "class=\"active-link\"" : "" ?>>
         <i class="fa-solid fa-masks-theater"></i>
         Spectacles
         </a>
