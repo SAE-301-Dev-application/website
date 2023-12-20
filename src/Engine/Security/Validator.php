@@ -130,29 +130,6 @@ class Validator
      */
     public function addError(string $rule, string $input, string $message): Validator
     {
-        /*
-        if (!in_array($input, array_keys($this->errors)))
-        {
-            $this->errors[$input] = [];
-        }
-
-        if (!in_array($rule, array_keys($this->errors[$input])))
-        {
-            $this->errors[$rule] = [];
-        }
-        */
-        /*
-        if (!in_array($rule, array_keys($this->errors)))
-        {
-            $this->errors[$rule] = [];
-        }
-
-        if (!in_array($input, array_keys($this->errors[$rule])))
-        {
-            $this->errors[$rule][$input] = [];
-        }
-        */
-
         $this->errors[$input][$rule][] = $message;
 
         return $this;
