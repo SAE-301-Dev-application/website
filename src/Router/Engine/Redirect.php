@@ -39,5 +39,7 @@ class Redirect
 
         $redirection = new RedirectResponse($route);
         $redirection->redirect();
+
+        return $redirection;
     }
 }
