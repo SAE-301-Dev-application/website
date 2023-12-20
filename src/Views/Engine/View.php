@@ -2,6 +2,9 @@
 
 namespace MvcLite\Views\Engine;
 
+use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\InternalResources\Delivery;
+use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\Exceptions\NotFoundViewException;
 
 class View
@@ -16,8 +19,11 @@ class View
             $error->render();
         }
 
+        $props["props"] = Delivery::get();
         extract($props);
 
         include_once $absoluteViewPath;
+
+        (new Delivery())->make();
     }
 }
