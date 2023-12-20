@@ -31,6 +31,6 @@ class RedirectResponse
 
     public function redirect(): void
     {
-        header("Location: " . $this->route->getPath());
+        header("Location: " . $this->route->getCompletePath());
     }
 }
