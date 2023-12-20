@@ -86,8 +86,10 @@ class Storage
         return $html;
     }
 
-    public static function component(string $name): void
+    public static function component(string $name, array $props = []): void
     {
+        extract($props);
+        
         include "src/Views/Components/$name.php";
     }
 }
