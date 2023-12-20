@@ -41,20 +41,22 @@ class RegisterController extends Controller
             ->required([
                 "firstname", "lastname", "email",
                 "login", "password", "password_confirmation"
-            ])
-            ->confirmation("password");
+            ], "Ce champ est requis.")
+            ->confirmation("password", "Les mots de passe ne correspondent pas.");
 
         $emailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"));
         $loginAlreadyTaken = User::loginAlreadyTaken($request->getInput("login"));
 
         if ($emailAlreadyTaken)
         {
-            $validation->addError("unique", "email", "This email address is already taken.");
+            $validation->addError("unique",
+                                  "email",
+                                  "Cette adresse e-mail est déjà utilisée.");
         }
 
         if ($loginAlreadyTaken)
         {
-            $validation->addError("unique", "login", "This login is already taken.");
+            $validation->addError("unique", "login", "Ce login est déjà utilisé.");
         }
 
         if (!$validation->hasFailed())
