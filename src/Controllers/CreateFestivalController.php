@@ -6,7 +6,7 @@ use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Router\Engine\Redirect;
 use MvcLite\Views\Engine\View;
 
-class DashboardController extends Controller
+class CreateFestivalController extends Controller
 {
     public function __construct()
     {
@@ -17,6 +17,6 @@ class DashboardController extends Controller
 
     public function render(): void
     {
-        View::render("create-festival");
+        View::render("CreateFestival");
     }
 }

@@ -119,6 +119,90 @@
   row-gap: 1.25rem;
 }
 
+#create-festival #main .form-grid{
+  margin-bottom: 1.75rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  -moz-column-gap: 2.5rem;
+       column-gap: 2.5rem;
+}
+
+#create-festival #main .form-grid > section#general_information{
+  display: flex;
+  flex-direction: column;
+  row-gap: 2.5rem;
+}
+
+#create-festival #main .form-grid > section#categories{
+  display: flex;
+  flex-direction: column;
+}
+
+#create-festival #main .form-grid > section#categories > .categories-label{
+  flex: none;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+}
+
+#create-festival #main .form-grid > section#categories > .choices-container{
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  row-gap: 0.75rem;
+  border-radius: 0.75rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 230 230 / var(--tw-bg-opacity));
+  padding: 1.75rem;
+}
+
+#create-festival #main .form-grid > section#picture{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 2.5rem;
+  text-align: center;
+}
+
+#create-festival #main .form-grid > section#picture > .picture-preview{
+  height: 10rem;
+  width: 10rem;
+  border-radius: 0.75rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 230 230 / var(--tw-bg-opacity));
+}
+
+#create-festival #main .form-grid > section#picture > .picture-disclaimers{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(104 104 104 / var(--tw-text-opacity));
+}
+
+#create-festival #main .form-grid > section#picture > .buttons > label > button{
+  border-radius: 9999px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+#create-festival #main .form-grid > section#picture > .buttons > input{
+  display: none;
+}
+
+#create-festival #main .buttons{
+  display: flex;
+  flex-wrap: wrap;
+  -moz-column-gap: 1.25rem;
+       column-gap: 1.25rem;
+}
+
+#create-festival #main .buttons > button{
+  width: auto;
+}
+
 /*
 ! tailwindcss v3.3.6 | MIT License | https://tailwindcss.com
 */
@@ -1185,6 +1269,10 @@ label.checkbox,
   height: 8rem;
 }
 
+.h-40{
+  height: 10rem;
+}
+
 .h-5{
   height: 1.25rem;
 }
@@ -1199,6 +1287,10 @@ label.checkbox,
 
 .w-32{
   width: 8rem;
+}
+
+.w-40{
+  width: 10rem;
 }
 
 .min-w-\[250px\]{
@@ -1233,6 +1325,10 @@ label.checkbox,
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.grid-cols-3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .flex-col{
   flex-direction: column;
 }
@@ -1260,6 +1356,15 @@ label.checkbox,
 .gap-x-10{
   -moz-column-gap: 2.5rem;
        column-gap: 2.5rem;
+}
+
+.gap-x-5{
+  -moz-column-gap: 1.25rem;
+       column-gap: 1.25rem;
+}
+
+.gap-y-10{
+  row-gap: 2.5rem;
 }
 
 .rounded-lg{
@@ -1326,9 +1431,18 @@ label.checkbox,
   padding: 1.25rem;
 }
 
+.p-7{
+  padding: 1.75rem;
+}
+
 .px-10{
   padding-left: 2.5rem;
   padding-right: 2.5rem;
+}
+
+.py-2{
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .py-24{
