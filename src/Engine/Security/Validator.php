@@ -9,6 +9,9 @@ use MvcLite\Router\Engine\Request;
 /**
  * Validation class.
  *
+ * This class allows developer to validate POST
+ * inputs following established and punctual rules.
+ *
  * @author belicfr
  */
 class Validator
@@ -40,7 +43,7 @@ class Validator
      *  - not nulls
      *  - not empty strings
      *
-     * @param array $values Values to validate
+     * @param array $inputs Values to validate
      * @param string|null $error Custom error message
      * @return Validator Current validator object
      */
