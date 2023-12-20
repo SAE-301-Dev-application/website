@@ -33,7 +33,7 @@
 }
 #index_main > .right-side > .form-container,
 #register_main > .right-side > .form-container {
-  @apply w-auto xl:w-1/2 flex-1 flex flex-col xl:justify-center xl:items-center md:px-20 xl:px-0;
+  @apply w-auto xl:w-1/2 flex-1 flex flex-col xl:justify-center  md:px-20 xl:px-0;
 }
 #index_main > .right-side > .form-container > form,
 #register_main > .right-side > .form-container > form {
@@ -41,11 +41,11 @@
 }
 #index_main footer,
 #register_main footer {
-  @apply text-center p-5 text-sm flex-none;
+  @apply flex text-center p-5 text-sm;
 }
 #index_main footer.computer,
 #register_main footer.computer {
-  @apply text-white hidden xl:block;
+  @apply absolute bottom-0 inset-x-0 text-white hidden xl:block;
 }
 #index_main footer.mobile,
 #register_main footer.mobile {

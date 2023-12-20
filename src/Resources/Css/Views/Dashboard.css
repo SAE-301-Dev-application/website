@@ -3,4 +3,6 @@
 }
 #dashboard_main #main section#latest_festivals > .festivals-list {
   @apply flex flex-col gap-y-5;
-}/*# sourceMappingURL=Dashboard.css.map */
+}
+
+/*# sourceMappingURL=Dashboard.css.map */
