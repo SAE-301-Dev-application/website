@@ -3,6 +3,7 @@
 namespace MvcLite\Router\Engine;
 
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\InternalResources\Delivery;
 use MvcLite\Router\Engine\Exceptions\UndefinedControllerMethodException;
 use MvcLite\Router\Engine\Exceptions\UndefinedRouteException;
 
@@ -101,6 +102,10 @@ class Router
             $error = new UndefinedControllerMethodException($route->getController(), $route->getMethod());
             $error->render();
         }
+
+        Delivery::get()
+            ->add("currentRoute", $route)
+            ->save();
 
         call_user_func([$controllerInstance, $route->getMethod()], $request);
     }
