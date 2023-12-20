@@ -177,7 +177,6 @@
   #index_main > .right-side > .form-container,
 #register_main > .right-side > .form-container{
     width: 50%;
-    align-items: center;
     justify-content: center;
     padding-left: 0px;
     padding-right: 0px;
