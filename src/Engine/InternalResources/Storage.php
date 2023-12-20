@@ -88,8 +88,9 @@ class Storage
 
     public static function component(string $name, array $props = []): void
     {
+        $props["props"] = Delivery::get();
         extract($props);
-        
+
         include "src/Views/Components/$name.php";
     }
 }
