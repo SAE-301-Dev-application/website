@@ -8,20 +8,47 @@ use MvcLite\Engine\InternalResources\Exceptions\NotFoundResourceException;
 
 class Storage
 {
+    /** RegEx for .css files. */
     private const REGEX_CSS_FILE = "/(.*).css$/";
 
+    /** RegEx for .js files. */
     private const REGEX_JS_FILE = "/(.*).js$/";
 
+    /** RegEx for .php files. */
+    private const REGEX_PHP_COMPONENT_FILE = "/(.*).php$/";
+
+    /**
+     * @return string /src/Engine/ folder path
+     */
     public static function getEnginePath(): string
     {
         return $_SERVER['DOCUMENT_ROOT'] . ROUTE_PATH_PREFIX . "/src/Engine";
     }
 
+    /**
+     * @return string /src/Resources/ folder path
+     */
     public static function getResourcesPath(): string
     {
         return $_SERVER['DOCUMENT_ROOT'] . ROUTE_PATH_PREFIX . "/src/Resources";
     }
 
+    /**
+     * @return string /src/Views/Components/ folder path
+     */
+    public static function getComponentsPath(): string
+    {
+        return $_SERVER["DOCUMENT_ROOT"] . ROUTE_PATH_PREFIX . "/src/Views/Components";
+    }
+
+    /**
+     * Attempt to include a supported file in a view.
+     *
+     * @param string $relativePath Relative path to file
+     * @param string $type Optional file type (by default
+     *                     automatically defined)
+     * @return string Generated HTML content
+     */
     public static function include(string $relativePath, string $type = ""): string
     {
         $pathPrefix = ROUTE_PATH_PREFIX[strlen(ROUTE_PATH_PREFIX) - 1] == '/'
@@ -35,6 +62,7 @@ class Storage
         $absolutePath = self::getResourcesPath() . $relativePath;
 
         $type = strtolower($type);
+        $html = "";
 
         if (!file_exists($absolutePath))
         {
@@ -49,6 +77,10 @@ class Storage
         else if ($type == "js" || preg_match(self::REGEX_JS_FILE, $relativePath))
         {
             $html = "<script src='$pathPrefix/src/Resources/$relativePath'></script>";
+        }
+        else if ($type == "php" || preg_match(self::REGEX_PHP_COMPONENT_FILE, $relativePath))
+        {
+            include "";
         }
         else
         {
