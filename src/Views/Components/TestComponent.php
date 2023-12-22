@@ -1,3 +1,0 @@
-<p>
-    CECI EST UN COMPOSANT.
-</p>
