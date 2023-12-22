@@ -29,8 +29,10 @@ class RedirectResponse
         return $this;
     }
 
-    public function redirect(): void
+    public function redirect(): RedirectResponse
     {
         header("Location: " . $this->route->getCompletePath());
+
+        return $this;
     }
 }
