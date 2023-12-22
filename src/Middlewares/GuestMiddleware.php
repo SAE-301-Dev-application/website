@@ -6,6 +6,7 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Middlewares\Engine\Middleware;
 use MvcLite\Router\Engine\Redirect;
+use MvcLite\Router\Engine\RedirectResponse;
 
 class GuestMiddleware extends Middleware
 {
@@ -16,12 +17,12 @@ class GuestMiddleware extends Middleware
         // Empty constructor.
     }
 
-    public function run(): bool|Redirect
+    public function run(): bool|RedirectResponse
     {
         if (Session::isLogged())
         {
-            echo "YOU MUST BE DISCONNECTED.";
-            die;
+            return Redirect::route("dashboard")
+                ->redirect();
         }
 
         return parent::run();
