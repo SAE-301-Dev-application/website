@@ -82,6 +82,7 @@ class RegisterController extends Controller
 
         Redirect::route("register")
             ->withValidator($validation)
+            ->withRequest($request)
             ->redirect();
     }
 }
