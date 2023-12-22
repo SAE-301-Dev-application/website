@@ -102,7 +102,7 @@ class Validator
 
         $isConfirmed = $inputValue == $confirmationValue;
 
-        if (!$isConfirmed)
+        if (strlen($inputValue) && strlen($confirmationValue) && !$isConfirmed)
         {
             $this->addError("confirmation", $input, $error ?? $defaultError);
         }
@@ -132,7 +132,7 @@ class Validator
 
         $isRespectingGivenLength = strlen($inputValue) >= $minLength;
 
-        if (!$isRespectingGivenLength)
+        if (strlen($inputValue) && !$isRespectingGivenLength)
         {
             $this->addError("minLength", $input, $error ?? $defaultError);
         }
@@ -221,7 +221,7 @@ class Validator
 
         $isValidEmailAddress = filter_var($inputValue, FILTER_VALIDATE_EMAIL);
 
-        if (!$isValidEmailAddress)
+        if (strlen($inputValue) && !$isValidEmailAddress)
         {
             $this->addError("email", $input, $error ?? $defaultError);
         }
