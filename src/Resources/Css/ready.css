@@ -176,7 +176,7 @@
 @media (min-width: 1280px){
   #index_main > .right-side > .form-container,
 #register_main > .right-side > .form-container{
-    width: 50%;
+    width: 66.666667%;
     justify-content: center;
     padding-left: 0px;
     padding-right: 0px;
@@ -1172,6 +1172,11 @@ section {
   }
 }
 
+.field-required{
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
 .festival-preview{
   display: flex;
   -moz-column-gap: 1.25rem;
@@ -1435,6 +1440,10 @@ label.checkbox,
 
 .w-1{
   width: 0.25rem;
+}
+
+.w-2{
+  width: 0.5rem;
 }
 
 .w-32{
@@ -1704,6 +1713,11 @@ label.checkbox,
   color: rgb(104 104 104 / var(--tw-text-opacity));
 }
 
+.text-red-600{
+  --tw-text-opacity: 1;
+  color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
 .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -1777,8 +1791,8 @@ label.checkbox,
     height: auto;
   }
 
-  .xl\:w-1\/2{
-    width: 50%;
+  .xl\:w-2\/3{
+    width: 66.666667%;
   }
 
   .xl\:grid-cols-2{

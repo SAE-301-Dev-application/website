@@ -185,6 +185,10 @@
         }
     }
 
+    .field-required {
+        @apply text-red-600;
+    }
+
     .festival-preview {
         @apply flex gap-x-5;
 
