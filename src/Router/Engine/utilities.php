@@ -17,6 +17,6 @@ function route(string $name): string
     $route = Router::getRouteByName($name);
 
     return $route !== null
-        ? $route->getPath()
+        ? $route->getCompletePath()
         : "#";
 }
