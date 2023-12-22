@@ -49,7 +49,7 @@ class Validator
      */
     public function required(array $inputs, ?string $error = null): Validator
     {
-        $defaultError = " input is required.";
+        $defaultError = "This input is required.";
 
         foreach ($inputs as $input)
         {
@@ -61,7 +61,7 @@ class Validator
                 $error->render();
             }
 
-            $isFilled = $inputValue !== null && strlen($inputValue);
+            $isFilled = $inputValue !== null && strlen(trim($inputValue));
 
             if (!$isFilled)
             {
@@ -96,6 +96,72 @@ class Validator
         }
 
         $this->validationState &= $isConfirmed;
+
+        return $this;
+    }
+
+    /**
+     * @param string $input Input to validate
+     * @param int $minLength Min length to apply
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function minLength(string $input, int $minLength, ?string $error = null): Validator
+    {
+        $defaultError = "This field must contain at least $minLength characters.";
+
+        $isRespectingGivenLength = strlen($input) >= $minLength;
+
+        if (!$isRespectingGivenLength)
+        {
+            $this->addError("minLength", $input, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $isRespectingGivenLength;
+
+        return $this;
+    }
+
+    /**
+     * @param string $input Input to validate
+     * @param int $maxLength Max length to apply
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function maxLength(string $input, int $maxLength, ?string $error = null): Validator
+    {
+        $defaultError = "This field must contain at most $maxLength characters.";
+
+        $isRespectingGivenLength = strlen($input) <= $maxLength;
+
+        if (!$isRespectingGivenLength)
+        {
+            $this->addError("maxLength", $input, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $isRespectingGivenLength;
+
+        return $this;
+    }
+
+    /**
+     * @param string $input Input to validate
+     * @param string $pattern RegEx to apply
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function matches(string $input, string $pattern, ?string $error = null): Validator
+    {
+        $defaultError = "This input is not valid.";
+
+        $isMatchingPattern = preg_match($pattern, $input);
+
+        if (!$isMatchingPattern)
+        {
+            $this->addError("matches", $input, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $isMatchingPattern;
 
         return $this;
     }
