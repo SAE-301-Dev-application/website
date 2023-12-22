@@ -53,7 +53,7 @@ class Session
 
         if ($attemptState)
         {
-            self::setSessionId($user["id"]);
+            self::setSessionId($user[AUTHENTIFICATION_COLUMNS["id"]]);
         }
 
         return $attemptState;
