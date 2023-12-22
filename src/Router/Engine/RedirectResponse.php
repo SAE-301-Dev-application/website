@@ -16,19 +16,46 @@ class RedirectResponse
     /** Redirection route. */
     private Route $route;
 
+    /** Current delivery object. */
+    private Delivery $currentDelivery;
+
     public function __construct(Route $route)
     {
         $this->route = $route;
+        $this->currentDelivery = new Delivery();
     }
 
+    /**
+     * @param Validator $validator Validator instance
+     * @return $this Current RedirectResponse object
+     */
     public function withValidator(Validator $validator): RedirectResponse
     {
-        (new Delivery($validator))
+        $this->currentDelivery
+            ->setValidator($validator)
             ->save();
 
         return $this;
     }
 
+    /**
+     * @param Request $request Request instance
+     * @return $this Current RedirectResponse object
+     */
+    public function withRequest(Request $request): RedirectResponse
+    {
+        $this->currentDelivery
+            ->setRequest($request)
+            ->save();
+
+        return $this;
+    }
+
+    /**
+     * Redirect to current route.
+     *
+     * @return $this Current RedirectResponse object
+     */
     public function redirect(): RedirectResponse
     {
         header("Location: " . $this->route->getCompletePath());
