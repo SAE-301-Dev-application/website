@@ -11,6 +11,7 @@ use MvcLite\Controllers\RegisterController;
 use MvcLite\Controllers\DashboardController;
 use MvcLite\Controllers\FestivalsController;
 use MvcLite\Controllers\CreateFestivalController;
+use MvcLite\Controllers\CreateSpectacleController;
 use MvcLite\Controllers\SessionController;
 use MvcLite\Router\Engine\Router;
 
@@ -38,8 +39,15 @@ Router::get("/logout", SessionController::class, "logout")
 Router::get("/dashboard", DashboardController::class, "render")
     ->setName("dashboard");
 
+
 Router::get("/festivals", FestivalsController::class, "render")
     ->setName("festivals");
 
+
 Router::get("/create-festival", CreateFestivalController::class, "render")
-    ->setName("create-festival");
+    ->setName("createFestival");
+
+    
+Router::get("/create-spectacle", CreateSpectacleController::class, "render")
+    ->setName("createSpecacle");
+
