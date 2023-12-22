@@ -111,6 +111,14 @@ class Delivery
     }
 
     /**
+     * @return bool If there is a request object
+     */
+    public function hasRequest(): bool
+    {
+        return $this->getRequest() !== null;
+    }
+
+    /**
      * Store in session variable the current delivery instance serialized.
      *
      * @return Delivery Current delivery object
