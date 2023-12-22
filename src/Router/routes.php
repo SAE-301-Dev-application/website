@@ -47,6 +47,7 @@ Router::get("/festivals", FestivalsController::class, "render")
 Router::get("/create-festival", CreateFestivalController::class, "render")
     ->setName("createFestival");
 
-
+    
 Router::get("/create-spectacle", CreateSpectacleController::class, "render")
     ->setName("createSpecacle");
+

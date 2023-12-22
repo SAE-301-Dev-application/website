@@ -43,7 +43,7 @@ use MvcLite\Engine\InternalResources\Storage;
                 Festivals organisés
                 </h2>
 
-                <a href="create-festival.html">
+                <a href="<?= route("createFestival") ?>">
                 <button class="button-blue">
                     <i class="fa-solid fa-plus"></i>
                     Créer un festival
