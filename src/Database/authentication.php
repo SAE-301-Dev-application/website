@@ -9,7 +9,8 @@ const AUTHENTIFICATION_COLUMNS = [
 
     "table"     => "utilisateur",
 
-    "login"     => "name",
-    "password"  => "password",
+    "id"        => "id_utilisateur",
+    "login"     => "login_uti",
+    "password"  => "mdp_uti",
 
 ];
