@@ -53,7 +53,9 @@ class RegisterController extends Controller
 
         if ($loginAlreadyTaken)
         {
-            $validation->addError("unique", "login", "Ce login est déjà utilisé.");
+            $validation->addError("unique",
+                                  "login",
+                                  "Ce login est déjà utilisé.");
         }
 
         if (!$validation->hasFailed())
