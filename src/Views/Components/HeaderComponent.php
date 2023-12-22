@@ -5,12 +5,12 @@
     <h1 class="logo"></h1>
 
     <div class="links">
-        <a href="/website/dashboard" <?= $props->getProps()["currentRoute"]->getPath() == "/dashboard" ? "class=\"active-link\"" : "" ?>>
+        <a href="<?= route("dashboard") ?>" <?= $props->getProps()["currentRoute"]->getPath() == "/dashboard" ? "class=\"active-link\"" : "" ?>>
         <i class="fa-solid fa-home"></i>
         Tableau de bord
         </a>
 
-        <a href="/website/festivals"<?= $props->getProps()["currentRoute"]->getPath() == "/festivals" ? "class=\"active-link\"" : "" ?>>
+        <a href="<?= route("festivals") ?>"<?= $props->getProps()["currentRoute"]->getPath() == "/festivals" ? "class=\"active-link\"" : "" ?>>
         <i class="fa-solid fa-champagne-glasses"></i>
         Festivals
         </a>

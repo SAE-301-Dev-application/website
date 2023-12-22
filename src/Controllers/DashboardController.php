@@ -14,7 +14,7 @@ class DashboardController extends Controller
         parent::__construct();
 
         $this->middleware(AuthMiddleware::class);
-    }
+    }   
 
     public function render(): void
     {

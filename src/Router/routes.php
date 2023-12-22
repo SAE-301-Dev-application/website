@@ -42,4 +42,4 @@ Router::get("/festivals", FestivalsController::class, "render")
     ->setName("festivals");
 
 Router::get("/create-festival", CreateFestivalController::class, "render")
-    ->setName("create-festival");
+    ->setName("createFestival");
