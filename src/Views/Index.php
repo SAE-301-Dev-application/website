@@ -39,7 +39,7 @@ use MvcLite\Engine\InternalResources\Storage;
             </h2>
 
             <div class="form-container">
-                <form action="#" method="post">
+                <form action="<?= route('post.login') ?>" method="post">
                     <div class="form-component">
                         <label for="login">
                             <p>
