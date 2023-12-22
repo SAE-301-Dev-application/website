@@ -1,19 +1,21 @@
+
+
 <header>
     <nav>
     <h1 class="logo"></h1>
 
     <div class="links">
-        <a href="Dashboard.php" <?php echo $currentView; echo isset($currentView) && $currentView == "Dashboard.php" ? "class=\"active-link\"" : "" ?>>
+        <a href="/website/dashboard" <?= $props->getProps()["currentRoute"]->getPath() == "/dashboard" ? "class=\"active-link\"" : "" ?>>
         <i class="fa-solid fa-home"></i>
         Tableau de bord
         </a>
 
-        <a href="Festivals.php"<?php echo isset($currentView) && $currentView == "Festivals.php" ? "class=\"active-link\"" : "" ?>>
+        <a href="/website/festivals"<?= $props->getProps()["currentRoute"]->getPath() == "/festivals" ? "class=\"active-link\"" : "" ?>>
         <i class="fa-solid fa-champagne-glasses"></i>
         Festivals
         </a>
 
-        <a href="#" <?php echo isset($currentView) && $currentView == "#" ? "class=\"active-link\"" : "" ?>>
+        <a href="#" <?= $props->getProps()["currentRoute"]->getPath() == "#" ? "class=\"active-link\"" : "" ?>>
         <i class="fa-solid fa-masks-theater"></i>
         Spectacles
         </a>

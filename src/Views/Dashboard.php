@@ -35,7 +35,6 @@ use MvcLite\Engine\InternalResources\Storage;
     -->
 
         <?php
-            $currentView = "Dashboard.php";  
             Storage::component("HeaderComponent");
         ?>
 
