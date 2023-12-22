@@ -133,8 +133,7 @@ class Validator
      */
     public function addError(string $rule, string $input, string $message): Validator
     {
-        $this->errors[$input][$rule][] = $message;
-
+        $this->errors[$input][$rule] = $message;
         return $this;
     }
 
