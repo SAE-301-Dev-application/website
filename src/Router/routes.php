@@ -14,8 +14,12 @@ use MvcLite\Router\Engine\Router;
 
 Router::get("/", IndexController::class, "redirectionIndex");
 
+
 Router::get("/index", IndexController::class, "render")
     ->setName("index");
+
+Router::post("/index/login", IndexController::class, "login")
+    ->setName("post.login");
 
 
 Router::get("/register", RegisterController::class, "render")
@@ -23,6 +27,7 @@ Router::get("/register", RegisterController::class, "render")
 
 Router::post("/register", RegisterController::class, "register")
     ->setName("post.register");
+
 
 Router::get("/dashboard", DashboardController::class, "render")
     ->setName("dashboard");
