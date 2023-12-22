@@ -54,8 +54,10 @@ $errors = $props->hasValidator()
                                 <input type="text"
                                        name="firstname"
                                        id="firstname"
+                                       value="<?php if ($props->hasRequest())
+                                           echo $props->getRequest()->getInput('firstname') ?>"
                                        required />
-                                
+
                                 <?php
                                 Storage::component("InputErrorComponent", [
                                     "errors" => $errors,
