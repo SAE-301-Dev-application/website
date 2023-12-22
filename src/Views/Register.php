@@ -1,5 +1,9 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
+
+$errors = $props->hasValidator()
+    ? $props->getValidator()->getErrors()
+    : [];
 ?>
 
 <!doctype html>
@@ -51,6 +55,13 @@ use MvcLite\Engine\InternalResources\Storage;
                                        name="firstname"
                                        id="firstname"
                                        required />
+                                
+                                <?php
+                                Storage::component("InputErrorComponent", [
+                                    "errors" => $errors,
+                                    "input" => "firstname",
+                                ]);
+                                ?>
                             </label>
                         </div>
 
@@ -64,6 +75,13 @@ use MvcLite\Engine\InternalResources\Storage;
                                        name="lastname"
                                        id="lastname"
                                        required />
+
+                                <?php
+                                Storage::component("InputErrorComponent", [
+                                    "errors" => $errors,
+                                    "input" => "lastname",
+                                ]);
+                                ?>
                             </label>
                         </div>
                     </div>
@@ -78,6 +96,13 @@ use MvcLite\Engine\InternalResources\Storage;
                                    name="email"
                                    id="email"
                                    required />
+
+                            <?php
+                            Storage::component("InputErrorComponent", [
+                                "errors" => $errors,
+                                "input" => "email",
+                            ]);
+                            ?>
                         </label>
                     </div>
 
@@ -91,6 +116,13 @@ use MvcLite\Engine\InternalResources\Storage;
                                    name="login"
                                    id="login"
                                    required />
+
+                            <?php
+                            Storage::component("InputErrorComponent", [
+                                "errors" => $errors,
+                                "input" => "login",
+                            ]);
+                            ?>
                         </label>
                     </div>
 
@@ -105,6 +137,13 @@ use MvcLite\Engine\InternalResources\Storage;
                                        name="password"
                                        id="password"
                                        required />
+
+                                <?php
+                                Storage::component("InputErrorComponent", [
+                                    "errors" => $errors,
+                                    "input" => "password",
+                                ]);
+                                ?>
                             </label>
                         </div>
 
@@ -118,6 +157,13 @@ use MvcLite\Engine\InternalResources\Storage;
                                        name="password_confirmation"
                                        id="password_confirmation"
                                        required />
+
+                                <?php
+                                Storage::component("InputErrorComponent", [
+                                    "errors" => $errors,
+                                    "input" => "password_confirmation",
+                                ]);
+                                ?>
                             </label>
                         </div>
                     </div>
