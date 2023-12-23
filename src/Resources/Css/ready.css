@@ -251,7 +251,55 @@
   row-gap: 1.25rem;
 }
 
-#create-festival #main .form-grid{
+#dashboard_main #main footer{
+  display: flex;
+  padding: 1.25rem;
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+#dashboard_main #main footer.computer{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: none;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+@media (min-width: 1280px){
+  #dashboard_main #main footer.computer{
+    display: block;
+  }
+}
+
+#dashboard_main #main footer.mobile{
+  display: block;
+  --tw-text-opacity: 1;
+  color: rgb(104 104 104 / var(--tw-text-opacity));
+}
+
+@media (min-width: 1280px){
+  #dashboard_main #main footer.mobile{
+    display: none;
+  }
+}
+
+#dashboard_main #main .festival-preview{
+  margin-bottom: 2.5rem;
+}
+
+#festivals_main #main{
+  padding-top: 6rem;
+}
+
+#festivals_main #main .festival-preview{
+  margin-bottom: 2.5rem;
+}
+
+#festivals_main #main .form-grid{
   margin-bottom: 1.75rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -259,25 +307,25 @@
        column-gap: 2.5rem;
 }
 
-#create-festival #main .form-grid > section#general_information{
+#festivals_main #main .form-grid > section#general_information{
   display: flex;
   flex-direction: column;
   row-gap: 2.5rem;
 }
 
-#create-festival #main .form-grid > section#categories{
+#festivals_main #main .form-grid > section#categories{
   display: flex;
   flex-direction: column;
 }
 
-#create-festival #main .form-grid > section#categories > .categories-label{
+#festivals_main #main .form-grid > section#categories > .categories-label{
   flex: none;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 700;
 }
 
-#create-festival #main .form-grid > section#categories > .choices-container{
+#festivals_main #main .form-grid > section#categories > .choices-container{
   display: flex;
   flex: 1 1 0%;
   flex-direction: column;
@@ -288,7 +336,7 @@
   padding: 1.75rem;
 }
 
-#create-festival #main .form-grid > section#picture{
+#festivals_main #main .form-grid > section#picture{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -297,7 +345,7 @@
   text-align: center;
 }
 
-#create-festival #main .form-grid > section#picture > .picture-preview{
+#festivals_main #main .form-grid > section#picture > .picture-preview{
   height: 10rem;
   width: 10rem;
   border-radius: 0.75rem;
@@ -305,14 +353,14 @@
   background-color: rgb(230 230 230 / var(--tw-bg-opacity));
 }
 
-#create-festival #main .form-grid > section#picture > .picture-disclaimers{
+#festivals_main #main .form-grid > section#picture > .picture-disclaimers{
   font-size: 0.875rem;
   line-height: 1.25rem;
   --tw-text-opacity: 1;
   color: rgb(104 104 104 / var(--tw-text-opacity));
 }
 
-#create-festival #main .form-grid > section#picture > .buttons > label > button{
+#festivals_main #main .form-grid > section#picture > .buttons > label > button{
   border-radius: 9999px;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -320,18 +368,18 @@
   padding-right: 2.5rem;
 }
 
-#create-festival #main .form-grid > section#picture > .buttons > input{
+#festivals_main #main .form-grid > section#picture > .buttons > input{
   display: none;
 }
 
-#create-festival #main .buttons{
+#festivals_main #main .buttons{
   display: flex;
   flex-wrap: wrap;
   -moz-column-gap: 1.25rem;
        column-gap: 1.25rem;
 }
 
-#create-festival #main .buttons > button{
+#festivals_main #main .buttons > button{
   width: auto;
 }
 

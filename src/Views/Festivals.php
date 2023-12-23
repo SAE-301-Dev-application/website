@@ -246,32 +246,34 @@ use MvcLite\Engine\InternalResources\Storage;
                 </div>
             </div>
 
-            <div class="pagination">
-                <div class="previous-links">
-                <a href="#">
-                    <i class="fa-solid fa-angles-left"></i>
-                </a>
-
-                <a href="#">
-                    <i class="fa-solid fa-angle-left"></i>
-                </a>
-                </div>
-
-                <div class="next-links">
-                <a href="#">
-                    <i class="fa-solid fa-angle-right"></i>
-                </a>
-
-                <a href="#">
-                    <i class="fa-solid fa-angles-right"></i>
-                </a>
-                </div>
-                <?php
-                    Storage::component("FooterComponent");
-                ?>
-            </div>
-            </section>
+        </section>
         </div>
-    </div>
+        <div class="pagination">
+            <div class="previous-links">
+            <a href="#">
+                <i class="fa-solid fa-angles-left"></i>
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-angle-left"></i>
+            </a>
+            </div>
+
+            <div class="next-links">
+            <a href="#">
+                <i class="fa-solid fa-angle-right"></i>
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-angles-right"></i>
+            </a>
+            </div>
+
+        </div>
+        <?php
+        Storage::component("FooterComponent");
+        ?>
+
+        </div>
 </body>
 </html>

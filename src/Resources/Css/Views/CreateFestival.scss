@@ -1,10 +1,13 @@
 $orange: #FF7A00;
 
-#create-festival {
+#festivals_main {
     #main {
+        @apply pt-24;
+        .festival-preview {
+            @apply mb-10;
+        }
         .form-grid {
         @apply grid grid-cols-3 gap-x-10 mb-7;
-
         > section {
             &#general_information {
             @apply flex flex-col gap-y-10;

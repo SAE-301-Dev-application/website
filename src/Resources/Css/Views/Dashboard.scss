@@ -11,5 +11,19 @@ $orange: #FF7A00;
                 }
             }
         }
+        footer {
+            @apply flex text-center p-5 text-sm;
+
+            &.computer {
+                @apply absolute bottom-0 inset-x-0 text-white hidden xl:block;
+            }
+
+            &.mobile {
+                @apply text-grey block xl:hidden;
+            }
+        }
+        .festival-preview {
+            @apply mb-10;
+        }
     }
 }
