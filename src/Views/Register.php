@@ -4,6 +4,24 @@ use MvcLite\Engine\InternalResources\Storage;
 $errors = $props->hasValidator()
     ? $props->getValidator()->getErrors()
     : [];
+
+$hasRequest = $props->hasRequest();
+
+$firstname = $hasRequest
+    ? $props->getRequest()->getInput("firstname")
+    : "";
+
+$lastname = $hasRequest
+    ? $props->getRequest()->getInput("lastname")
+    : "";
+
+$email = $hasRequest
+    ? $props->getRequest()->getInput("email")
+    : "";
+
+$login = $hasRequest
+    ? $props->getRequest()->getInput("login")
+    : "";
 ?>
 
 <!doctype html>
@@ -54,8 +72,7 @@ $errors = $props->hasValidator()
                                 <input type="text"
                                        name="firstname"
                                        id="firstname"
-                                       value="<?php if ($props->hasRequest())
-                                           echo $props->getRequest()->getInput('firstname') ?>"
+                                       value="<?= $firstname ?>"
                                        required />
 
                                 <?php
@@ -76,6 +93,7 @@ $errors = $props->hasValidator()
                                 <input type="text"
                                        name="lastname"
                                        id="lastname"
+                                       value="<?= $lastname ?>"
                                        required />
 
                                 <?php
@@ -97,6 +115,7 @@ $errors = $props->hasValidator()
                             <input type="email"
                                    name="email"
                                    id="email"
+                                   value="<?= $email ?>"
                                    required />
 
                             <?php
@@ -117,6 +136,7 @@ $errors = $props->hasValidator()
                             <input type="text"
                                    name="login"
                                    id="login"
+                                   value="<?= $login ?>"
                                    required />
 
                             <?php
