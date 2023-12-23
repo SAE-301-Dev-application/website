@@ -219,7 +219,7 @@ class Validator
             $error->render();
         }
 
-        $isValidEmailAddress = filter_var($inputValue, FILTER_VALIDATE_EMAIL);
+        $isValidEmailAddress = filter_var($inputValue, FILTER_VALIDATE_EMAIL) == $inputValue;
 
         if (strlen($inputValue) && !$isValidEmailAddress)
         {
