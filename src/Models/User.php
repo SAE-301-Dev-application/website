@@ -109,10 +109,10 @@ class User
      */
     public static function emailAlreadyTaken(string $email): bool
     {
-        $query = "SELECT COUNT(*) as count FROM utilisateur WHERE email_uti = ?";
+        $query = "SELECT verifierUsageEmail(?) as resultat";
 
         return Database::query($query, $email)
-            ->get()["count"];
+            ->get()["resultat"];
     }
 
     /**
@@ -123,9 +123,9 @@ class User
      */
     public static function loginAlreadyTaken(string $login): bool
     {
-        $query = "SELECT COUNT(*) as count FROM utilisateur WHERE login_uti = ?";
+        $query = "SELECT verifierUsageLogin(?) as resultat";
 
         return Database::query($query, $login)
-            ->get()["count"];
+            ->get()["resultat"];
     }
 }
