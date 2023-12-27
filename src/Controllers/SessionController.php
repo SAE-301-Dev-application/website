@@ -25,6 +25,5 @@ class SessionController extends Controller
     public function logout(): void
     {
         Session::logout();
-        Redirect::route("index");
     }
 }
