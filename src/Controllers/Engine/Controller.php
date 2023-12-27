@@ -3,12 +3,13 @@
 namespace MvcLite\Controllers\Engine;
 
 use MvcLite\Middlewares\Engine\Middleware;
+use MvcLite\Middlewares\ExistingAccountMiddleware;
 
 class Controller
 {
     public function __construct()
     {
-        // Empty constructor.
+        $this->middleware(ExistingAccountMiddleware::class);
     }
 
     /**
