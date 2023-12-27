@@ -64,7 +64,7 @@ class Router
      */
     public static function getRouteByPath(string $path): Route
     {
-        if (preg_match("/(.+)\/$/", $path) !== false)
+        if (preg_match("/(.+)\/$/", $path))
         {
             $path = substr($path, 0, -1);
         }
