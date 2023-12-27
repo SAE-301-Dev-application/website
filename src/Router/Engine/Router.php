@@ -64,6 +64,11 @@ class Router
      */
     public static function getRouteByPath(string $path): Route
     {
+        if (preg_match("/(.+)\/$/", $path) !== false)
+        {
+            $path = substr($path, 0, -1);
+        }
+
         $route = array_filter(self::$routes, function (Route $route) use ($path)
         {
             return $route->getCompletePath() == $path
