@@ -5,6 +5,7 @@ namespace MvcLite\Engine\Session;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Router\Engine\Redirect;
 
 /**
  * Session manager class.
@@ -35,6 +36,14 @@ class Session
             : false;
     }
 
+    /**
+     * Attempt to log in the account corresponding to
+     * given login and password.
+     *
+     * @param string $login
+     * @param string $password
+     * @return bool Log in attempt state
+     */
     public static function attemptLogin(string $login, string $password): bool
     {
         $query = "SELECT * FROM "
@@ -69,8 +78,34 @@ class Session
         $_SESSION[self::AUTH_SESSION_VARIABLE] = $sessionId;
     }
 
+    /**
+     * Log out from current session.
+     */
     public static function logout(): void
     {
         session_destroy();
+        Redirect::to("/");
+    }
+
+    /**
+     * @return false|array Account array if exists;
+     *                     else FALSE
+     */
+    public static function getSessionAccount(): false|array
+    {
+        if (!self::getSessionId())
+        {
+            return false;
+        }
+
+        $query = "SELECT * FROM "
+               . AUTHENTIFICATION_COLUMNS["table"]
+               . " WHERE "
+               . AUTHENTIFICATION_COLUMNS["id"]
+               . " = ?";
+
+        $sessionAccount = Database::query($query, self::getSessionId());
+
+        return $sessionAccount->get();
     }
 }
