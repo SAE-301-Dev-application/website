@@ -88,11 +88,15 @@ class RegisterController extends Controller
                          $request->getInput("email"),
                          $request->getInput("login"),
                          $hash);
-        }
 
-        Redirect::route("register")
-            ->withValidator($validation)
-            ->withRequest($request)
-            ->redirect();
+            Redirect::route("index");
+        }
+        else
+        {
+            Redirect::route("register")
+                ->withValidator($validation)
+                ->withRequest($request)
+                ->redirect();
+        }
     }
 }
