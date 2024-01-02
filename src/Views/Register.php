@@ -72,6 +72,8 @@ $login = $hasRequest
                                 <input type="text"
                                        name="firstname"
                                        id="firstname"
+                                       minlength="1"
+                                       maxlength="25"
                                        value="<?= $firstname ?>"
                                        required />
 
@@ -93,6 +95,8 @@ $login = $hasRequest
                                 <input type="text"
                                        name="lastname"
                                        id="lastname"
+                                       minlength="1"
+                                       maxlength="50"
                                        value="<?= $lastname ?>"
                                        required />
 
@@ -136,6 +140,8 @@ $login = $hasRequest
                             <input type="text"
                                    name="login"
                                    id="login"
+                                   minlength="3"
+                                   maxlength="25"
                                    value="<?= $login ?>"
                                    required />
 
