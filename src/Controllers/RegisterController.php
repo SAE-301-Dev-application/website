@@ -3,6 +3,7 @@
 namespace MvcLite\Controllers;
 
 use MvcLite\Controllers\Engine\Controller;
+use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Models\User;
@@ -52,25 +53,25 @@ class RegisterController extends Controller
             ->matches("lastname", "/^[a-zA-ZÀ-ÿ\s\-']{1,50}$/u", "Le nom de famille doit contenir uniquement des lettres, espaces, apostrophes et tirets.")
             ->email("email", "L'adresse e-mail renseignée n'est pas valide. Elle doit être au format 'exemple@email.fr'.");
 
-        $emailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"));
-        $loginAlreadyTaken = User::loginAlreadyTaken($request->getInput("login"));
-
-        if ($emailAlreadyTaken)
-        {
-            $validation->addError("unique",
-                                  "email",
-                                  "Cette adresse e-mail est déjà utilisée.");
-        }
-
-        if ($loginAlreadyTaken)
-        {
-            $validation->addError("unique",
-                                  "login",
-                                  "Ce login est déjà utilisé.");
-        }
-
         if (!$validation->hasFailed())
         {
+            $emailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"));
+            $loginAlreadyTaken = User::loginAlreadyTaken($request->getInput("login"));
+
+            if ($emailAlreadyTaken)
+            {
+                $validation->addError("unique",
+                    "email",
+                    "Cette adresse e-mail est déjà utilisée.");
+            }
+
+            if ($loginAlreadyTaken)
+            {
+                $validation->addError("unique",
+                    "login",
+                    "Ce login est déjà utilisé.");
+            }
+
             $hash = Password::hash($request->getInput("password"));
 
             User::create($request->getInput("lastname"),
