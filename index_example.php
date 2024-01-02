@@ -38,6 +38,6 @@ if (!isset($_GET["route"]))
     $error->render();
 }
 
-$route = Router::getRouteByPath(ROUTE_PATH_PREFIX . $_GET["route"]);
+$route = Router::getRouteByPath('/' . $_GET["route"]);
 Router::useRoute($route);
 
