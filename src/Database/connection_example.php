@@ -17,6 +17,7 @@ const DATABASE_CREDENTIALS = [
 
     "host"          =>  "localhost",
     "port"          =>  "3306",
+    "charset"       =>  "utf8mb4",
     "name"          =>  "festiplan",
     "user"          =>  "utilisateur_festiplan",
     "password"      =>  "US3RfEs.T1PL4N."
