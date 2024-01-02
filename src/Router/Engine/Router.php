@@ -71,7 +71,7 @@ class Router
 
         $route = array_filter(self::$routes, function (Route $route) use ($path)
         {
-            return $route->getCompletePath() == $path
+            return $route->getPath() == $path
                 && $route->getHttpMethod() == self::getCurrentHttpMethod();
         });
 
