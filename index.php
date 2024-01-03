@@ -26,7 +26,6 @@ if (!isset($_SESSION[Delivery::DELIVER_POST_KEY]))
 }
 
 require_once "src/Database/connection.php";
-require_once "src/Database/authentication.php";
 
 require_once "src/Router/reserved.php";
 require_once "src/Router/routes.php";
