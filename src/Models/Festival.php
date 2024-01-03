@@ -62,14 +62,8 @@ class Festival
                                 string $image)
     {
 
-        if (isset($nom) && str_len($nom) < 50 && !empty($nom)) {
-
-            $this->nom = $nom;
-        } else {
-            //throw()
-        }
+        $this->nom = $nom;
         
-
         $this->description = $description;
 
         $this->dateDebut = $dateDebut;
@@ -132,10 +126,12 @@ class Festival
      * @return bool If the account is being created
      */
     public static function create(string $nom,
-                                  string $prenom,
-                                  string $email,
-                                  string $login,
-                                  string $hash): bool
+                                  string $description,
+                                  string $dateDebut,
+                                  string $dateFin,
+                                  string $categories,
+                                  string $image)      
+        
     {
         $query = "INSERT INTO utilisateur 
                   (nom_uti, prenom_uti, email_uti, login_uti, mdp_uti) 
