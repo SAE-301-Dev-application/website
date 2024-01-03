@@ -12,7 +12,7 @@ class FestivalsController extends Controller
     {
         parent::__construct();
 
-        // Empty constructor.
+        $this->middleware(AuthMiddleware::class);
     }
 
     public function render(): void
