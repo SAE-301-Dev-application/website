@@ -2,6 +2,8 @@
 
 namespace MvcLite\Controllers;
 
+use MVCLite\Router\Engine\Request;
+use MVCLite\Router\Engine\RedirectResponse;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Router\Engine\Redirect;
@@ -15,9 +17,14 @@ class CreateSpectacleController extends Controller
 
         $this->middleware(AuthMiddleware::class);
     }
-
+    
     public function render(): void
     {
         View::render("CreateSpectacle");
+    }
+
+    public function createSpectacle(Request $request): RedirectResponse
+    {
+        echo "ehehe";
     }
 }
