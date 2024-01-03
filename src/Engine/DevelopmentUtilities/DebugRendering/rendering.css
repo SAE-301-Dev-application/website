@@ -11,6 +11,4 @@ div[mvclite-dd] {
 div[mvclite-dd]::before {
   content: "DEBUG:";
   color: darkorange;
-}
-
-/*# sourceMappingURL=rendering.css.map */
+}/*# sourceMappingURL=rendering.css.map */
