@@ -1,44 +1,44 @@
-#festivals_main #main {
+#create_festival #main {
   @apply pt-24;
 }
-#festivals_main #main .festival-preview {
+#create_festival #main .festival-preview {
   @apply mb-10;
 }
-#festivals_main #main .form-grid {
+#create_festival #main .form-grid {
   @apply grid grid-cols-3 gap-x-10 mb-7;
 }
-#festivals_main #main .form-grid > section#general_information {
+#create_festival #main .form-grid > section#general_information {
   @apply flex flex-col gap-y-10;
 }
-#festivals_main #main .form-grid > section#categories {
+#create_festival #main .form-grid > section#categories {
   @apply flex flex-col;
 }
-#festivals_main #main .form-grid > section#categories > .categories-label {
+#create_festival #main .form-grid > section#categories > .categories-label {
   @apply font-bold text-sm flex-none;
 }
-#festivals_main #main .form-grid > section#categories > .choices-container {
+#create_festival #main .form-grid > section#categories > .choices-container {
   @apply bg-grey-light rounded-xl p-7 flex-1 flex flex-col gap-y-3;
 }
-#festivals_main #main .form-grid > section#picture {
+#create_festival #main .form-grid > section#picture {
   @apply flex flex-col gap-y-10 justify-center items-center
                     text-center;
 }
-#festivals_main #main .form-grid > section#picture > .picture-preview {
+#create_festival #main .form-grid > section#picture > .picture-preview {
   @apply w-40 h-40 bg-grey-light rounded-xl;
 }
-#festivals_main #main .form-grid > section#picture > .picture-disclaimers {
+#create_festival #main .form-grid > section#picture > .picture-disclaimers {
   @apply text-sm text-grey;
 }
-#festivals_main #main .form-grid > section#picture > .buttons > label > button {
+#create_festival #main .form-grid > section#picture > .buttons > label > button {
   @apply py-2 px-10 rounded-full;
 }
-#festivals_main #main .form-grid > section#picture > .buttons > input {
+#create_festival #main .form-grid > section#picture > .buttons > input {
   @apply hidden;
 }
-#festivals_main #main .buttons {
+#create_festival #main .buttons {
   @apply flex gap-x-5 flex-wrap;
 }
-#festivals_main #main .buttons > button {
+#create_festival #main .buttons > button {
   @apply w-auto;
 }
 

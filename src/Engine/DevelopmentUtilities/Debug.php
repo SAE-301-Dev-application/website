@@ -20,8 +20,7 @@ class Debug
 
     public static function dd(mixed ...$values): void
     {
-        self::dump($values);
-
+        self::dump(...$values);
         die;
     }
 }
