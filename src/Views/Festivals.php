@@ -13,7 +13,7 @@ use MvcLite\Engine\InternalResources\Storage;
 
     <!-- CSS -->
     <?php
-        Storage::include("Css/ready.css");
+    Storage::include("Css/ready.css");
     ?>
 
     <!-- JS -->
@@ -25,15 +25,9 @@ use MvcLite\Engine\InternalResources\Storage;
 </head>
 <body>
     <div id="festivals_main">
-    <!--
-    TODO:
-    navbar
-    main
-    footer
-    -->
-
+        
         <?php
-            Storage::component("HeaderComponent");
+        Storage::component("HeaderComponent");
         ?>
 
         <div id="main">
@@ -270,10 +264,11 @@ use MvcLite\Engine\InternalResources\Storage;
             </div>
 
         </div>
+
         <?php
         Storage::component("FooterComponent");
         ?>
 
-        </div>
+    </div>
 </body>
 </html>
