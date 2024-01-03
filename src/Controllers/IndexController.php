@@ -8,7 +8,6 @@ use MvcLite\Engine\Security\Validator;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Middlewares\GuestMiddleware;
 use MvcLite\Router\Engine\Redirect;
-use MvcLite\Router\Engine\RedirectResponse;
 use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
 
