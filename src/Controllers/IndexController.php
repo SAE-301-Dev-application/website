@@ -35,19 +35,20 @@ class IndexController extends Controller
         $validation = (new Validator($request))
             ->required([
                 "login", "password",
-            ]);
+            ], "Ce champ est requis.");
 
-        if (!Session::attemptLogin($request->getInput("login"),
-                                   $request->getInput("password")))
+        if (!$validation->hasFailed()
+            && !Session::attemptLogin($request->getInput("login"),
+                                      $request->getInput("password")))
         {
-            $validation->addError("login", "login", "Identifiants incorrects.");
+            $validation->addError("incorrect", "login", "Informations de connexion incorrectes.");
         }
 
         if ($validation->hasFailed())
         {
-            Debug::dd($validation->getErrors());
             Redirect::route("index")
                 ->withValidator($validation)
+                ->withRequest($request)
                 ->redirect();
         }
         else
