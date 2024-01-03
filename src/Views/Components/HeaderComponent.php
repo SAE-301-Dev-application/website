@@ -36,7 +36,7 @@
             Mon profil
             </a>
 
-            <a href="#">
+            <a href="<?= route("logout") ?>">
             <i class="fa-solid fa-arrow-right-from-bracket fa-fw"></i>
             Déconnexion
             </a>
