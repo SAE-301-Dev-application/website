@@ -13,15 +13,14 @@ class Debug
 
             var_dump($value);
 
-            echo "    </pre>
+            echo "</pre>
                   </div>";
         }
     }
 
     public static function dd(mixed ...$values): void
     {
-        self::dump($values);
-
+        self::dump(...$values);
         die;
     }
 }
