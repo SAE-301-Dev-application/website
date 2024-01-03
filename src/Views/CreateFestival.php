@@ -28,7 +28,7 @@ use MvcLite\Engine\InternalResources\Storage;
 
 </head>
 <body>
-  <div id="create-festival">
+  <div id="create_festival">
 
     <?php
     Storage::component("HeaderComponent");
