@@ -35,7 +35,7 @@ use MvcLite\Engine\InternalResources\Storage;
     -->
 
         <?php
-            Storage::component("HeaderComponent");
+        Storage::component("HeaderComponent");
         ?>
 
         <div id="main">
