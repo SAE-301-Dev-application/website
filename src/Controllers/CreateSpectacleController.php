@@ -3,6 +3,7 @@
 namespace MvcLite\Controllers;
 
 use MvcLite\Controllers\Engine\Controller;
+use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Router\Engine\Redirect;
 use MvcLite\Views\Engine\View;
 
