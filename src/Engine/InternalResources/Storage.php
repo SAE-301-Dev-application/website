@@ -3,6 +3,7 @@
 namespace MvcLite\Engine\InternalResources;
 
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\InternalResources\Exceptions\InvalidImportMethodException;
 use MvcLite\Engine\InternalResources\Exceptions\InvalidResourceTypeException;
 use MvcLite\Engine\InternalResources\Exceptions\NotFoundResourceException;
 
@@ -13,6 +14,11 @@ class Storage
 
     /** RegEx for .js files. */
     private const REGEX_JS_FILE = "/(.*).js$/";
+
+    /** JS script tag import method. */
+    private const JS_IMPORT_METHODS = [
+        "async", "defer",
+    ];
 
     /**
      * @return string /src/Engine/ folder path
@@ -46,7 +52,7 @@ class Storage
      *                     automatically defined)
      * @return string Generated HTML content
      */
-    public static function include(string $relativePath, string $type = ""): string
+    public static function include(string $relativePath, string $type = "", string $importMethod = ""): string
     {
         $pathPrefix = ROUTE_PATH_PREFIX[strlen(ROUTE_PATH_PREFIX) - 1] == '/'
             ? substr(ROUTE_PATH_PREFIX, 0, strlen(ROUTE_PATH_PREFIX) - 1)
@@ -69,11 +75,23 @@ class Storage
 
         if ($type == "css" || preg_match(self::REGEX_CSS_FILE, $relativePath))
         {
+            if ($importMethod != "")
+            {
+                $error = new InvalidImportMethodException();
+                $error->render();
+            }
+
             $html = "<link rel='stylesheet' href='$pathPrefix/src/Resources$relativePath' />";
         }
         else if ($type == "js" || preg_match(self::REGEX_JS_FILE, $relativePath))
         {
-            $html = "<script src='$pathPrefix/src/Resources/$relativePath'></script>";
+            if ($importMethod != "" && !in_array($importMethod, self::JS_IMPORT_METHODS))
+            {
+                $error = new InvalidImportMethodException();
+                $error->render();
+            }
+            
+            $html = "<script src='$pathPrefix/src/Resources/$relativePath' $importMethod></script>";
         }
         else
         {
