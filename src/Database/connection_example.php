@@ -24,11 +24,13 @@ const DATABASE_CREDENTIALS = [
 
 ];
 
+const DATABASE_CONNECTION_ERROR = "Database connection error.";
+
 
 $db = (new Database(DATABASE_CREDENTIALS))->attemptConnection();
 
 if (!$db)
 {
-    $error = new FailedConnectionToDatabaseException();
+    $error = new FailedConnectionToDatabaseException(DATABASE_CONNECTION_ERROR);
     $error->render();
 }
