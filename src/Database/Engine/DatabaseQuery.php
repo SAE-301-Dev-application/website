@@ -3,6 +3,7 @@
 namespace MvcLite\Database\Engine;
 
 use MvcLite\Database\Engine\Exceptions\FailedConnectionToDatabaseException;
+use MvcLite\Database\Engine\Exceptions\FailedDatabaseQueryException;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use PDOException;
 use PDOStatement;
@@ -36,7 +37,7 @@ class DatabaseQuery
         }
         catch (PDOException $e)
         {
-            $error = new FailedConnectionToDatabaseException($e->getMessage());
+            $error = new FailedDatabaseQueryException($sqlQuery);
             $error->render();
         }
     }
