@@ -13,8 +13,9 @@ index.php
 .vscode/
 
 # Fichiers CSS compilés
-/src/Resources/Css/**/*.css
-
+*.css
+*.css.map
+!tailwind.css
 
 # Fichiers macOS
 .DS_Store
