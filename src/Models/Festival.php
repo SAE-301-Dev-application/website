@@ -54,7 +54,12 @@ class Festival
     /** Festival's planning. */
     private string $Grij;
 
-    public function __construct(string $nom, string $description, string $dateDebut, string $dateFin, string $categories, string $image)
+    public function __construct(string $nom,
+                                string $description,
+                                string $dateDebut,
+                                string $dateFin,
+                                string $categories,
+                                string $image)
     {
 
         if (isset($nom) && str_len($nom) < 50 && !empty($nom)) {
