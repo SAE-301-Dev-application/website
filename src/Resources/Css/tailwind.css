@@ -2,7 +2,7 @@
 
 @import "Views/Index.css";
 @import "Views/Dashboard.css";
-@import "Views/CreateFestival.css";
+@import "Views/Creator.css";
 
 @tailwind base;
 @tailwind components;

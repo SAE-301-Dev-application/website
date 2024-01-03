@@ -13,7 +13,7 @@ use MvcLite\Engine\InternalResources\Storage;
 
   <!-- CSS -->
   <?php
-  Storage::include("Css/ready.css");
+    Storage::include("Css/ready.css");
   ?>
 
 
@@ -28,17 +28,16 @@ use MvcLite\Engine\InternalResources\Storage;
 
 </head>
 <body>
-  <div id="create_spectacle">
+  <div id="create-festival">
     <?php
-      $currentView = "CreateSpectacle.php";  
-      Storage::component("HeaderComponent", ["currentView" => "CreateSpectacle.php"]);
+        Storage::component("HeaderComponent");
     ?>
 
     <div id="main">
       <section id="all_festivals">
         <div class="title-container">
           <h2 class="title">
-            Créer un Spectacle
+            Ajouter des intervenants
           </h2>
         </div>
 
@@ -47,12 +46,15 @@ use MvcLite\Engine\InternalResources\Storage;
             <div class="form-grid">
               <section id="general_information">
                 <div class="form-component">
-                  <label for="name">
+                  <label for="intervenants">
                     <p>
-                      Nom :
+                      Ajouter un intervenants :
                     </p>
-                    <input type="text" name="name" id="name" />
+                    <input type="text" name="intervenants" id="intervenants" />
                   </label>
+                  <button class="button-blue">
+                    Ajouter
+                  </button>
                 </div>
 
                 <div class="form-component">
@@ -67,21 +69,25 @@ use MvcLite\Engine\InternalResources\Storage;
 
                 <div class="form-duo">
                   <div class="form-component">
-                    <label for="beginning_date">
+                    <label for="duration">
                       <p>
-                        Date de début :
+                        Durée :
                       </p>
-                      <input type="date" name="beginning_date"
-                            id="beginning_date" />
+                      <input type="number" name="duration"
+                            id="duration" />
                     </label>
                   </div>
 
                   <div class="form-component">
-                    <label for="ending_date">
+                    <label for="scene_size">
                       <p>
-                        Date de fin :
+                        Taille de scène requise :
                       </p>
-                      <input type="date" name="ending_date" id="ending_date" />
+                      <select name="scene_size" id="scene_size">
+                        <option value="small">petite</option>
+                        <option value="medium">moyenne</option>
+                        <option value="large">grande</option>
+                      </select>
                     </label>
                   </div>
                 </div>
@@ -140,18 +146,16 @@ use MvcLite\Engine\InternalResources\Storage;
               </button>
 
               <button class="button-blue">
-                Créer le festival
+                Suivant
               </button>
             </div>
           </form>
         </div>
       </section>
     </div>
-    
     <?php
-    Storage::component("FooterComponent");
+      Storage::component("FooterComponent");
     ?>
-
   </div>
 </body>
 </html>
