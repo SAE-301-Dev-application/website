@@ -54,5 +54,8 @@ Router::get("/create-spectacle", CreateSpectacleController::class, "render")
 Router::post("/create-spectacle", CreateSpectacleController::class, "createSpectacle")
     ->setName("post.createSpectacle");
  
+Router::post("/create-festival", CreateFestivalController::class, "createFestival")
+    ->setName("post.createFestival");
+ 
 
 

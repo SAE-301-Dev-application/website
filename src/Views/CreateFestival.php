@@ -43,7 +43,7 @@ use MvcLite\Engine\InternalResources\Storage;
       </div>
 
       <div class="form-container">
-        <form action="#">
+        <form action="<?= route("post.createFestival") ?>" method="post">
           <div class="form-grid">
             <section id="general_information">
               <div class="form-component">
@@ -139,7 +139,7 @@ use MvcLite\Engine\InternalResources\Storage;
               Annuler
             </button>
 
-            <button class="button-blue">
+            <button class="button-blue" type="submit">
               Créer le festival
             </button>
           </div>

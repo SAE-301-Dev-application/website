@@ -296,4 +296,44 @@ class Validator
     {
         return $this->request;
     }
+
+    // /**
+    //  * @param DateTimeImmutable $date1 A date to compare
+    //  * @param DateTimeImmutable $date2 Another date to compare
+    //  * @param string $error Error message
+    //  * @return int 
+    //  * Return 1 if $date1 > $date2
+    //  * Return 0 if $date 1 <= $date2
+    //  */
+    // public function dateSuperior(string $date1, string $date2, string $error)
+
+    // {
+    //     $date1value = $this->getRequest()->getInput($date1);
+    //     $date2value = $this->getRequest()->getInput($date2);
+
+    //     if (new DateTimeImmutable($date1value) > new DateTimeImmutable($date2value))
+    //     {
+    //         $error->render();
+    //     }
+    // }
+
+    // /**
+    //  * @param DateTimeImmutable $date1 A date to compare to today's date
+    //  * @param string $error Error message
+    //  * @return int 
+    //  * Return 1 if $date1 > $date2
+    //  * Return 0 if $date 1 <= $date2
+    //  */
+    // public function dateSuperiorTodayDate(string $date1, string $error)
+
+    // {
+    //     $date1value = $this->getRequest()->getInput($date1);
+    //     $todayDate = new \DateTimeImmutable();
+    //     $todayDate->setTime(0, 0, 0);
+
+    //     if ($todayDate > new \DateTimeImmutable($date1value))
+    //     {
+    //         $error->render();
+    //     }
+    // }
 }
