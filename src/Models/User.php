@@ -12,10 +12,10 @@ class User
     private int $id;
 
     /** User lastname */
-    private string $nom;
+    private string $name;
 
     /** User firstname. */
-    private string $prenom;
+    private string $firstname;
 
     /** User email address. */
     private string $email;
@@ -23,10 +23,10 @@ class User
     /** User login. */
     private string $login;
 
-    public function __construct(string $nom, string $prenom, string $email, string $login)
+    public function __construct(string $name, string $firstname, string $email, string $login)
     {
-        $this->nom = $nom;
-        $this->prenom = $prenom;
+        $this->name = $name;
+        $this->firstname = $firstname;
         $this->email = $email;
         $this->login = $login;
     }
@@ -42,17 +42,17 @@ class User
     /**
      * @return string User lastname
      */
-    public function getNom(): string
+    public function getName(): string
     {
-        return $this->nom;
+        return $this->name;
     }
 
     /**
      * @return string User firstname
      */
-    public function getPrenom(): string
+    public function getFirstname(): string
     {
-        return $this->prenom;
+        return $this->firstname;
     }
 
     /**
@@ -74,15 +74,15 @@ class User
     /**
      * Attempt to create an account with given information.
      *
-     * @param string $nom
-     * @param string $prenom
+     * @param string $name
+     * @param string $firstname
      * @param string $email
      * @param string $login
      * @param string $hash
      * @return bool If the account is being created
      */
-    public static function create(string $nom,
-                                  string $prenom,
+    public static function create(string $name,
+                                  string $firstname,
                                   string $email,
                                   string $login,
                                   string $hash): bool
@@ -90,8 +90,8 @@ class User
         $query = "CALL ajouterUtilisateur(?, ?, ?, ?, ?);";
 
         $user = Database::query($query,
-                                $nom,
-                                $prenom,
+                                $name,
+                                $firstname,
                                 $email,
                                 $login,
                                 $hash);
