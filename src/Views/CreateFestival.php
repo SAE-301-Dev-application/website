@@ -1,5 +1,53 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
+use MvcLite\Engine\DevelopmentUtilities\Debug;
+
+$errors = $props->hasValidator()
+    ? $props->getValidator()->getErrors()
+    : [];
+
+$hasRequest = $props->hasRequest();
+
+$name = $hasRequest
+    ? $props->getRequest()->getInput("name")
+    : "";
+
+$description = $hasRequest
+    ? $props->getRequest()->getInput("description")
+    : "";
+
+$beginningDate = $hasRequest
+    ? $props->getRequest()->getInput("beginning_date")
+    : "";
+
+$endingDate = $hasRequest
+    ? $props->getRequest()->getInput("ending_date")
+    : "";
+
+$musicCategoryCheck
+    = $hasRequest && $props->getRequest()->getInput("music") !== null
+          ? "checked"
+          : "";
+
+$theaterCategoryCheck
+    = $hasRequest && $props->getRequest()->getInput("theater") !== null
+          ? "checked"
+          : "";
+
+$circusCategoryCheck
+    = $hasRequest && $props->getRequest()->getInput("circus") !== null
+          ? "checked"
+          : "";
+
+$danceCategoryCheck
+    = $hasRequest && $props->getRequest()->getInput("dance") !== null
+          ? "checked"
+          : "";
+
+$filmScreeningCategoryCheck
+    = $hasRequest && $props->getRequest()->getInput("film-screening") !== null
+          ? "checked"
+          : false;
 ?>
 
 <!doctype html>
@@ -34,7 +82,7 @@ use MvcLite\Engine\InternalResources\Storage;
     ?>
 
     <div id="main">
-      <section id="all_festivals">
+      <section id="festival">
         <div class="title-container">
           <h2 class="title">
             Créer un festival
@@ -50,7 +98,20 @@ use MvcLite\Engine\InternalResources\Storage;
                     <p>
                       Nom :
                     </p>
-                    <input type="text" name="name" id="name" />
+
+                    <input type="text"
+                           name="name"
+                           id="name"
+                           maxlength="50"
+                           value="<?= $name ?>"
+                           required />
+
+                    <?php
+                    Storage::component("InputErrorComponent", [
+                        "errors" => $errors,
+                        "input" => "name",
+                    ]);
+                    ?>
                   </label>
                 </div>
 
@@ -59,8 +120,20 @@ use MvcLite\Engine\InternalResources\Storage;
                     <p>
                       Description :
                     </p>
-                    <textarea name="description" id="description" cols="30"
-                              rows="8"></textarea>
+
+                    <textarea name="description"
+                              id="description"
+                              cols="30"
+                              rows="8"
+                              maxlength="1000"
+                              required><?= $description ?></textarea>
+
+                    <?php
+                    Storage::component("InputErrorComponent", [
+                        "errors" => $errors,
+                        "input" => "description",
+                    ]);
+                    ?>
                   </label>
                 </div>
 
@@ -70,8 +143,19 @@ use MvcLite\Engine\InternalResources\Storage;
                       <p>
                         Date de début :
                       </p>
-                      <input type="date" name="beginning_date"
-                            id="beginning_date" />
+
+                      <input type="date"
+                             name="beginning_date"
+                             id="beginning_date"
+                             value="<?= $beginningDate ?>"
+                             required />
+
+                      <?php
+                      Storage::component("InputErrorComponent", [
+                          "errors" => $errors,
+                          "input" => "beginning_date",
+                      ]);
+                      ?>
                     </label>
                   </div>
 
@@ -80,7 +164,19 @@ use MvcLite\Engine\InternalResources\Storage;
                       <p>
                         Date de fin :
                       </p>
-                      <input type="date" name="ending_date" id="ending_date" />
+
+                      <input type="date"
+                             name="ending_date"
+                             id="ending_date"
+                             value="<?= $endingDate ?>"
+                             required />
+
+                      <?php
+                      Storage::component("InputErrorComponent", [
+                          "errors" => $errors,
+                          "input" => "ending_date",
+                      ]);
+                      ?>
                     </label>
                   </div>
                 </div>
@@ -92,31 +188,53 @@ use MvcLite\Engine\InternalResources\Storage;
                 </p>
 
                 <div class="choices-container">
-                  <label class="checkbox" for="choice1">
-                    <input type="checkbox" name="music" id="music-choice" />
+                  <label class="checkbox" for="music">
+                    <input type="checkbox"
+                           name="music"
+                           id="music-choice"
+                           <?= $musicCategoryCheck ?> />
                     Musique
                   </label>
 
-                  <label class="checkbox" for="choice2">
-                    <input type="checkbox" name="theater" id="theater-choice" />
+                  <label class="checkbox" for="theater">
+                    <input type="checkbox"
+                           name="theater"
+                           id="theater-choice"
+                           <?= $theaterCategoryCheck ?> />
                     Théâtre
                   </label>
 
-                  <label class="checkbox" for="choice2">
-                    <input type="checkbox" name="circus" id="circus-choice" />
+                  <label class="checkbox" for="circus">
+                    <input type="checkbox"
+                           name="circus"
+                           id="circus-choice"
+                           <?= $circusCategoryCheck ?> />
                     Cirque
                   </label>
 
-                  <label class="checkbox" for="choice2">
-                    <input type="checkbox" name="dance" id="dance-choice" />
+                  <label class="checkbox" for="dance">
+                    <input type="checkbox"
+                           name="dance"
+                           id="dance-choice"
+                           <?= $danceCategoryCheck ?> />
                     Danse
                   </label>
 
-                  <label class="checkbox" for="choice2">
-                    <input type="checkbox" name="film-screening" id="film-screening-choice" />
+                  <label class="checkbox" for="film-screening">
+                    <input type="checkbox"
+                           name="film-screening"
+                           id="film-screening-choice"
+                           <?= $filmScreeningCategoryCheck ?> />
                     Projection de film
                   </label>
                 </div>
+
+                <?php
+                Storage::component("InputErrorComponent", [
+                    "errors" => $errors,
+                    "input" => "categories",
+                ]);
+                ?>
               </section>
 
               <section id="picture">
@@ -129,8 +247,8 @@ use MvcLite\Engine\InternalResources\Storage;
                   </p>
 
                   <p>
-                    Seules les images au format <br/>
-                    <strong>GIF</strong>, <strong>PNG</strong>, <strong>JPEG</strong>
+                    Seules les images au format <strong>GIF</strong>,
+                    <strong>PNG</strong>, <strong>JPEG</strong>
                     sont acceptées.
                   </p>
                 </div>
@@ -143,7 +261,7 @@ use MvcLite\Engine\InternalResources\Storage;
                   </label>
 
                   <input type="file" name="picture"
-                        id="picture_input" />
+                         id="picture_input" />
                 </div>
               </section>
             </div>

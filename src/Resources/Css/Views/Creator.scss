@@ -5,10 +5,6 @@ $orange: #FF7A00;
     #main {
         @apply pt-24;
 
-        .festival-preview {
-            @apply mb-10;
-        }
-
         .form-grid {
         @apply grid grid-cols-3 gap-x-10 mb-7;
         > section {
