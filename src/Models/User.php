@@ -87,9 +87,7 @@ class User
                                   string $login,
                                   string $hash): bool
     {
-        $query = "INSERT INTO utilisateur 
-                  (nom_uti, prenom_uti, email_uti, login_uti, mdp_uti) 
-                  VALUES (?, ?, ?, ?, ?)";
+        $query = "CALL ajouterUtilisateur(?, ?, ?, ?, ?);";
 
         $user = Database::query($query,
                                 $nom,
