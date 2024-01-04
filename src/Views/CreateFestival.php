@@ -16,7 +16,6 @@ use MvcLite\Engine\InternalResources\Storage;
   Storage::include("Css/ready.css");
   ?>
 
-
   <!-- JS -->
   <script src="../node_modules/jquery/dist/jquery.min.js" defer></script>
   <script src="../node_modules/gsap/dist/gsap.min.js" defer></script>
@@ -30,127 +29,144 @@ use MvcLite\Engine\InternalResources\Storage;
 <body>
   <div id="create_festival">
 
-  <?php
-  Storage::component("HeaderComponent");
-  ?>
+    <?php
+    Storage::component("HeaderComponent");
+    ?>
 
-  <div id="main">
-    <section id="all_festivals">
-      <div class="title-container">
-        <h2 class="title">
-          Créer un festival
-        </h2>
-      </div>
+    <div id="main">
+      <section id="all_festivals">
+        <div class="title-container">
+          <h2 class="title">
+            Créer un festival
+          </h2>
+        </div>
 
-      <div class="form-container">
-        <form action="<?= route("post.createFestival") ?>" method="post">
-          <div class="form-grid">
-            <section id="general_information">
-              <div class="form-component">
-                <label for="name">
-                  <p>
-                    Nom :
-                  </p>
-                  <input type="text" name="name" id="name" />
-                </label>
-              </div>
-
-              <div class="form-component">
-                <label for="description">
-                  <p>
-                    Description :
-                  </p>
-                  <textarea name="description" id="description" cols="30"
-                            rows="8"></textarea>
-                </label>
-              </div>
-
-              <div class="form-duo">
+        <div class="form-container">
+          <form action="<?= route("post.createFestival") ?>" method="post">
+            <div class="form-grid">
+              <section id="general_information">
                 <div class="form-component">
-                  <label for="beginning_date">
+                  <label for="name">
                     <p>
-                      Date de début :
+                      Nom :
                     </p>
-                    <input type="date" name="beginning_date"
-                          id="beginning_date" />
+                    <input type="text" name="name" id="name" />
                   </label>
                 </div>
 
                 <div class="form-component">
-                  <label for="ending_date">
+                  <label for="description">
                     <p>
-                      Date de fin :
+                      Description :
                     </p>
-                    <input type="date" name="ending_date" id="ending_date" />
+                    <textarea name="description" id="description" cols="30"
+                              rows="8"></textarea>
                   </label>
                 </div>
-              </div>
-            </section>
 
-            <section id="categories">
-              <p class="categories-label">
-                Catégories :
-              </p>
+                <div class="form-duo">
+                  <div class="form-component">
+                    <label for="beginning_date">
+                      <p>
+                        Date de début :
+                      </p>
+                      <input type="date" name="beginning_date"
+                            id="beginning_date" />
+                    </label>
+                  </div>
 
-              <div class="choices-container">
-                <label class="checkbox" for="choice1">
-                  <input type="checkbox" name="choice" id="choice1" />
-                  Catégorie 1
-                </label>
+                  <div class="form-component">
+                    <label for="ending_date">
+                      <p>
+                        Date de fin :
+                      </p>
+                      <input type="date" name="ending_date" id="ending_date" />
+                    </label>
+                  </div>
+                </div>
+              </section>
 
-                <label class="checkbox" for="choice2">
-                  <input type="checkbox" name="choice" id="choice2" />
-                  Catégorie 2
-                </label>
-              </div>
-            </section>
-
-            <section id="picture">
-              <div class="picture-preview"></div>
-
-              <div class="picture-disclaimers">
-                <p>
-                  Dimensions maximales :
-                  <strong>800x600</strong>
+              <section id="categories">
+                <p class="categories-label">
+                  Catégories :
                 </p>
 
-                <p>
-                  Seules les images au format <strong>GIF</strong>,
-                  <strong>PNG</strong>,
-                  <strong>JPEG</strong> sont acceptées.
-                </p>
-              </div>
+                <div class="choices-container">
+                  <label class="checkbox" for="choice1">
+                    <input type="checkbox" name="music" id="music-choice" />
+                    Musique
+                  </label>
 
-              <div class="buttons">
-                <label for="picture_input">
-                  <button class="button-grey" type="button" id="choose_picture">
-                    Parcourir
-                  </button>
-                </label>
+                  <label class="checkbox" for="choice2">
+                    <input type="checkbox" name="theater" id="theater-choice" />
+                    Théâtre
+                  </label>
 
-                <input type="file" name="picture"
-                      id="picture_input" />
-              </div>
-            </section>
-          </div>
+                  <label class="checkbox" for="choice2">
+                    <input type="checkbox" name="circus" id="circus-choice" />
+                    Cirque
+                  </label>
 
-          <div class="buttons">
-            <button class="button-grey">
-              Annuler
-            </button>
+                  <label class="checkbox" for="choice2">
+                    <input type="checkbox" name="dance" id="dance-choice" />
+                    Danse
+                  </label>
 
-            <button class="button-blue" type="submit">
-              Créer le festival
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
-  </div>
+                  <label class="checkbox" for="choice2">
+                    <input type="checkbox" name="film-screening" id="film-screening-choice" />
+                    Projection de film
+                  </label>
+                </div>
+              </section>
 
-  <?php
-    Storage::component("FooterComponent");
-  ?>
+              <section id="picture">
+                <div class="picture-preview"></div>
+
+                <div class="picture-disclaimers">
+                  <p>
+                    Dimensions maximales :
+                    <strong>800x600</strong>
+                  </p>
+
+                  <p>
+                    Seules les images au format <br/>
+                    <strong>GIF</strong>, <strong>PNG</strong>, <strong>JPEG</strong>
+                    sont acceptées.
+                  </p>
+                </div>
+
+                <div class="buttons">
+                  <label for="picture_input">
+                    <button class="button-grey" type="button" id="choose_picture">
+                      Parcourir
+                    </button>
+                  </label>
+
+                  <input type="file" name="picture"
+                        id="picture_input" />
+                </div>
+              </section>
+            </div>
+
+            <div class="buttons">
+              <a href="<?= route("festivals") ?>">
+                <button class="button-grey" type="button">
+                  Annuler
+                </button>
+              </a>
+
+              <button class="button-blue" type="submit">
+                Créer le festival
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <?php
+      Storage::component("FooterComponent");
+    ?>
 
   </div>
 </body>
