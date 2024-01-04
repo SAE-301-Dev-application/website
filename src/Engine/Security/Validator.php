@@ -314,7 +314,7 @@ class Validator
             $error->render();
         }
 
-        $isNotExceeding = (int) $inputValue >= $maximum;
+        $isNotExceeding = (int) $inputValue >= $minimum;
 
         if (!$isNotExceeding)
         {
@@ -322,6 +322,38 @@ class Validator
         }
 
         $this->validationState &= $isNotExceeding;
+
+        return $this;
+    }
+
+    /**
+     * Returns if given input value is contained by given array.
+     *
+     * @param string $input Key of the input to validate
+     * @param array $array Haystack array
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function in(string $input, array $array, ?string $error = null): Validator
+    {
+        $defaultError = "Given array does not include $input.";
+
+        $inputValue = $this->getRequest()->getInput($input);
+
+        if ($inputValue === null)
+        {
+            $error = new UndefinedInputException($input);
+            $error->render();
+        }
+
+        $arrayContainsInput = in_array($inputValue, $array);
+
+        if (!$arrayContainsInput)
+        {
+            $this->addError("in", $input, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $arrayContainsInput;
 
         return $this;
     }
