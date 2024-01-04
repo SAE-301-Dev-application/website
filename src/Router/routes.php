@@ -6,6 +6,7 @@
  */
 
 
+use MvcLite\Controllers\CreateSceneController;
 use MvcLite\Controllers\IndexController;
 use MvcLite\Controllers\RegisterController;
 use MvcLite\Controllers\DashboardController;
@@ -56,3 +57,9 @@ Router::get("/create-spectacle", CreateSpectacleController::class, "render")
 
 Router::post("/create-spectacle", CreateSpectacleController::class, "createSpectacle")
     ->setName("post.createSpectacle");
+
+Router::get("/create-scene", CreateSceneController::class, "render")
+    ->setName("createScene");
+
+Router::get("/create-scene", CreateSceneController::class, "createScene")
+    ->setName("post.createScene");

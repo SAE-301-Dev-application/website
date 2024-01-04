@@ -248,7 +248,7 @@
     nav,
     footer.grey-footer {
         @apply px-10 py-5 flex items-center
-        gap-x-20;
+               gap-x-20;
     }
 
     footer.grey-footer {
@@ -273,6 +273,28 @@
 
         > input {
             @apply h-5 w-5;
+        }
+    }
+
+    .form-help-box {
+        @apply rounded-xl bg-grey-light text-grey p-5;
+
+        > .box-header {
+            @apply flex items-center mb-5;
+
+            > i {
+                @apply mr-5 text-4xl;
+            }
+
+            > h3.box-title {
+                @apply text-xl font-bold;
+            }
+        }
+
+        & p {
+            &:not(:last-child) {
+                @apply mb-5;
+            }
         }
     }
 
