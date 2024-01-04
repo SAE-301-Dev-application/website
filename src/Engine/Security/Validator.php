@@ -359,6 +359,85 @@ class Validator
     }
 
     /**
+     * Returns if given input value is between given minimum and maximum values.
+     *
+     * @param string $input Key of the input to validate
+     * @param int $minimum Given minimum
+     * @param int $maximum Given maximum
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function between(string $input,
+                            int $minimum,
+                            int $maximum,
+                            ?string $error = null): Validator
+    {
+        $defaultError = "$input must be between $minimum and $maximum.";
+
+        $inputValue = $this->getRequest()->getInput($input);
+
+        if ($inputValue === null)
+        {
+            $error = new UndefinedInputException($input);
+            $error->render();
+        }
+
+        $inputValue = (int) $inputValue;
+
+        $isBetween = $minimum <= $inputValue && $inputValue <= $maximum;
+
+        if (!$isBetween)
+        {
+            $this->addError("between", $input, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $isBetween;
+
+        return $this;
+    }
+
+    /**
+     * Compares given beginning and ending dates.
+     *
+     * @param string $beginningDateInput Given beginning date
+     * @param string $endingDateInput Given ending date
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function dateSlot(string $beginningDateInput,
+                             string $endingDateInput,
+                             ?string $error = null): Validator
+    {
+        $defaultError = "$beginningDateInput must be earlier than $endingDateInput.";
+
+        $beginningDate = $this->getRequest()->getInput($beginningDateInput);
+        $endingDate = $this->getRequest()->getInput($endingDateInput);
+
+        if ($beginningDate === null)
+        {
+            $error = new UndefinedInputException($beginningDateInput);
+            $error->render();
+        }
+
+        if ($endingDate === null)
+        {
+            $error = new UndefinedInputException($endingDateInput);
+            $error->render();
+        }
+
+        $isValidDateSlot = strtotime($beginningDate) <= strtotime($endingDate);
+
+        if (!$isValidDateSlot)
+        {
+            $this->addError("dateSlot", $beginningDateInput, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $isValidDateSlot;
+
+        return $this;
+    }
+
+    /**
      * @return array Error messages
      */
     public function getErrors(): array
