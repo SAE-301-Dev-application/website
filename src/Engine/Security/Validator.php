@@ -232,6 +232,101 @@ class Validator
     }
 
     /**
+     * Returns if given input value is numeric.
+     *
+     * @param string $input Key of the input to validate
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function numeric(string $input, ?string $error = null): Validator
+    {
+        $defaultError = "$input must be numeric.";
+
+        $inputValue = $this->getRequest()->getInput($input);
+
+        if ($inputValue === null)
+        {
+            $error = new UndefinedInputException($input);
+            $error->render();
+        }
+
+        $isNumeric = is_numeric($inputValue);
+
+        if (!$isNumeric)
+        {
+            $this->addError("numeric", $input, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $isNumeric;
+
+        return $this;
+    }
+
+    /**
+     * Returns if given input value respects maximum limit.
+     *
+     * @param string $input Key of the input to validate
+     * @param int $maximum Maximum limit
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function max(string $input, int $maximum, ?string $error = null): Validator
+    {
+        $defaultError = "$input cannot exceed $maximum.";
+
+        $inputValue = $this->getRequest()->getInput($input);
+
+        if ($inputValue === null)
+        {
+            $error = new UndefinedInputException($input);
+            $error->render();
+        }
+
+        $isNotExceeding = (int) $inputValue <= $maximum;
+
+        if (!$isNotExceeding)
+        {
+            $this->addError("max", $input, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $isNotExceeding;
+
+        return $this;
+    }
+
+    /**
+     * Returns if given input value respects minimum limit.
+     *
+     * @param string $input Key of the input to validate
+     * @param int $minimum Minimum limit
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function min(string $input, int $minimum, ?string $error = null): Validator
+    {
+        $defaultError = "$input cannot be less than $minimum.";
+
+        $inputValue = $this->getRequest()->getInput($input);
+
+        if ($inputValue === null)
+        {
+            $error = new UndefinedInputException($input);
+            $error->render();
+        }
+
+        $isNotExceeding = (int) $inputValue >= $maximum;
+
+        if (!$isNotExceeding)
+        {
+            $this->addError("min", $input, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $isNotExceeding;
+
+        return $this;
+    }
+
+    /**
      * @return array Error messages
      */
     public function getErrors(): array
