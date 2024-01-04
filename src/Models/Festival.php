@@ -8,170 +8,122 @@ use MvcLite\Engine\Security\Password;
 
 class Festival
 {
-    //------ First part - The festival's global parameters------
-
-    /** Festival's id. */
-    private int $id;  // Auto-incrément dans la BDD
-
     /** Festival's name */
-    private string $nom;
+    private string $name;
 
     /** Festival's description. */
     private string $description;
 
-    /** Festival's start date. */
-    private string $dateDebut;
+    /** Festival's beginning date. */
+    private string $beginningDate;
 
-    /** Festival's end date. */
-    private int $dateFin;
+    /** Festival's ending date. */
+    private string $endingDate;
 
-    /** Festival's themes */
-    private string $categories;
+    /** Festival's categories */
+    private array $categories;
 
     /** Festival's illustration */
-    private string $image;
+    private string $illustration;
 
-    //------ Second part - The scenes' choice------
-
-    /** Festival's scenes. */
-    private string $scenes;  // Objet Scene
-
-    //------ Third part - The festival's team------
-
-    /** Festival's owner */
-    private string $responsable;
-
-    /** Festival's team */
-    private string $equipe;    
-
-    //------ Fourth part - The shows' choice ------
-
-    /** Festival's shows. */
-    private string $spectacles; // Objet Spectacle
-
-    //------ Last part - The festival's planning ------
-
-    /** Festival's planning. */
-    private string $Grij;
-
-    public function __construct(string $nom,
+    public function __construct(string $name,
                                 string $description,
-                                string $dateDebut,
-                                string $dateFin,
-                                string $categories,
-                                string $image)
+                                string $beginningDate,
+                                string $endingDate,
+                                array $categories,
+                                string $illustration)
     {
-
-        $this->nom = $nom;
-        
+        $this->name = $name;
         $this->description = $description;
-
-        $this->dateDebut = $dateDebut;
-
-        $this->dateFin = $dateFin;
-
+        $this->beginningDate = $beginningDate;
+        $this->endingDate = $endingDate;
         $this->categories = $categories;
-
-        $this->image = $image;
+        $this->illustration = $illustration;
     }
 
     /**
-     * @return int User id
+     * @return string Festival's name
      */
-    public function getId(): int
+    public function getName(): string
     {
-        return $this->id;
+        return $this->name;
     }
 
     /**
-     * @return string User lastname
+     * @return string Festival's description
      */
-    public function getNom(): string
+    public function getDescription(): string
     {
-        return $this->nom;
+        return $this->description;
     }
 
     /**
-     * @return string User firstname
+     * @return string Festival's beginning date
      */
-    public function getPrenom(): string
+    public function getBeginningDate(): string
     {
-        return $this->prenom;
+        return $this->beginningDate;
     }
 
     /**
-     * @return string User email address
+     * @return string Festival's ending date
      */
-    public function getEmail(): string
+    public function getEndingDate(): string
     {
-        return $this->email;
+        return $this->endingDate;
     }
 
     /**
-     * @return string User login
+     * @return array Festival's categories
      */
-    public function getLogin(): string
+    public function getCategories(): array
     {
-        return $this->login;
+        return $this->categories;
     }
 
     /**
-     * Attempt to create an account with given information.
+     * @return string Festival's illustration
+     */
+    public function getIllustration(): string
+    {
+        return $this->illustration;
+    }
+
+    /**
+     * Attempt to create a festival and link categories to it.
      *
-     * @param string $nom
-     * @param string $prenom
-     * @param string $email
-     * @param string $login
-     * @param string $hash
-     * @return bool If the account is being created
+     * @param string $name
+     * @param string $description
+     * @param string $illustration
+     * @param string $beginningDate
+     * @param string $endingDate
+     * @param array $categories
      */
-    public static function create(string $nom,
+    public static function create(string $name,
                                   string $description,
-                                  string $dateDebut,
-                                  string $dateFin,
-                                  string $categories,
-                                  string $image)      
-        
+                                  string|null $illustration,
+                                  string $beginningDate,
+                                  string $endingDate,
+                                  array $categories): void
     {
-        $query = "INSERT INTO utilisateur 
-                  (nom_uti, prenom_uti, email_uti, login_uti, mdp_uti) 
-                  VALUES (?, ?, ?, ?, ?)";
+        $addFestivalQuery = "SELECT ajouterFestival(?, ?, ?, ?, ?) AS id;";
 
-        $user = Database::query($query,
-                                $nom,
-                                $prenom,
-                                $email,
-                                $login,
-                                $hash);
+        $linkCategorieQuery = "CALL ajouterFestivalCategorie(?, ?);";
 
-        return $user->getExecutionState();
-    }
+        $festivalId = Database::query($addFestivalQuery,
+                                      $name,
+                                      $description,
+                                      $illustration === "" ? null : $illustration,
+                                      $beginningDate,
+                                      $endingDate);
 
-    /**
-     * Returns if given email address is already taken by user.
-     *
-     * @param string $email
-     * @return bool
-     */
-    public static function emailAlreadyTaken(string $email): bool
-    {
-        $query = "SELECT COUNT(*) as count FROM utilisateur WHERE email_uti = ?";
+        $festivalId = $festivalId->get()["id"];
 
-        return Database::query($query, $email)
-            ->get()["count"];
-    }
-
-    /**
-     * Returns if given login is already taken by user.
-     *
-     * @param string $login
-     * @return bool
-     */
-    public static function taille(string $login): bool
-    {
-        $query = "SELECT COUNT(*) as count FROM utilisateur WHERE login_uti = ?";
-
-        return Database::query($query, $login)
-            ->get()["count"];
+        foreach ($categories as $categorie)
+        {
+            Database::query($linkCategorieQuery,
+                            $festivalId,
+                            $categorie);
+        }
     }
 }
