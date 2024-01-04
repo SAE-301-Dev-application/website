@@ -53,8 +53,6 @@ class RegisterController extends Controller
             ->matches("lastname", "/^[a-zA-ZÀ-ÿ\s\-']{1,50}$/u", "Le nom de famille doit contenir uniquement des lettres, espaces, apostrophes et tirets.")
             ->email("email", "L'adresse e-mail renseignée n'est pas valide. Elle doit être au format 'exemple@email.fr'.");
 
-        $validation->hasError("login", "maxLength");
-
         if (!$validation->hasError("email", "maxLength"))
         {
             $emailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"));
