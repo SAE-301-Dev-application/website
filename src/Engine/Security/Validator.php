@@ -438,6 +438,38 @@ class Validator
     }
 
     /**
+     * Returns if given input value is a date.
+     * 
+     * @param string $dateInput Key of the input to validate
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function futureDate(string $dateInput,
+                               ?string $error = null): Validator
+    {
+        $defaultError = "The field must contain a date after the current date.";
+
+        $date = $this->getRequest()->getInput($dateInput);
+
+        if ($date === null)
+        {
+            $error = new UndefinedInputException($dateInput);
+            $error->render();
+        }
+
+        $isFutureDate = strtotime($date) >= time();
+
+        if (!$isFutureDate)
+        {
+            $this->addError("futureDate", $dateInput, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $isFutureDate;
+
+        return $this;
+    }
+
+    /**
      * @return array Error messages
      */
     public function getErrors(): array
