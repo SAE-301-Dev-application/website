@@ -1,5 +1,31 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
+
+$errors = $props->hasValidator()
+    ? $props->getValidator()->getErrors()
+    : [];
+
+$hasRequest = $props->hasRequest();
+
+$name = $hasRequest
+    ? $props->getRequest()->getInput("name")
+    : "";
+
+$maxSeats = $hasRequest
+    ? $props->getRequest()->getInput("max_seats")
+    : "";
+
+$longitude = $hasRequest
+    ? $props->getRequest()->getInput("longitude")
+    : "";
+
+$latitude = $hasRequest
+    ? $props->getRequest()->getInput("latitude")
+    : "";
+
+$size = $hasRequest
+    ? $props->getRequest()->getInput("size")
+    : "";
 ?>
 
 <!doctype html>
@@ -42,7 +68,7 @@ use MvcLite\Engine\InternalResources\Storage;
         </div>
 
         <div class="form-container">
-          <form action="<?= route("post.createFestival") ?>" method="post">
+          <form action="<?= route("post.createScene") ?>" method="post" enctype="multipart/form-data">
             <div class="form-grid">
               <section id="general_information">
                 <div class="form-component">
@@ -50,9 +76,17 @@ use MvcLite\Engine\InternalResources\Storage;
                     <p>
                       Nom :
                     </p>
-                    <input type="text" name="name" id="name" />
+                    <input type="text" name="name" id="name" value="<?= $name ?>" />
+                    <?php
+                    Storage::component("InputErrorComponent", [
+                        "errors" => $errors,
+                        "input" => "name",
+                    ]);
+                    ?>
                   </label>
                 </div>
+
+                <input type="file" name="test" id="test" />
 
                 <div class="form-component">
                   <label for="max_seats">
@@ -60,6 +94,12 @@ use MvcLite\Engine\InternalResources\Storage;
                       Nombre de spectateurs maximum :
                     </p>
                     <input type="number" name="max_seats" id="max_seats">
+                    <?php
+                    Storage::component("InputErrorComponent", [
+                        "errors" => $errors,
+                        "input" => "max_seats",
+                    ]);
+                    ?>
                   </label>
                 </div>
 
@@ -109,7 +149,7 @@ use MvcLite\Engine\InternalResources\Storage;
               </section>
 
               <?php
-              Storage::component("FormHelpBox", [
+              Storage::component("FormHelpBoxComponent", [
                   "icon" => "fa-regular fa-question-circle",
                   "title" => "Ajouter une scène",
                   "content"
