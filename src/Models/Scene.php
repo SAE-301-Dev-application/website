@@ -43,17 +43,17 @@ class Scene
     public static function create(string $nom,
                                   int $taille,
                                   int $maxSpectateurs,
-                                  string $coordonnees): bool
+                                  float $longitude,
+                                  float $latitude): bool
     {
-        $query = "INSERT INTO scene 
-                  (nom_sc, taille_sc, nb_max_spectateurs, coordonnees_sc) 
-                  VALUES (?, ?, ?, ?)";
+        $query = "CALL ajouterScene(?, ?, ?, ?, ?)";
 
         $user = Database::query($query,
                                 $nom,
                                 $taille,
                                 $maxSpectateurs,
-                                $coordonnees);
+                                $latitude,
+                                $longitude);
 
         return $user->getExecutionState();
     }
