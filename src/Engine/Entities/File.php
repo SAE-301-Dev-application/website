@@ -95,6 +95,14 @@ class File
         return file_get_contents($this->getTemporaryName());
     }
 
+    /**
+     * @param string New file name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     public function hasImage(): Image
     {
         return new Image(
