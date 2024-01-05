@@ -96,7 +96,7 @@ class File
     }
 
     /**
-     * @param string New file name
+     * @param string $name New file name
      */
     public function setName(string $name): void
     {
