@@ -86,8 +86,6 @@ $size = $hasRequest
                   </label>
                 </div>
 
-                <input type="file" name="test" id="test" />
-
                 <div class="form-component">
                   <label for="max_seats">
                     <p>
