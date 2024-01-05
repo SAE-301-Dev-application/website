@@ -3,9 +3,11 @@
 namespace MvcLite\Controllers;
 
 use MvcLite\Controllers\Engine\Controller;
+use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Middlewares\AuthMiddleware;
+use MvcLite\Models\Scene;
 use MvcLite\Router\Engine\Redirect;
 use MvcLite\Router\Engine\RedirectResponse;
 use MvcLite\Router\Engine\Request;
@@ -84,11 +86,11 @@ class CreateSceneController extends Controller
 
             ->numeric("longitude", self::ERROR_NOT_NUMERIC_LONGITUDE)
             ->min("longitude", -90, self::ERROR_LONGITUDE_LESS_THAN_MIN)
-            ->min("longitude", 90, self::ERROR_LONGITUDE_EXCEEDS_MAX)
+            ->max("longitude", 90, self::ERROR_LONGITUDE_EXCEEDS_MAX)
 
             ->numeric("latitude", self::ERROR_NOT_NUMERIC_LATITUDE)
             ->min("latitude", -90, self::ERROR_LATITUDE_LESS_THAN_MIN)
-            ->min("latitude", 90, self::ERROR_LATITUDE_EXCEEDS_MAX)
+            ->max("latitude", 90, self::ERROR_LATITUDE_EXCEEDS_MAX)
 
             ->numeric("size", self::ERROR_NOT_NUMERIC_SIZE)
             ->between("size",
@@ -96,8 +98,18 @@ class CreateSceneController extends Controller
                       self::MAX_SCENE_SIZE,
                       self::ERROR_SIZE_NOT_BETWEEN_MIN_AND_MAX);
 
-        Debug::dd($validation->getErrors());
+        if (!$validation->hasFailed())
+        {
+            Scene::create($request->getInput("name"),
+                          $request->getInput("size"),
+                          $request->getInput("max_seats"),
+                          $request->getInput("latitude"),
+                          $request->getInput("longitude"));
+        }
 
-        return Redirect::route(null);  // TODO TEMP!
+        return Redirect::route("createScene")
+            ->withRequest($request)
+            ->withValidator($validation)
+            ->redirect();
     }
 }
