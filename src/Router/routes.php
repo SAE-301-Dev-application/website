@@ -61,5 +61,5 @@ Router::post("/create-spectacle", CreateSpectacleController::class, "createSpect
 Router::get("/create-scene", CreateSceneController::class, "render")
     ->setName("createScene");
 
-Router::get("/create-scene", CreateSceneController::class, "createScene")
+Router::post("/create-scene", CreateSceneController::class, "createScene")
     ->setName("post.createScene");
