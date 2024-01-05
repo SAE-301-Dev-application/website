@@ -27,12 +27,6 @@ use MvcLite\Engine\InternalResources\Storage;
 
 <body>
     <div id="dashboard_main">
-    <!--
-    TODO:
-    navbar
-    main
-    footer
-    -->
 
         <?php
         Storage::component("HeaderComponent");
