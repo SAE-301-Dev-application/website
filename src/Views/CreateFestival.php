@@ -266,7 +266,7 @@ $filmScreeningCategoryCheck
                     </button>
                   </label>
 
-                  <input type="file" name="picture"
+                  <input type="file" name="illustration"
                          id="picture_input"
                          accept=".png,.jpeg,.gif" />
                 </div>

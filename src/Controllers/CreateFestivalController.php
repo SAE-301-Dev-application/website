@@ -36,6 +36,9 @@ class CreateFestivalController extends Controller
         = "Aucune catégorie n'a été renseignée pour ce festival. "
         . "Veuillez en choisir une.";
 
+    private const PATH_TO_IMAGE_FOLDER
+        = ROUTE_PATH_PREFIX . "src/Resources/Medias/Images/FestivalsUploads/";
+
     public function __construct()
     {
         parent::__construct();
@@ -115,6 +118,37 @@ class CreateFestivalController extends Controller
 
         if (!$validation->hasFailed())
         {
+            // Get the file from the $_FILES superglobal
+            // $imageFile = $request->getFile("illustration");
+
+            // // Check if there is a downloaded file
+            // if ($imageFile && $imageFile["error"] === UPLOAD_ERR_OK)
+            // {
+            //     $imageData = file_get_contents($imageFile["tmp_name"]);
+
+            //     // Get the MIME type from the first bytes of the file
+            //     $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            //     $imageMimeType = $finfo->buffer($imageData);
+
+            //     $extensionMap = [
+            //         'image/gif' => 'gif',
+            //         'image/jpeg' => 'jpeg',
+            //         'image/png' => 'png'
+            //     ];
+
+            //     $imageExtension = $extensionMap[$imageMimeType] ?? "png";
+
+            //     // Generate a unique file name
+            //     $imageName = uniqid("festival_") . "." . $imageExtension;
+
+            //     $uploadPath = self::PATH_TO_IMAGE_FOLDER . $imageName;
+
+            //     // Create the file on the server
+            //     file_put_contents($uploadPath, $imageData);
+
+            //     Debug::dd($uploadPath);
+            // }
+
             Festival::create($request->getInput("name"),
                              $request->getInput("description"),
                              $request->getInput("illustration"),
