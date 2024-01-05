@@ -111,13 +111,7 @@ class Request
      */
     public function getParameter(string $key): ?string
     {
-        // TODO: simplify to ternary.
-        if (!in_array($key, array_keys($this->getParameters())))
-        {
-            return null;
-        }
-
-        return $this->getParameters()[$key];
+        return $this->getParameters()[$key] ?? null;
     }
 
     /**
