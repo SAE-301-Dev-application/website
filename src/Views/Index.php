@@ -19,9 +19,19 @@ $login = $props->hasRequest()
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Connexion - Festiplan</title>
 
+  <!-- CSS -->
   <?php
   Storage::include("Css/ready.css");
   ?>
+
+  <!-- JS -->
+  <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
+  <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
+  <?php
+  Storage::include("Js/login-register/animation.js", "js", "defer");
+  Storage::include("Js/login-register/login.js", "js", "defer");
+  ?>
+
 </head>
 <body>
   <div id="index_main">
