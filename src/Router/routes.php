@@ -8,6 +8,7 @@
 
 use MvcLite\Controllers\CreateSceneController;
 use MvcLite\Controllers\IndexController;
+use MvcLite\Controllers\ProfileController;
 use MvcLite\Controllers\RegisterController;
 use MvcLite\Controllers\DashboardController;
 use MvcLite\Controllers\FestivalsController;
@@ -63,3 +64,7 @@ Router::get("/create-scene", CreateSceneController::class, "render")
 
 Router::post("/create-scene", CreateSceneController::class, "createScene")
     ->setName("post.createScene");
+
+
+Router::get("/profile", ProfileController::class, "render")
+    ->setName("profile");
