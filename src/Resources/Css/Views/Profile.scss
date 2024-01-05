@@ -1,0 +1,11 @@
+$orange: #FF7A00;
+
+#profile_main {
+    #main {
+        @apply grid grid-cols-2 gap-x-10;
+
+        > h1.username {
+            @apply font-light text-5xl;
+        }
+    }
+}

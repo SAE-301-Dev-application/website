@@ -28,7 +28,7 @@ class ExistingAccountMiddleware extends Middleware
 
     public function run(): bool|RedirectResponse
     {
-        if (!Session::getSessionAccount() && Session::isLogged())
+        if (!Session::getUserAccount() && Session::isLogged())
         {
             Session::logout();
         }

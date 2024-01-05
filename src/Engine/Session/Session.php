@@ -5,6 +5,7 @@ namespace MvcLite\Engine\Session;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Models\User;
 use MvcLite\Router\Engine\Redirect;
 
 /**
@@ -88,24 +89,13 @@ class Session
     }
 
     /**
-     * @return false|array Account array if exists;
-     *                     else FALSE
+     * @return User|false Account User object if visitor is logged;
+     *                    else NULL
      */
-    public static function getSessionAccount(): false|array
+    public static function getUserAccount(): User|null
     {
-        if (!self::getSessionId())
-        {
-            return false;
-        }
-
-        $query = "SELECT * FROM "
-               . AUTHENTIFICATION_COLUMNS["table"]
-               . " WHERE "
-               . AUTHENTIFICATION_COLUMNS["id"]
-               . " = ?";
-
-        $sessionAccount = Database::query($query, self::getSessionId());
-
-        return $sessionAccount->get();
+        return self::isLogged()
+            ? User::getUserById(self::getSessionId())
+            : null;
     }
 }

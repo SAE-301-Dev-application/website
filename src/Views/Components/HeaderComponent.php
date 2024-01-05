@@ -1,3 +1,8 @@
+<?php
+
+use MvcLite\Engine\Session\Session;
+
+?>
 
 
 <header>
@@ -25,7 +30,8 @@
         <div class="user-name">
         <p>
             <i class="fa-solid fa-angle-down"></i>
-            Utilisateur
+            <?= Session::getUserAccount()->getFirstname() ?>
+            <?= Session::getUserAccount()->getLastname() ?>
         </p>
         </div>
 

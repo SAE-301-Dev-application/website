@@ -5,6 +5,7 @@ namespace MvcLite\Models;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Engine\Session\Session;
 
 class User
 {
@@ -12,7 +13,7 @@ class User
     private int $id;
 
     /** User lastname */
-    private string $name;
+    private string $lastname;
 
     /** User firstname. */
     private string $firstname;
@@ -23,12 +24,13 @@ class User
     /** User login. */
     private string $login;
 
-    public function __construct(string $name, string $firstname, string $email, string $login)
+    public function __construct(array $databaseUserRow)
     {
-        $this->name = $name;
-        $this->firstname = $firstname;
-        $this->email = $email;
-        $this->login = $login;
+        $this->id = $databaseUserRow["id_utilisateur"];
+        $this->lastname = $databaseUserRow["nom_uti"];
+        $this->firstname = $databaseUserRow["prenom_uti"];
+        $this->email = $databaseUserRow["email_uti"];
+        $this->login = $databaseUserRow["login_uti"];
     }
 
     /**
@@ -42,9 +44,9 @@ class User
     /**
      * @return string User lastname
      */
-    public function getName(): string
+    public function getLastname(): string
     {
-        return $this->name;
+        return $this->lastname;
     }
 
     /**
@@ -125,5 +127,24 @@ class User
 
         return Database::query($query, $login)
             ->get()["resultat"];
+    }
+
+    /**
+     * Searches and returns User instance by its id.
+     *
+     * @param int $id User id
+     * @return User|null User object if exists;
+     *                   else NULL
+     */
+    public static function getUserById(int $id): ?User
+    {
+        $query = "SELECT * FROM utilisateur WHERE id_utilisateur = ?";
+
+        $getUser = Database::query($query, $id);
+        $user = $getUser->get();
+
+        return $user
+            ? new User($user)
+            : null;
     }
 }
