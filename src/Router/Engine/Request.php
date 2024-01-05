@@ -3,6 +3,7 @@
 namespace MvcLite\Router\Engine;
 
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\Entities\File;
 use MvcLite\Router\Engine\Exceptions\UndefinedInputException;
 use MvcLite\Router\Engine\Exceptions\UndefinedParameterException;
 
@@ -22,16 +23,20 @@ class Request
     /** Current request parameters. */
     private array $parameters;
 
+    /** Current request files. */
+    private array $files;
+
     public function __construct()
     {
         $this->uri = $_SERVER["REQUEST_URI"];
 
         $this->saveInputs();
         $this->saveParameters();
+        $this->saveFiles();
     }
 
     /**
-     * Gets $_POST values and returns its neutralized version.
+     * Saves $_POST values and returns its neutralized version.
      *
      * @return array Inputs array
      */
@@ -83,7 +88,7 @@ class Request
     }
 
     /**
-     * Gets $_GET values and returns them.
+     * Saves $_GET values and returns them.
      *
      * @return array Parameters array
      */
@@ -104,14 +109,45 @@ class Request
      * @param string $key Parameter key
      * @return string Parameter value
      */
-    public function getParameter(string $key): string
+    public function getParameter(string $key): ?string
     {
+        // TODO: simplify to ternary.
         if (!in_array($key, array_keys($this->getParameters())))
         {
-            $error = new UndefinedParameterException($key);
-            $error->render();
+            return null;
         }
 
         return $this->getParameters()[$key];
+    }
+
+    /**
+     * Saves $_GET values and returns them.
+     *
+     * @return array Files array
+     */
+    public function saveFiles(): array
+    {
+        foreach ($_FILES as $fileKey => $file)
+        {
+            $this->files[$fileKey] = new File(
+                $file["name"], $file["full_path"], $file["type"],
+                $file["tmp_name"], $file["error"], $file["size"],
+            );
+        }
+
+        return $this->files;
+    }
+
+    /**
+     * @return array Current request files array
+     */
+    public function getFiles(): array
+    {
+        return $this->files;
+    }
+
+    public function getFile(string $name): ?File
+    {
+        return $this->getFiles()[$name] ?? null;
     }
 }
