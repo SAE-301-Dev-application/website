@@ -25,7 +25,7 @@ class Storage
      */
     public static function getEnginePath(): string
     {
-        return $_SERVER['DOCUMENT_ROOT'] . ROUTE_PATH_PREFIX . "src/Engine";
+        return $_SERVER['DOCUMENT_ROOT'] . ROUTE_PATH_PREFIX . "/src/Engine";
     }
 
     /**
@@ -33,7 +33,7 @@ class Storage
      */
     public static function getResourcesPath(): string
     {
-        return $_SERVER['DOCUMENT_ROOT'] . ROUTE_PATH_PREFIX . "src/Resources";
+        return $_SERVER['DOCUMENT_ROOT'] . ROUTE_PATH_PREFIX . "/src/Resources";
     }
 
     /**
@@ -41,7 +41,7 @@ class Storage
      */
     public static function getComponentsPath(): string
     {
-        return $_SERVER["DOCUMENT_ROOT"] . ROUTE_PATH_PREFIX . "src/Views/Components";
+        return $_SERVER["DOCUMENT_ROOT"] . ROUTE_PATH_PREFIX . "/src/Views/Components";
     }
 
     /**
