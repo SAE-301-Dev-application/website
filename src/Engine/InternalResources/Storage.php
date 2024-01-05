@@ -3,6 +3,7 @@
 namespace MvcLite\Engine\InternalResources;
 
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\Entities\Image;
 use MvcLite\Engine\InternalResources\Exceptions\InvalidImportMethodException;
 use MvcLite\Engine\InternalResources\Exceptions\InvalidResourceTypeException;
 use MvcLite\Engine\InternalResources\Exceptions\NotFoundResourceException;
@@ -104,11 +105,42 @@ class Storage
         return $html;
     }
 
+    /**
+     * Attempt to include an existing component.
+     *
+     * @param string $name Component name
+     * @param array $props Props to share with component
+     */
     public static function component(string $name, array $props = []): void
     {
         $props["props"] = Delivery::get();
         extract($props);
 
         include "src/Views/Components/$name.php";
+    }
+
+    /**
+     * @param Image $image
+     * @param string $subfoldersRelativePath
+     * @return string Uploaded image absolute path
+     */
+    public static function createImage(Image $image, string $subfoldersRelativePath = ""): string
+    {
+        $imageFolderAbsolutePath = self::getResourcesPath()
+                                 . "/Medias/Images/$subfoldersRelativePath/";
+
+        $imageAbsolutePath = $imageFolderAbsolutePath
+                           . $image->getName();
+
+        if (!file_exists($imageFolderAbsolutePath))
+        {
+            mkdir($imageFolderAbsolutePath, recursive: true);
+        }
+
+        $file = fopen($imageAbsolutePath, 'w');
+        fwrite($file, $image->getContent());
+        fclose($file);
+
+        return $imageAbsolutePath;
     }
 }
