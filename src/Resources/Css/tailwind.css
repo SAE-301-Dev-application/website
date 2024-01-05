@@ -3,6 +3,7 @@
 @import "Views/Index.css";
 @import "Views/Dashboard.css";
 @import "Views/Creator.css";
+@import "Views/Profile.css";
 
 @tailwind base;
 @tailwind components;
