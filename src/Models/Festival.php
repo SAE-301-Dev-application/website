@@ -138,7 +138,7 @@ class Festival
         $checkNameQuery = "SELECT verifierFestivalExiste(?) AS resultat;";
 
         $result = Database::query($checkNameQuery, $name);
-        Debug::dd($result->get()["resultat"]);
-        return $result->get()["resultat"];
+
+        return $result->get()["resultat"] === 1;
     }
 }
