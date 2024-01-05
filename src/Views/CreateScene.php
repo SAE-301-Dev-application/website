@@ -17,8 +17,8 @@ use MvcLite\Engine\InternalResources\Storage;
   ?>
 
   <!-- JS -->
-  <script src="../node_modules/jquery/dist/jquery.min.js" defer></script>
-  <script src="../node_modules/gsap/dist/gsap.min.js" defer></script>
+  <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
+  <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
 
   <!-- <script src="../src/js/CreateFestival/picture-chooser.js" defer></script> -->
 
