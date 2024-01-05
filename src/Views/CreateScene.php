@@ -76,7 +76,11 @@ $size = $hasRequest
                     <p>
                       Nom :
                     </p>
-                    <input type="text" name="name" id="name" value="<?= $name ?>" />
+                    <input type="text"
+                           name="name"
+                           id="name"
+                           value="<?= $name ?>"
+                           required />
                     <?php
                     Storage::component("InputErrorComponent", [
                         "errors" => $errors,
@@ -91,7 +95,10 @@ $size = $hasRequest
                     <p>
                       Nombre de spectateurs maximum :
                     </p>
-                    <input type="number" name="max_seats" id="max_seats">
+                    <input type="number"
+                           name="max_seats"
+                           id="max_seats"
+                           required />
                     <?php
                     Storage::component("InputErrorComponent", [
                         "errors" => $errors,
@@ -107,8 +114,17 @@ $size = $hasRequest
                       <p>
                         Longitude :
                       </p>
-                      <input type="number" step="0.01" name="longitude"
-                            id="longitude" />
+                      <input type="number"
+                             step="0.01"
+                             name="longitude"
+                             id="longitude"
+                             required />
+                      <?php
+                      Storage::component("InputErrorComponent", [
+                          "errors" => $errors,
+                          "input" => "longitude",
+                      ]);
+                      ?>
                     </label>
                   </div>
 
@@ -117,7 +133,13 @@ $size = $hasRequest
                       <p>
                         Latitude :
                       </p>
-                      <input type="number" step="0.01" name="latitude" id="latitude" />
+                      <input type="number" step="0.01" name="latitude" id="latitude" required />
+                      <?php
+                      Storage::component("InputErrorComponent", [
+                          "errors" => $errors,
+                          "input" => "latitude",
+                      ]);
+                      ?>
                     </label>
                   </div>
                 </div>
@@ -127,7 +149,7 @@ $size = $hasRequest
                     <p>
                       Taille :
                     </p>
-                    <select name="size" id="size">
+                    <select name="size" id="size" required>
                       <optgroup label="Sélectionnez une taille :">
                         <option value="1">
                           Petite
@@ -142,6 +164,12 @@ $size = $hasRequest
                         </option>
                       </optgroup>
                     </select>
+                    <?php
+                    Storage::component("InputErrorComponent", [
+                        "errors" => $errors,
+                        "input" => "size",
+                    ]);
+                    ?>
                   </label>
                 </div>
               </section>
