@@ -48,23 +48,9 @@ $filmScreeningCategoryCheck
     = $hasRequest && $props->getRequest()->getInput("film-screening") !== null
           ? "checked"
           : false;
-          
-if (count($errors) && !$props->getValidator()->hasError("illustration", "type"))
-{
-    $illustration = $hasRequest
-        ? $props->getRequest()->getFile("illustration")->getName()
-        : "default_illustration.png";
-}
-else
-{
-    $illustration = "default_illustration.png";
-}
 
 $illustrationPath = ROUTE_PATH_PREFIX
-    . "src/Resources/Medias/Images/"
-    . ($illustration === "default_illustration.png"
-          ? $illustration
-          : "FestivalsUploads/" . $illustration);
+    . "src/Resources/Medias/Images/default_illustration.png";
 ?>
 
 <!doctype html>
