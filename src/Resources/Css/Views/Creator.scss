@@ -6,7 +6,7 @@ $orange: #FF7A00;
         @apply pt-24;
 
         .form-grid {
-        @apply grid grid-cols-3 gap-x-10 mb-7;
+        @apply grid grid-cols-3 gap-x-20 mb-7;
         > section {
             &#general_information {
             @apply flex flex-col gap-y-10;
@@ -25,11 +25,15 @@ $orange: #FF7A00;
             }
 
             &#picture {
-            @apply flex flex-col gap-y-10 justify-center items-center
-                    text-center;
+            @apply flex flex-col gap-y-5 justify-center items-center
+                   text-center;
 
             > .picture-preview {
-                @apply w-40 h-40 bg-grey-light rounded-xl;
+                @apply w-80 h-60 bg-grey-light rounded-xl;
+
+                > img {
+                @apply w-full h-full object-cover rounded-xl;
+                }
             }
 
             > .picture-disclaimers {

@@ -65,10 +65,11 @@ $filmScreeningCategoryCheck
   ?>
 
   <!-- JS -->
-  <script src="../node_modules/jquery/dist/jquery.min.js" defer></script>
-  <script src="../node_modules/gsap/dist/gsap.min.js" defer></script>
-
-  <!-- <script src="../src/js/CreateFestival/picture-chooser.js" defer></script> -->
+  <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
+  <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
+  <?php
+  Storage::include("Js/creation/picture-chooser.js", "js", "defer");
+  ?>
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -238,7 +239,12 @@ $filmScreeningCategoryCheck
               </section>
 
               <section id="picture">
-                <div class="picture-preview"></div>
+                <div class="picture-preview">
+                  <img src=<?= "/website/src/Resources/Medias/Images/"
+                             . "FestivalsUploads/festival_default_illustration.png" ?>
+                       alt="Image de prévisualisation"
+                       id="preview-img" />
+                </div>
 
                 <div class="picture-disclaimers">
                   <p>
@@ -261,7 +267,8 @@ $filmScreeningCategoryCheck
                   </label>
 
                   <input type="file" name="picture"
-                         id="picture_input" />
+                         id="picture_input"
+                         accept=".png,.jpeg,.gif" />
                 </div>
               </section>
             </div>
