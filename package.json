@@ -11,5 +11,9 @@
   "license": "MIT",
   "devDependencies": {
     "tailwindcss": "^3.3.6"
+  },
+  "dependencies": {
+    "gsap": "^3.12.4",
+    "jquery": "^3.7.1"
   }
 }
