@@ -68,7 +68,7 @@ class CreateSceneController extends Controller
 
     public function render(): void
     {
-        View::render("CreateScene");  // TODO: wait view creation.
+        View::render("CreateScene");
     }
 
     public function createScene(Request $request): RedirectResponse
