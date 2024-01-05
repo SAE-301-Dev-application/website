@@ -48,6 +48,23 @@ $filmScreeningCategoryCheck
     = $hasRequest && $props->getRequest()->getInput("film-screening") !== null
           ? "checked"
           : false;
+          
+if (count($errors) && !$props->getValidator()->hasError("illustration", "type"))
+{
+    $illustration = $hasRequest
+        ? $props->getRequest()->getFile("illustration")->getName()
+        : "default_illustration.png";
+}
+else
+{
+    $illustration = "default_illustration.png";
+}
+
+$illustrationPath = ROUTE_PATH_PREFIX
+    . "src/Resources/Medias/Images/"
+    . ($illustration === "default_illustration.png"
+          ? $illustration
+          : "FestivalsUploads/" . $illustration);
 ?>
 
 <!doctype html>
@@ -91,7 +108,9 @@ $filmScreeningCategoryCheck
         </div>
 
         <div class="form-container">
-          <form action="<?= route("post.createFestival") ?>" method="post">
+          <form action="<?= route("post.createFestival") ?>"
+                method="post"
+                enctype="multipart/form-data">
             <div class="form-grid">
               <section id="general_information">
                 <div class="form-component">
@@ -240,8 +259,7 @@ $filmScreeningCategoryCheck
 
               <section id="picture">
                 <div class="picture-preview">
-                  <img src=<?= "/website/src/Resources/Medias/Images/"
-                             . "FestivalsUploads/festival_default_illustration.png" ?>
+                  <img src=<?= $illustrationPath ?>
                        alt="Image de prévisualisation"
                        id="preview-img" />
                 </div>
@@ -270,6 +288,13 @@ $filmScreeningCategoryCheck
                          id="picture_input"
                          accept=".png,.jpeg,.gif" />
                 </div>
+
+                <?php
+                Storage::component("InputErrorComponent", [
+                    "errors" => $errors,
+                    "input" => "illustration",
+                ]);
+                ?>
               </section>
             </div>
 

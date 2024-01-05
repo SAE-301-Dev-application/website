@@ -101,7 +101,7 @@ class Festival
      */
     public static function create(string $name,
                                   string $description,
-                                  string|null $illustration,
+                                  ?string $illustration,
                                   string $beginningDate,
                                   string $endingDate,
                                   array $categories): void
@@ -113,7 +113,7 @@ class Festival
         $festivalId = Database::query($addFestivalQuery,
                                       $name,
                                       $description,
-                                      $illustration === "" ? null : $illustration,
+                                      $illustration ?? null,
                                       $beginningDate,
                                       $endingDate);
 
@@ -125,5 +125,20 @@ class Festival
                             $festivalId,
                             $categorie);
         }
+    }
+
+    /**
+     * Check if a festival exists.
+     * 
+     * @param string $name
+     * @return bool True if the festival exists, false otherwise.
+     */
+    public static function hasFestival(string $name): bool
+    {
+        $checkNameQuery = "SELECT verifierFestivalExiste(?) AS resultat;";
+
+        $result = Database::query($checkNameQuery, $name);
+        Debug::dd($result->get()["resultat"]);
+        return $result->get()["resultat"];
     }
 }

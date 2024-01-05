@@ -4,6 +4,7 @@ namespace MvcLite\Controllers;
 
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\InternalResources\Storage;
 use MVCLite\Router\Engine\Request;
 use MVCLite\Router\Engine\RedirectResponse;
 use MvcLite\Controllers\Engine\Controller;
@@ -22,6 +23,9 @@ class CreateFestivalController extends Controller
 
     private const ERROR_MAX_LENGTH_DESCRIPTION
         = "La description du festival ne doit pas dépasser 1 000 caractères.";
+
+    private const ERROR_NAME_ALREADY_USED
+        = "Ce nom de festival est déjà utilisé.";
         
     private const ERROR_ENDING_BEFORE_BEGINNING_DATE
         = "La date de fin ne peut pas être antérieure à celle de début.";
@@ -36,8 +40,8 @@ class CreateFestivalController extends Controller
         = "Aucune catégorie n'a été renseignée pour ce festival. "
         . "Veuillez en choisir une.";
 
-    private const PATH_TO_IMAGE_FOLDER
-        = ROUTE_PATH_PREFIX . "src/Resources/Medias/Images/FestivalsUploads/";
+    private const ERROR_TYPE_NOT_SUPPORTED
+        = "Le type d'illustration %s n'est pas supporté.";
 
     public function __construct()
     {
@@ -87,6 +91,12 @@ class CreateFestivalController extends Controller
             ->maxLength("name", 50, self::ERROR_MAX_LENGTH_NAME)
             ->maxLength("description", 1000, self::ERROR_MAX_LENGTH_DESCRIPTION);
 
+        // if (Festival::hasFestival($request->getInput("name")))
+        // {
+        //     $validation->addError("nameAlreadyUsed", "name",
+        //         ERROR_NAME_ALREADY_USED);
+        // }
+
         if (count($checkedCategories) === 0)
         {
             $validation->addError("noCategorieChecked", "categories",
@@ -116,42 +126,53 @@ class CreateFestivalController extends Controller
                 ->futureDate("ending_date", self::ERROR_END_DATE_IN_PAST);
         }
 
+        // Get the file from the $_FILES superglobal
+        $imageFile = $request->getFile("illustration");
+
+        // Check if there is a downloaded file
+        if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK)
+        {
+            $imageExtension = explode('/', $imageFile->getType())[1];
+
+            if (!in_array($imageExtension, ["png", "jpeg", "gif"]))
+            {
+                $validation->addError("type", "illustration",
+                                      sprintf(self::ERROR_TYPE_NOT_SUPPORTED,
+                                              '.' . $imageExtension));
+            }
+            else
+            {
+                // Generate a unique file name
+                $imageName = uniqid("festival_") . "." . $imageExtension;
+
+                $imageFile->setName($imageName);
+
+                $pathToImageFolder = Storage::getResourcesPath()
+                                   . "/Medias/Images/FestivalsUploads/";
+
+                // Create the directory if it doesn't exist
+                if (!file_exists($pathToImageFolder)) {
+                    mkdir($pathToImageFolder, 0777, true);
+                }
+
+                $uploadPath = $pathToImageFolder . $imageName;
+                
+                // Create a file with the path $uploadPath
+                $newFile = fopen($uploadPath, "w") or die("Unable to open file!");
+
+                // Write the content of the uploaded file in the new file
+                fwrite($newFile, $imageFile->getContent());
+
+                // Close the new file
+                fclose($newFile);
+            }
+        }
+
         if (!$validation->hasFailed())
         {
-            // Get the file from the $_FILES superglobal
-            // $imageFile = $request->getFile("illustration");
-
-            // // Check if there is a downloaded file
-            // if ($imageFile && $imageFile["error"] === UPLOAD_ERR_OK)
-            // {
-            //     $imageData = file_get_contents($imageFile["tmp_name"]);
-
-            //     // Get the MIME type from the first bytes of the file
-            //     $finfo = new \finfo(FILEINFO_MIME_TYPE);
-            //     $imageMimeType = $finfo->buffer($imageData);
-
-            //     $extensionMap = [
-            //         'image/gif' => 'gif',
-            //         'image/jpeg' => 'jpeg',
-            //         'image/png' => 'png'
-            //     ];
-
-            //     $imageExtension = $extensionMap[$imageMimeType] ?? "png";
-
-            //     // Generate a unique file name
-            //     $imageName = uniqid("festival_") . "." . $imageExtension;
-
-            //     $uploadPath = self::PATH_TO_IMAGE_FOLDER . $imageName;
-
-            //     // Create the file on the server
-            //     file_put_contents($uploadPath, $imageData);
-
-            //     Debug::dd($uploadPath);
-            // }
-
             Festival::create($request->getInput("name"),
                              $request->getInput("description"),
-                             $request->getInput("illustration"),
+                             $imageName ?? null,
                              $request->getInput("beginning_date"),
                              $request->getInput("ending_date"),
                              $checkedCategories);
