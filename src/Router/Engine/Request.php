@@ -128,7 +128,7 @@ class Request
     public function saveFiles(): array
     {
         $this->files = [];
-        
+
         foreach ($_FILES as $fileKey => $file)
         {
             $this->files[$fileKey] = new File(
