@@ -99,7 +99,7 @@ class CreateFestivalController extends Controller
             }
         }
 
-        $imageFile = $request->getFile("illustration");
+        $imageFile = $request->getFile("illustration")->hasImage();
 
         $validation = (new Validator($request))
             ->required([
@@ -120,7 +120,7 @@ class CreateFestivalController extends Controller
 
             $validation
                 ->extension("illustration",
-                           self::ILLUSTRATION_TYPES,
+                            self::ILLUSTRATION_TYPES,
                             $illustrationWrongTypeErrorMessage)
                 ->maxSize("illustration",
                           self::ILLUSTRATION_MAX_WIDTH,
