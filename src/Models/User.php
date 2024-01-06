@@ -6,8 +6,9 @@ use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Session\Session;
+use MvcLite\Models\Engine\Model;
 
-class User
+class User extends Model
 {
     /** User id. */
     private int $id;
@@ -26,6 +27,8 @@ class User
 
     public function __construct(array $databaseUserRow)
     {
+        parent::__construct("utilisateur");
+
         $this->id = $databaseUserRow["id_utilisateur"];
         $this->lastname = $databaseUserRow["nom_uti"];
         $this->firstname = $databaseUserRow["prenom_uti"];

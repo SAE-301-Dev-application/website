@@ -5,8 +5,9 @@ namespace MvcLite\Models;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Models\Engine\Model;
 
-class Scene
+class Scene extends Model
 {
     /** User id. */
     private int $id;
@@ -25,6 +26,8 @@ class Scene
                                 int $maxSpectateurs,
                                 string $coordonnees)
     {
+        parent::__construct("scene");
+
         $this->nom = $nom;
         $this->taille = $taille;
         $this->maxSpectateurs = $maxSpectateurs;

@@ -5,8 +5,9 @@ namespace MvcLite\Models;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Models\Engine\Model;
 
-class Festival
+class Festival extends Model
 {
     /** Festival's name */
     private string $name;
@@ -33,6 +34,8 @@ class Festival
                                 array $categories,
                                 string $illustration)
     {
+        parent::__construct("festival");
+
         $this->name = $name;
         $this->description = $description;
         $this->beginningDate = $beginningDate;
@@ -133,7 +136,7 @@ class Festival
      * @param string $name
      * @return bool True if the festival exists, false otherwise.
      */
-    public static function hasFestival(string $name): bool
+    public static function isNameAlreadyTaken(string $name): bool
     {
         $checkNameQuery = "SELECT verifierFestivalExiste(?) AS resultat;";
 
