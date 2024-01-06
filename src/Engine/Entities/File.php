@@ -2,6 +2,8 @@
 
 namespace MvcLite\Engine\Entities;
 
+use MvcLite\Engine\DevelopmentUtilities\Debug;
+
 /**
  * Class that represents a file.
  *
@@ -103,8 +105,19 @@ class File
         $this->name = $name;
     }
 
-    public function hasImage(): Image
+    public function isImage(): bool
     {
+        $contentType = mime_content_type($this->getTemporaryName());
+        return $contentType && explode('/', $contentType)[0] == "image";
+    }
+
+    public function hasImage(): ?Image
+    {
+        if (!$this->isImage())
+        {
+            return null;
+        }
+
         return new Image(
             $this->getName(), $this->getFullPath(), $this->getType(),
             $this->getTemporaryName(), $this->getError(), $this->getSize()
