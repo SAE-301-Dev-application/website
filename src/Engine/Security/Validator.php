@@ -3,6 +3,8 @@
 namespace MvcLite\Engine\Security;
 
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\Entities\File;
+use MvcLite\Router\Engine\Exceptions\UndefinedFileException;
 use MvcLite\Router\Engine\Exceptions\UndefinedInputException;
 use MvcLite\Router\Engine\Request;
 
@@ -465,6 +467,65 @@ class Validator
         }
 
         $this->validationState &= $isFutureDate;
+
+        return $this;
+    }
+
+    public function extension(string $fileInput, array $extensions, ?string $error): Validator
+    {
+        $defaultError = "This file must have one of the following extensions: "
+                      . implode(', ', $extensions);
+
+        $file = $this->getRequest()
+            ->getFile($fileInput);
+
+        if ($file === null)
+        {
+            $error = new UndefinedFileException($fileInput);
+            $error->render();
+        }
+
+        $hasAcceptedExtension = in_array($file->getType(), $extensions);
+
+        if (!$hasAcceptedExtension)
+        {
+            $this->addError("extension", $fileInput, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $hasAcceptedExtension;
+
+        return $this;
+    }
+
+    public function maxSize(string $imageInput, int $maxWidth, int $maxHeight, ?string $error): Validator
+    {
+        $defaultError = "This image cannot be larger than $maxWidth"
+                      . 'x'
+                      . "$maxHeight.";
+
+        $imageFile = $this->getRequest()
+            ->getFile($imageInput);
+
+        if ($imageFile === null)
+        {
+            $error = new UndefinedFileException($imageInput);
+            $error->render();
+        }
+
+        if ($imageFile->isImage())
+        {
+            $image = $imageFile->hasImage();
+            $imageSize = getimagesize($image->getTemporaryName());
+
+            $hasGoodSize = $imageSize[0] <= $maxWidth && $imageSize[1] <= $maxHeight;
+
+            if (!$hasGoodSize)
+            {
+                $this->addError("maxSize", $imageInput, $error ?? $defaultError);
+            }
+
+            $this->validationState &= $hasGoodSize;
+        }
 
         return $this;
     }
