@@ -45,7 +45,7 @@ $danceCategoryCheck
           : "";
 
 $filmScreeningCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("film-screening") !== null
+    = $hasRequest && $props->getRequest()->getInput("film_screening") !== null
           ? "checked"
           : false;
 
@@ -197,7 +197,7 @@ $illustrationPath = ROUTE_PATH_PREFIX
                   <label class="checkbox" for="music">
                     <input type="checkbox"
                            name="music"
-                           id="music-choice"
+                           id="music_choice"
                            <?= $musicCategoryCheck ?> />
                     Musique
                   </label>
@@ -205,7 +205,7 @@ $illustrationPath = ROUTE_PATH_PREFIX
                   <label class="checkbox" for="theater">
                     <input type="checkbox"
                            name="theater"
-                           id="theater-choice"
+                           id="theater_choice"
                            <?= $theaterCategoryCheck ?> />
                     Théâtre
                   </label>
@@ -213,7 +213,7 @@ $illustrationPath = ROUTE_PATH_PREFIX
                   <label class="checkbox" for="circus">
                     <input type="checkbox"
                            name="circus"
-                           id="circus-choice"
+                           id="circus_choice"
                            <?= $circusCategoryCheck ?> />
                     Cirque
                   </label>
@@ -221,15 +221,15 @@ $illustrationPath = ROUTE_PATH_PREFIX
                   <label class="checkbox" for="dance">
                     <input type="checkbox"
                            name="dance"
-                           id="dance-choice"
+                           id="dance_choice"
                            <?= $danceCategoryCheck ?> />
                     Danse
                   </label>
 
-                  <label class="checkbox" for="film-screening">
+                  <label class="checkbox" for="film_screening">
                     <input type="checkbox"
-                           name="film-screening"
-                           id="film-screening-choice"
+                           name="film_screening"
+                           id="film_screening_choice"
                            <?= $filmScreeningCategoryCheck ?> />
                     Projection de film
                   </label>
