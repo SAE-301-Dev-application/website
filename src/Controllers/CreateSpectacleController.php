@@ -174,7 +174,7 @@ class CreateSpectacleController extends Controller
                               $request->getInput("scene_size"),
                               $checkedCategories);
 
-            Redirect::route("spectacles") // TODO rediriger vers la page du spectacle (pour pouvoir le modifier)
+            Redirect::route("dashboard") // TODO rediriger vers la page du spectacle (pour pouvoir le modifier)
                 ->withValidator($validation)
                 ->withRequest($request)
                 ->redirect();

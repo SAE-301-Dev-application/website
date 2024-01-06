@@ -162,13 +162,15 @@ $illustrationPath = ROUTE_PATH_PREFIX
                         Durée :
                       </p>
 
-                      <input type="number"
-                             name="duration"
-                             id="duration"
-                             min="1"
-                             max="1680"
-                             value="<?= $duration ?>"
-                             required />
+                      <div class="duration-container">
+                        <input type="number"
+                               name="duration"
+                               id="duration"
+                               min="1"
+                               max="1680"
+                               value="<?= $duration ?>"
+                               required />
+                      </div>
 
                       <?php
                       Storage::component("InputErrorComponent", [
