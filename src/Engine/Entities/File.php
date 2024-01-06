@@ -107,6 +107,11 @@ class File
 
     public function isImage(): bool
     {
+        if ($this->getError() !== UPLOAD_ERR_OK)
+        {
+            return false;
+        }
+        
         $contentType = mime_content_type($this->getTemporaryName());
         return $contentType && explode('/', $contentType)[0] == "image";
     }
