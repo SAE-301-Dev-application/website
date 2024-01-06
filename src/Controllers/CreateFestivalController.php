@@ -43,6 +43,22 @@ class CreateFestivalController extends Controller
     private const ERROR_TYPE_NOT_SUPPORTED
         = "Le type d'illustration %s n'est pas supporté.";
 
+    private const ERROR_DISRESPECTED_ILLUSTRATION_MAX_SIZE
+        = "L'illustration ne peut pas avoir une dimension plus grande que "
+        . self::ILLUSTRATION_MAX_WIDTH
+        . 'x'
+        . self::ILLUSTRATION_MAX_HEIGHT
+        . ".";
+
+    private const ILLUSTRATION_MAX_WIDTH = 800;
+
+    private const ILLUSTRATION_MAX_HEIGHT = 600;
+
+    /** Accepted illustration file types. */
+    private const ILLUSTRATION_TYPES = [
+        "png", "gif", "jpeg",
+    ];
+
     public function __construct()
     {
         parent::__construct();
@@ -83,6 +99,8 @@ class CreateFestivalController extends Controller
             }
         }
 
+        $imageFile = $request->getFile("illustration");
+
         $validation = (new Validator($request))
             ->required([
                 "name", "description", "beginning_date", "ending_date"
@@ -90,6 +108,25 @@ class CreateFestivalController extends Controller
 
             ->maxLength("name", 50, self::ERROR_MAX_LENGTH_NAME)
             ->maxLength("description", 1000, self::ERROR_MAX_LENGTH_DESCRIPTION);
+
+        if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK)
+        {
+            $imageExtension = explode('/', $imageFile->getType())[1];
+
+            $illustrationWrongTypeErrorMessage = sprintf(
+                self::ERROR_TYPE_NOT_SUPPORTED,
+                '.' . $imageExtension
+            );
+
+            $validation
+                ->extension("illustration",
+                           self::ILLUSTRATION_TYPES,
+                            $illustrationWrongTypeErrorMessage)
+                ->maxSize("illustration",
+                          self::ILLUSTRATION_MAX_WIDTH,
+                          self::ILLUSTRATION_MAX_HEIGHT,
+                          self::ERROR_DISRESPECTED_ILLUSTRATION_MAX_SIZE);
+        }
 
         if (count($checkedCategories) === 0)
         {
@@ -122,24 +159,8 @@ class CreateFestivalController extends Controller
                 ->futureDate("ending_date", self::ERROR_END_DATE_IN_PAST);
         }
 
-        // Get the file from the $_FILES superglobal
-        $imageFile = $request->getFile("illustration")->hasImage();
-
-        // Check if there is a downloaded file
-        if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK)
-        {
-            $imageExtension = explode('/', $imageFile->getType())[1];
-
-            if (!in_array($imageExtension, ["png", "jpeg", "gif"]))
-            {
-                $validation->addError("type", "illustration",
-                                      sprintf(self::ERROR_TYPE_NOT_SUPPORTED,
-                                              '.' . $imageExtension));
-            }
-        }
-
         if (!$validation->hasFailed()
-            && Festival::hasFestival($request->getInput("name")))
+            && Festival::isNameAlreadyTaken($request->getInput("name")))
         {
             $validation->addError("nameAlreadyUsed", "name",
                 self::ERROR_NAME_ALREADY_USED);
@@ -151,6 +172,8 @@ class CreateFestivalController extends Controller
             {
                 // Generate a unique file name
                 $imageName = uniqid("festival_") . "." . $imageExtension;
+
+                $imageFile->setName($imageName);
 
                 $uploadPath = Storage::createImage($imageFile, "FestivalsUploads");
             }
