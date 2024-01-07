@@ -69,11 +69,20 @@ class CreateSceneController extends Controller
         $this->middleware(AuthMiddleware::class);
     }
 
+    /**
+     * Scene creation view rendering.
+     */
     public function render(): void
     {
         View::render("CreateScene");
     }
 
+    /**
+     * Attempts to create a new scene with given inputs.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
     public function createScene(Request $request): RedirectResponse
     {
         $validation = (new Validator($request))
