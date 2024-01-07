@@ -579,7 +579,7 @@ class Validator
             $this->addError("exists", $input, $error ?? $defaultError);
         }
 
-        $this->validationState &= $alreadyUsed;
+        $this->validationState &= $isNotUsed;
 
         return $this;
     }
