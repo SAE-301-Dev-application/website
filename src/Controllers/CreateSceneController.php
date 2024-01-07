@@ -16,7 +16,7 @@ use MvcLite\Views\Engine\View;
 class CreateSceneController extends Controller
 {
     private const ERROR_REQUIRED_FIELD
-        = "Ce champs est requis.";
+        = "Ce champ est requis.";
 
     private const ERROR_MAX_LENGTH_NAME
         = "Le nom ne peut contenir au maximum que 25 caractères.";

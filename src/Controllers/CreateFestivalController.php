@@ -16,7 +16,7 @@ use MvcLite\Models\Festival;
 class CreateFestivalController extends Controller
 {
     private const ERROR_REQUIRED_FIELD
-        = "Ce champs est requis.";
+        = "Ce champ est requis.";
 
     private const ERROR_MAX_LENGTH_NAME
         = "Le nom du festival ne doit pas dépasser 50 caractères.";
@@ -86,7 +86,7 @@ class CreateFestivalController extends Controller
             "theater"        => "2",
             "circus"         => "3",
             "dance"          => "4",
-            "film-screening" => "5"
+            "film_screening" => "5"
         );
 
         $checkedCategories = [];
@@ -99,7 +99,7 @@ class CreateFestivalController extends Controller
             }
         }
 
-        $imageFile = $request->getFile("illustration");
+        $imageFile = $request->getFile("illustration")->hasImage();
 
         $validation = (new Validator($request))
             ->required([
@@ -120,7 +120,7 @@ class CreateFestivalController extends Controller
 
             $validation
                 ->extension("illustration",
-                           self::ILLUSTRATION_TYPES,
+                            self::ILLUSTRATION_TYPES,
                             $illustrationWrongTypeErrorMessage)
                 ->maxSize("illustration",
                           self::ILLUSTRATION_MAX_WIDTH,

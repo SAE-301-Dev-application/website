@@ -10,6 +10,64 @@ $orange: #FF7A00;
         > section {
             &#general_information {
             @apply flex flex-col gap-y-10;
+
+                > .form-duo {
+                > .form-component {
+                > label {
+                /* prepare wrapper element */
+                  // .duration-container {
+                  //   display: inline-block;
+                  //   position: relative;
+                  // }
+
+                  // /* position the unit to the right of the wrapper */
+                  // .duration-container::after {
+                  //   position: absolute;
+                  //   top: 2px;
+                  //   right: .5em;
+                  //   transition: all .05s ease-in-out;
+                  // }
+
+                  // /* move unit more to the left on hover or focus within
+                  //   for arrow buttons will appear to the right of number inputs */
+                  // .duration-container:hover::after,
+                  // .duration-container:focus-within::after {
+                  //   right: 1.5em;
+                  // }
+
+                  // /* handle Firefox (arrows always shown) */
+                  // @supports (-moz-appearance:none) {
+                  //   .duration-container::after {
+                  //     right: 1.5em;
+                  //   }
+                  // }
+
+                  // /* set the unit abbreviation for each unit class */
+                  // .duration-container::after {
+                  //   content: 'min';
+                  // }
+                
+                > .duration-container {
+                    @apply inline-block relative;
+                }
+
+                > .duration-container::after {
+                    @apply absolute top-2 right-4 transition-all duration-75 ease-in-out;
+
+                    @apply content-['min'];
+
+                    @supports (-moz-appearance:none) {
+                    @apply right-5;
+                    }
+
+                    &:hover,
+                    &:focus-within {
+                    @apply right-5;
+                    }
+                }
+                }
+                }
+                }
             }
 
             &#categories {

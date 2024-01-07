@@ -486,7 +486,9 @@ class Validator
             $error->render();
         }
 
-        $hasAcceptedExtension = in_array($file->getType(), $extensions);
+        $fileExtension = explode('/', $file->getType())[1];
+
+        $hasAcceptedExtension = in_array($fileExtension, $extensions);
 
         if (!$hasAcceptedExtension)
         {
