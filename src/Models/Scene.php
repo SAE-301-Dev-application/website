@@ -20,18 +20,11 @@ class Scene extends Model
 
     private string $coordonnees;
 
-    public function __construct(int $id,
-                                string $nom,
-                                int $taille,
-                                int $maxSpectateurs,
-                                string $coordonnees)
+    public function __construct()
     {
-        parent::__construct("scene");
+        parent::__construct();
 
-        $this->nom = $nom;
-        $this->taille = $taille;
-        $this->maxSpectateurs = $maxSpectateurs;
-        $this->coordonnees = $coordonnees;
+        $this->setTableName("scene");
     }
 
     /**

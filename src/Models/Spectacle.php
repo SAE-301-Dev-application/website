@@ -27,21 +27,11 @@ class Spectacle extends Model
     /** Spectacle's illustration */
     private string $illustration;
 
-    public function __construct(string $title,
-                                string $description,
-                                string $duration,
-                                string $sceneSize,
-                                array $categories,
-                                string $illustration)
+    public function __construct()
     {
-        parent::__construct("spectacle");
+        parent::__construct();
 
-        $this->name = $title;
-        $this->description = $description;
-        $this->beginningDate = $duration;
-        $this->endingDate = $sceneSize;
-        $this->categories = $categories;
-        $this->illustration = $illustration;
+        $this->setTableName("spectacle");
     }
 
     /**

@@ -27,21 +27,11 @@ class Festival extends Model
     /** Festival's illustration */
     private string $illustration;
 
-    public function __construct(string $name,
-                                string $description,
-                                string $beginningDate,
-                                string $endingDate,
-                                array $categories,
-                                string $illustration)
+    public function __construct()
     {
-        parent::__construct("festival");
+        parent::__construct();
 
-        $this->name = $name;
-        $this->description = $description;
-        $this->beginningDate = $beginningDate;
-        $this->endingDate = $endingDate;
-        $this->categories = $categories;
-        $this->illustration = $illustration;
+        $this->setTableName("festival");
     }
 
     /**
