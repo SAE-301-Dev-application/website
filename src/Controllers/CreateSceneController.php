@@ -80,6 +80,7 @@ class CreateSceneController extends Controller
                 "size",
             ], self::ERROR_REQUIRED_FIELD)
             ->maxLength("name", 25, self::ERROR_MAX_LENGTH_NAME)
+            ->unique("name", Scene::class, "nom_sc")
 
             ->numeric("max_seats", self::ERROR_NOT_NUMERIC_SEATS_MAX)
             ->min("max_seats", 1, self::ERROR_ZERO_OR_NEGATIVE_SEATS_MAX)
