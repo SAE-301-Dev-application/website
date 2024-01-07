@@ -4,6 +4,7 @@ namespace MvcLite\Engine\Security;
 
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Entities\File;
+use MvcLite\Models\Engine\Model;
 use MvcLite\Router\Engine\Exceptions\UndefinedFileException;
 use MvcLite\Router\Engine\Exceptions\UndefinedInputException;
 use MvcLite\Router\Engine\Request;
@@ -528,6 +529,11 @@ class Validator
         }
 
         return $this;
+    }
+
+    public function exists(string $input, Model $model, string $column, ?string $error): Validator
+    {
+        // TODO
     }
 
     /**
