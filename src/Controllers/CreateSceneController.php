@@ -21,6 +21,9 @@ class CreateSceneController extends Controller
     private const ERROR_MAX_LENGTH_NAME
         = "Le nom ne peut contenir au maximum que 25 caractères.";
 
+    private const ERROR_NAME_ALREADY_TAKEN
+        = "Ce nom est déjà utilisé par une autre scène.";
+
     private const ERROR_NOT_NUMERIC_SEATS_MAX
         = "Le nombre maximal de places doit être un nombre.";
 
@@ -80,7 +83,10 @@ class CreateSceneController extends Controller
                 "size",
             ], self::ERROR_REQUIRED_FIELD)
             ->maxLength("name", 25, self::ERROR_MAX_LENGTH_NAME)
-            ->unique("name", Scene::class, "nom_sc")
+            ->unique("name",
+                     Scene::class,
+                     "nom_sc",
+                     self::ERROR_NAME_ALREADY_TAKEN)
 
             ->numeric("max_seats", self::ERROR_NOT_NUMERIC_SEATS_MAX)
             ->min("max_seats", 1, self::ERROR_ZERO_OR_NEGATIVE_SEATS_MAX)
