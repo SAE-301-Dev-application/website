@@ -27,7 +27,9 @@ class User extends Model
 
     public function __construct(array $databaseUserRow)
     {
-        parent::__construct("utilisateur");
+        parent::__construct();
+
+        $this->setTableName("utilisateur");
 
         $this->id = $databaseUserRow["id_utilisateur"];
         $this->lastname = $databaseUserRow["nom_uti"];
