@@ -441,7 +441,7 @@ class Validator
     }
 
     /**
-     * Returns if given input value is a date.
+     * Given date must be a future one.
      * 
      * @param string $dateInput Key of the input to validate
      * @param string|null $error Optional custom error message
@@ -472,7 +472,15 @@ class Validator
         return $this;
     }
 
-    public function extension(string $fileInput, array $extensions, ?string $error): Validator
+    /**
+     * Given file must have one of given extensions.
+     *
+     * @param string $fileInput Key of the file to validate
+     * @param array $extensions Given accepted extensions array
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function extension(string $fileInput, array $extensions, ?string $error = null): Validator
     {
         $defaultError = "This file must have one of the following extensions: "
                       . implode(', ', $extensions);
@@ -500,7 +508,16 @@ class Validator
         return $this;
     }
 
-    public function maxSize(string $imageInput, int $maxWidth, int $maxHeight, ?string $error): Validator
+    /**
+     * Given image must respect given max size.
+     *
+     * @param string $imageInput Key of the image file to validate
+     * @param int $maxWidth Max width accepted
+     * @param int $maxHeight Max height accepted
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function maxSize(string $imageInput, int $maxWidth, int $maxHeight, ?string $error = null): Validator
     {
         $defaultError = "This image cannot be larger than $maxWidth"
                       . 'x'
@@ -533,9 +550,38 @@ class Validator
         return $this;
     }
 
-    public function exists(string $input, Model $model, string $column, ?string $error): Validator
+    /**
+     * Given input value must not exist on model table column.
+     *
+     * @param string $input Key of the input to validate
+     * @param string $modelClass Model to use
+     * @param string $column Column name
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function unique(string $input, string $modelClass, string $column, ?string $error = null): Validator
     {
-        // TODO
+        $defaultError = "This $column is already used.";
+
+        $inputValue = $this->getRequest()->getInput($input);
+
+        if ($inputValue === null)
+        {
+            $error = new UndefinedInputException($input);
+            $error->render();
+        }
+
+        $model = new $modelClass();
+        $isNotUsed = !$model->isColumnValueExisting($column, $inputValue);
+
+        if (!$isNotUsed)
+        {
+            $this->addError("exists", $input, $error ?? $defaultError);
+        }
+
+        $this->validationState &= $alreadyUsed;
+
+        return $this;
     }
 
     /**
