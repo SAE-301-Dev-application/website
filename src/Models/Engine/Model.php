@@ -6,11 +6,12 @@ use MvcLite\Database\Engine\Database;
 
 class Model
 {
+    /** Model table name. */
     private string $tableName;
 
-    public function __construct(string $tableName)
+    public function __construct()
     {
-        $this->tableName = $tableName;
+        // Empty constructor.
     }
 
     /**
