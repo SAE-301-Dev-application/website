@@ -10,10 +10,10 @@ $orange: #FF7A00;
             @apply flex flex-col xl:flex-row gap-x-16 gap-y-10;
 
             > .left-side {
-                @apply xl:w-80 xl:flex-none;
+                @apply xl:w-80 xl:flex-none relative;
 
                 > .menu-container {
-                    @apply flex flex-col gap-y-3;
+                    @apply flex flex-col gap-y-3 fixed xl:w-80;
 
                     > a.link {
                         @apply bg-grey-light px-5 py-3 rounded-md font-bold relative;
@@ -36,6 +36,10 @@ $orange: #FF7A00;
                     &#settings {
                         > .buttons-container {
                             @apply flex flex-wrap gap-x-5;
+
+                            > a.button-link {
+                                @apply xl:w-1/5;
+                            }
                         }
                     }
 
@@ -44,8 +48,8 @@ $orange: #FF7A00;
                             @apply w-48 h-48;
                         }
 
-                        > .festival-header {
-                            @apply mb-10;
+                        & .festival-header {
+                            @apply mb-5;
                         }
                     }
 
