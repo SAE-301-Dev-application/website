@@ -52,6 +52,10 @@
 
         .form-buttons {
             @apply flex-row;
+
+            > * {
+                @apply block w-full;
+            }
         }
 
         .form-buttons-column {
