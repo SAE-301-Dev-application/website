@@ -134,4 +134,36 @@ class Festival extends Model
 
         return $result->get()["resultat"] === 1;
     }
+
+    /**
+     * Get all festivals.
+     * 
+     * @return array Festivals
+     */
+    public static function getFestivals(): array
+    {
+        $getFestivalsQuery = "SELECT * FROM festival;";
+
+        $result = Database::query($getFestivalsQuery);
+
+        return $result->getAll();
+    }
+
+    /**
+     * Get path to a festival's illustration.
+     * 
+     * @param ?string $name
+     * @return string Festival's illustration path
+     */
+    public static function getImagePathByName(?string $name)
+    {
+        $illustrationPath = ROUTE_PATH_PREFIX
+            . "src/Resources/Medias/Images/";
+    
+        $defaultIllustration = "default_illustration.png";
+
+        return !$name || $name === $defaultIllustration
+            ? $illustrationPath . $defaultIllustration
+            : $illustrationPath . "FestivalsUploads/" . $name;
+    }
 }
