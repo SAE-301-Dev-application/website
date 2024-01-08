@@ -40,19 +40,24 @@ class RegisterController extends Controller
                 "firstname", "lastname", "email",
                 "login", "password", "password_confirmation"
             ], "Ce champ est requis.")
-            ->confirmation("password", "Confirmation du mot de passe échouée. Les deux mots de passe sont différents.")
             ->minLength("firstname", 1, "Le prénom doit contenir au moins 1 caractère.")
-            ->minLength("lastname", 1, "Le nom de famille doit contenir au moins 1 caractère.")
-            ->minLength("email", 5, "L'adresse e-mail doit contenir au moins 5 caractères.")
-            ->minLength("login", 3, "Le login doit contenir au moins 3 caractères.")
-            ->minLength("password", 8, "Le mot de passe doit contenir au moins 8 caractères.")
             ->maxLength("firstname", 25, "Le prénom doit contenir au plus 25 caractères.")
-            ->maxLength("lastname", 50, "Le nom de famille doit contenir au plus 50 caractères.")
-            ->maxLength("login", 25, "Le login doit contenir au plus 25 caractères.")
             ->matches("firstname", "/^[a-zA-ZÀ-ÿ\s\-']{1,25}$/u", "Le prénom doit contenir uniquement des lettres, espaces, apostrophes et tirets.")
+
+            ->minLength("lastname", 1, "Le nom de famille doit contenir au moins 1 caractère.")
             ->matches("lastname", "/^[a-zA-ZÀ-ÿ\s\-']{1,50}$/u", "Le nom de famille doit contenir uniquement des lettres, espaces, apostrophes et tirets.")
+            ->maxLength("lastname", 50, "Le nom de famille doit contenir au plus 50 caractères.")
+
+            ->minLength("login", 3, "Le login doit contenir au moins 3 caractères.")
+            ->maxLength("login", 25, "Le login doit contenir au plus 25 caractères.")
+
+            ->confirmation("password", "Confirmation du mot de passe échouée. Les deux mots de passe sont différents.")
+            ->minLength("password", 8, "Le mot de passe doit contenir au moins 8 caractères.")
+
+            ->minLength("email", 5, "L'adresse e-mail doit contenir au moins 5 caractères.")
             ->email("email", "L'adresse e-mail renseignée n'est pas valide. Elle doit être au format 'exemple@email.fr'.");
 
+        // TODO: use unique rule!
         if (!$validation->hasError("email", "maxLength"))
         {
             $emailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"));
@@ -65,6 +70,7 @@ class RegisterController extends Controller
             }
         }
 
+        // TODO: use unique rule!
         if (!$validation->hasError("login", "maxLength"))
         {
             $loginAlreadyTaken = User::loginAlreadyTaken($request->getInput("login"));
