@@ -2,6 +2,29 @@
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\Session\Session;
 
+$errors = $props->hasValidator()
+    ? $props->getValidator()->getErrors()
+    : [];
+
+$hasRequest = $props->hasRequest();
+
+$firstname = $hasRequest
+    ? $props->getRequest()->getInput("firstname")
+    : Session::getUserAccount()->getFirstname();
+
+$lastname = $hasRequest
+    ? $props->getRequest()->getInput("lastname")
+    : Session::getUserAccount()->getLastname();
+
+$login = $hasRequest
+    ? $props->getRequest()->getInput("login")
+    : Session::getUserAccount()->getLogin();
+
+$email = $hasRequest
+    ? $props->getRequest()->getInput("email")
+    : Session::getUserAccount()->getEmail();
+
+\MvcLite\Engine\DevelopmentUtilities\Debug::dump($errors);
 ?>
 
 <!doctype html>
@@ -71,14 +94,17 @@ use MvcLite\Engine\Session\Session;
               Mon profil
             </h3>
 
-            <form action="#" method="post">
+            <form action="<?= route("post.profile.save") ?>" method="post">
               <div class="form-component">
                 <label for="firstname">
                   <p>
                     Prénom :
                   </p>
 
-                  <input type="text" name="firstname" id="firstname" />
+                  <input type="text"
+                         name="firstname"
+                         id="firstname"
+                         value="<?= $firstname ?>" />
                 </label>
               </div>
 
@@ -88,7 +114,10 @@ use MvcLite\Engine\Session\Session;
                     Nom de famille :
                   </p>
 
-                  <input type="text" name="lastname" id="lastname" />
+                  <input type="text"
+                         name="lastname"
+                         id="lastname"
+                         value="<?= $lastname ?>" />
                 </label>
               </div>
 
@@ -98,7 +127,10 @@ use MvcLite\Engine\Session\Session;
                     Login :
                   </p>
 
-                  <input type="text" name="login" id="login" />
+                  <input type="text"
+                         name="login"
+                         id="login"
+                         value="<?= $login ?>" />
                 </label>
               </div>
 
@@ -108,7 +140,10 @@ use MvcLite\Engine\Session\Session;
                     Adresse e-mail :
                   </p>
 
-                  <input type="email" name="email" id="email" />
+                  <input type="email"
+                         name="email"
+                         id="email"
+                         value="<?= $email ?>" />
                 </label>
               </div>
 
@@ -118,10 +153,12 @@ use MvcLite\Engine\Session\Session;
                   Enregistrer
                 </button>
 
-                <button class="button-grey">
-                  <i class="fa-solid fa-eraser fa-xl"></i>
-                  Réinitialiser
-                </button>
+                <a href="<?= route("profile") ?>">
+                  <button class="button-grey" type="button">
+                    <i class="fa-solid fa-eraser fa-xl"></i>
+                    Réinitialiser
+                  </button>
+                </a>
               </div>
             </form>
           </section>
@@ -218,10 +255,12 @@ use MvcLite\Engine\Session\Session;
             </h3>
 
             <div class="buttons-container">
-              <button class="button-red">
-                Se désinscrire
-                <i class="fa-solid fa-right-from-bracket"></i>
-              </button>
+              <a class="button-link" href="<?= route("logout") ?>">
+                <button class="button-red">
+                  Se désinscrire
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+              </a>
             </div>
           </section>
         </div>
