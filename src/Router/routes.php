@@ -47,6 +47,9 @@ Router::get("/dashboard", DashboardController::class, "render")
 Router::get("/festivals", FestivalsController::class, "render")
     ->setName("festivals");
 
+Router::post("/festivals", FestivalsController::class, "render")
+    ->setName("post.festivals");
+
 
 Router::get("/create-festival", CreateFestivalController::class, "render")
     ->setName("createFestival");
@@ -61,11 +64,13 @@ Router::get("/create-spectacle", CreateSpectacleController::class, "render")
 Router::post("/create-spectacle", CreateSpectacleController::class, "createSpectacle")
     ->setName("post.createSpectacle");
 
+
 Router::get("/create-scene", CreateSceneController::class, "render")
     ->setName("createScene");
 
 Router::post("/create-scene", CreateSceneController::class, "createScene")
     ->setName("post.createScene");
+
 
 Router::get("/horaires-festival", HorairesFestivalController::class, "render")
     ->setName("horairesFestival");
@@ -77,5 +82,6 @@ Router::get("/profile", ProfileController::class, "render")
 Router::post("/profile/save", ProfileController::class, "save")
     ->setName("post.profile.save");
 
-Router::get("/create-festival/add-scene", CreateFestivalAddScenesController::class, "save")
-    ->setName("createFestival.addScene");
+
+Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
+    ->setName("addScene");

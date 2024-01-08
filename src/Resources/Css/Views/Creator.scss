@@ -3,6 +3,7 @@ $orange: #FF7A00;
 #create_festival,
 #create_spectacle,
 #horaires_festival,
+#add-scene,
 #create_scene {
     #main {
         @apply pt-24;
@@ -16,6 +17,9 @@ $orange: #FF7A00;
 
                     > .form-duo {
                     > .form-component {
+                      > .scene {
+                        @apply text-4xl font-bold;
+                      }
                     > label {
                     /* prepare wrapper element */
                     // .duration-container {
@@ -49,7 +53,7 @@ $orange: #FF7A00;
                     // .duration-container::after {
                     //   content: 'min';
                     // }
-                    
+
                     > .duration-container {
                         @apply inline-block relative;
                     }
