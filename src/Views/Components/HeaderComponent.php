@@ -37,7 +37,7 @@ use MvcLite\Engine\Session\Session;
 
         <div class="menu-dropdown-container">
         <div class="menu-dropdown">
-            <a href="#">
+            <a href="<?= route("profile") ?>">
             <i class="fa-solid fa-user fa-fw"></i>
             Mon profil
             </a>
