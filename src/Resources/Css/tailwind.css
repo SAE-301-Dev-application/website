@@ -207,7 +207,7 @@
         }
 
         > .festival-identity {
-            @apply flex-1 flex flex-col gap-y-5;
+            @apply flex-1 flex flex-col;
 
             & > .festival-header {
                 @apply flex justify-between gap-x-5;
