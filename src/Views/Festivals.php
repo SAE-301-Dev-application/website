@@ -48,24 +48,35 @@ use MvcLite\Models\Festival;
 
         <div class="festivals-grid">
 
-          <?php for ($i = $startIndex, $compteur = 1;
-                     $compteur <= 6 && $i < count($festivals);
-                     $i++, $compteur++) { ?>
+          <?php for ($i = $startIndex, $count = 1;
+                     $count <= 6 && $i < count($festivals);
+                     $i++, $count++) {
+          
+          $isFestivalInProgress = $festivals[$i]["en_cours_fe"] === 1;
+          ?>
 
-          <div class="festival-preview">
-            <div class="festival-picture"
-                 style="background: url('<?= Festival::getImagePathByName($festivals[$i]["illustration_fe"]) ?>') center / cover no-repeat;"></div>
+          <a href="<?= route("dashboard") ?>"> <!--?festival=<?= ""//$festivals[$i]["id_festival"] ?>"> TODO changer pour page festival -->
+            <div class="festival-preview">
+              <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
+                  style="background: url('<?= Festival::getImagePathByName($festivals[$i]["illustration_fe"]) ?>') center / cover no-repeat;">
+                <?php if ($isFestivalInProgress) { ?>
+                <div class="filter-in-progress">
+                  <p>en cours</p>
+                </div>
+                <?php } ?>
+              </div>
 
-            <div class="festival-identity">
-              <h3 class="festival-name">
-              <?= $festivals[$i]["nom_fe"] ?>
-              </h3>
+              <div class="festival-identity">
+                <h3 class="festival-name">
+                <?= $festivals[$i]["nom_fe"] ?>
+                </h3>
 
-              <p class="festival-description">
-              <?= $festivals[$i]["description_fe"] ?>
-              </p>
+                <p class="festival-description">
+                <?= $festivals[$i]["description_fe"] ?>
+                </p>
+              </div>
             </div>
-          </div>
+          </a>
 
           <?php } ?>
 
