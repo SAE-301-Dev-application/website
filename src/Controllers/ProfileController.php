@@ -5,6 +5,7 @@ namespace MvcLite\Controllers;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Validator;
+use MvcLite\Engine\Session\Session;
 use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Models\User;
 use MvcLite\Router\Engine\Redirect;
@@ -15,7 +16,7 @@ use MvcLite\Views\Engine\View;
 class ProfileController extends Controller
 {
     private const ERROR_REQUIRED_FIELD
-        = "Ce champ est requis";
+        = "Ce champ est requis.";
 
     private const ERROR_FIRSTNAME_EXCEEDING_MAX_LENGTH
         = "Votre prénom ne peut pas dépasser "
@@ -44,6 +45,20 @@ class ProfileController extends Controller
         = "Votre login ne peut avoir plus de "
         . User::LOGIN_MAX_LENGTH
         . " caractères.";
+
+    private const ERROR_EMAIL_TOO_SHORT
+        = "Votre adresse e-mail doit avoir "
+        . User::EMAIL_MIN_LENGTH
+        . " caractères au minimum.";
+
+    private const ERROR_EMAIL_EXCEEDING_MAX_LENGTH
+        = "Votre adresse e-mail ne peut avoir plus de "
+        . User::EMAIL_MAX_LENGTH
+        . " caractères.";
+
+    private const ERROR_EMAIL_SYNTAX
+        = "L'adresse e-mail renseignée n'est pas valide. 
+           Elle doit être au format 'exemple@email.fr'.";
 
     public function __construct()
     {
@@ -85,7 +100,26 @@ class ProfileController extends Controller
             ->maxLength("login",
                 User::LOGIN_MAX_LENGTH,
                 self::ERROR_LOGIN_EXCEEDING_MAX_LENGTH)
-        ;
+
+            ->minLength("email",
+                        User::EMAIL_MIN_LENGTH,
+                        self::ERROR_EMAIL_TOO_SHORT)
+            ->maxLength("email",
+                        User::EMAIL_MAX_LENGTH,
+                        self::ERROR_EMAIL_EXCEEDING_MAX_LENGTH)
+            ->email("email", self::ERROR_EMAIL_SYNTAX);
+
+        if (!$validation->hasFailed())
+        {
+            $user = User::getUserById(Session::getSessionId());
+
+            $user->setFirstname($request->getInput("firstname"));
+            $user->setLastname($request->getInput("lastname"));
+            $user->setLogin($request->getInput("login"));
+            $user->setEmail($request->getInput("email"));
+
+            $user->save();
+        }
 
         return Redirect::route("profile")
             ->withValidator($validation)
