@@ -22,6 +22,10 @@ class User extends Model
 
     public const LOGIN_MAX_LENGTH = 25;
 
+    public const EMAIL_MIN_LENGTH = 5;
+
+    public const EMAIL_MAX_LENGTH = 255;
+
     /** User id. */
     private int $id;
 
@@ -37,17 +41,21 @@ class User extends Model
     /** User login. */
     private string $login;
 
-    public function __construct(array $databaseUserRow)
+    /** User password. */
+    private string $password;
+
+    public function __construct()
     {
         parent::__construct();
 
-        $this->setTableName("utilisateur");
+        $this->setId(0);
+        $this->setFirstname("None");
+        $this->setLastname("None");
+        $this->setLogin("None");
+        $this->setEmail("None");
+        $this->setPassword("None");
 
-        $this->id = $databaseUserRow["id_utilisateur"];
-        $this->lastname = $databaseUserRow["nom_uti"];
-        $this->firstname = $databaseUserRow["prenom_uti"];
-        $this->email = $databaseUserRow["email_uti"];
-        $this->login = $databaseUserRow["login_uti"];
+        $this->setTableName("utilisateur");
     }
 
     /**
@@ -59,11 +67,29 @@ class User extends Model
     }
 
     /**
+     * @param int $id User id
+     * @return int User id
+     */
+    private function setId(int $id): int
+    {
+        return $this->id = $id;
+    }
+
+    /**
      * @return string User lastname
      */
     public function getLastname(): string
     {
         return $this->lastname;
+    }
+
+    /**
+     * @param string $lastname New lastname
+     * @return string New lastname
+     */
+    public function setLastname(string $lastname): string
+    {
+        return $this->lastname = $lastname;
     }
 
     /**
@@ -75,6 +101,15 @@ class User extends Model
     }
 
     /**
+     * @param string $firstname New firstname
+     * @return string New firstname
+     */
+    public function setFirstname(string $firstname): string
+    {
+        return $this->firstname = $firstname;
+    }
+
+    /**
      * @return string User email address
      */
     public function getEmail(): string
@@ -83,11 +118,66 @@ class User extends Model
     }
 
     /**
+     * @param string $email New email address
+     * @return string New email address
+     */
+    public function setEmail(string $email): string
+    {
+        return $this->email = $email;
+    }
+
+    /**
      * @return string User login
      */
     public function getLogin(): string
     {
         return $this->login;
+    }
+
+    /**
+     * @param string $login New login
+     * @return string New login
+     */
+    public function setLogin(string $login): string
+    {
+        return $this->login = $login;
+    }
+
+    /**
+     * @return string User login
+     */
+    private function getPassword(): string
+    {
+        return $this->login;
+    }
+
+    /**
+     * @param string $password New password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function save(): bool
+    {
+        $query = "UPDATE utilisateur
+                  SET prenom_uti = ?,
+                      nom_uti = ?,
+                      email_uti = ?,
+                      login_uti = ?,
+                      mdp_uti = ?
+                  WHERE id_utilisateur = ?";
+
+        $userSaving = Database::query($query,
+                                      $this->getFirstname(),
+                                      $this->getLastname(),
+                                      $this->getEmail(),
+                                      $this->getLogin(),
+                                      $this->getPassword(),
+                                      $this->getId());
+
+        return $userSaving->getExecutionState();
     }
 
     /**
@@ -160,8 +250,19 @@ class User extends Model
         $getUser = Database::query($query, $id);
         $user = $getUser->get();
 
-        return $user
-            ? new User($user)
-            : null;
+        if ($user)
+        {
+            $userInstance = new User();
+            $userInstance->setId($id);
+            $userInstance->setLastname($user["nom_uti"]);
+            $userInstance->setFirstname($user["prenom_uti"]);
+            $userInstance->setEmail($user["email_uti"]);
+            $userInstance->setLogin($user["login_uti"]);
+            $userInstance->setPassword($user["mdp_uti"]);
+
+            return $userInstance;
+        }
+
+        return null;
     }
 }
