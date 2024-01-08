@@ -53,7 +53,7 @@ $size = $hasRequest
 
 </head>
 <body>
-  <div id="create_festival">
+  <div id="create_scene">
 
     <?php
     Storage::component("HeaderComponent");

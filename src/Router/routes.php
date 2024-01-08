@@ -14,6 +14,7 @@ use MvcLite\Controllers\DashboardController;
 use MvcLite\Controllers\FestivalsController;
 use MvcLite\Controllers\CreateFestivalController;
 use MvcLite\Controllers\CreateSpectacleController;
+use MvcLite\Controllers\HorairesFestivalController;
 use MvcLite\Controllers\SessionController;
 use MvcLite\Router\Engine\Router;
 
@@ -64,6 +65,9 @@ Router::get("/create-scene", CreateSceneController::class, "render")
 
 Router::post("/create-scene", CreateSceneController::class, "createScene")
     ->setName("post.createScene");
+
+Router::get("/horaires-festival", HorairesFestivalController::class, "render")
+    ->setName("horairesFestival");
 
 
 Router::get("/profile", ProfileController::class, "render")
