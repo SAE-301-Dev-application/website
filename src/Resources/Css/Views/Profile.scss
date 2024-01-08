@@ -13,7 +13,7 @@ $orange: #FF7A00;
                 @apply xl:w-80 xl:flex-none relative;
 
                 > .menu-container {
-                    @apply flex flex-col gap-y-3 fixed xl:w-80;
+                    @apply flex flex-col gap-y-3 xl:fixed xl:w-80;
 
                     > a.link {
                         @apply bg-grey-light px-5 py-3 rounded-md font-bold relative;
