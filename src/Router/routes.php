@@ -6,6 +6,7 @@
  */
 
 
+use MvcLite\Controllers\CreateFestivalAddScenesController;
 use MvcLite\Controllers\CreateSceneController;
 use MvcLite\Controllers\IndexController;
 use MvcLite\Controllers\ProfileController;
@@ -75,3 +76,6 @@ Router::get("/profile", ProfileController::class, "render")
 
 Router::post("/profile/save", ProfileController::class, "save")
     ->setName("post.profile.save");
+
+Router::get("/create-festival/add-scene", CreateFestivalAddScenesController::class, "save")
+    ->setName("createFestival.addScene");
