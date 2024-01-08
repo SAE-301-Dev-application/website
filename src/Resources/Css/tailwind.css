@@ -51,7 +51,7 @@
         }
 
         .form-buttons {
-            @apply flex-wrap;
+            @apply flex-row;
         }
 
         .form-buttons-column {
@@ -82,7 +82,8 @@
         }
 
         &.button-blue,
-        &.button-grey {
+        &.button-grey,
+        &.button-red {
             @apply text-white;
         }
 
@@ -92,6 +93,14 @@
 
         &.button-grey {
             @apply bg-grey;
+        }
+
+        &.button-red {
+            @apply bg-red;
+        }
+
+        > i {
+            @apply mr-1;
         }
     }
 
@@ -187,7 +196,7 @@
     }
 
     .field-required {
-        @apply text-red-600;
+        @apply text-red;
     }
 
     .festival-preview {
@@ -198,9 +207,33 @@
         }
 
         > .festival-identity {
-            @apply flex-1 flex flex-col justify-between;
+            @apply flex-1 flex flex-col gap-y-5;
 
-            > h3.festival-name {
+            & > .festival-header {
+                @apply flex justify-between gap-x-5;
+
+                & > .festival-name-container {
+                    @apply flex items-center gap-x-5;
+
+                    > * {
+                        @apply flex-none;
+                    }
+
+                    > i {
+                        @apply text-orange;
+                    }
+                }
+
+                & > .festival-buttons-container {
+                    @apply flex justify-end gap-x-3;
+
+                    > button {
+                        @apply flex-none w-auto;
+                    }
+                }
+            }
+
+            & h3.festival-name {
                 @apply font-black text-4xl mb-1;
             }
         }
