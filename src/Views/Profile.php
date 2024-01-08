@@ -1,6 +1,7 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\Session\Session;
+use MvcLite\Models\User;
 
 $errors = $props->hasValidator()
     ? $props->getValidator()->getErrors()
@@ -23,8 +24,6 @@ $login = $hasRequest
 $email = $hasRequest
     ? $props->getRequest()->getInput("email")
     : Session::getUserAccount()->getEmail();
-
-\MvcLite\Engine\DevelopmentUtilities\Debug::dump($errors);
 ?>
 
 <!doctype html>
@@ -104,7 +103,15 @@ $email = $hasRequest
                   <input type="text"
                          name="firstname"
                          id="firstname"
-                         value="<?= $firstname ?>" />
+                         value="<?= $firstname ?>"
+                         maxlength="<?= User::FIRSTNAME_MAX_LENGTH ?>" />
+
+                  <?php
+                  Storage::component("InputErrorComponent", [
+                      "errors" => $errors,
+                      "input" => "firstname",
+                  ]);
+                  ?>
                 </label>
               </div>
 
@@ -117,7 +124,15 @@ $email = $hasRequest
                   <input type="text"
                          name="lastname"
                          id="lastname"
-                         value="<?= $lastname ?>" />
+                         value="<?= $lastname ?>"
+                         maxlength="<?= User::LASTNAME_MAX_LENGTH ?>" />
+
+                  <?php
+                  Storage::component("InputErrorComponent", [
+                      "errors" => $errors,
+                      "input" => "lastname",
+                  ]);
+                  ?>
                 </label>
               </div>
 
@@ -130,7 +145,16 @@ $email = $hasRequest
                   <input type="text"
                          name="login"
                          id="login"
-                         value="<?= $login ?>" />
+                         value="<?= $login ?>"
+                         minlength="<?= User::LOGIN_MIN_LENGTH ?>"
+                         maxlength="<?= User::LOGIN_MAX_LENGTH ?>" />
+
+                  <?php
+                  Storage::component("InputErrorComponent", [
+                      "errors" => $errors,
+                      "input" => "login",
+                  ]);
+                  ?>
                 </label>
               </div>
 
@@ -143,7 +167,16 @@ $email = $hasRequest
                   <input type="email"
                          name="email"
                          id="email"
-                         value="<?= $email ?>" />
+                         value="<?= $email ?>"
+                         minlength="<?= User::EMAIL_MIN_LENGTH ?>"
+                         maxlength="<?= User::EMAIL_MAX_LENGTH ?>" />
+
+                  <?php
+                  Storage::component("InputErrorComponent", [
+                      "errors" => $errors,
+                      "input" => "email",
+                  ]);
+                  ?>
                 </label>
               </div>
 
