@@ -2,6 +2,7 @@
 
 @import "Views/Index.css";
 @import "Views/Dashboard.css";
+@import "Views/Festivals.css";
 @import "Views/Creator.css";
 @import "Views/Profile.css";
 
@@ -207,7 +208,7 @@
         @apply flex gap-x-5;
 
         > .festival-picture {
-            @apply w-32 h-32 rounded-lg bg-blue flex-none;
+            @apply w-40 h-32 rounded-lg bg-blue flex-none;
         }
 
         > .festival-identity {
