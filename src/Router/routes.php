@@ -72,3 +72,6 @@ Router::get("/horaires-festival", HorairesFestivalController::class, "render")
 
 Router::get("/profile", ProfileController::class, "render")
     ->setName("profile");
+
+Router::post("/profile/save", ProfileController::class, "save")
+    ->setName("post.profile.save");
