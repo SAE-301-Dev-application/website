@@ -42,36 +42,36 @@ use MvcLite\Engine\InternalResources\Storage;
 
             <div class="festivals-list">
                 <div class="festival-preview">
-                <div class="festival-picture"></div>
+                  <div class="festival-picture"></div>
 
-                <div class="festival-identity">
-                    <h3 class="festival-name">
-                    Festival name
-                    </h3>
+                  <div class="festival-identity">
+                      <h3 class="festival-name">
+                      Festival name
+                      </h3>
 
-                    <p class="festival-description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Consequuntur delectus minus officiis porro possimus.
-                    Ab at dignissimos eum harum in, ipsum, maxime porro possimus
-                    provident quam quasi quo sint ullam.
-                    </p>
-                </div>
+                      <p class="festival-description">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Consequuntur delectus minus officiis porro possimus.
+                      Ab at dignissimos eum harum in, ipsum, maxime porro possimus
+                      provident quam quasi quo sint ullam.
+                      </p>
+                  </div>
 
-                <div class="festival-duration">
-                    <div class="beginning-date">
-                    01 janv. 2023
-                    </div>
+                  <div class="festival-duration">
+                      <div class="beginning-date">
+                      01 janv. 2023
+                      </div>
 
-                    <div class="duration-arrow">
-                    <svg width="61" height="19" viewBox="0 0 61 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 1L30.5 17.5L60.1045 1" stroke="#686868"/>
-                    </svg>
-                    </div>
+                      <div class="duration-arrow">
+                      <svg width="61" height="19" viewBox="0 0 61 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M1 1L30.5 17.5L60.1045 1" stroke="#686868"/>
+                      </svg>
+                      </div>
 
-                    <div class="ending-date">
-                    02 janv. 2023
-                    </div>
-                </div>
+                      <div class="ending-date">
+                      02 janv. 2023
+                      </div>
+                  </div>
                 </div>
             </div>
             </section>
