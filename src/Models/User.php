@@ -10,6 +10,18 @@ use MvcLite\Models\Engine\Model;
 
 class User extends Model
 {
+    public const FIRSTNAME_MAX_LENGTH = 25;
+
+    public const FIRSTNAME_REGEX = "/^[a-zA-ZÀ-ÿ\s\-']{1,25}$/u";
+
+    public const LASTNAME_MAX_LENGTH = 50;
+
+    public const LASTNAME_REGEX = "/^[a-zA-ZÀ-ÿ\s\-']{1,50}$/u";
+
+    public const LOGIN_MIN_LENGTH = 3;
+
+    public const LOGIN_MAX_LENGTH = 25;
+
     /** User id. */
     private int $id;
 
