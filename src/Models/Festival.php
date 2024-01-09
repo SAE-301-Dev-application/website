@@ -121,13 +121,6 @@ class Festival extends Model
         $this->endingDate = $endingDate;
     }
 
-    /**
-     * @return array Festival's categories
-     */
-    public function getCategories(): array
-    {
-        return [];  // todo stump
-    }
 
     /**
      * @return string Festival's illustration
@@ -143,6 +136,74 @@ class Festival extends Model
     public function setIllustration(?string $illustration): void
     {
         $this->illustration = $illustration;
+    }
+
+    /**
+     * @return array Festival's categories
+     */
+    public function getCategories(): array
+    {
+
+        $getCategoriesQuery
+            = "SELECT DISTINCT id_categorie
+               FROM festival_categorie
+               WHERE id_festival = ?
+               ORDER BY id_categorie;";
+
+        $result = Database::query($getCategoriesQuery, $id);
+
+        return $result->getAll();
+    }
+
+    /**
+     * @return array Festival's spectacles
+     */
+    public function getSpectacles(): array
+    {
+
+        $getSpectaclesQuery
+            = "SELECT DISTINCT id_spectacle
+               FROM festival_spectacle
+               WHERE id_festival = ?
+               ORDER BY id_spectacle;";
+
+        $result = Database::query($getSpectaclesQuery, $id);
+
+        return $result->getAll();
+    }
+
+    /**
+     * @return array Festival's scenes
+     */
+    public function getScenes(): array
+    {
+
+        $getSpectaclesQuery
+            = "SELECT DISTINCT id_scene
+               FROM festival_scene
+               WHERE id_festival = ?
+               ORDER BY id_scene;";
+
+        $result = Database::query($getSpectaclesQuery, $id);
+
+        return $result->getAll();
+    }
+
+    /**
+     * @return array Festival's scenes
+     */
+    public function getUtilisateurs(): array
+    {
+
+        $getSpectaclesQuery
+            = "SELECT DISTINCT id_utilisateur, role_uti
+               FROM festival_utilisateur
+               WHERE id_festival = ?
+               ORDER BY id_utilisateur, role_uti;";
+
+        $result = Database::query($getSpectaclesQuery, $id);
+
+        return $result->getAll();
     }
 
     /**
