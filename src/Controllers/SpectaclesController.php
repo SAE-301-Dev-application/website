@@ -8,9 +8,9 @@ use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Router\Engine\Redirect;
 use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
-use MvcLite\Models\Festival;
+use MvcLite\Models\Spectacle;
 
-class FestivalsController extends Controller
+class SpectaclesController extends Controller
 {
     public function __construct()
     {
@@ -20,35 +20,35 @@ class FestivalsController extends Controller
     }
 
     /**
-     * Festivals display view rendering.
+     * Spectacles display view rendering.
      * 
      * @param Request $request
      */
     public function render(Request $request): void
     {
-        $festivals = Festival::getFestivals();
+        $spectacles = Spectacle::getSpectacles();
 
         $startIndex = $request->getParameter("indice")
             ? intval($request->getParameter("indice")) ?? 0
             : 0;
 
-        $festivalsCount = count($festivals);
+        $spectaclesCount = count($spectacles);
 
-        if ($startIndex < 0 || $startIndex >= $festivalsCount
+        if ($startIndex < 0 || $startIndex >= $spectaclesCount
             || !is_int($startIndex) || $startIndex % 6 !== 0) {
-            Redirect::route("festivals");
+            Redirect::route("spectacles");
             die;
         }
 
-        $indexLastPage = $festivalsCount % 6 === 0
-            ? $festivalsCount - 6
-            : $festivalsCount - ($festivalsCount % 6);
+        $indexLastPage = $spectaclesCount % 6 === 0
+            ? $spectaclesCount - 6
+            : $spectaclesCount - ($spectaclesCount % 6);
         
         $previousVisibility = $startIndex === 0 ? " invisible" : "";
-        $nextVisibility = $startIndex + 6 >= $festivalsCount ? " invisible" : "";
+        $nextVisibility = $startIndex + 6 >= $spectaclesCount ? " invisible" : "";
 
-        View::render("Festivals", [
-            "festivals" => $festivals,
+        View::render("Spectacles", [
+            "spectacles" => $spectacles,
             "startIndex" => $startIndex,
             "indexLastPage" => $indexLastPage,
             "previousVisibility" => $previousVisibility,

@@ -7,7 +7,7 @@ if (isset($errors[$input]))
     {
 ?>
 
-        <li class="field-required">
+        <li class="input-error">
             <?= $value; ?>
         </li>
 

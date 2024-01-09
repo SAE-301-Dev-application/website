@@ -3,6 +3,7 @@
 namespace MvcLite\Models;
 
 use MvcLite\Database\Engine\Database;
+use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Session\Session;
@@ -10,6 +11,24 @@ use MvcLite\Models\Engine\Model;
 
 class User extends Model
 {
+    public const FIRSTNAME_MAX_LENGTH = 25;
+
+    public const FIRSTNAME_REGEX = "/^[a-zA-ZÀ-ÿ\s\-']{1,25}$/u";
+
+    public const LASTNAME_MAX_LENGTH = 50;
+
+    public const LASTNAME_REGEX = "/^[a-zA-ZÀ-ÿ\s\-']{1,50}$/u";
+
+    public const LOGIN_MIN_LENGTH = 3;
+
+    public const LOGIN_MAX_LENGTH = 25;
+
+    public const EMAIL_MIN_LENGTH = 5;
+
+    public const EMAIL_MAX_LENGTH = 255;
+
+    public const PASSWORD_MIN_LENGTH = 8;
+
     /** User id. */
     private int $id;
 
@@ -25,17 +44,21 @@ class User extends Model
     /** User login. */
     private string $login;
 
-    public function __construct(array $databaseUserRow)
+    /** User password. */
+    private string $password;
+
+    public function __construct()
     {
         parent::__construct();
 
-        $this->setTableName("utilisateur");
+        $this->setId(0);
+        $this->setFirstname("None");
+        $this->setLastname("None");
+        $this->setLogin("None");
+        $this->setEmail("None");
+        $this->setPassword("None");
 
-        $this->id = $databaseUserRow["id_utilisateur"];
-        $this->lastname = $databaseUserRow["nom_uti"];
-        $this->firstname = $databaseUserRow["prenom_uti"];
-        $this->email = $databaseUserRow["email_uti"];
-        $this->login = $databaseUserRow["login_uti"];
+        $this->setTableName("utilisateur");
     }
 
     /**
@@ -47,11 +70,29 @@ class User extends Model
     }
 
     /**
+     * @param int $id User id
+     * @return int User id
+     */
+    private function setId(int $id): int
+    {
+        return $this->id = $id;
+    }
+
+    /**
      * @return string User lastname
      */
     public function getLastname(): string
     {
         return $this->lastname;
+    }
+
+    /**
+     * @param string $lastname New lastname
+     * @return string New lastname
+     */
+    public function setLastname(string $lastname): string
+    {
+        return $this->lastname = $lastname;
     }
 
     /**
@@ -63,6 +104,15 @@ class User extends Model
     }
 
     /**
+     * @param string $firstname New firstname
+     * @return string New firstname
+     */
+    public function setFirstname(string $firstname): string
+    {
+        return $this->firstname = $firstname;
+    }
+
+    /**
      * @return string User email address
      */
     public function getEmail(): string
@@ -71,11 +121,109 @@ class User extends Model
     }
 
     /**
+     * @param string $email New email address
+     * @return string New email address
+     */
+    public function setEmail(string $email): string
+    {
+        return $this->email = $email;
+    }
+
+    /**
      * @return string User login
      */
     public function getLogin(): string
     {
         return $this->login;
+    }
+
+    /**
+     * @param string $login New login
+     * @return string New login
+     */
+    public function setLogin(string $login): string
+    {
+        return $this->login = $login;
+    }
+
+    /**
+     * @return string User login
+     */
+    private function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password New password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return DatabaseQuery User's festivals
+     */
+    public function getFestivals(): DatabaseQuery
+    {
+        $query = "SELECT *
+                  FROM festival
+                  INNER JOIN festiplan.festival_utilisateur fu 
+                      on festival.id_festival = fu.id_festival
+                  WHERE fu.id_utilisateur = ?";
+
+        $festivals = Database::query($query, $this->getId());
+
+        return $festivals;
+    }
+
+    /**
+     * @return DatabaseQuery User's spectacles
+     */
+    public function getSpectacles(): DatabaseQuery
+    {
+        $query = "SELECT *
+                  FROM spectacle
+                  INNER JOIN spectacle_intervenant si
+                      on spectacle.id_spectacle = si.id_spectacle
+                  WHERE si.id_intervenant = ?";
+
+        $spectacles = Database::query($query, $this->getId());
+
+        return $spectacles;
+    }
+
+    /**
+     * Verify given password with session user one.
+     *
+     * @param string $password Given password
+     * @return bool If given password is the good one
+     */
+    public function verifyPassword(string $password): bool
+    {
+        return Password::verify($password, $this->getPassword());
+    }
+
+    public function save(): bool
+    {
+        $query = "UPDATE utilisateur
+                  SET prenom_uti = ?,
+                      nom_uti = ?,
+                      email_uti = ?,
+                      login_uti = ?,
+                      mdp_uti = ?
+                  WHERE id_utilisateur = ?";
+
+        $userSaving = Database::query($query,
+                                      $this->getFirstname(),
+                                      $this->getLastname(),
+                                      $this->getEmail(),
+                                      $this->getLogin(),
+                                      $this->getPassword(),
+                                      $this->getId());
+
+        return $userSaving->getExecutionState();
     }
 
     /**
@@ -148,8 +296,37 @@ class User extends Model
         $getUser = Database::query($query, $id);
         $user = $getUser->get();
 
-        return $user
-            ? new User($user)
-            : null;
+        if ($user)
+        {
+            $userInstance = new User();
+            $userInstance->setId($id);
+            $userInstance->setLastname($user["nom_uti"]);
+            $userInstance->setFirstname($user["prenom_uti"]);
+            $userInstance->setEmail($user["email_uti"]);
+            $userInstance->setLogin($user["login_uti"]);
+            $userInstance->setPassword($user["mdp_uti"]);
+
+            return $userInstance;
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns User array by using DatabaseQuery object.
+     *
+     * @param DatabaseQuery $queryObject
+     * @return array users array
+     */
+    public static function queryToArray(DatabaseQuery $queryObject): array
+    {
+        $modelArray = [];
+
+        while ($line = $queryObject->get())
+        {
+            $modelArray[] = self::getUserById($line["id_utilisateur"]);
+        }
+
+        return $modelArray;
     }
 }

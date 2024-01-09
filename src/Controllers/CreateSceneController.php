@@ -121,11 +121,15 @@ class CreateSceneController extends Controller
                           $request->getInput("max_seats"),
                           $request->getInput("latitude"),
                           $request->getInput("longitude"));
-        }
 
-        return Redirect::route("createScene")
-            ->withRequest($request)
-            ->withValidator($validation)
-            ->redirect();
+            return Redirect::route("dashboard"); // TODO A modifier
+        }
+        else
+        {
+          return Redirect::route("createScene")
+              ->withRequest($request)
+              ->withValidator($validation)
+              ->redirect();
+        }
     }
 }

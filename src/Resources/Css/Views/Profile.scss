@@ -2,10 +2,74 @@ $orange: #FF7A00;
 
 #profile_main {
     #main {
-        @apply grid grid-cols-2 gap-x-10;
-
         > h1.username {
-            @apply font-light text-5xl;
+            @apply font-light text-5xl mb-10;
+        }
+
+        > .main-grid {
+            @apply flex flex-col xl:flex-row gap-x-16 gap-y-10;
+
+            > .left-side {
+                @apply xl:w-80 xl:flex-none relative;
+
+                > .menu-container {
+                    @apply flex flex-col gap-y-3 xl:fixed xl:w-80;
+
+                    > a.link {
+                        @apply bg-grey-light px-5 py-3 rounded-md font-bold relative;
+
+                        &.active-link {
+                            @apply bg-neutral-300;
+
+                            &::before {
+                                @apply content-[''] w-4 inset-y-0 absolute -left-6 bg-blue rounded-md;
+                            }
+                        }
+                    }
+                }
+            }
+
+            > .main-side {
+                @apply xl:flex-1 flex flex-col gap-y-10;
+
+                > section {
+                    &#settings {
+                        > .buttons-container {
+                            @apply flex flex-wrap gap-x-5;
+
+                            > a.button-link {
+                                @apply xl:w-1/5;
+                            }
+                        }
+                    }
+
+                    > .festivals-container {
+                        @apply flex flex-col gap-y-5;
+
+                        > .festival-preview {
+                            > .festival-picture {
+                                @apply w-48 h-40;
+                            }
+
+                            & .festival-header {
+                                @apply mb-5;
+                            }
+                        }
+                    }
+
+                    > h3.section-title {
+                        @apply font-black border-b border-neutral-300 text-4xl pb-5 mb-5;
+                    }
+
+                    > .forms-container {
+                        @apply grid grid-cols-1 xl:grid-cols-2 gap-10;
+
+                        > form {
+                            @apply w-2/3 flex flex-col gap-y-5;
+                        }
+                    }
+                }
+            }
         }
     }
 }

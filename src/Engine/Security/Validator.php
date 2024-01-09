@@ -4,6 +4,7 @@ namespace MvcLite\Engine\Security;
 
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Entities\File;
+use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Engine\Model;
 use MvcLite\Router\Engine\Exceptions\UndefinedFileException;
 use MvcLite\Router\Engine\Exceptions\UndefinedInputException;
@@ -57,12 +58,6 @@ class Validator
         foreach ($inputs as $input)
         {
             $inputValue = $this->getRequest()->getInput($input);
-
-            if ($inputValue === null)
-            {
-                $error = new UndefinedInputException($input);
-                $error->render();
-            }
 
             $isFilled = $inputValue !== null && strlen(trim($inputValue));
 
@@ -580,6 +575,45 @@ class Validator
         }
 
         $this->validationState &= $isNotUsed;
+
+        return $this;
+    }
+
+    /**
+     * Verify given password with session account one.
+     *
+     * @param string $input Key of the input to validate
+     * @param string|null $error Optional custom error message
+     * @return $this Current validator instance
+     */
+    public function password(string $input, ?string $error = null): Validator
+    {
+        $notLoggedDefaultError = "You must be logged to an account.";
+        $wrongPasswordDefaultError = "Wrong account information.";
+
+        $inputValue = $this->getRequest()->getInput($input);
+
+        if ($inputValue === null)
+        {
+            $error = new UndefinedInputException($input);
+            $error->render();
+        }
+
+        if (!Session::isLogged())
+        {
+            $this->addError("password", $input, $notLoggedDefaultError);
+        }
+        else
+        {
+            $isGoodPassword = Session::getUserAccount()->verifyPassword($inputValue);
+
+            if (!$isGoodPassword)
+            {
+                $this->addError("password", $input, $error ?? $wrongPasswordDefaultError);
+            }
+
+            $this->validationState &= $isGoodPassword;
+        }
 
         return $this;
     }

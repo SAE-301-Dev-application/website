@@ -1,6 +1,6 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
-use MvcLite\Models\Festival;
+use MvcLite\Models\Spectacle;
 ?>
 
 <!doctype html>
@@ -10,7 +10,7 @@ use MvcLite\Models\Festival;
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Les festivals - Festiplan</title>
+  <title>Les spectacles - Festiplan</title>
 
   <!-- CSS -->
   <?php
@@ -25,54 +25,47 @@ use MvcLite\Models\Festival;
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  <div id="festivals_main">
+  <div id="spectacles_main">
       
     <?php
     Storage::component("HeaderComponent");
     ?>
 
     <div id="main">
-      <section id="all_festivals">
+      <section id="all_spectacles">
         <div class="title-container">
           <h2 class="title">
-          Tous les festivals
+          Tous les spectacles
           </h2>
 
-          <a href="<?= route("createFestival") ?>">
+          <a href="<?= route("createSpectacle") ?>">
             <button class="button-blue">
               <i class="fa-solid fa-plus"></i>
-              Créer un festival
+              Créer un spectacle
             </button>
           </a>
         </div>
 
-        <div class="festivals-grid">
+        <div class="spectacles-grid">
 
           <?php for ($i = $startIndex, $count = 1;
-                     $count <= 6 && $i < count($festivals);
+                     $count <= 6 && $i < count($spectacles);
                      $i++, $count++) {
-          
-          $isFestivalInProgress = $festivals[$i]["en_cours_fe"] === 1;
           ?>
 
-          <a href="<?= route("dashboard") ?>"> <!--?festival=<?= ""//$festivals[$i]["id_festival"] ?>"> TODO changer pour page festival -->
-            <div class="festival-preview">
-              <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
-                  style="background: url('<?= Festival::getImagePathByName($festivals[$i]["illustration_fe"]) ?>') center / cover no-repeat;">
-                <?php if ($isFestivalInProgress) { ?>
-                <div class="filter-in-progress">
-                  <p>en cours</p>
-                </div>
-                <?php } ?>
+          <a href="<?= route("dashboard") ?>"> <!--?spectacle=<?= ""//$spectacles[$i]["id_spectacle"] ?>"> TODO changer pour page spectacle -->
+            <div class="spectacle-preview">
+              <div class="spectacle-picture"
+                   style="background: url('<?= Spectacle::getImagePathByName($spectacles[$i]["illustration_sp"]) ?>') center / cover no-repeat;">
               </div>
 
-              <div class="festival-identity">
-                <h3 class="festival-name">
-                <?= $festivals[$i]["nom_fe"] ?>
+              <div class="spectacle-identity">
+                <h3 class="spectacle-title">
+                <?= $spectacles[$i]["titre_sp"] ?>
                 </h3>
 
-                <p class="festival-description">
-                <?= $festivals[$i]["description_fe"] ?>
+                <p class="spectacle-description">
+                <?= $spectacles[$i]["description_sp"] ?>
                 </p>
               </div>
             </div>
@@ -85,21 +78,21 @@ use MvcLite\Models\Festival;
 
       <div class="pagination">
         <div class="previous-links<?= $previousVisibility ?>">
-          <a href="<?= route("festivals") ?>?indice=0">
+          <a href="<?= route("spectacles") ?>?indice=0">
             <i class="fa-solid fa-angles-left"></i>
           </a>
 
-          <a href="<?= route("festivals") ?>?indice=<?= $startIndex - 6 ?>">
+          <a href="<?= route("spectacles") ?>?indice=<?= $startIndex - 6 ?>">
             <i class="fa-solid fa-angle-left"></i>
           </a>
         </div>
 
         <div class="next-links<?= $nextVisibility ?>">
-          <a href="<?= route("festivals") ?>?indice=<?= $startIndex + 6 ?>">
+          <a href="<?= route("spectacles") ?>?indice=<?= $startIndex + 6 ?>">
             <i class="fa-solid fa-angle-right"></i>
           </a>
 
-          <a href="<?= route("festivals") ?>?indice=<?= $indexLastPage ?>">
+          <a href="<?= route("spectacles") ?>?indice=<?= $indexLastPage ?>">
             <i class="fa-solid fa-angles-right"></i>
           </a>
         </div>

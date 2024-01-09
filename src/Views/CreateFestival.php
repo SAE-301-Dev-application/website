@@ -272,7 +272,7 @@ $illustrationPath = ROUTE_PATH_PREFIX
 
                   <input type="file" name="illustration"
                          id="picture_input"
-                         accept=".png,.jpeg,.gif" />
+                         accept=".png,.jpeg,.jpg,.gif" />
                 </div>
 
                 <?php
