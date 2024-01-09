@@ -2,6 +2,7 @@
 
 namespace MvcLite\Controllers;
 
+use MvcLite\Database\Engine\Pagination;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Middlewares\AuthMiddleware;
@@ -26,33 +27,30 @@ class FestivalsController extends Controller
      */
     public function render(Request $request): void
     {
-        $festivals = Festival::getFestivals();
-
-        $startIndex = $request->getParameter("indice")
-            ? intval($request->getParameter("indice")) ?? 0
-            : 0;
-
-        $festivalsCount = count($festivals);
-
-        if ($startIndex < 0 || $startIndex >= $festivalsCount
-            || !is_int($startIndex) || $startIndex % 6 !== 0) {
-            Redirect::route("festivals");
-            die;
-        }
-
-        $indexLastPage = $festivalsCount % 6 === 0
-            ? $festivalsCount - 6
-            : $festivalsCount - ($festivalsCount % 6);
-        
-        $previousVisibility = $startIndex === 0 ? " link-disabled" : "";
-        $nextVisibility = $startIndex + 6 >= $festivalsCount ? " link-disabled" : "";
+        $pageNumber = $request->getParameter("page") ?? 1;
 
         View::render("Festivals", [
-            "festivals" => $festivals,
-            "startIndex" => $startIndex,
-            "indexLastPage" => $indexLastPage,
-            "previousVisibility" => $previousVisibility,
-            "nextVisibility" => $nextVisibility,
+            "festivals"     => self::getPageFestivals($pageNumber),
+            "pagesCount"    => self::getPagesCount(),
         ]);
+    }
+
+    private static function getFestivalsPagination(): Pagination
+    {
+        $festivals = Festival::queryToArray(Festival::getFestivals());
+
+        return new Pagination($festivals, 6);
+    }
+
+    private static function getPageFestivals(int $pageNumber): array
+    {
+        return self::getFestivalsPagination()
+            ->getPage($pageNumber);
+    }
+
+    private static function getPagesCount(): int
+    {
+        return self::getFestivalsPagination()
+            ->count();
     }
 }
