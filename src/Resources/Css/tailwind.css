@@ -375,8 +375,20 @@
     .popup-container {
         @apply z-[100] fixed inset-0 bg-[rgba(0,0,0,.4)] flex justify-center items-center;
 
+        &.popup-hidden {
+            @apply hidden;
+        }
+
         > .popup {
-            @apply bg-white shadow-md rounded-lg p-5 text-black;
+            @apply bg-white shadow-md rounded-lg p-5 text-black w-1/2 relative;
+
+            > .popup-close-button {
+                @apply absolute right-5 top-5 text-xl;
+
+                &:hover {
+                    @apply cursor-pointer opacity-60;
+                }
+            }
 
             > h3.popup-title {
                 @apply font-black text-4xl mb-5;
