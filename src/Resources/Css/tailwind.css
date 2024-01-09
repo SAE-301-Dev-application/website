@@ -200,8 +200,8 @@
         }
     }
 
-    .field-required {
-        @apply text-red;
+    .input-error {
+        @apply text-red text-sm;
     }
 
     .festival-preview {
@@ -346,6 +346,22 @@
             &:not(:last-child) {
                 @apply mb-5;
             }
+        }
+    }
+
+    .alert {
+        @apply rounded-xl p-5 font-semibold flex gap-x-5 items-center;
+
+        &.alert-grey {
+            @apply bg-grey text-white;
+        }
+
+        > .alert-icon {
+            @apply flex-none text-3xl;
+        }
+
+        > .alert-content {
+            @apply flex-1;
         }
     }
 
