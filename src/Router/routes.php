@@ -13,6 +13,7 @@ use MvcLite\Controllers\ProfileController;
 use MvcLite\Controllers\RegisterController;
 use MvcLite\Controllers\DashboardController;
 use MvcLite\Controllers\FestivalsController;
+use MvcLite\Controllers\SpectaclesController;
 use MvcLite\Controllers\CreateFestivalController;
 use MvcLite\Controllers\CreateSpectacleController;
 use MvcLite\Controllers\GrijFestivalController;
@@ -47,8 +48,9 @@ Router::get("/dashboard", DashboardController::class, "render")
 Router::get("/festivals", FestivalsController::class, "render")
     ->setName("festivals");
 
-Router::post("/festivals", FestivalsController::class, "render")
-    ->setName("post.festivals");
+
+Router::get("/spectacles", SpectaclesController::class, "render")
+    ->setName("spectacles");
 
 
 Router::get("/create-festival", CreateFestivalController::class, "render")
