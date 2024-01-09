@@ -457,18 +457,16 @@ class Festival extends Model
     /**
      * Get all festivals.
      * 
-     * @return array Festivals
+     * @return DatabaseQuery All festivals DatabaseQuery object
      */
-    public static function getFestivals(): array
+    public static function getFestivals(): DatabaseQuery
     {
         $getFestivalsQuery
             = "SELECT *
                FROM festival
                ORDER BY date_debut_fe ASC, date_fin_fe ASC;";
 
-        $result = Database::query($getFestivalsQuery);
-
-        return Festival::queryToArray($result);
+        return Database::query($getFestivalsQuery);
     }
 
     /**
