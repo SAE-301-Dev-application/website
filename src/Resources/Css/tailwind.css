@@ -51,6 +51,20 @@
             }
         }
 
+        .form-input-button {
+            @apply flex gap-x-3;
+
+            > input,
+            > select,
+            > textarea {
+                @apply flex-1;
+            }
+
+            > button {
+                @apply flex-none w-auto;
+            }
+        }
+
         .form-buttons,
         .form-buttons-column {
             @apply flex gap-5;
@@ -334,7 +348,7 @@
     }
 
     .form-help-box {
-        @apply rounded-xl bg-grey-light text-grey p-5;
+        @apply rounded-xl bg-grey-light text-grey p-5 hidden xl:block;
 
         > .box-header {
             @apply flex items-center mb-5;

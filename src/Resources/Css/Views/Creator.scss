@@ -11,7 +11,9 @@ $orange: #FF7A00;
         .form-grid {
             @apply grid grid-cols-3 gap-x-20 mb-7;
 
-            > section {
+            section {
+                @apply col-span-full xl:col-span-1;
+
                 &#general_information {
                 @apply flex flex-col gap-y-10;
 
@@ -92,6 +94,28 @@ $orange: #FF7A00;
                     }
                 }
                 }
+
+                &#search_scene {
+                    @apply mb-10;
+                }
+
+                &#current_scenes {
+                    > .scene-container {
+                        @apply flex justify-between items-center gap-x-3;
+
+                        > h3.scene-name {
+                            @apply font-black text-3xl;
+                        }
+
+                        > button {
+                            @apply w-auto;
+                        }
+                    }
+                }
+            }
+
+            > .main-container {
+                @apply col-span-full xl:col-span-1;
             }
 
             > .form-help-box {
