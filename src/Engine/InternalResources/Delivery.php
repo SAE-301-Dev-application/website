@@ -2,6 +2,7 @@
 
 namespace MvcLite\Engine\InternalResources;
 
+use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Router\Engine\Request;
 
@@ -35,8 +36,8 @@ class Delivery
 
     public function __construct()
     {
-        $this->validator = null;
-        $this->request = null;
+        $this->request = new Request();
+        $this->validator = new Validator($this->getRequest());
         $this->props = [];
     }
 
