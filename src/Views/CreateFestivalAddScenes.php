@@ -59,13 +59,12 @@ $errors = $props->hasValidator()
                     <p>
                       Rechercher une scène :
                     </p>
-                    <input type="text" name="scenes" id="scenes"/>
-
+                    <input type="text" name="scenes" id="scenes" />
                   </label>
                 </div>
 
                 <div class="form-component">
-                  <button class="button-blue">
+                  <button class="button-blue buttons-add-scene">
                     Rechercher
                   </button>
                 </div>
@@ -77,7 +76,7 @@ $errors = $props->hasValidator()
                 </div>
 
                 <div class="form-component">
-                  <button class="button-red" id="suppress1" name="suppress1">
+                  <button class="button-red buttons-add-scene" id="suppress1" name="suppress1">
                     Supprimer
                   </button>
                 </div>
@@ -89,7 +88,7 @@ $errors = $props->hasValidator()
                 </div>
 
                 <div class="form-component">
-                  <button class="button-red">
+                  <button class="button-red buttons-add-scene">
                     Supprimer
                   </button>
                 </div>
@@ -101,7 +100,7 @@ $errors = $props->hasValidator()
                 </div>
 
                 <div class="form-component">
-                  <button class="button-red">
+                  <button class="button-red buttons-add-scene">
                     Supprimer
                   </button>
                 </div>
@@ -141,6 +140,9 @@ $errors = $props->hasValidator()
       </div>
     </section>
   </div>
+    <div class="mb-40">
+
+    </div>
 
     <?php
     Storage::component("FooterComponent");
