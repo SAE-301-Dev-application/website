@@ -26,8 +26,8 @@ use MvcLite\Engine\Session\Session;
 
       </a>
 
-      <a href="#"
-         <?= $props->getProps()["currentRoute"]->getPath() == "#" ? "class=\"active-link\"" : "" ?>>
+      <a href="<?= route("spectacles") ?>"
+         <?= $props->getProps()["currentRoute"]->getPath() == "/spectacles" ? "class=\"active-link\"" : "" ?>>
 
         <i class="fa-solid fa-masks-theater"></i>
         Spectacles
