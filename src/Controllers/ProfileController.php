@@ -195,6 +195,21 @@ class ProfileController extends Controller
             ->redirect();
     }
 
+    public function deleteSpectacle(Request $request): RedirectResponse
+    {
+        $spectacleId = $request->getParameter("spectacleId");
+        $spectacle = Spectacle::getSpectacleById($spectacleId);
+        $isMySpectacle = true;  // TODO STUB
+
+        if ($spectacleId !== null && $spectacle !== null && $isMySpectacle)
+        {
+            $spectacle->delete();
+        }
+
+        return Redirect::route("profile")
+            ->redirect();
+    }
+
     /**
      * @return array Session user's festivals
      */
@@ -203,6 +218,9 @@ class ProfileController extends Controller
         return Festival::queryToArray(Session::getUserAccount()->getFestivals());
     }
 
+    /**
+     * @return array Session user's spectacles
+     */
     private static function getUserSpectacles(): array
     {
         return Spectacle::queryToArray(Session::getUserAccount()->getSpectacles());
