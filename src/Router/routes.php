@@ -93,6 +93,7 @@ Router::post("/profile/new-password/save",
     "saveNewPassword")
     ->setName("post.profile.newPassword.save");
 
+    
 Router::get("/informations-festival", InformationsFestivalController::class, "render")
     ->setName("informationsFestival");
 

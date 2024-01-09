@@ -1,6 +1,9 @@
 <?php
+use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Models\Festival;
+
+$festivalsUploadsPath = Storage::getResourcesPath() . "/Medias/Images/FestivalsUploads/";
 ?>
 
 <!doctype html>
@@ -35,16 +38,44 @@ use MvcLite\Models\Festival;
       <section id="all_festivals">
         <div class="title-container">
           <h2 class="title">
-          Tous les festivals
+            <!-- A rendre dynamique -->
+            <?= $name ?>
           </h2>
 
-          <a href="<?= route("createFestival") ?>">
+          <a href="<?= route("")//TODO mettre la route ?>">
             <button class="button-blue">
               <i class="fa-solid fa-plus"></i>
-              Créer un festival
+              Voir la planification
+            </button>
+          </a>
+
+          <a href="<?= route("")//TODO mettre la route ?>">
+            <button class="button-blue">
+              <i class="fa-solid fa-plus"></i>
+              Modifier festival
             </button>
           </a>
         </div>
+        <!-- A rendre dynamique -->
+        <?php
+            foreach ($categories as $categorie) {
+                echo $categorie;
+            }
+        ?>
+        
+        <div>
+          <!-- A rendre dynamique -->
+          <img src="<?= $festivalsUploadsPath . $illustration ?>" alt="logo du festival">
+
+        </div>
+
+
+
+
+
+
+
+
 
         <div class="festivals-grid">
 
@@ -53,10 +84,9 @@ use MvcLite\Models\Festival;
                      $i++, $count++) {
           
           $isFestivalInProgress = $festivals[$i]["en_cours_fe"] === 1;
-          $idFestival = $festivals[$i]["id_festival"];
           ?>
 
-          <a href="<?= route("informationsFestival") ?>?id=<?=$idFestival?>">
+          <a href="<?= route("dashboard") ?>"> <!--?festival=<?= ""//$festivals[$i]["id_festival"] ?>"> TODO changer pour page festival -->
             <div class="festival-preview">
               <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
                   style="background: url('<?= Festival::getImagePathByName($festivals[$i]["illustration_fe"]) ?>') center / cover no-repeat;">
