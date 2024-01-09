@@ -1,30 +1,9 @@
-const BODY = $('body');
+const TOGGLING_POPUP_ELEMENTS = $('#unsubscribe_button, .popup > .popup-close-button'),
+      CONFIRMATION_POPUP = $('#popup_confirm_account_deleting');
 
-const UNSUBSCRIBE_BUTTON = $('#unsubscribe-button');
+console.log("importé");
 
-const CONFIRMATION_POPUP = $('#profile_main > #confirmation-popup');
-
-let popupVisible = false;
-
-UNSUBSCRIBE_BUTTON.on('click', () => {
-    confirmationPopup();
+TOGGLING_POPUP_ELEMENTS.on('click', () => {
+    console.log("cliqué", CONFIRMATION_POPUP);
+    CONFIRMATION_POPUP.toggleClass("popup-hidden");
 });
-
-/**
- * Makes the unsubscribe confirmation pop-up visible.
- */
-function confirmationPopup() {
-    if (!popupVisible) {
-        BODY.addClass('hide-overflow');
-
-    } else {
-        BODY.removeClass('hide-overflow');
-    }
-}
-
-/**
- * Redirects the user to the unsubscribe page.
- */
-function unsubscribe() {
-    header("Location: /unsubscribe");
-}
