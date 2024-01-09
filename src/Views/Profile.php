@@ -9,6 +9,7 @@ $errors = $props->hasValidator()
 
 $hasRequest = $props->hasRequest();
 
+
 $firstname = $hasRequest
     ? $props->getRequest()->getInput("firstname")
     : Session::getUserAccount()->getFirstname();
@@ -93,107 +94,177 @@ $email = $hasRequest
               Mon profil
             </h3>
 
-            <form action="<?= route("post.profile.save") ?>" method="post">
-              <div class="form-component">
-                <label for="firstname">
-                  <p>
-                    Prénom :
-                  </p>
+            <div class="forms-container">
+                <form action="<?= route("post.profile.generalInformation.save") ?>" method="post">
+                    <div class="form-component">
+                        <label for="firstname">
+                            <p>
+                                Prénom :
+                            </p>
 
-                  <input type="text"
-                         name="firstname"
-                         id="firstname"
-                         value="<?= $firstname ?>"
-                         maxlength="<?= User::FIRSTNAME_MAX_LENGTH ?>" />
+                            <input type="text"
+                                   name="firstname"
+                                   id="firstname"
+                                   value="<?= $firstname ?>"
+                                   maxlength="<?= User::FIRSTNAME_MAX_LENGTH ?>" />
 
-                  <?php
-                  Storage::component("InputErrorComponent", [
-                      "errors" => $errors,
-                      "input" => "firstname",
-                  ]);
-                  ?>
-                </label>
-              </div>
+                            <?php
+                            Storage::component("InputErrorComponent", [
+                                "errors" => $errors,
+                                "input" => "firstname",
+                            ]);
+                            ?>
+                        </label>
+                    </div>
 
-              <div class="form-component">
-                <label for="lastname">
-                  <p>
-                    Nom de famille :
-                  </p>
+                    <div class="form-component">
+                        <label for="lastname">
+                            <p>
+                                Nom de famille :
+                            </p>
 
-                  <input type="text"
-                         name="lastname"
-                         id="lastname"
-                         value="<?= $lastname ?>"
-                         maxlength="<?= User::LASTNAME_MAX_LENGTH ?>" />
+                            <input type="text"
+                                   name="lastname"
+                                   id="lastname"
+                                   value="<?= $lastname ?>"
+                                   maxlength="<?= User::LASTNAME_MAX_LENGTH ?>" />
 
-                  <?php
-                  Storage::component("InputErrorComponent", [
-                      "errors" => $errors,
-                      "input" => "lastname",
-                  ]);
-                  ?>
-                </label>
-              </div>
+                            <?php
+                            Storage::component("InputErrorComponent", [
+                                "errors" => $errors,
+                                "input" => "lastname",
+                            ]);
+                            ?>
+                        </label>
+                    </div>
 
-              <div class="form-component">
-                <label for="login">
-                  <p>
-                    Login :
-                  </p>
+                    <div class="form-component">
+                        <label for="login">
+                            <p>
+                                Login :
+                            </p>
 
-                  <input type="text"
-                         name="login"
-                         id="login"
-                         value="<?= $login ?>"
-                         minlength="<?= User::LOGIN_MIN_LENGTH ?>"
-                         maxlength="<?= User::LOGIN_MAX_LENGTH ?>" />
+                            <input type="text"
+                                   name="login"
+                                   id="login"
+                                   value="<?= $login ?>"
+                                   minlength="<?= User::LOGIN_MIN_LENGTH ?>"
+                                   maxlength="<?= User::LOGIN_MAX_LENGTH ?>" />
 
-                  <?php
-                  Storage::component("InputErrorComponent", [
-                      "errors" => $errors,
-                      "input" => "login",
-                  ]);
-                  ?>
-                </label>
-              </div>
+                            <?php
+                            Storage::component("InputErrorComponent", [
+                                "errors" => $errors,
+                                "input" => "login",
+                            ]);
+                            ?>
+                        </label>
+                    </div>
 
-              <div class="form-component">
-                <label for="email">
-                  <p>
-                    Adresse e-mail :
-                  </p>
+                    <div class="form-component">
+                        <label for="email">
+                            <p>
+                                Adresse e-mail :
+                            </p>
 
-                  <input type="email"
-                         name="email"
-                         id="email"
-                         value="<?= $email ?>"
-                         minlength="<?= User::EMAIL_MIN_LENGTH ?>"
-                         maxlength="<?= User::EMAIL_MAX_LENGTH ?>" />
+                            <input type="email"
+                                   name="email"
+                                   id="email"
+                                   value="<?= $email ?>"
+                                   minlength="<?= User::EMAIL_MIN_LENGTH ?>"
+                                   maxlength="<?= User::EMAIL_MAX_LENGTH ?>" />
 
-                  <?php
-                  Storage::component("InputErrorComponent", [
-                      "errors" => $errors,
-                      "input" => "email",
-                  ]);
-                  ?>
-                </label>
-              </div>
+                            <?php
+                            Storage::component("InputErrorComponent", [
+                                "errors" => $errors,
+                                "input" => "email",
+                            ]);
+                            ?>
+                        </label>
+                    </div>
 
-              <div class="form-buttons">
-                <button class="button-blue">
-                  <i class="fa-solid fa-save fa-xl"></i>
-                  Enregistrer
-                </button>
+                    <div class="form-buttons">
+                        <button class="button-blue">
+                            <i class="fa-solid fa-save fa-xl"></i>
+                            Enregistrer
+                        </button>
 
-                <a href="<?= route("profile") ?>">
-                  <button class="button-grey" type="button">
-                    <i class="fa-solid fa-eraser fa-xl"></i>
-                    Réinitialiser
-                  </button>
-                </a>
-              </div>
-            </form>
+                        <a href="<?= route("profile") ?>">
+                            <button class="button-grey" type="button">
+                                <i class="fa-solid fa-eraser fa-xl"></i>
+                                Réinitialiser
+                            </button>
+                        </a>
+                    </div>
+                </form>
+
+                <form action="<?= route("post.profile.newPassword.save") ?>" method="post">
+                    <div class="form-component">
+                        <label for="current_password">
+                            <p>
+                                Mot de passe actuel :
+                            </p>
+
+                            <input type="password"
+                                   name="current_password"
+                                   id="current_password" />
+
+                            <?php
+                            Storage::component("InputErrorComponent", [
+                                "errors" => $errors,
+                                "input" => "current_password",
+                            ]);
+                            ?>
+                        </label>
+                    </div>
+
+                    <div class="form-duo">
+                        <div class="form-component">
+                            <label for="new_password">
+                                <p>
+                                    Nouveau mot de passe :
+                                </p>
+
+                                <input type="password"
+                                       name="new_password"
+                                       id="new_password" />
+
+                                <?php
+                                Storage::component("InputErrorComponent", [
+                                    "errors" => $errors,
+                                    "input" => "new_password",
+                                ]);
+                                ?>
+                            </label>
+                        </div>
+
+                        <div class="form-component">
+                            <label for="new_password_confirmation">
+                                <p>
+                                    Confirmation :
+                                </p>
+
+                                <input type="password"
+                                       name="new_password_confirmation"
+                                       id="new_password_confirmation" />
+
+                                <?php
+                                Storage::component("InputErrorComponent", [
+                                    "errors" => $errors,
+                                    "input" => "new_password_confirmation",
+                                ]);
+                                ?>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button class="button-blue">
+                            <i class="fa-solid fa-lock"></i>
+                            Modifier mon mot de passe
+                        </button>
+                    </div>
+                </form>
+            </div>
           </section>
 
           <section id="my_festivals">
@@ -217,7 +288,8 @@ $email = $hasRequest
                         <?= $festival->getName() ?>
                       </h3>
                       
-                      <i class="fa-solid fa-warning fa-2xl"></i>
+                      <i class="fa-solid fa-warning fa-2xl"
+                         title="La configuration de ce festival n'est pas terminée !"></i>
                     </div>
 
                     <div class="festival-buttons-container">
