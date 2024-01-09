@@ -27,6 +27,8 @@ class User extends Model
 
     public const EMAIL_MAX_LENGTH = 255;
 
+    public const PASSWORD_MIN_LENGTH = 8;
+
     /** User id. */
     private int $id;
 
@@ -149,7 +151,7 @@ class User extends Model
      */
     private function getPassword(): string
     {
-        return $this->login;
+        return $this->password;
     }
 
     /**
@@ -174,6 +176,17 @@ class User extends Model
         $festivals = Database::query($query, $this->getId());
 
         return $festivals;
+    }
+
+    /**
+     * Verify given password with session user one.
+     *
+     * @param string $password Given password
+     * @return bool If given password is the good one
+     */
+    public function verifyPassword(string $password): bool
+    {
+        return Password::verify($password, $this->getPassword());
     }
 
     public function save(): bool
