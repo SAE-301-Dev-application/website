@@ -47,7 +47,7 @@ $pauseValue = $hasRequest
 
 </head>
 <body>
-  <div id="horaires_festival">
+  <div id="grij_festival">
 
     <?php
     Storage::component("HeaderComponent");

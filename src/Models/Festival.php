@@ -184,6 +184,176 @@ class Festival extends Model
     }
 
     /**
+     * Attempt to modify a festival's generals parameters 
+     * and relink categories to it.
+     *
+     * @param string $name
+     * @param string $description
+     * @param string $illustration
+     * @param string $beginningDate
+     * @param string $endingDate
+     * @param array $categories
+     */
+    public static function modifyGeneralParameters(string $name,
+                                  string $description,
+                                  ?string $illustration,
+                                  string $beginningDate,
+                                  string $endingDate,
+                                  array $categories): void
+    {
+        $addFestivalQuery = "SELECT modifierFestival(?, ?, ?, ?, ?) AS id;";
+
+        $linkCategorieQuery = "CALL ajouterFestivalCategorie(?, ?);";
+
+        $festivalId = Database::query($addFestivalQuery,
+                                      $name,
+                                      $description,
+                                      $illustration ?? null,
+                                      $beginningDate,
+                                      $endingDate);
+
+        $festivalId = $festivalId->get()["id"];
+
+        foreach ($categories as $categorie)
+        {
+            Database::query($linkCategorieQuery,
+                            $festivalId,
+                            $categorie);
+        }
+    }
+
+    /**
+     * Attempt to add users as the ones who are responsible or who 
+     * organize a festival.
+     *
+     * @param int $id
+     * @param int $idUser
+     * @param string $role
+     */
+    public static function ajouterRolesUtilisateurs(int $id,
+                                                    int $idUser,
+                                                    int $role)
+    {
+
+        $addFestivalQuery = "SELECT ajouterFestivalUtilisateur(?, ?, ?) AS id;";
+
+        $festivalId = Database::query($id,
+                                      $idUser,
+                                      $role);
+
+    }
+
+    /**
+     * Attempt to modify the roles of the users who
+     * are responsible or who organize a festival.
+     *
+     * @param int $id
+     * @param int $idUser
+     * @param string $role
+     */
+    public static function modifierRolesUtilisateurs(int $id,
+                                                     int $idUser,
+                                                     int $role)
+    {
+
+        $addFestivalQuery = "SELECT ajouterFestivalOrganisateurs(?, ?, ?) AS id;";
+
+        $festivalId = Database::query($id,
+                                      $idUser,
+                                      $role);
+
+    }
+
+    /**
+     * Attempt to delete an user from the one who are
+     * responsible or who organiize a festival.
+     *
+     * @param int $id
+     * @param int $idUser
+     * @param string $role
+     */
+    public static function supprimerRolesUtilisateurs(int $id,
+                                                      int $idUser,
+                                                      int $role)
+    {
+
+        $addFestivalQuery = "SELECT ajouterFestivalOrganisateurs(?, ?, ?) AS id;";
+
+        $festivalId = Database::query($id,
+                                      $idUser,
+                                      $role);
+
+    }
+
+    /**
+     * Attempt to add a spectacle in a festival.
+     *
+     * @param int $id
+     * @param int $idSpectacle
+     */
+    public static function ajouterSpectacle(int $id,
+                                            int $idSpectacle)
+    {
+
+        $addFestivalQuery = "SELECT ajouterFestivalSpectacle(?, ?) AS id;";
+
+        $festivalId = Database::query($id,
+                                      $idSpectacle);
+
+    }
+
+    /**
+     * Attempt to delete a spectacle from a festival.
+     *
+     * @param int $id
+     * @param int $idSpectacle
+     */
+    public static function supprimerSpectacle(int $id,
+                                              int $idSpectacle)
+    {
+
+        $addFestivalQuery = "SELECT supprimerFestivalSpectacle(?, ?) AS id;";
+
+        $festivalId = Database::query($id,
+                                      $idSpectacle);
+
+    }
+
+    /**
+     * Attempt to add a scene in a festival.
+     *
+     * @param int $id
+     * @param int $idSpectacle
+     */
+    public static function ajouterScene(int $id,
+                                        int $idScene)
+    {
+
+        $addFestivalQuery = "SELECT ajouterFestivalScene(?, ?) AS id;";
+
+        $festivalId = Database::query($id,
+                                      $idScene);
+
+    }
+
+    /**
+     * Attempt to delete a scene from a festival.
+     *
+     * @param int $id
+     * @param int $idSpectacle
+     */
+    public static function supprimerScene(int $id,
+                                          int $idScene)
+    {
+
+        $addFestivalQuery = "SELECT supprimerFestivalScene(?, ?) AS id;";
+
+        $festivalId = Database::query($id,
+                                      $idScene);
+
+    }
+
+    /**
      * Check if a festival exists.
      * 
      * @param string $name
