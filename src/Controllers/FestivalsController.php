@@ -44,8 +44,8 @@ class FestivalsController extends Controller
             ? $festivalsCount - 6
             : $festivalsCount - ($festivalsCount % 6);
         
-        $previousVisibility = $startIndex === 0 ? " invisible" : "";
-        $nextVisibility = $startIndex + 6 >= $festivalsCount ? " invisible" : "";
+        $previousVisibility = $startIndex === 0 ? " link-disabled" : "";
+        $nextVisibility = $startIndex + 6 >= $festivalsCount ? " link-disabled" : "";
 
         View::render("Festivals", [
             "festivals" => $festivals,
