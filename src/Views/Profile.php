@@ -44,18 +44,24 @@ $email = $hasRequest
   <!-- JS -->
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
-  
-    <?php
-    Storage::include("Js/profile/navigation-links-manager.js", importMethod: "defer");
-    ?>
+  <?php
+  Storage::include("Js/profile/navigation-links-manager.js", importMethod: "defer");
+  Storage::include("Js/profile/unsubscribe.js", importMethod: "defer");
+  ?>
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
 </head>
 
 <body>
   <div id="profile_main">
+
+    <?php
+    Storage::component("PopupComponent", [
+      "title" => "test",
+      "slot" => "testslot"
+    ]);
+    ?>
 
     <?php
     Storage::component("HeaderComponent");
@@ -428,7 +434,7 @@ $email = $hasRequest
             </div>
 
             <div class="buttons-container">
-              <a class="button-link" href="<?= route("logout") ?>">
+              <a class="button-link" id="unsubscribe-button">
                 <button class="button-red">
                   Se désinscrire
                   <i class="fa-solid fa-right-from-bracket"></i>

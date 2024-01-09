@@ -373,7 +373,7 @@
     }
 
     .popup-container {
-        @apply fixed inset-0 bg-[rgba(0,0,0,.4)] flex justify-center items-center;
+        @apply z-[100] fixed inset-0 bg-[rgba(0,0,0,.4)] flex justify-center items-center;
 
         > .popup {
             @apply bg-white shadow-md rounded-lg p-5 text-black;

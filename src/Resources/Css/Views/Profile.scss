@@ -93,3 +93,9 @@ $orange: #FF7A00;
         }
     }
 }
+
+body {
+    &.hide-overflow {
+        @apply overflow-hidden;
+    }
+}
