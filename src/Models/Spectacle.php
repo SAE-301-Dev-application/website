@@ -3,13 +3,22 @@
 namespace MvcLite\Models;
 
 use MvcLite\Database\Engine\Database;
+use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Models\Engine\Model;
 
 class Spectacle extends Model
 {
-    /** Spectacle's name */
+    /** Default festival illustration path. */
+    private const DEFAULT_FESTIVAL_ILLUSTRATION_PATH
+        = ROUTE_PATH_PREFIX
+        . "src/Resources/Medias/Images/default_illustration.png";
+
+    /** Spectacle's id. */
+    private int $id;
+
+    /** Spectacle's name. */
     private string $title;
 
     /** Spectacle's description. */
@@ -20,9 +29,6 @@ class Spectacle extends Model
 
     /** Spectacle's scene size. */
     private string $sceneSize;
-
-    /** Spectacle's categories */
-    private array $categories;
 
     /** Spectacle's illustration */
     private string $illustration;
@@ -35,11 +41,37 @@ class Spectacle extends Model
     }
 
     /**
+     * @return int Spectacle's id
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id Spectacle's id
+     * @return int Spectacle's id
+     */
+    private function setId(int $id): int
+    {
+        return $this->id = $id;
+    }
+
+    /**
      * @return string Spectacle's name
      */
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @param string $title New spectacle's title
+     * @return string New spectacle's title
+     */
+    public function setTitle(string $title): string
+    {
+        return $this->title = $title;
     }
 
     /**
@@ -51,11 +83,29 @@ class Spectacle extends Model
     }
 
     /**
+     * @param string $description New spectacle's description
+     * @return string New spectacle's description
+     */
+    public function setDescription(string $description): string
+    {
+        return $this->description = $description;
+    }
+
+    /**
      * @return string Spectacle's duration
      */
     public function getDuration(): string
     {
         return $this->duration;
+    }
+
+    /**
+     * @param string $duration New spectacle's duration
+     * @return string New spectacle's duration
+     */
+    public function setDuration(string $duration): string
+    {
+        return $this->duration = $duration;
     }
 
     /**
@@ -67,11 +117,20 @@ class Spectacle extends Model
     }
 
     /**
+     * @param string $sceneSize New spectacle's scene size
+     * @return string New spectacle's scene size
+     */
+    public function setSceneSize(string $sceneSize): string
+    {
+        return $this->sceneSize = $sceneSize;
+    }
+
+    /**
      * @return array Spectacle's categories
      */
     public function getCategories(): array
     {
-        return $this->categories;
+        return [];  // TODO stumb
     }
 
     /**
@@ -80,6 +139,15 @@ class Spectacle extends Model
     public function getIllustration(): string
     {
         return $this->illustration;
+    }
+
+    /**
+     * @param string $illustration New spectacle's illustration
+     * @return string New spectacle's illustration
+     */
+    public function setIllustration(string $illustration): string
+    {
+        return $this->illustration = $illustration;
     }
 
     /**
@@ -147,5 +215,65 @@ class Spectacle extends Model
         $result = Database::query($checkTitleQuery, $title);
 
         return $result->get()["resultat"] === 1;
+    }
+
+    /**
+     * Searches and returns Spectacle instance by its id.
+     *
+     * @param int $id Spectacle id
+     * @return Festival|null Spectacle object if exists;
+     *                       else NULL
+     */
+    public static function getSpectacleById(int $id): ?static
+    {
+        $query = "SELECT * FROM spectacle WHERE id_spectacle = ?";
+
+        $getSpectacle = Database::query($query, $id);
+        $spectacle = $getSpectacle->get();
+
+        if ($spectacle)
+        {
+            $spectacleInstance = new Spectacle();
+
+            $spectacleInstance
+                ->setId($id);
+
+            $spectacleInstance
+                ->setTitle($spectacle["titre_sp"]);
+
+            $spectacleInstance
+                ->setDescription($spectacle["description_sp"]);
+
+            $spectacleInstance
+                ->setIllustration($spectacle["illustration_sp"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_PATH);
+
+            $spectacleInstance
+                ->setDuration($spectacle["duree_sp"]);
+
+            $spectacleInstance
+                ->setSceneSize($spectacle["taille_scene_sp"]);
+
+            return $spectacleInstance;
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns User array by using DatabaseQuery object.
+     *
+     * @param DatabaseQuery $queryObject
+     * @return array users array
+     */
+    public static function queryToArray(DatabaseQuery $queryObject): array
+    {
+        $modelArray = [];
+
+        while ($line = $queryObject->get())
+        {
+            $modelArray[] = self::getSpectacleById($line["id_spectacle"]);
+        }
+
+        return $modelArray;
     }
 }
