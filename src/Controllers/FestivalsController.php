@@ -7,6 +7,7 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Router\Engine\Redirect;
+use MvcLite\Router\Engine\RedirectResponse;
 use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
 use MvcLite\Models\Festival;
@@ -25,14 +26,23 @@ class FestivalsController extends Controller
      * 
      * @param Request $request
      */
-    public function render(Request $request): void
+    public function render(Request $request): RedirectResponse|true
     {
         $pageNumber = $request->getParameter("page") ?? 1;
 
+        $pageFestivals = self::getPageFestivals($pageNumber);
+
+        if ($pageFestivals === null)
+        {
+            return Redirect::route("festivals");
+        }
+
         View::render("Festivals", [
-            "festivals"     => self::getPageFestivals($pageNumber),
+            "festivals"     => $pageFestivals,
             "pagesCount"    => self::getPagesCount(),
         ]);
+
+        return true;
     }
 
     private static function getFestivalsPagination(): Pagination
@@ -42,7 +52,7 @@ class FestivalsController extends Controller
         return new Pagination($festivals, 6);
     }
 
-    private static function getPageFestivals(int $pageNumber): array
+    private static function getPageFestivals(int $pageNumber): ?array
     {
         return self::getFestivalsPagination()
             ->getPage($pageNumber);

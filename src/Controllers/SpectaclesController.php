@@ -7,6 +7,7 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Router\Engine\Redirect;
+use MvcLite\Router\Engine\RedirectResponse;
 use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
 use MvcLite\Models\Spectacle;
@@ -25,14 +26,23 @@ class SpectaclesController extends Controller
      * 
      * @param Request $request
      */
-    public function render(Request $request): void
+    public function render(Request $request): RedirectResponse|true
     {
         $pageNumber = $request->getParameter("page") ?? 1;
 
+        $pageSpectacles = self::getPageSpectacles($pageNumber);
+
+        if ($pageSpectacles === null)
+        {
+            return Redirect::route("spectacles");
+        }
+
         View::render("Spectacles", [
-            "spectacles"    => self::getPageSpectacles($pageNumber),
+            "spectacles"    => $pageSpectacles,
             "pagesCount"    => self::getPagesCount(),
         ]);
+
+        return true;
     }
 
     private static function getSpectaclesPagination(): Pagination
@@ -42,7 +52,7 @@ class SpectaclesController extends Controller
         return new Pagination($spectacles, 6);
     }
 
-    private static function getPageSpectacles(int $pageNumber): array
+    private static function getPageSpectacles(int $pageNumber): ?array
     {
         return self::getSpectaclesPagination()
             ->getPage($pageNumber);

@@ -50,62 +50,40 @@ $errors = $props->hasValidator()
         <form action="<?= route("festivals") ?>"
               method="post"
               enctype="multipart/form-data">
+
           <div class="form-grid">
-            <section id="general_information">
-              <div class="form-duo">
-                <div class="form-component">
+              <div class="main-container">
+                <section id="search_scene">
+                  <div class="form-component">
+                    <label for="search_scene_input">
+                      <p>
+                        Rechercher une scène :
+                      </p>
 
-                  <label for="scenes">
-                    <p>
-                      Rechercher une scène :
-                    </p>
-                    <input type="text" name="scenes" id="scenes" />
-                  </label>
-                </div>
+                      <div class="form-input-button">
+                        <input type="text" name="search_scene" id="search_scene_input" />
 
-                <div class="form-component">
-                  <button class="button-blue buttons-add-scene">
-                    Rechercher
-                  </button>
-                </div>
+                        <button class="button-blue">
+                          Rechercher
+                        </button>
+                      </div>
+                    </label>
+                  </div>
+                </section>
 
-                <div class="form-component">
-                  <p class="scene">
-                    Scene 1
-                  </p>
-                </div>
+                <section id="current_scenes">
+                  <div class="scene-container">
+                    <h3 class="scene-name">
+                      Ma scène
+                    </h3>
 
-                <div class="form-component">
-                  <button class="button-red buttons-add-scene" id="suppress1" name="suppress1">
-                    Supprimer
-                  </button>
-                </div>
-
-                <div class="form-component">
-                  <p class="scene">
-                    Scene 2
-                  </p>
-                </div>
-
-                <div class="form-component">
-                  <button class="button-red buttons-add-scene">
-                    Supprimer
-                  </button>
-                </div>
-
-                <div class="form-component">
-                  <p class="scene">
-                    Scene 3
-                  </p>
-                </div>
-
-                <div class="form-component">
-                  <button class="button-red buttons-add-scene">
-                    Supprimer
-                  </button>
-                </div>
+                    <button class="button-red">
+                      <i class="fa-solid fa-trash"></i>
+                      Supprimer
+                    </button>
+                  </div>
+                </section>
               </div>
-            </section>
 
               <?php
               Storage::component("FormHelpBoxComponent", [
@@ -113,14 +91,18 @@ $errors = $props->hasValidator()
                   "title" => "Ajouter une scène au festival",
                   "content"
                   => "<p>
-                            Pour ses représentations, un festival nécessite des scènes. Autrement dit, des lieux 
-                            de représentations de spectacles. <br />
-                          </p>
-                            
-                           Saisissez le nom de la scène et sélectionnez parmi les résultats de recherche présentés.<br/>
-                            Vous pouvez, d’autre part, retirer des scènes de votre sélection en <br/>
-                            cliquant sur son bouton Supprimer.
-                          </p>",
+                        Pour ses représentations, un festival nécessite des scènes. Autrement dit, des lieux 
+                        de représentations de spectacles.
+                      </p>
+                        
+                      <p>
+                        Saisissez le nom de la scène et sélectionnez parmi les résultats de recherche présentés.
+                      </p>
+                      
+                      <p>
+                        Vous pouvez, d’autre part, retirer des scènes de votre sélection en
+                        cliquant sur son bouton Supprimer.
+                      </p>",
               ]);
               ?>
           </div>
@@ -136,6 +118,7 @@ $errors = $props->hasValidator()
               Ajouter les scènes
             </button>
           </div>
+
         </form>
       </div>
     </section>
