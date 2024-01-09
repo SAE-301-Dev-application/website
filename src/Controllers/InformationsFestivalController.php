@@ -26,6 +26,6 @@ class InformationsFestivalController extends Controller
      */
     public function render(Request $request): void
     {
-        View::render("InformationFestival");
+        View::render("InformationsFestival");
     }
 }

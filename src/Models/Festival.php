@@ -459,6 +459,48 @@ class Festival extends Model
     }
 
     /**
+     * Searches and returns Festival instance by its name.
+     *
+     * @param string $nom Festival name
+     * @return Festival|null Festival object if exists;
+     *                       else NULL
+     */
+    public static function getFestivalByName(string $nom): ?Festival
+    {
+        $query = "SELECT * FROM festival WHERE nom_fe = ?";
+
+        $getFestival = Database::query($query, $nom);
+        $festival = $getFestival->get();
+
+        if ($festival)
+        {
+            $festivalInstance = new Festival();
+
+            $festivalInstance
+                ->setId($festival["nom_fe"]);
+
+            $festivalInstance
+                ->setName($nom);
+
+            $festivalInstance
+                ->setDescription($festival["description_fe"]);
+
+            $festivalInstance
+                ->setBeginningDate($festival["date_debut_fe"]);
+
+            $festivalInstance
+                ->setEndingDate($festival["date_fin_fe"]);
+
+            $festivalInstance
+                ->setIllustration($festival["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_PATH);
+
+            return $festivalInstance;
+        }
+
+        return null;
+    }
+
+    /**
      * Returns User array by using DatabaseQuery object.
      *
      * @param DatabaseQuery $queryObject
