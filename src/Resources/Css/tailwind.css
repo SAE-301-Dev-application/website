@@ -169,7 +169,7 @@
             > .user-name {
                 @apply flex items-center justify-end;
 
-                i {
+                & i {
                     @apply mr-1;
                 }
             }
@@ -255,7 +255,8 @@
                 }
             }
 
-            & h3.festival-name , h3.spectacle-title {
+            & h3.festival-name,
+            & h3.spectacle-title {
                 @apply font-black text-4xl mb-1;
             }
         }
