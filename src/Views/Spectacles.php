@@ -53,19 +53,19 @@ use MvcLite\Models\Spectacle;
                      $i++, $count++) {
           ?>
 
-          <a href="<?= route("dashboard") ?>"> <!--?spectacle=<?= ""//$spectacles[$i]["id_spectacle"] ?>"> TODO changer pour page spectacle -->
+          <a href="<?= route("dashboard") ?>"> <!--?id=<?= ""//$spectacles[$i]->getId() ?>"> TODO changer pour page spectacle -->
             <div class="spectacle-preview">
               <div class="spectacle-picture"
-                   style="background: url('<?= Spectacle::getImagePathByName($spectacles[$i]["illustration_sp"]) ?>') center / cover no-repeat;">
+                   style="background: url('<?= $spectacles[$i]->getIllustration() ?>') center / cover no-repeat;">
               </div>
 
               <div class="spectacle-identity">
                 <h3 class="spectacle-title">
-                <?= $spectacles[$i]["titre_sp"] ?>
+                <?= $spectacles[$i]->getTitle() ?>
                 </h3>
 
                 <p class="spectacle-description">
-                <?= $spectacles[$i]["description_sp"] ?>
+                <?= $spectacles[$i]->getDescription() ?>
                 </p>
               </div>
             </div>

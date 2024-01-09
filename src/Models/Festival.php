@@ -11,9 +11,13 @@ use MvcLite\Models\Engine\Model;
 
 class Festival extends Model
 {
+    /** Default festival illustration name. */
+    private const DEFAULT_FESTIVAL_ILLUSTRATION_NAME
+        = "default_illustration.png";
+
     /** Default festival illustration path. */
     private const DEFAULT_FESTIVAL_ILLUSTRATION_PATH
-        = "default_illustration.png";
+        = ROUTE_PATH_PREFIX . "src/Resources/Medias/Images/";
 
     /** Festival's id. */
     private int $id;
@@ -121,20 +125,17 @@ class Festival extends Model
         $this->endingDate = $endingDate;
     }
 
-    /**
-     * @return array Festival's categories
-     */
-    public function getCategories(): array
-    {
-        return [];  // todo stump
-    }
 
     /**
      * @return string Festival's illustration
      */
     public function getIllustration(): string
     {
-        return Storage::getResourcesPath() . "/Medias/Images/FestivalsUploads/" . $this->illustration;
+        return self::DEFAULT_FESTIVAL_ILLUSTRATION_PATH
+               . ($this->illustration === self::DEFAULT_FESTIVAL_ILLUSTRATION_NAME
+                      ? ""
+                      : "FestivalsUploads/")
+               . $this->illustration;
     }
 
     /**
@@ -143,6 +144,83 @@ class Festival extends Model
     public function setIllustration(?string $illustration): void
     {
         $this->illustration = $illustration;
+    }
+
+    /**
+     * @return array Festival's categories
+     */
+    public function getCategories(): array
+    {
+
+        $getCategoriesQuery
+            = "SELECT DISTINCT id_categorie
+               FROM festival_categorie
+               WHERE id_festival = ?
+               ORDER BY id_categorie;";
+
+        $result = Database::query($getCategoriesQuery, $id);
+
+        return $result->getAll();
+    }
+
+    /**
+     * @return array Festival's spectacles
+     */
+    public function getSpectacles(): array
+    {
+
+        $getSpectaclesQuery
+            = "SELECT DISTINCT id_spectacle
+               FROM festival_spectacle
+               WHERE id_festival = ?
+               ORDER BY id_spectacle;";
+
+        $result = Database::query($getSpectaclesQuery, $id);
+
+        return $result->getAll();
+    }
+
+    /**
+     * @return array Festival's scenes
+     */
+    public function getScenes(): array
+    {
+
+        $getSpectaclesQuery
+            = "SELECT DISTINCT id_scene
+               FROM festival_scene
+               WHERE id_festival = ?
+               ORDER BY id_scene;";
+
+        $result = Database::query($getSpectaclesQuery, $id);
+
+        return $result->getAll();
+    }
+
+    /**
+     * @return array Festival's scenes
+     */
+    public function getUtilisateurs(): array
+    {
+
+        $getSpectaclesQuery
+            = "SELECT DISTINCT id_utilisateur, role_uti
+               FROM festival_utilisateur
+               WHERE id_festival = ?
+               ORDER BY id_utilisateur, role_uti;";
+
+        $result = Database::query($getSpectaclesQuery, $id);
+
+        return $result->getAll();
+    }
+    
+    /**
+     * @return bool True if the festival is in progress, false otherwise.
+     */
+    public function isFestivalInProgress(): bool
+    {
+        $now = time();
+        return $now >= strtotime($this->beginningDate) && $now <= strtotime($this->endingDate);
     }
 
     /**
@@ -384,36 +462,13 @@ class Festival extends Model
     public static function getFestivals(): array
     {
         $getFestivalsQuery
-            = "SELECT *,
-               CASE
-                   WHEN CURRENT_DATE BETWEEN date_debut_fe AND date_fin_fe THEN 1
-                   ELSE 0
-               END AS en_cours_fe
+            = "SELECT *
                FROM festival
-               ORDER BY en_cours_fe DESC, date_debut_fe ASC, date_fin_fe ASC;";
+               ORDER BY date_debut_fe ASC, date_fin_fe ASC;";
 
         $result = Database::query($getFestivalsQuery);
 
         return Festival::queryToArray($result);
-    }
-
-    /**
-     * Get path to a festival's illustration.
-     * 
-     * @param ?string $name
-     * @return string Festival's illustration path
-     */
-    public static function getImagePathByName(?string $name)
-    {
-        // TODO: delete? !!
-        $illustrationPath = ROUTE_PATH_PREFIX
-            . "src/Resources/Medias/Images/";
-
-        $defaultIllustration = "default_illustration.png";
-
-        return !$name || $name === $defaultIllustration
-            ? $illustrationPath . $defaultIllustration
-            : $illustrationPath . "FestivalsUploads/" . $name;
     }
 
     /**
@@ -450,7 +505,7 @@ class Festival extends Model
                 ->setEndingDate($festival["date_fin_fe"]);
 
             $festivalInstance
-                ->setIllustration($festival["illustration_fe"]);
+                ->setIllustration($festival["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_NAME);
 
             return $festivalInstance;
         }
@@ -492,7 +547,7 @@ class Festival extends Model
                 ->setEndingDate($festival["date_fin_fe"]);
 
             $festivalInstance
-                ->setIllustration($festival["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_PATH);
+                ->setIllustration($festival["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_NAME);
 
             return $festivalInstance;
         }

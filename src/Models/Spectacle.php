@@ -11,9 +11,13 @@ use MvcLite\Models\Engine\Model;
 
 class Spectacle extends Model
 {
-    /** Default festival illustration path. */
-    private const DEFAULT_FESTIVAL_ILLUSTRATION_PATH
+    /** Default spectacle illustration name. */
+    private const DEFAULT_SPECTACLE_ILLUSTRATION_NAME
         = "default_illustration.png";
+
+    /** Default spectacle illustration path. */
+    private const DEFAULT_SPECTACLE_ILLUSTRATION_PATH
+        = ROUTE_PATH_PREFIX . "src/Resources/Medias/Images/";
 
     /** Spectacle's id. */
     private int $id;
@@ -138,7 +142,11 @@ class Spectacle extends Model
      */
     public function getIllustration(): string
     {
-        return Storage::getResourcesPath() . "/Medias/Images/SpectaclesUploads/" . $this->illustration;
+      return self::DEFAULT_SPECTACLE_ILLUSTRATION_PATH
+          . ($this->illustration === self::DEFAULT_SPECTACLE_ILLUSTRATION_NAME
+                ? ""
+                : "SpectaclesUploads/")
+          . $this->illustration;
     }
 
     /**
@@ -236,7 +244,7 @@ class Spectacle extends Model
 
         $result = Database::query($getSpectaclesQuery);
 
-        return $result->getAll();
+        return Spectacle::queryToArray($result);
     }
 
     /**
@@ -262,7 +270,7 @@ class Spectacle extends Model
      * Searches and returns Spectacle instance by its id.
      *
      * @param int $id Spectacle id
-     * @return Festival|null Spectacle object if exists;
+     * @return Spectacle|null Spectacle object if exists;
      *                       else NULL
      */
     public static function getSpectacleById(int $id): ?Spectacle
@@ -286,7 +294,7 @@ class Spectacle extends Model
                 ->setDescription($spectacle["description_sp"]);
 
             $spectacleInstance
-                ->setIllustration($spectacle["illustration_sp"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_PATH);
+                ->setIllustration($spectacle["illustration_sp"] ?? self::DEFAULT_SPECTACLE_ILLUSTRATION_NAME);
 
             $spectacleInstance
                 ->setDuration($spectacle["duree_sp"]);
