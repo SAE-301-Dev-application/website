@@ -43,6 +43,30 @@ $orange: #FF7A00;
                         }
                     }
 
+                    > .section-title-container {
+                        @apply flex justify-between gap-x-10 border-b border-neutral-300 pb-5 mb-5;
+
+                        * {
+                            @apply flex-none;
+                        }
+
+                        > .left-side {
+                            @apply flex gap-x-10 justify-start;
+
+                            > h3.section-title {
+                                @apply font-black text-4xl;
+                            }
+                        }
+
+                        > .right-side {
+                            @apply flex gap-x-10 justify-end;
+                        }
+
+                        button {
+                            @apply w-auto;
+                        }
+                    }
+
                     > .festivals-container {
                         @apply flex flex-col gap-y-5;
 
@@ -55,10 +79,6 @@ $orange: #FF7A00;
                                 @apply mb-5;
                             }
                         }
-                    }
-
-                    > h3.section-title {
-                        @apply font-black border-b border-neutral-300 text-4xl pb-5 mb-5;
                     }
 
                     > .forms-container {
