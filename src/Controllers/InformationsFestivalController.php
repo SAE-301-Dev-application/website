@@ -30,11 +30,10 @@ class InformationsFestivalController extends Controller
 
         $id = $request->getParameter("id");
 
-
-        // $festival = Festival::getFestivalByName($nom);
+        $festival = new Festival();
         $festival = Festival::getFestivalById($id);
 
-        // Debug::dd($festival, $id);
+        Debug::dd($festival, $id); 
 
         $name = $festival->getName();
         $description = $festival->getDescription();
@@ -42,6 +41,9 @@ class InformationsFestivalController extends Controller
         $beginningDate = $festival->getBeginningDate();
         $endingDate = $festival->getEndingDate();
         $illustration = $festival->getIllustration();
+        $spectacles = $festival->getSpectacles();
+        $scenes = $festival->getScenes();
+        $utilisateurs = $festival->getUtilisateurs();
         
         View::render("InformationsFestival", [
             "name" => $name,
@@ -50,6 +52,9 @@ class InformationsFestivalController extends Controller
             "beginningDate" => $beginningDate,
             "endingDate" => $endingDate,
             "illustration" => $illustration,
+            "spectacles" => $spectacles,
+            "scenes" => $scenes,
+            "utilisateurs" => $utilisateurs
         ]);
     }
 }
