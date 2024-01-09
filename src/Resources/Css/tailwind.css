@@ -22,7 +22,7 @@
     }
 
     #main {
-        @apply p-24;
+        @apply p-10 xl:p-24;
     }
 
 }
@@ -232,7 +232,7 @@
             @apply flex-1 flex flex-col;
 
             & > .festival-header {
-                @apply flex justify-between gap-x-5;
+                @apply flex flex-col xl:flex-row gap-y-2 justify-between gap-x-5;
 
                 & > .festival-name-container {
                     @apply flex items-center gap-x-5;
@@ -247,7 +247,7 @@
                 }
 
                 & > .festival-buttons-container {
-                    @apply flex justify-end gap-x-3;
+                    @apply flex xl:justify-end gap-x-3;
 
                     > button {
                         @apply flex-none w-auto;
@@ -257,7 +257,7 @@
 
             & h3.festival-name,
             & h3.spectacle-title {
-                @apply font-black text-4xl mb-1;
+                @apply font-black text-3xl lg:text-4xl mb-1;
             }
         }
 
