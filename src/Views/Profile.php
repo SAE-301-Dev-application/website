@@ -202,14 +202,19 @@ $email = $hasRequest
             </h3>
 
             <div class="festivals-container">
+              <?php
+              foreach ($myFestivals as $festival)
+              {
+              ?>
               <div class="festival-preview">
-                <div class="festival-picture"></div>
+                <div class="festival-picture"
+                     style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;"></div>
 
                 <div class="festival-identity">
                   <div class="festival-header">
                     <div class="festival-name-container">
                       <h3 class="festival-name">
-                        Festival name
+                        <?= $festival->getName() ?>
                       </h3>
                       
                       <i class="fa-solid fa-warning fa-2xl"></i>
@@ -229,13 +234,13 @@ $email = $hasRequest
                   </div>
 
                   <p class="festival-description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Consequuntur delectus minus officiis porro possimus.
-                    Ab at dignissimos eum harum in, ipsum, maxime porro possimus
-                    provident quam quasi quo sint ullam.
+                      <?= $festival->getDescription() ?>
                   </p>
                 </div>
               </div>
+              <?php
+              }
+              ?>
             </div>
           </section>
 
