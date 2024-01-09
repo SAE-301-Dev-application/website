@@ -90,9 +90,13 @@ $email = $hasRequest
 
         <div class="main-side">
           <section id="my_profile">
-            <h3 class="section-title">
-              Mon profil
-            </h3>
+            <div class="section-title-container">
+              <div class="left-side">
+                <h3 class="section-title">
+                  Mon profil
+                </h3>
+              </div>
+            </div>
 
             <div class="forms-container">
                 <form action="<?= route("post.profile.generalInformation.save") ?>" method="post">
@@ -268,9 +272,19 @@ $email = $hasRequest
           </section>
 
           <section id="my_festivals">
-            <h3 class="section-title">
-              Mes festivals
-            </h3>
+            <div class="section-title-container">
+              <div class="left-side">
+                <h3 class="section-title">
+                  Mes festivals
+                </h3>
+
+                <a href="<?= route("createFestival") ?>">
+                  <button class="button-blue">
+                    Créer un festival
+                  </button>
+                </a>
+              </div>
+            </div>
 
             <div class="festivals-container">
               <?php
@@ -324,7 +338,7 @@ $email = $hasRequest
                 </div>
                 <div class="alert-content">
                   <p>
-                    Vous ne participez pour le moment à aucun festival.
+                    Vous n'organisez aucun festival.
                   </p>
                 </div>
               </div>
@@ -335,9 +349,13 @@ $email = $hasRequest
           </section>
 
           <section id="my_spectacles">
-            <h3 class="section-title">
-              Mes spectacles
-            </h3>
+            <div class="section-title-container">
+              <div class="left-side">
+                <h3 class="section-title">
+                  Mes spectacles
+                </h3>
+              </div>
+            </div>
 
             <div class="festivals-container">
               <?php
@@ -390,7 +408,7 @@ $email = $hasRequest
                   </div>
                   <div class="alert-content">
                     <p>
-                      Vous ne participez pour le moment à aucun spectacle.
+                      Vous n'êtes responsable d'aucun spectacle.
                     </p>
                   </div>
                 </div>
@@ -401,9 +419,13 @@ $email = $hasRequest
           </section>
 
           <section id="settings">
-            <h3 class="section-title">
-              Paramètres
-            </h3>
+            <div class="section-title-container">
+              <div class="left-side">
+                <h3 class="section-title">
+                  Paramètres
+                </h3>
+              </div>
+            </div>
 
             <div class="buttons-container">
               <a class="button-link" href="<?= route("logout") ?>">
