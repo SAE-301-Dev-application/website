@@ -277,6 +277,12 @@
         > .next-links {
             @apply flex gap-x-2;
 
+            &.link-disabled {
+                > * {
+                    @apply hidden;
+                }
+            }
+
             > a {
                 &:hover {
                     @apply opacity-80;
@@ -363,6 +369,18 @@
 
         > .alert-content {
             @apply flex-1;
+        }
+    }
+
+    .popup-container {
+        @apply fixed inset-0 bg-[rgba(0,0,0,.4)] flex justify-center items-center;
+
+        > .popup {
+            @apply bg-white shadow-md rounded-lg p-5 text-black;
+
+            > h3.popup-title {
+                @apply font-black text-4xl mb-5;
+            }
         }
     }
 
