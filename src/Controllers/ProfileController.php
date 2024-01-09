@@ -5,6 +5,7 @@ namespace MvcLite\Controllers;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Middlewares\AuthMiddleware;
@@ -62,13 +63,27 @@ class ProfileController extends Controller
         = "L'adresse e-mail renseignée n'est pas valide. 
            Elle doit être au format 'exemple@email.fr'.";
 
+    private const ERROR_WRONG_PASSWORD
+        = "Mot de passe incorrect.";
+
+    private const ERROR_TOO_SHORT_PASSWORD
+        = "Votre nouveau mot de passe doit avoir "
+        . User::PASSWORD_MIN_LENGTH
+        . " caractères au minimum.";
+
+    private const ERROR_NEW_PASSWORD_CONFIRMATION
+        = "Les nouveaux mots de passe ne correspondent pas.";
+
     public function __construct()
     {
         parent::__construct();
 
         $this->middleware(AuthMiddleware::class);
-    }   
+    }
 
+    /**
+     * Profile view rendering.
+     */
     public function render(): void
     {
         View::render("Profile", [
@@ -76,7 +91,17 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function save(Request $request): RedirectResponse
+    /**
+     * Current account general information saving:
+     *  - firstname
+     *  - lastname
+     *  - login
+     *  - email address
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function saveGeneralInformation(Request $request): RedirectResponse
     {
         $validation = (new Validator($request))
             ->required([
@@ -121,6 +146,44 @@ class ProfileController extends Controller
             $user->setLastname($request->getInput("lastname"));
             $user->setLogin($request->getInput("login"));
             $user->setEmail($request->getInput("email"));
+
+            $user->save();
+        }
+
+        return Redirect::route("profile")
+            ->withValidator($validation)
+            ->redirect();
+    }
+
+    /**
+     * Current account password changing.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function saveNewPassword(Request $request): RedirectResponse
+    {
+        $validation = (new Validator($request))
+            ->required([
+                "current_password", "new_password",
+                "new_password_confirmation",
+            ], self::ERROR_REQUIRED_FIELD)
+
+            ->password("current_password", self::ERROR_WRONG_PASSWORD)
+
+            ->minLength("new_password",
+                        User::PASSWORD_MIN_LENGTH,
+                        self::ERROR_TOO_SHORT_PASSWORD)
+            ->confirmation("new_password",
+                           self::ERROR_NEW_PASSWORD_CONFIRMATION);
+
+        if (!$validation->hasFailed())
+        {
+            $newPassword = Password::hash($request->getInput("new_password"));
+
+            $user = Session::getUserAccount();
+
+            $user->setPassword($newPassword);
 
             $user->save();
         }
