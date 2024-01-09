@@ -79,8 +79,15 @@ Router::get("/horaires-festival", HorairesFestivalController::class, "render")
 Router::get("/profile", ProfileController::class, "render")
     ->setName("profile");
 
-Router::post("/profile/save", ProfileController::class, "save")
-    ->setName("post.profile.save");
+Router::post("/profile/general-information/save",
+             ProfileController::class,
+             "saveGeneralInformation")
+    ->setName("post.profile.generalInformation.save");
+
+Router::post("/profile/new-password/save",
+    ProfileController::class,
+    "saveNewPassword")
+    ->setName("post.profile.newPassword.save");
 
 
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
