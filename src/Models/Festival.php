@@ -382,7 +382,7 @@ class Festival extends Model
                    ELSE 0
                END AS en_cours_fe
                FROM festival
-               ORDER BY en_cours_fe DESC, date_debut_fe ASC;";
+               ORDER BY en_cours_fe DESC, date_debut_fe ASC, date_fin_fe ASC;";
 
         $result = Database::query($getFestivalsQuery);
 
@@ -406,7 +406,6 @@ class Festival extends Model
         return !$name || $name === $defaultIllustration
             ? $illustrationPath . $defaultIllustration
             : $illustrationPath . "FestivalsUploads/" . $name;
-
     }
 
     /**

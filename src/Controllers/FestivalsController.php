@@ -20,7 +20,7 @@ class FestivalsController extends Controller
     }
 
     /**
-     * Festival display view rendering.
+     * Festivals display view rendering.
      * 
      * @param Request $request
      */

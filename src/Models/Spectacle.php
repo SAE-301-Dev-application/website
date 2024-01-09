@@ -218,6 +218,42 @@ class Spectacle extends Model
     }
 
     /**
+     * Get all spectacles.
+     * 
+     * @return array Spectacles
+     */
+    public static function getSpectacles(): array
+    {
+        $getSpectaclesQuery
+            = "SELECT *
+               FROM spectacle
+               ORDER BY id_spectacle ASC;";
+
+        $result = Database::query($getSpectaclesQuery);
+
+        return $result->getAll();
+    }
+
+    /**
+     * Get path to a spectacle's illustration.
+     * 
+     * @param ?string $name
+     * @return string Spectacle's illustration path
+     */
+    public static function getImagePathByName(?string $name)
+    {
+        // TODO: delete? !!
+        $illustrationPath = ROUTE_PATH_PREFIX
+            . "src/Resources/Medias/Images/";
+
+        $defaultIllustration = "default_illustration.png";
+
+        return !$name || $name === $defaultIllustration
+            ? $illustrationPath . $defaultIllustration
+            : $illustrationPath . "SpectaclesUploads/" . $name;
+    }
+
+    /**
      * Searches and returns Spectacle instance by its id.
      *
      * @param int $id Spectacle id
