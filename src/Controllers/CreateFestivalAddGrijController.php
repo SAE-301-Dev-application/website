@@ -13,7 +13,7 @@ use MvcLite\Router\Engine\Redirect;
 use MvcLite\Views\Engine\View;
 use MvcLite\Models\Festival;
 
-class GrijFestivalController extends Controller
+class CreateFestivalAddGrijController extends Controller
 {
     private const ERROR_REQUIRED_FIELD
         = "Ce champ est requis.";
@@ -45,7 +45,7 @@ class GrijFestivalController extends Controller
      */
     public function render(): void
     {
-        View::render("GrijFestival");
+        View::render("CreateFestivalAddGrij");
     }
 
     /**

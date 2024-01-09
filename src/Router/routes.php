@@ -19,6 +19,7 @@ use MvcLite\Controllers\CreateSpectacleController;
 use MvcLite\Controllers\GrijFestivalController;
 use MvcLite\Controllers\SessionController;
 use MvcLite\Controllers\AddScenesFestivalController;
+use MvcLite\Controllers\InformationsFestivalController;
 use MvcLite\Router\Engine\Router;
 
 Router::get("/", IndexController::class, "redirectionIndex");
@@ -75,7 +76,7 @@ Router::post("/create-scene", CreateSceneController::class, "createScene")
     ->setName("post.createScene");
 
 
-Router::get("/grij-festival", GrijFestivalController::class, "render")
+Router::get("/grij-festival", CreateFestivalAddGrijController::class, "render")
     ->setName("grijFestival");
 
 
@@ -91,6 +92,9 @@ Router::post("/profile/new-password/save",
     ProfileController::class,
     "saveNewPassword")
     ->setName("post.profile.newPassword.save");
+
+Router::get("/informations-festival", InformationsFestivalController::class, "render")
+    ->setName("informationFestival");
 
 
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")

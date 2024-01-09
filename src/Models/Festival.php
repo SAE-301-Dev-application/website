@@ -194,18 +194,19 @@ class Festival extends Model
      * @param string $endingDate
      * @param array $categories
      */
-    public static function modifyGeneralParameters(string $name,
-                                  string $description,
-                                  ?string $illustration,
-                                  string $beginningDate,
-                                  string $endingDate,
-                                  array $categories): void
+    public static function modifyGeneralParameters(int $id,
+                                                   string $name,
+                                                   string $description,
+                                                   ?string $illustration,
+                                                   string $beginningDate,
+                                                   string $endingDate): void
     {
         $addFestivalQuery = "SELECT modifierFestival(?, ?, ?, ?, ?) AS id;";
 
         $linkCategorieQuery = "CALL ajouterFestivalCategorie(?, ?);";
 
         $festivalId = Database::query($addFestivalQuery,
+                                      $id,
                                       $name,
                                       $description,
                                       $illustration ?? null,
@@ -237,7 +238,8 @@ class Festival extends Model
 
         $addFestivalQuery = "SELECT ajouterFestivalUtilisateur(?, ?, ?) AS id;";
 
-        $festivalId = Database::query($id,
+        $festivalId = Database::query($addFestivalQuery,
+                                      $id,
                                       $idUser,
                                       $role);
 
@@ -258,7 +260,8 @@ class Festival extends Model
 
         $addFestivalQuery = "SELECT ajouterFestivalOrganisateurs(?, ?, ?) AS id;";
 
-        $festivalId = Database::query($id,
+        $festivalId = Database::query($addFestivalQuery,
+                                      $id,
                                       $idUser,
                                       $role);
 
@@ -279,7 +282,8 @@ class Festival extends Model
 
         $addFestivalQuery = "SELECT ajouterFestivalOrganisateurs(?, ?, ?) AS id;";
 
-        $festivalId = Database::query($id,
+        $festivalId = Database::query($addFestivalQuery,
+                                      $id,
                                       $idUser,
                                       $role);
 
@@ -297,7 +301,8 @@ class Festival extends Model
 
         $addFestivalQuery = "SELECT ajouterFestivalSpectacle(?, ?) AS id;";
 
-        $festivalId = Database::query($id,
+        $festivalId = Database::query($addFestivalQuery,
+                                      $id,
                                       $idSpectacle);
 
     }
@@ -314,7 +319,8 @@ class Festival extends Model
 
         $addFestivalQuery = "SELECT supprimerFestivalSpectacle(?, ?) AS id;";
 
-        $festivalId = Database::query($id,
+        $festivalId = Database::query($addFestivalQuery,
+                                      $id,
                                       $idSpectacle);
 
     }
@@ -331,7 +337,8 @@ class Festival extends Model
 
         $addFestivalQuery = "SELECT ajouterFestivalScene(?, ?) AS id;";
 
-        $festivalId = Database::query($id,
+        $festivalId = Database::query($addFestivalQuery,
+                                      $id,
                                       $idScene);
 
     }
@@ -348,7 +355,8 @@ class Festival extends Model
 
         $addFestivalQuery = "SELECT supprimerFestivalScene(?, ?) AS id;";
 
-        $festivalId = Database::query($id,
+        $festivalId = Database::query($addFestivalQuery,
+                                      $id,
                                       $idScene);
 
     }
