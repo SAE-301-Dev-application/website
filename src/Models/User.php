@@ -3,6 +3,7 @@
 namespace MvcLite\Models;
 
 use MvcLite\Database\Engine\Database;
+use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Session\Session;
@@ -159,6 +160,22 @@ class User extends Model
         $this->password = $password;
     }
 
+    /**
+     * @return DatabaseQuery User's festivals
+     */
+    public function getFestivals(): DatabaseQuery
+    {
+        $query = "SELECT *
+                  FROM festival
+                  INNER JOIN festiplan.festival_utilisateur fu 
+                      on festival.id_festival = fu.id_festival
+                  WHERE fu.id_utilisateur = ?";
+
+        $festivals = Database::query($query, $this->getId());
+
+        return $festivals;
+    }
+
     public function save(): bool
     {
         $query = "UPDATE utilisateur
@@ -264,5 +281,23 @@ class User extends Model
         }
 
         return null;
+    }
+
+    /**
+     * Returns User array by using DatabaseQuery object.
+     *
+     * @param DatabaseQuery $queryObject
+     * @return array users array
+     */
+    public static function queryToArray(DatabaseQuery $queryObject): array
+    {
+        $modelArray = [];
+
+        while ($line = $queryObject->get())
+        {
+            $modelArray[] = self::getUserById($line["id_utilisateur"]);
+        }
+
+        return $modelArray;
     }
 }
