@@ -2,6 +2,7 @@
 
 namespace MvcLite\Controllers;
 
+use MvcLite\Database\Engine\Pagination;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Middlewares\AuthMiddleware;
@@ -26,33 +27,30 @@ class SpectaclesController extends Controller
      */
     public function render(Request $request): void
     {
-        $spectacles = Spectacle::getSpectacles();
-
-        $startIndex = $request->getParameter("indice")
-            ? intval($request->getParameter("indice")) ?? 0
-            : 0;
-
-        $spectaclesCount = count($spectacles);
-
-        if ($startIndex < 0 || $startIndex >= $spectaclesCount
-            || !is_int($startIndex) || $startIndex % 6 !== 0) {
-            Redirect::route("spectacles");
-            die;
-        }
-
-        $indexLastPage = $spectaclesCount % 6 === 0
-            ? $spectaclesCount - 6
-            : $spectaclesCount - ($spectaclesCount % 6);
-        
-        $previousVisibility = $startIndex === 0 ? " link-disabled" : "";
-        $nextVisibility = $startIndex + 6 >= $spectaclesCount ? " link-disabled" : "";
+        $pageNumber = $request->getParameter("page") ?? 1;
 
         View::render("Spectacles", [
-            "spectacles" => $spectacles,
-            "startIndex" => $startIndex,
-            "indexLastPage" => $indexLastPage,
-            "previousVisibility" => $previousVisibility,
-            "nextVisibility" => $nextVisibility,
+            "spectacles"    => self::getPageSpectacles($pageNumber),
+            "pagesCount"    => self::getPagesCount(),
         ]);
+    }
+
+    private static function getSpectaclesPagination(): Pagination
+    {
+        $spectacles = Spectacle::queryToArray(Spectacle::getSpectacles());
+
+        return new Pagination($spectacles, 6);
+    }
+
+    private static function getPageSpectacles(int $pageNumber): array
+    {
+        return self::getSpectaclesPagination()
+            ->getPage($pageNumber);
+    }
+
+    private static function getPagesCount(): int
+    {
+        return self::getSpectaclesPagination()
+            ->count();
     }
 }
