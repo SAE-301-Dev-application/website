@@ -462,9 +462,13 @@ class Festival extends Model
     public static function getFestivals(): DatabaseQuery
     {
         $getFestivalsQuery
-            = "SELECT *
+            = "SELECT *,
+               CASE
+                   WHEN CURRENT_DATE BETWEEN date_debut_fe AND date_fin_fe THEN 1
+                   ELSE 0
+               END AS en_cours_fe
                FROM festival
-               ORDER BY date_debut_fe ASC, date_fin_fe ASC;";
+               ORDER BY en_cours_fe DESC, date_debut_fe ASC, date_fin_fe ASC;";
 
         return Database::query($getFestivalsQuery);
     }
