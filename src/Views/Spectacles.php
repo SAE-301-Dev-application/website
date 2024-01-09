@@ -1,6 +1,7 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
-use MvcLite\Models\Spectacle;
+
+$page = $props->getRequest()->getParameter("page") ?? 1;
 ?>
 
 <!doctype html>
@@ -48,24 +49,24 @@ use MvcLite\Models\Spectacle;
 
         <div class="spectacles-grid">
 
-          <?php for ($i = $startIndex, $count = 1;
-                     $count <= 6 && $i < count($spectacles);
-                     $i++, $count++) {
+          <?php
+          foreach ($spectacles as $spectacle)
+          {
           ?>
 
           <a href="<?= route("dashboard") ?>"> <!--?id=<?= ""//$spectacles[$i]->getId() ?>"> TODO changer pour page spectacle -->
             <div class="spectacle-preview">
               <div class="spectacle-picture"
-                   style="background: url('<?= $spectacles[$i]->getIllustration() ?>') center / cover no-repeat;">
+                   style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
               </div>
 
               <div class="spectacle-identity">
                 <h3 class="spectacle-title">
-                <?= $spectacles[$i]->getTitle() ?>
+                <?= $spectacle->getTitle() ?>
                 </h3>
 
                 <p class="spectacle-description">
-                <?= $spectacles[$i]->getDescription() ?>
+                <?= $spectacle->getDescription() ?>
                 </p>
               </div>
             </div>
@@ -77,24 +78,38 @@ use MvcLite\Models\Spectacle;
       </section>
 
       <div class="pagination">
-        <div class="previous-links<?= $previousVisibility ?>">
-          <a href="<?= route("spectacles") ?>?indice=0">
+        <div class="previous-links">
+          <?php
+          if ($page > 1)
+          {
+          ?>
+          <a href="<?= route("spectacles") ?>?page=1">
             <i class="fa-solid fa-angles-left"></i>
           </a>
 
-          <a href="<?= route("spectacles") ?>?indice=<?= $startIndex - 6 ?>">
+          <a href="<?= route("spectacles") ?>?page=<?= $page - 1 ?>">
             <i class="fa-solid fa-angle-left"></i>
           </a>
+          <?php
+          }
+          ?>
         </div>
 
-        <div class="next-links<?= $nextVisibility ?>">
-          <a href="<?= route("spectacles") ?>?indice=<?= $startIndex + 6 ?>">
+        <div class="next-links">
+          <?php
+          if ($page < $pagesCount - 1)
+          {
+          ?>
+          <a href="<?= route("spectacles") ?>?page=<?= $page + 1 ?>">
             <i class="fa-solid fa-angle-right"></i>
           </a>
 
-          <a href="<?= route("spectacles") ?>?indice=<?= $indexLastPage ?>">
+          <a href="<?= route("spectacles") ?>?page=<?= $pagesCount - 1 ?>">
             <i class="fa-solid fa-angles-right"></i>
           </a>
+          <?php
+          }
+          ?>
         </div>
       </div>
     </div>

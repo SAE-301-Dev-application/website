@@ -1,6 +1,7 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
-use MvcLite\Models\Festival;
+
+$page = $props->getRequest()->getParameter("page") ?? 1;
 ?>
 
 <!doctype html>
@@ -48,31 +49,32 @@ use MvcLite\Models\Festival;
 
         <div class="festivals-grid">
 
-          <?php for ($i = $startIndex, $count = 1;
-                     $count <= 6 && $i < count($festivals);
-                     $i++, $count++) {
-          
-          $isFestivalInProgress = $festivals[$i]->isFestivalInProgress();
+          <?php
+          foreach ($festivals as $festival)
+          {
+              $isFestivalInProgress = $festival->isFestivalInProgress();
           ?>
 
-          <a href="<?= route("informationsFestival") ?>?id=<?= $festivals[$i]->getId() ?>">
+          <a href="<?= route("informationsFestival") ?>?id=<?= $festival->getId() ?>">
             <div class="festival-preview">
               <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
-                  style="background: url('<?= $festivals[$i]->getIllustration() ?>') center / cover no-repeat;">
+                  style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;">
+
                 <?php if ($isFestivalInProgress) { ?>
-                <div class="filter-in-progress">
-                  <p>en cours</p>
-                </div>
+                    <div class="filter-in-progress">
+                      <p>en cours</p>
+                    </div>
                 <?php } ?>
+
               </div>
 
               <div class="festival-identity">
                 <h3 class="festival-name">
-                <?= $festivals[$i]->getName() ?>
+                <?= $festival->getName() ?>
                 </h3>
 
                 <p class="festival-description">
-                <?= $festivals[$i]->getDescription() ?>
+                <?= $festival->getDescription() ?>
                 </p>
               </div>
             </div>
@@ -84,24 +86,38 @@ use MvcLite\Models\Festival;
       </section>
 
       <div class="pagination">
-        <div class="previous-links<?= $previousVisibility ?>">
-          <a href="<?= route("festivals") ?>?indice=0">
+        <div class="previous-links">
+          <?php
+          if ($page > 1)
+          {
+          ?>
+          <a href="<?= route("festivals") ?>?page=1">
             <i class="fa-solid fa-angles-left"></i>
           </a>
 
-          <a href="<?= route("festivals") ?>?indice=<?= $startIndex - 6 ?>">
+          <a href="<?= route("festivals") ?>?page=<?= $page - 1 ?>">
             <i class="fa-solid fa-angle-left"></i>
           </a>
+          <?php
+          }
+          ?>
         </div>
 
-        <div class="next-links<?= $nextVisibility ?>">
-          <a href="<?= route("festivals") ?>?indice=<?= $startIndex + 6 ?>">
+        <div class="next-links">
+          <?php
+          if ($page < $pagesCount - 1)
+          {
+          ?>
+          <a href="<?= route("festivals") ?>?page=<?= $page + 1 ?>">
             <i class="fa-solid fa-angle-right"></i>
           </a>
 
-          <a href="<?= route("festivals") ?>?indice=<?= $indexLastPage ?>">
+          <a href="<?= route("festivals") ?>?page=<?= $pagesCount - 1 ?>">
             <i class="fa-solid fa-angles-right"></i>
           </a>
+          <?php
+          }
+          ?>
         </div>
       </div>
     </div>
