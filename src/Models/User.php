@@ -179,6 +179,22 @@ class User extends Model
     }
 
     /**
+     * @return DatabaseQuery User's spectacles
+     */
+    public function getSpectacles(): DatabaseQuery
+    {
+        $query = "SELECT *
+                  FROM spectacle
+                  INNER JOIN spectacle_intervenant si
+                      on spectacle.id_spectacle = si.id_spectacle
+                  WHERE si.id_intervenant = ?";
+
+        $spectacles = Database::query($query, $this->getId());
+
+        return $spectacles;
+    }
+
+    /**
      * Verify given password with session user one.
      *
      * @param string $password Given password
