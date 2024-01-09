@@ -12,8 +12,7 @@ class Festival extends Model
 {
     /** Default festival illustration path. */
     private const DEFAULT_FESTIVAL_ILLUSTRATION_PATH
-        = ROUTE_PATH_PREFIX
-        . "src/Resources/Medias/Images/default_illustration.png";
+        = "default_illustration.png";
 
     /** Festival's id. */
     private int $id;
@@ -450,7 +449,7 @@ class Festival extends Model
                 ->setEndingDate($festival["date_fin_fe"]);
 
             $festivalInstance
-                ->setIllustration($festival["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_PATH);
+                ->setIllustration($festival["illustration_fe"]);
 
             return $festivalInstance;
         }

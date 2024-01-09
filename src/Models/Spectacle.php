@@ -12,8 +12,7 @@ class Spectacle extends Model
 {
     /** Default festival illustration path. */
     private const DEFAULT_FESTIVAL_ILLUSTRATION_PATH
-        = ROUTE_PATH_PREFIX
-        . "src/Resources/Medias/Images/default_illustration.png";
+        = "default_illustration.png";
 
     /** Spectacle's id. */
     private int $id;
