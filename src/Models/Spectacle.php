@@ -150,6 +150,11 @@ class Spectacle extends Model
         return $this->illustration = $illustration;
     }
 
+    public function getOwner(): ?User
+    {
+        return new User();  // TODO STUB
+    }
+
     /**
      * Attempt to create a spectacle and link categories to it.
      *
@@ -260,7 +265,7 @@ class Spectacle extends Model
      * @return Festival|null Spectacle object if exists;
      *                       else NULL
      */
-    public static function getSpectacleById(int $id): ?static
+    public static function getSpectacleById(int $id): ?Spectacle
     {
         $query = "SELECT * FROM spectacle WHERE id_spectacle = ?";
 
@@ -293,6 +298,20 @@ class Spectacle extends Model
         }
 
         return null;
+    }
+
+    /**
+     * Attempts to delete a spectacle by its id.
+     *
+     * @return bool If spectacle is successfully deleted
+     */
+    public function delete(): bool
+    {
+        $query = "DELETE FROM spectacle WHERE id_spectacle = ?";
+
+        $spectacleDeleting = Database::query($query, $this->getId());
+
+        return $spectacleDeleting->getExecutionState();
     }
 
     /**
