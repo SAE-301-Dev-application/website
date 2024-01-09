@@ -58,8 +58,10 @@ $email = $hasRequest
 
     <?php
     Storage::component("PopupComponent", [
-      "title" => "test",
-      "slot" => "testslot"
+      "id"    => "popup_confirm_account_deleting",
+      "title" => "title_popup",
+      "slot"  => "<p>Hello, World</p> 
+                  <button class='button-blue'>Button</button>",
     ]);
     ?>
 
@@ -434,12 +436,10 @@ $email = $hasRequest
             </div>
 
             <div class="buttons-container">
-              <a class="button-link" id="unsubscribe-button">
-                <button class="button-red">
-                  Se désinscrire
-                  <i class="fa-solid fa-right-from-bracket"></i>
-                </button>
-              </a>
+              <button class="button-red" id="unsubscribe_button">
+                Se désinscrire
+                <i class="fa-solid fa-right-from-bracket"></i>
+              </button>
             </div>
           </section>
         </div>
