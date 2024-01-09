@@ -380,7 +380,7 @@
         }
 
         > .popup {
-            @apply bg-white shadow-md rounded-lg p-5 text-black w-1/2 relative;
+            @apply bg-white shadow-md rounded-lg p-5 text-black w-full xl:w-1/2 relative mx-5;
 
             > .popup-close-button {
                 @apply absolute right-5 top-5 text-xl;
