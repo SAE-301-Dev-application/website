@@ -20,39 +20,14 @@ $orange: #FF7A00;
                       > .scene {
                         @apply text-4xl font-bold;
                       }
+                      >.buttons-add-scene {
+                          @apply w-1/2;
+                      }
+                      >.text-box-search {
+                          @apply w-3;
+                      }
+
                     > label {
-                    /* prepare wrapper element */
-                    // .duration-container {
-                    //   display: inline-block;
-                    //   position: relative;
-                    // }
-
-                    // /* position the unit to the right of the wrapper */
-                    // .duration-container::after {
-                    //   position: absolute;
-                    //   top: 2px;
-                    //   right: .5em;
-                    //   transition: all .05s ease-in-out;
-                    // }
-
-                    // /* move unit more to the left on hover or focus within
-                    //   for arrow buttons will appear to the right of number inputs */
-                    // .duration-container:hover::after,
-                    // .duration-container:focus-within::after {
-                    //   right: 1.5em;
-                    // }
-
-                    // /* handle Firefox (arrows always shown) */
-                    // @supports (-moz-appearance:none) {
-                    //   .duration-container::after {
-                    //     right: 1.5em;
-                    //   }
-                    // }
-
-                    // /* set the unit abbreviation for each unit class */
-                    // .duration-container::after {
-                    //   content: 'min';
-                    // }
 
                     > .duration-container {
                         @apply inline-block relative;
