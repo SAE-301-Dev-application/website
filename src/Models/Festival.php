@@ -5,6 +5,7 @@ namespace MvcLite\Models;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Models\Engine\Model;
 
@@ -133,7 +134,7 @@ class Festival extends Model
      */
     public function getIllustration(): string
     {
-        return $this->illustration;
+        return Storage::getResourcesPath() . "/Medias/Images/FestivalsUploads/" . $this->illustration;
     }
 
     /**
@@ -393,7 +394,7 @@ class Festival extends Model
 
         $result = Database::query($getFestivalsQuery);
 
-        return $result->getAll();
+        return Festival::queryToArray($result);
     }
 
     /**
