@@ -63,7 +63,7 @@ $size = $hasRequest
       <section id="creation_form">
         <div class="title-container">
           <h2 class="title">
-            Créer une scène
+            Ajouter des scènes
           </h2>
         </div>
 
@@ -74,7 +74,7 @@ $size = $hasRequest
                 <div class="form-component">
                   <label for="name">
                     <p>
-                      Nom :
+                      Recherche de scène :
                     </p>
                     <input type="text"
                            name="name"
@@ -89,90 +89,6 @@ $size = $hasRequest
                     ?>
                   </label>
                 </div>
-
-                <div class="form-component">
-                  <label for="max_seats">
-                    <p>
-                      Nombre de spectateurs maximum :
-                    </p>
-                    <input type="number"
-                           name="max_seats"
-                           id="max_seats"
-                           required />
-                    <?php
-                    Storage::component("InputErrorComponent", [
-                        "errors" => $errors,
-                        "input" => "max_seats",
-                    ]);
-                    ?>
-                  </label>
-                </div>
-
-                <div class="form-duo">
-                  <div class="form-component">
-                    <label for="longitude">
-                      <p>
-                        Longitude :
-                      </p>
-                      <input type="number"
-                             step="0.01"
-                             name="longitude"
-                             id="longitude"
-                             required />
-                      <?php
-                      Storage::component("InputErrorComponent", [
-                          "errors" => $errors,
-                          "input" => "longitude",
-                      ]);
-                      ?>
-                    </label>
-                  </div>
-
-                  <div class="form-component">
-                    <label for="latitude">
-                      <p>
-                        Latitude :
-                      </p>
-                      <input type="number" step="0.01" name="latitude" id="latitude" required />
-                      <?php
-                      Storage::component("InputErrorComponent", [
-                          "errors" => $errors,
-                          "input" => "latitude",
-                      ]);
-                      ?>
-                    </label>
-                  </div>
-                </div>
-
-                <div class="form-component">
-                  <label for="size">
-                    <p>
-                      Taille :
-                    </p>
-                    <select name="size" id="size" required>
-                      <optgroup label="Sélectionnez une taille :">
-                        <option value="1">
-                          Petite
-                        </option>
-
-                        <option value="2">
-                          Moyenne
-                        </option>
-
-                        <option value="3">
-                          Grande
-                        </option>
-                      </optgroup>
-                    </select>
-                    <?php
-                    Storage::component("InputErrorComponent", [
-                        "errors" => $errors,
-                        "input" => "size",
-                    ]);
-                    ?>
-                  </label>
-                </div>
-              </section>
 
               <?php
               Storage::component("FormHelpBoxComponent", [
@@ -203,7 +119,7 @@ $size = $hasRequest
               </a>
 
               <button class="button-blue" type="submit">
-                Créer la scène
+                Créer le festival
               </button>
             </div>
           </form>

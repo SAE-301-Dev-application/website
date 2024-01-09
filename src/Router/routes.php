@@ -15,6 +15,7 @@ use MvcLite\Controllers\FestivalsController;
 use MvcLite\Controllers\CreateFestivalController;
 use MvcLite\Controllers\CreateSpectacleController;
 use MvcLite\Controllers\SessionController;
+use MvcLite\Controllers\AddScenesFestivalController;
 use MvcLite\Router\Engine\Router;
 
 Router::get("/", IndexController::class, "redirectionIndex");
@@ -68,3 +69,6 @@ Router::post("/create-scene", CreateSceneController::class, "createScene")
 
 Router::get("/profile", ProfileController::class, "render")
     ->setName("profile");
+
+Router::get("/create-festival/add-scene", AddScenesFestivalController::class, "render")
+    ->setName("addSceneFestivals");
