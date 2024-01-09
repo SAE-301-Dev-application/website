@@ -59,12 +59,6 @@ class Validator
         {
             $inputValue = $this->getRequest()->getInput($input);
 
-            if ($inputValue === null)
-            {
-                $error = new UndefinedInputException($input);
-                $error->render();
-            }
-
             $isFilled = $inputValue !== null && strlen(trim($inputValue));
 
             if (!$isFilled)
