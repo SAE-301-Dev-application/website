@@ -10,6 +10,7 @@ use MvcLite\Engine\Security\Validator;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Models\Festival;
+use MvcLite\Models\Spectacle;
 use MvcLite\Models\User;
 use MvcLite\Router\Engine\Redirect;
 use MvcLite\Router\Engine\RedirectResponse;
@@ -88,6 +89,7 @@ class ProfileController extends Controller
     {
         View::render("Profile", [
             "myFestivals" => self::getUserFestivals(),
+            "mySpectacles" => self::getUserSpectacles(),
         ]);
     }
 
@@ -199,5 +201,10 @@ class ProfileController extends Controller
     private static function getUserFestivals(): array
     {
         return Festival::queryToArray(Session::getUserAccount()->getFestivals());
+    }
+
+    private static function getUserSpectacles(): array
+    {
+        return Spectacle::queryToArray(Session::getUserAccount()->getSpectacles());
     }
 }
