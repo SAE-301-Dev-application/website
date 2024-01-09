@@ -46,7 +46,7 @@ $email = $hasRequest
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
   <?php
   Storage::include("Js/profile/navigation-links-manager.js", importMethod: "defer");
-  Storage::include("Js/profile/unsubscribe.js", importMethod: "defer");
+  Storage::include("Js/profile/unregister.js", importMethod: "defer");
   ?>
 
   <!-- FontAwesome -->
@@ -58,10 +58,17 @@ $email = $hasRequest
 
     <?php
     Storage::component("PopupComponent", [
-      "id"    => "popup_confirm_account_deleting",
-      "title" => "title_popup",
-      "slot"  => "<p>Hello, World</p> 
-                  <button class='button-blue'>Button</button>",
+      "id"      => "popup_confirm_account_deleting",
+      "title"   => "Confirmation de désinscription",
+
+      "slot"    => "<p class='question'>Êtes vous sûr de vouloir vous désinscrire de la plateforme ?</p>
+                    <p><i class='fa-solid fa-warning fa-2xl'></i> <strong>Attention</strong>, cette action est irréversible et le compte ne pourra pas être récupéré.</p>
+                    <p>Tous les festivals et les spectacles dont vous êtes responsable seront également supprimés.</p>",
+
+      "buttons" => "<div class='buttons'>
+                      <button class='button-grey' id='popup_cancel_button'>Annuler</button>
+                      <button class='button-red'>Se désinscrire <i class='fa-solid fa-right-from-bracket'></i></button>
+                    </div>",
     ]);
     ?>
 
