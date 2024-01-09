@@ -594,7 +594,8 @@ class Validator
      */
     public function password(string $input, ?string $error = null): Validator
     {
-        $defaultError = "Wrong account information.";
+        $notLoggedDefaultError = "You must be logged to an account.";
+        $wrongPasswordDefaultError = "Wrong account information.";
 
         $inputValue = $this->getRequest()->getInput($input);
 
@@ -604,14 +605,21 @@ class Validator
             $error->render();
         }
 
-        $isGoodPassword = Session::getUserAccount()->verifyPassword($inputValue);
-
-        if (!$isGoodPassword)
+        if (!Session::isLogged())
         {
-            $this->addError("password", $input, $error ?? $defaultError);
+            $this->addError("password", $input, $notLoggedDefaultError);
         }
+        else
+        {
+            $isGoodPassword = Session::getUserAccount()->verifyPassword($inputValue);
 
-        $this->validationState &= $isGoodPassword;
+            if (!$isGoodPassword)
+            {
+                $this->addError("password", $input, $error ?? $wrongPasswordDefaultError);
+            }
+
+            $this->validationState &= $isGoodPassword;
+        }
 
         return $this;
     }
