@@ -52,14 +52,13 @@ use MvcLite\Models\Festival;
                      $count <= 6 && $i < count($festivals);
                      $i++, $count++) {
           
-          $isFestivalInProgress = $festivals[$i]["en_cours_fe"] === 1;
-          $idFestival = $festivals[$i]["id_festival"];
+          $isFestivalInProgress = $festivals[$i]->isFestivalInProgress();
           ?>
 
-          <a href="<?= route("informationsFestival") ?>?id=<?=$idFestival?>">
+          <a href="<?= route("informationsFestival") ?>?id=<?= $festivals[$i]->getId() ?>">
             <div class="festival-preview">
               <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
-                  style="background: url('<?= Festival::getImagePathByName($festivals[$i]["illustration_fe"]) ?>') center / cover no-repeat;">
+                  style="background: url('<?= $festivals[$i]->getIllustration() ?>') center / cover no-repeat;">
                 <?php if ($isFestivalInProgress) { ?>
                 <div class="filter-in-progress">
                   <p>en cours</p>
@@ -69,11 +68,11 @@ use MvcLite\Models\Festival;
 
               <div class="festival-identity">
                 <h3 class="festival-name">
-                <?= $festivals[$i]["nom_fe"] ?>
+                <?= $festivals[$i]->getName() ?>
                 </h3>
 
                 <p class="festival-description">
-                <?= $festivals[$i]["description_fe"] ?>
+                <?= $festivals[$i]->getDescription() ?>
                 </p>
               </div>
             </div>
