@@ -31,7 +31,6 @@ class Request
         $this->uri = $_SERVER["REQUEST_URI"];
 
         $this->saveInputs();
-        $this->saveParameters();
         $this->saveFiles();
     }
 
@@ -88,26 +87,17 @@ class Request
     }
 
     /**
-     * Saves $_GET values and returns them.
-     *
-     * @return array Parameters array
-     */
-    private function saveParameters(): array
-    {
-        return $this->parameters = $_GET;
-    }
-
-    /**
      * @return array Current request parameters
      */
     public function getParameters(): array
     {
-        return $this->parameters;
+        return $_GET;
     }
 
     /**
      * @param string $key Parameter key
-     * @return string Parameter value
+     * @return string|null Parameter value if exists;
+     *                     else NULL
      */
     public function getParameter(string $key): ?string
     {
