@@ -233,18 +233,16 @@ class Spectacle extends Model
     /**
      * Get all spectacles.
      * 
-     * @return array Spectacles
+     * @return DatabaseQuery Spectacles
      */
-    public static function getSpectacles(): array
+    public static function getSpectacles(): DatabaseQuery
     {
         $getSpectaclesQuery
             = "SELECT *
                FROM spectacle
                ORDER BY id_spectacle ASC;";
 
-        $result = Database::query($getSpectaclesQuery);
-
-        return Spectacle::queryToArray($result);
+        return Database::query($getSpectaclesQuery);
     }
 
     /**
