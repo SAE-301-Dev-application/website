@@ -259,7 +259,7 @@ $email = $hasRequest
 
                     <div class="form-buttons">
                         <button class="button-blue">
-                            <i class="fa-solid fa-lock"></i>
+                            <i class="fa-solid fa-lock fa-xl"></i>
                             Modifier mon mot de passe
                         </button>
                     </div>
@@ -274,8 +274,10 @@ $email = $hasRequest
 
             <div class="festivals-container">
               <?php
-              foreach ($myFestivals as $festival)
+              if (count($myFestivals))
               {
+                foreach ($myFestivals as $festival)
+                {
               ?>
               <div class="festival-preview">
                 <div class="festival-picture"
@@ -311,6 +313,22 @@ $email = $hasRequest
                 </div>
               </div>
               <?php
+                }
+              }
+              else
+              {
+              ?>
+              <div class="alert alert-grey">
+                <div class="alert-icon">
+                  <i class="fa-solid fa-info-circle"></i>
+                </div>
+                <div class="alert-content">
+                  <p>
+                    Vous ne participez pour le moment à aucun festival.
+                  </p>
+                </div>
+              </div>
+              <?php
               }
               ?>
             </div>
@@ -322,14 +340,21 @@ $email = $hasRequest
             </h3>
 
             <div class="festivals-container">
+              <?php
+              if (count($mySpectacles))
+              {
+                foreach ($mySpectacles as $spectacle)
+                {
+              ?>
               <div class="festival-preview">
-                <div class="festival-picture"></div>
+                <div class="festival-picture"
+                     style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;"></div>
 
                 <div class="festival-identity">
                   <div class="festival-header">
                     <div class="festival-name-container">
                       <h3 class="festival-name">
-                        Spectacle name
+                        <?= $spectacle->getTitle() ?>
                       </h3>
 
                       <i class="fa-solid fa-warning fa-2xl"></i>
@@ -349,13 +374,29 @@ $email = $hasRequest
                   </div>
 
                   <p class="festival-description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Consequuntur delectus minus officiis porro possimus.
-                    Ab at dignissimos eum harum in, ipsum, maxime porro possimus
-                    provident quam quasi quo sint ullam.
+                    <?= $spectacle->getDescription() ?>
                   </p>
                 </div>
               </div>
+              <?php
+                }
+              }
+              else
+              {
+              ?>
+                <div class="alert alert-grey">
+                  <div class="alert-icon">
+                    <i class="fa-solid fa-info-circle"></i>
+                  </div>
+                  <div class="alert-content">
+                    <p>
+                      Vous ne participez pour le moment à aucun spectacle.
+                    </p>
+                  </div>
+                </div>
+              <?php
+              }
+              ?>
             </div>
           </section>
 
