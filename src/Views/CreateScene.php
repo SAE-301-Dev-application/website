@@ -35,7 +35,7 @@ $size = $hasRequest
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Créer un festival - Festiplan</title>
+  <title>Créer une scène - Festiplan</title>
 
   <!-- CSS -->
   <?php
@@ -45,8 +45,6 @@ $size = $hasRequest
   <!-- JS -->
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
-
-  <!-- <script src="../src/js/CreateFestival/picture-chooser.js" defer></script> -->
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -79,6 +77,7 @@ $size = $hasRequest
                     <input type="text"
                            name="name"
                            id="name"
+                           maxlength="25"
                            value="<?= $name ?>"
                            required />
                     <?php
@@ -99,6 +98,7 @@ $size = $hasRequest
                            name="max_seats"
                            id="max_seats"
                            min="1"
+                           value="<?= $maxSeats ?>"
                            required />
                     <?php
                     Storage::component("InputErrorComponent", [
@@ -115,11 +115,14 @@ $size = $hasRequest
                       <p>
                         Longitude :
                       </p>
+
                       <input type="number"
                              step="0.01"
                              name="longitude"
                              id="longitude"
+                             value="<?= $longitude ?>"
                              required />
+
                       <?php
                       Storage::component("InputErrorComponent", [
                           "errors" => $errors,
@@ -134,7 +137,14 @@ $size = $hasRequest
                       <p>
                         Latitude :
                       </p>
-                      <input type="number" step="0.01" name="latitude" id="latitude" required />
+
+                      <input type="number"
+                             step="0.01"
+                             name="latitude"
+                             id="latitude"
+                             value="<?= $latitude ?>"
+                             required />
+
                       <?php
                       Storage::component("InputErrorComponent", [
                           "errors" => $errors,
@@ -150,21 +160,23 @@ $size = $hasRequest
                     <p>
                       Taille :
                     </p>
+
                     <select name="size" id="size" required>
                       <optgroup label="Sélectionnez une taille :">
-                        <option value="1">
+                        <option value="1"<?= $size === "1" ? " selected" : "" ?>>
                           Petite
                         </option>
 
-                        <option value="2">
+                        <option value="2"<?= $size === "2" ? " selected" : "" ?>>
                           Moyenne
                         </option>
 
-                        <option value="3">
+                        <option value="3"<?= $size === "3" ? " selected" : "" ?>>
                           Grande
                         </option>
                       </optgroup>
                     </select>
+
                     <?php
                     Storage::component("InputErrorComponent", [
                         "errors" => $errors,
@@ -178,7 +190,7 @@ $size = $hasRequest
               <?php
               Storage::component("FormHelpBoxComponent", [
                   "icon" => "fa-regular fa-question-circle",
-                  "title" => "Ajouter une scène",
+                  "title" => "Créer une scène",
                   "content"
                       => "<p>
                             Les scènes sont des lieux où peuvent se dérouler les spectacles planifiés sur 
