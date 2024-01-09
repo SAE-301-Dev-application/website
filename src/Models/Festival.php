@@ -3,13 +3,22 @@
 namespace MvcLite\Models;
 
 use MvcLite\Database\Engine\Database;
+use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Models\Engine\Model;
 
 class Festival extends Model
 {
-    /** Festival's name */
+    /** Default festival illustration path. */
+    private const DEFAULT_FESTIVAL_ILLUSTRATION_PATH
+        = ROUTE_PATH_PREFIX
+        . "src/Resources/Medias/Images/default_illustration.png";
+
+    /** Festival's id. */
+    private int $id;
+
+    /** Festival's name. */
     private string $name;
 
     /** Festival's description. */
@@ -21,17 +30,31 @@ class Festival extends Model
     /** Festival's ending date. */
     private string $endingDate;
 
-    /** Festival's categories */
-    private array $categories;
-
     /** Festival's illustration */
-    private string $illustration;
+    private ?string $illustration;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->setTableName("festival");
+    }
+
+    /**
+     * @return int Festival's id
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id New festival's id
+     * @return int New festival's id
+     */
+    private function setId(int $id): int
+    {
+        return $this->id = $id;
     }
 
     /**
@@ -43,11 +66,27 @@ class Festival extends Model
     }
 
     /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
      * @return string Festival's description
      */
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
     /**
@@ -59,6 +98,14 @@ class Festival extends Model
     }
 
     /**
+     * @param string $beginningDate
+     */
+    public function setBeginningDate(string $beginningDate): void
+    {
+        $this->beginningDate = $beginningDate;
+    }
+
+    /**
      * @return string Festival's ending date
      */
     public function getEndingDate(): string
@@ -67,11 +114,19 @@ class Festival extends Model
     }
 
     /**
+     * @param string $endingDate
+     */
+    public function setEndingDate(string $endingDate): void
+    {
+        $this->endingDate = $endingDate;
+    }
+
+    /**
      * @return array Festival's categories
      */
     public function getCategories(): array
     {
-        return $this->categories;
+        return [];  // todo stump
     }
 
     /**
@@ -80,6 +135,14 @@ class Festival extends Model
     public function getIllustration(): string
     {
         return $this->illustration;
+    }
+
+    /**
+     * @param string|null $illustration
+     */
+    public function setIllustration(?string $illustration): void
+    {
+        $this->illustration = $illustration;
     }
 
     /**
@@ -163,13 +226,75 @@ class Festival extends Model
      */
     public static function getImagePathByName(?string $name)
     {
+        // TODO: delete? !!
         $illustrationPath = ROUTE_PATH_PREFIX
             . "src/Resources/Medias/Images/";
-    
+
         $defaultIllustration = "default_illustration.png";
 
         return !$name || $name === $defaultIllustration
             ? $illustrationPath . $defaultIllustration
             : $illustrationPath . "FestivalsUploads/" . $name;
+
+    }
+
+    /**
+     * Searches and returns Festival instance by its id.
+     *
+     * @param int $id Festival id
+     * @return Festival|null Festival object if exists;
+     *                       else NULL
+     */
+    public static function getFestivalById(int $id): ?Festival
+    {
+        $query = "SELECT * FROM festival WHERE id_festival = ?";
+
+        $getFestival = Database::query($query, $id);
+        $festival = $getFestival->get();
+
+        if ($festival)
+        {
+            $festivalInstance = new Festival();
+
+            $festivalInstance
+                ->setId($id);
+
+            $festivalInstance
+                ->setName($festival["nom_fe"]);
+
+            $festivalInstance
+                ->setDescription($festival["description_fe"]);
+
+            $festivalInstance
+                ->setBeginningDate($festival["date_debut_fe"]);
+
+            $festivalInstance
+                ->setEndingDate($festival["date_fin_fe"]);
+
+            $festivalInstance
+                ->setIllustration($festival["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_PATH);
+
+            return $festivalInstance;
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns User array by using DatabaseQuery object.
+     *
+     * @param DatabaseQuery $queryObject
+     * @return array users array
+     */
+    public static function queryToArray(DatabaseQuery $queryObject): array
+    {
+        $modelArray = [];
+
+        while ($line = $queryObject->get())
+        {
+            $modelArray[] = self::getFestivalById($line["id_festival"]);
+        }
+
+        return $modelArray;
     }
 }
