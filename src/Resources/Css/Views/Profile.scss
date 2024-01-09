@@ -37,8 +37,8 @@ $orange: #FF7A00;
                         > .buttons-container {
                             @apply flex flex-wrap gap-x-5;
 
-                            > a.button-link {
-                                @apply xl:w-1/5;
+                            > button {
+                                @apply xl:w-auto;
                             }
                         }
                     }
