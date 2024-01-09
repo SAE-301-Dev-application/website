@@ -3,10 +3,12 @@
 namespace MvcLite\Controllers;
 
 use MvcLite\Controllers\Engine\Controller;
+use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Middlewares\AuthMiddleware;
+use MvcLite\Models\Festival;
 use MvcLite\Models\User;
 use MvcLite\Router\Engine\Redirect;
 use MvcLite\Router\Engine\RedirectResponse;
@@ -69,7 +71,9 @@ class ProfileController extends Controller
 
     public function render(): void
     {
-        View::render("Profile");
+        View::render("Profile", [
+            "myFestivals" => self::getUserFestivals(),
+        ]);
     }
 
     public function save(Request $request): RedirectResponse
@@ -124,5 +128,13 @@ class ProfileController extends Controller
         return Redirect::route("profile")
             ->withValidator($validation)
             ->redirect();
+    }
+
+    /**
+     * @return array Session user's festivals
+     */
+    private static function getUserFestivals(): array
+    {
+        return Festival::queryToArray(Session::getUserAccount()->getFestivals());
     }
 }
