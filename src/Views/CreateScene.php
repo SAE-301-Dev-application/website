@@ -98,6 +98,7 @@ $size = $hasRequest
                     <input type="number"
                            name="max_seats"
                            id="max_seats"
+                           min="1"
                            required />
                     <?php
                     Storage::component("InputErrorComponent", [
