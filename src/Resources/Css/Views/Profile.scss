@@ -67,6 +67,14 @@ $orange: #FF7A00;
                         }
                     }
 
+                    > .forms-container {
+                        @apply grid grid-cols-1 xl:grid-cols-2 gap-10;
+
+                        > form {
+                            @apply xl:w-2/3 flex flex-col gap-y-5;
+                        }
+                    }
+
                     > .festivals-container {
                         @apply flex flex-col gap-y-5;
 
@@ -80,22 +88,8 @@ $orange: #FF7A00;
                             }
                         }
                     }
-
-                    > .forms-container {
-                        @apply grid grid-cols-1 xl:grid-cols-2 gap-10;
-
-                        > form {
-                            @apply w-2/3 flex flex-col gap-y-5;
-                        }
-                    }
                 }
             }
         }
-    }
-}
-
-body {
-    &.hide-overflow {
-        @apply overflow-hidden;
     }
 }
