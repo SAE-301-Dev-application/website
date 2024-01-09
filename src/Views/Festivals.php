@@ -105,14 +105,14 @@ $page = $props->getRequest()->getParameter("page") ?? 1;
 
         <div class="next-links">
           <?php
-          if ($page < $pagesCount - 1)
+          if ($page < $pagesCount)
           {
           ?>
           <a href="<?= route("festivals") ?>?page=<?= $page + 1 ?>">
             <i class="fa-solid fa-angle-right"></i>
           </a>
 
-          <a href="<?= route("festivals") ?>?page=<?= $pagesCount - 1 ?>">
+          <a href="<?= route("festivals") ?>?page=<?= $pagesCount ?>">
             <i class="fa-solid fa-angles-right"></i>
           </a>
           <?php
