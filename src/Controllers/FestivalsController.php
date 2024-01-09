@@ -30,9 +30,14 @@ class FestivalsController extends Controller
     {
         $pageNumber = $request->getParameter("page") ?? 1;
 
+        if (!is_numeric($pageNumber) || $pageNumber < 1)
+        {
+            return Redirect::route("festivals");
+        }
+
         $pageFestivals = self::getPageFestivals($pageNumber);
 
-        if ($pageFestivals === null)
+        if (!$pageFestivals)
         {
             return Redirect::route("festivals");
         }
