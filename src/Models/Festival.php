@@ -381,7 +381,8 @@ class Festival extends Model
                    WHEN CURRENT_DATE BETWEEN date_debut_fe AND date_fin_fe THEN 1
                    ELSE 0
                END AS en_cours_fe
-               FROM festival;";
+               FROM festival
+               ORDER BY en_cours_fe DESC, date_debut_fe ASC;";
 
         $result = Database::query($getFestivalsQuery);
 
