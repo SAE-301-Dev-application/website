@@ -281,12 +281,6 @@
         > .next-links {
             @apply flex gap-x-2;
 
-            &.link-disabled {
-                > * {
-                    @apply hidden;
-                }
-            }
-
             > a {
                 &:hover {
                     @apply opacity-80;
