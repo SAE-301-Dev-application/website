@@ -43,13 +43,17 @@ $orange: #FF7A00;
                         }
                     }
 
-                    .festival-preview {
-                        > .festival-picture {
-                            @apply w-48 h-40;
-                        }
+                    > .festivals-container {
+                        @apply flex flex-col gap-y-5;
 
-                        & .festival-header {
-                            @apply mb-5;
+                        > .festival-preview {
+                            > .festival-picture {
+                                @apply w-48 h-40;
+                            }
+
+                            & .festival-header {
+                                @apply mb-5;
+                            }
                         }
                     }
 
