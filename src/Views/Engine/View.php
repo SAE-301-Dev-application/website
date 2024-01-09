@@ -20,6 +20,7 @@ class View
         }
 
         $props["props"] = Delivery::get();
+
         extract($props);
 
         include_once $absoluteViewPath;
