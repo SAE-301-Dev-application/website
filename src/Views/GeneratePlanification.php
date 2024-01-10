@@ -1,8 +1,6 @@
 <?php
-
 use MvcLite\Engine\InternalResources\Storage;
-
-
+use MvcLite\DevelomentUtilities\Debug;
 ?>
 
 <!doctype html>
@@ -15,13 +13,18 @@ use MvcLite\Engine\InternalResources\Storage;
   <title>Génération de la planification - Festiplan</title>
 
   <!-- CSS -->
-    <?php
-    Storage::include("Css/ready.css");
-    ?>
+  <?php
+  Storage::include("Css/ready.css");
+  ?>
 
   <!-- JS -->
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
+  <script src="/website/node_modules/fullcalendar/index.global.min.js" defer></script>
+
+  <?php
+  Storage::include("Js/planification/generation.js", importMethod: "defer");
+  ?>
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -31,9 +34,9 @@ use MvcLite\Engine\InternalResources\Storage;
 <body>
 <div id="generate_planification_main">
 
-    <?php
-    Storage::component("HeaderComponent");
-    ?>
+  <?php
+  Storage::component("HeaderComponent");
+  ?>
 
   <div id="main">
     <section id="planification">
@@ -43,14 +46,16 @@ use MvcLite\Engine\InternalResources\Storage;
         </h2>
 
       </div>
+
+      <div class="calendar-container">
+        <div id='calendar'></div>
+      </div>
     </section>
-
-
   </div>
 
-    <?php
-    Storage::component("FooterComponent");
-    ?>
+  <?php
+  Storage::component("FooterComponent");
+  ?>
 
 </div>
 </body>

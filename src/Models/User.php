@@ -182,7 +182,7 @@ class User extends Model
     public function getSpectacles(): DatabaseQuery
     {
         $query = "SELECT *
-                  FROM spectacle
+                  FROM spectacleg
                   INNER JOIN spectacle_intervenant si
                       on spectacle.id_spectacle = si.id_spectacle
                   WHERE si.id_intervenant = ?";
@@ -333,7 +333,7 @@ class User extends Model
     public static function queryToArray(DatabaseQuery $queryObject): array
     {
         $modelArray = [];
-
+        
         while ($line = $queryObject->get())
         {
             $modelArray[] = self::getUserById($line["id_utilisateur"]);

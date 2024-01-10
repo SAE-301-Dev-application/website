@@ -6,21 +6,22 @@
  */
 
 
-use MvcLite\Controllers\AddScenesFestivalController;
-use MvcLite\Controllers\CreateFestivalAddScenesController;
+use MvcLite\Controllers\IndexController;
+use MvcLite\Controllers\ProfileController;
 use MvcLite\Controllers\CreateFestivalController;
-use MvcLite\Controllers\CreateSceneController;
+use MvcLite\Controllers\CreateFestivalAddScenesController;
+use MvcLite\Controllers\CreateFestivalAddGrijController;
 use MvcLite\Controllers\CreateSpectacleController;
+use MvcLite\Controllers\CreateSceneController;
 use MvcLite\Controllers\DashboardController;
 use MvcLite\Controllers\FestivalsController;
 use MvcLite\Controllers\GeneratePlanificationController;
-use MvcLite\Controllers\GrijFestivalController;
-use MvcLite\Controllers\IndexController;
 use MvcLite\Controllers\InformationsFestivalController;
-use MvcLite\Controllers\ProfileController;
+use MvcLite\Controllers\InformationsSpectacleController;
 use MvcLite\Controllers\RegisterController;
 use MvcLite\Controllers\SessionController;
 use MvcLite\Controllers\SpectaclesController;
+
 use MvcLite\Router\Engine\Router;
 
 Router::get("/", IndexController::class, "redirectionIndex");
@@ -102,6 +103,9 @@ Router::post("/profile/delete-account/confirm",
     
 Router::get("/festival", InformationsFestivalController::class, "render")
     ->setName("informationsFestival");
+
+Router::get("/informations-spectacle", InformationsSpectacleController::class, "render")
+    ->setName("informationsSpectacle");
 
 
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")

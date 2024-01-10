@@ -1,0 +1,29 @@
+#generate_planification_main {
+    > #main {
+        > #planification {
+            > .calendar-container {
+                @apply bg-grey p-5 rounded-2xl;
+
+                > #calendar {
+                    @apply w-full;
+
+                    tr {
+                      @apply h-20;
+                    }
+
+                    tr, th, td {
+                        @apply border-grey border-2;
+                    }
+
+                    th {
+                        @apply bg-grey-light border-b-0 h-2;
+                    }
+
+                    tr:first-child { // ne fonctionne pas ?
+                        @apply border-t-0;
+                    }
+                }
+            }
+        }
+    }
+}
