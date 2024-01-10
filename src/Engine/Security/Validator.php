@@ -667,6 +667,17 @@ class Validator
     }
 
     /**
+     * @param string $input Input key
+     * @param string $rule Rule name
+     * @return string|null Error message if rule failed for given input;
+     *                     else NULL
+     */
+    public function getError(string $input, string $rule): ?string
+    {
+        return $this->getErrors()[$input][$rule] ?? null;
+    }
+
+    /**
      * Validator rule initialization.
      *
      * @param string $rule Rule name
