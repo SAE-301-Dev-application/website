@@ -46,7 +46,7 @@ $email = $hasRequest
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
   <?php
   Storage::include("Js/profile/navigation-links-manager.js", importMethod: "defer");
-  Storage::include("Js/profile/unregister.js", importMethod: "defer");
+  Storage::include("Js/profile/delete-account.js", importMethod: "defer");
   ?>
 
   <!-- FontAwesome -->
@@ -443,7 +443,7 @@ $email = $hasRequest
             </div>
 
             <div class="buttons-container">
-              <button class="button-red" id="unsubscribe_button">
+              <button class="button-red" id="delete_account_button">
                 Se désinscrire
                 <i class="fa-solid fa-right-from-bracket"></i>
               </button>
