@@ -112,10 +112,16 @@ $orange: #FF7A00;
           @apply flex flex-col gap-y-5;
 
           > .scene-container {
-            @apply flex justify-between items-center gap-x-3;
+            @apply flex justify-between items-start gap-x-3;
 
-            > h3.scene-name {
-              @apply font-black text-3xl;
+            > .scene-information {
+              > h3.scene-name {
+                @apply font-black text-3xl;
+              }
+
+              > ul.scene-details {
+                @apply text-grey text-sm;
+              }
             }
 
             > button {
