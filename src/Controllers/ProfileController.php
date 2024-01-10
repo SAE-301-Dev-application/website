@@ -211,6 +211,32 @@ class ProfileController extends Controller
     }
 
     /**
+     * Current account deletion confirmation.
+     * 
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function confirmDeleteAccount(Request $request): RedirectResponse
+    {
+        $validation = (new Validator($request));
+            // ->required([  TODO STUB
+            //     "password",
+            // ], self::ERROR_REQUIRED_FIELD)
+
+            // ->password("password", self::ERROR_WRONG_PASSWORD);
+
+        if (!$validation->hasFailed())
+        {
+            $user = Session::getUserAccount();
+
+            $user->delete();
+        }
+
+        return Redirect::route("logout")
+            ->redirect();
+    }
+
+    /**
      * @return array Session user's festivals
      */
     private static function getUserFestivals(): array
