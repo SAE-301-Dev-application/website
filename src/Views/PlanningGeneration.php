@@ -22,6 +22,11 @@ use MvcLite\Engine\InternalResources\Storage;
   <!-- JS -->
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
+  <script src="/website/node_modules/fullcalendar/index.global.min.js" defer></script>
+
+  <?php
+  Storage::include("Js/planning/generation.js", importMethod: "defer");
+  ?>
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -43,8 +48,13 @@ use MvcLite\Engine\InternalResources\Storage;
         </h2>
 
       </div>
-    </section>
 
+      <div style="overflow: scroll; width: 100%; .fc, tr: { height: 10vh; };">
+        <div id='calendar'>
+        </div>
+      </div>
+
+    </section>
 
   </div>
 

@@ -5,7 +5,7 @@ namespace MvcLite\Controllers;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Views\Engine\View;
 
-class GeneratePlanificationController extends Controller
+class PlanningGenerationController extends Controller
 {
     public function __construct()
     {
@@ -17,7 +17,7 @@ class GeneratePlanificationController extends Controller
 
     public function render(): void
     {
-        View::render("GeneratePlanification");
+        View::render("planningGeneration");
     }
 
 }
