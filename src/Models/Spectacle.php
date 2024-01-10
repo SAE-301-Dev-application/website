@@ -134,8 +134,17 @@ class Spectacle extends Model
      */
     public function getCategories(): array
     {
-        return [];  // TODO stumb
+
+        $getCategoriesQuery
+            = "SELECT DISTINCT id_categorie
+               FROM spectacle_categorie
+               WHERE spectacle_categorie.id_spectacle = ?";
+
+        $result = Database::query($getCategoriesQuery, $this->getId());
+
+        return Categorie::queryToArray($result);
     }
+
 
     /**
      * @return string Spectacle's illustration
@@ -161,6 +170,22 @@ class Spectacle extends Model
     public function getOwner(): ?User
     {
         return new User();  // TODO STUB
+    }
+
+    /**
+     * @return array Spectacle's contributor
+     */
+    public function getContributor(): array
+    {
+
+        $getUserQuery
+            = "SELECT DISTINCT id_intervenant, type_inter
+               FROM spectacle_intervenant
+               WHERE spectacle_intervenant.id_spectacle = ?";
+
+        $result = Database::query($getUserQuery, $this->getId());
+
+        return Contributor::queryToArray($result);
     }
 
     /**

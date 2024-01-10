@@ -158,12 +158,11 @@ class Festival extends Model
         $getCategoriesQuery
             = "SELECT DISTINCT id_categorie
                FROM festival_categorie
-               WHERE id_festival = ?
-               ORDER BY id_categorie;";
+               WHERE festival_categorie.id_festival = ?";
 
         $result = Database::query($getCategoriesQuery, $this->getId());
 
-        return $result->getAll();
+        return Categorie::queryToArray($result);
     }
 
     /**

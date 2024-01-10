@@ -336,7 +336,7 @@ class User extends Model
     public static function queryToArray(DatabaseQuery $queryObject): array
     {
         $modelArray = [];
-
+        
         while ($line = $queryObject->get())
         {
             $modelArray[] = self::getUserById($line["id_utilisateur"]);

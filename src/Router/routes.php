@@ -20,6 +20,7 @@ use MvcLite\Controllers\GrijFestivalController;
 use MvcLite\Controllers\SessionController;
 use MvcLite\Controllers\AddScenesFestivalController;
 use MvcLite\Controllers\InformationsFestivalController;
+use MvcLite\Controllers\InformationsSpectacleController;
 use MvcLite\Router\Engine\Router;
 
 Router::get("/", IndexController::class, "redirectionIndex");
@@ -101,6 +102,9 @@ Router::post("/profile/delete-account/confirm",
     
 Router::get("/informations-festival", InformationsFestivalController::class, "render")
     ->setName("informationsFestival");
+
+Router::get("/informations-spectacle", InformationsSpectacleController::class, "render")
+    ->setName("informationsSpectacle");
 
 
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
