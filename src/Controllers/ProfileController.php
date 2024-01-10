@@ -233,12 +233,10 @@ class ProfileController extends Controller
         else
         {
             $user = Session::getUserAccount();
-    
-            //$user->delete();
+            $user->delete();
 
             echo "success";
         }
-        return;
     }
 
     /**
