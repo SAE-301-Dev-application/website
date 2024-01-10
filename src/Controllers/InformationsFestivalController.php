@@ -26,35 +26,14 @@ class InformationsFestivalController extends Controller
      */
     public function render(Request $request): void
     {
-        // $nom = $request->getParameter("nom");
 
         $id = $request->getParameter("id");
 
         $festival = new Festival();
         $festival = Festival::getFestivalById($id);
-
-        Debug::dd($festival, $id); 
-
-        $name = $festival->getName();
-        $description = $festival->getDescription();
-        $categories = $festival->getCategories();
-        $beginningDate = $festival->getBeginningDate();
-        $endingDate = $festival->getEndingDate();
-        $illustration = $festival->getIllustration();
-        $spectacles = $festival->getSpectacles();
-        $scenes = $festival->getScenes();
-        $utilisateurs = $festival->getUtilisateurs();
         
         View::render("InformationsFestival", [
-            "name" => $name,
-            "description" => $description,
-            "categories" => $categories,
-            "beginningDate" => $beginningDate,
-            "endingDate" => $endingDate,
-            "illustration" => $illustration,
-            "spectacles" => $spectacles,
-            "scenes" => $scenes,
-            "utilisateurs" => $utilisateurs
+            "festival" => $festival
         ]);
     }
 }
