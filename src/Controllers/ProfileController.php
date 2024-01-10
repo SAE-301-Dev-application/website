@@ -218,22 +218,25 @@ class ProfileController extends Controller
      */
     public function confirmDeleteAccount(Request $request): RedirectResponse
     {
-        $validation = (new Validator($request));
+
+        echo "confirmDeleteAccount";
+        
+        // $validation = (new Validator($request));
             // ->required([  TODO STUB
             //     "password",
             // ], self::ERROR_REQUIRED_FIELD)
 
             // ->password("password", self::ERROR_WRONG_PASSWORD);
 
-        if (!$validation->hasFailed())
-        {
-            $user = Session::getUserAccount();
+        // if (!$validation->hasFailed())
+        // {
+        //     $user = Session::getUserAccount();
 
-            $user->delete();
-        }
+        //     $user->delete();
+        // }
 
-        return Redirect::route("logout")
-            ->redirect();
+        // return Redirect::route("logout")
+        //     ->redirect();
     }
 
     /**
