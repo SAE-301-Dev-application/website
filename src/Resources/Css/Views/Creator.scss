@@ -116,7 +116,7 @@ $orange: #FF7A00;
 
             > .scene-information {
               > h3.scene-name {
-                @apply font-black text-3xl;
+                @apply font-black text-3xl mb-1;
               }
 
               > ul.scene-details {
