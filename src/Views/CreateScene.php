@@ -1,31 +1,17 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
 
-$errors = $props->hasValidator()
-    ? $props->getValidator()->getErrors()
-    : [];
+$errors = $props->getValidator()->getErrors() ?? [];
 
-$hasRequest = $props->hasRequest();
+$name = $props->getRequest()->getInput("name") ?? "";
 
-$name = $hasRequest
-    ? $props->getRequest()->getInput("name")
-    : "";
+$maxSeats = $props->getRequest()->getInput("max_seats") ?? "";
 
-$maxSeats = $hasRequest
-    ? $props->getRequest()->getInput("max_seats")
-    : "";
+$longitude = $props->getRequest()->getInput("longitude") ?? "";
 
-$longitude = $hasRequest
-    ? $props->getRequest()->getInput("longitude")
-    : "";
+$latitude = $props->getRequest()->getInput("latitude") ?? "";
 
-$latitude = $hasRequest
-    ? $props->getRequest()->getInput("latitude")
-    : "";
-
-$size = $hasRequest
-    ? $props->getRequest()->getInput("size")
-    : "";
+$size = $props->getRequest()->getInput("size") ?? "";
 ?>
 
 <!doctype html>

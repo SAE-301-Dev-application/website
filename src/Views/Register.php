@@ -1,27 +1,15 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
 
-$errors = $props->hasValidator()
-    ? $props->getValidator()->getErrors()
-    : [];
+$errors = $props->getValidator()->getErrors() ?? [];
 
-$hasRequest = $props->hasRequest();
+$firstname = $props->getRequest()->getInput("firstname") ?? "";
 
-$firstname = $hasRequest
-    ? $props->getRequest()->getInput("firstname")
-    : "";
+$lastname = $props->getRequest()->getInput("lastname") ?? "";
 
-$lastname = $hasRequest
-    ? $props->getRequest()->getInput("lastname")
-    : "";
+$email = $props->getRequest()->getInput("email") ?? "";
 
-$email = $hasRequest
-    ? $props->getRequest()->getInput("email")
-    : "";
-
-$login = $hasRequest
-    ? $props->getRequest()->getInput("login")
-    : "";
+$login = $props->getRequest()->getInput("login") ?? "";
 ?>
 
 <!doctype html>

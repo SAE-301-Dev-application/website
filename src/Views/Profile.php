@@ -9,7 +9,6 @@ $errors = $props->hasValidator()
 
 $hasRequest = $props->hasRequest();
 
-
 $firstname = $hasRequest
     ? $props->getRequest()->getInput("firstname")
     : Session::getUserAccount()->getFirstname();
