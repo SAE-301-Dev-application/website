@@ -170,9 +170,7 @@ class User extends Model
         $query = "SELECT *
                   FROM festival
                   INNER JOIN festiplan.festival_utilisateur fu 
-                      on festival.id_festival = fu.id_festival
-                  WHERE fu.id_utilisateur = ?
-                  AND fu.role_uti = 2";
+                      on festival.id_festival = fu.id_festival";
 
         $festivals = Database::query($query, $this->getId());
 
@@ -185,7 +183,7 @@ class User extends Model
     public function getSpectacles(): DatabaseQuery
     {
         $query = "SELECT *
-                  FROM spectacle
+                  FROM spectacleg
                   INNER JOIN spectacle_intervenant si
                       on spectacle.id_spectacle = si.id_spectacle
                   WHERE si.id_intervenant = ?";
