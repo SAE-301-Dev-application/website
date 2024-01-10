@@ -14,14 +14,19 @@ class Scene extends Model
     /** User id. */
     private int $id;
 
+    /* Scene's name */
     private string $name;
 
-    private int $taille;
+    /* Scene size, goes to 1 (Small), 2 (Medium) or 3 (Big) */
+    private int $size;
 
+    /* Maximum number of spectators in the scene */
     private int $maxSpectateurs;
 
+    /* Latitude coordinates of the scene */
     private string $latitude;
 
+    /* Longitude coordinates of the scene */
     private string $longitude;
 
     public function __construct()
@@ -32,7 +37,7 @@ class Scene extends Model
     }
 
     /**
-     * @return int Spectacle's id
+     * @return int Scene's id
      */
     public function getId(): int
     {
@@ -40,8 +45,8 @@ class Scene extends Model
     }
 
     /**
-     * @param int $id Spectacle's id
-     * @return int Spectacle's id
+     * @param int $id Scene's id
+     * @return int Scene's id
      */
     private function setId(int $id): int
     {
@@ -49,7 +54,7 @@ class Scene extends Model
     }
 
     /**
-     * @return string Spectacle's name
+     * @return string Scene's name
      */
     public function getName(): string
     {
@@ -57,8 +62,8 @@ class Scene extends Model
     }
 
     /**
-     * @param string $title New spectacle's title
-     * @return string New spectacle's title
+     * @param string $name New Scene's name
+     * @return string New Scene's name
      */
     public function setName(string $name): string
     {
@@ -66,24 +71,24 @@ class Scene extends Model
     }
 
     /**
-     * @return string Spectacle's description
+     * @return string Scene's size
      */
-    public function getTaille(): int
+    public function getSize(): int
     {
-        return $this->taille;
+        return $this->size;
     }
 
     /**
-     * @param string $description New spectacle's description
-     * @return int New spectacle's description
+     * @param string $size New Scene's size
+     * @return int New Scene's size
      */
-    public function setTaille(int $taille): int
+    public function setSize(int $size): int
     {
-        return $this->taille = $taille;
+        return $this->size = $size;
     }
 
     /**
-     * @return string Spectacle's duration
+     * @return string Scene's maximum capacity of spectators
      */
     public function getMaxSpectateurs(): int
     {
@@ -91,8 +96,8 @@ class Scene extends Model
     }
 
     /**
-     * @param string $duration New spectacle's duration
-     * @return string New spectacle's duration
+     * @param string $maxSpectateurs New Scene's maximum capacity of spectators
+     * @return string New Scene's maximum capacity of spectators
      */
     public function setMaxSpectateurs(int $maxSpectateurs): int
     {
@@ -100,7 +105,7 @@ class Scene extends Model
     }
 
     /**
-     * @return string Spectacle's scene size
+     * @return string Scene's latitude coordinates
      */
     public function getLatitude(): string
     {
@@ -108,8 +113,8 @@ class Scene extends Model
     }
 
     /**
-     * @param string $sceneSize New spectacle's scene size
-     * @return string New spectacle's scene size
+     * @param string $latitude New Scene's latitude coordinates
+     * @return string New Scene's latitude coordinates
      */
     public function setLatitude(string $latitude): string
     {
@@ -117,7 +122,7 @@ class Scene extends Model
     }
 
     /**
-     * @return string Spectacle's scene size
+     * @return string Scene's longitude coordinates
      */
     public function getLongitude(): string
     {
@@ -125,8 +130,8 @@ class Scene extends Model
     }
 
     /**
-     * @param string $sceneSize New spectacle's scene size
-     * @return string New spectacle's scene size
+     * @param string $longitude New Scene's longitude coordinates
+     * @return string New Scene's longitude coordinates
      */
     public function setLongitude(string $longitude): string
     {
@@ -137,13 +142,14 @@ class Scene extends Model
      * Attempt to create a scene with given information.
      *
      * @param string $nom
-     * @param int $taille
+     * @param int $size
      * @param int $maxSpectateurs
-     * @param string $coordonnees
+     * @param string $latitude
+     * @param string $longitude
      * @return bool If the scene is being created
      */
     public static function create(string $nom,
-                                  int $taille,
+                                  int $size,
                                   int $maxSpectateurs,
                                   float $longitude,
                                   float $latitude): bool
@@ -152,7 +158,7 @@ class Scene extends Model
 
         $user = Database::query($query,
                                 $nom,
-                                $taille,
+                                $size,
                                 $maxSpectateurs,
                                 $latitude,
                                 $longitude);
@@ -161,10 +167,10 @@ class Scene extends Model
     }
 
     /**
-     * Searches and returns Spectacle instance by its id.
+     * Searches and returns Scene instance by its id.
      *
-     * @param int $id Spectacle id
-     * @return Spectacle|null Spectacle object if exists;
+     * @param int $id Scene id
+     * @return Scene|null Scene object if exists;
      *                       else NULL
      */
     public static function getSceneById(int $id): ?Scene
@@ -185,10 +191,10 @@ class Scene extends Model
                 ->setName($scene["nom_sc"]);
 
             $sceneInstance
-                ->setTaille($scene["taille_sc"]);
+                ->setSize($scene["taille_sc"]);
 
             $sceneInstance
-                ->setMaxSpectateurs($scene["nb_max_spectateurs"] ?? self::DEFAULT_SPECTACLE_ILLUSTRATION_NAME);
+                ->setMaxSpectateurs($scene["nb_max_spectateurs"]);
 
             $sceneInstance
                 ->setLatitude($scene["latitude_sc"]);
