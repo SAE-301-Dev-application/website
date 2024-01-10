@@ -228,6 +228,20 @@ class User extends Model
     }
 
     /**
+     * Delete current user account.
+     * 
+     * @return bool If the account is being deleted
+     */
+    public function delete(): bool
+    {
+        $query = "CALL supprimerUtilisateur(?);";
+
+        $deletion = Database::query($query, $this->getId());
+
+        return $deletion->getExecutionState();
+    }
+
+    /**
      * Attempt to create an account with given information.
      *
      * @param string $name
