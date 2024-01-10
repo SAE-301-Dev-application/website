@@ -2,25 +2,24 @@
     > #main {
         > #planification {
             > .calendar-container {
-                @apply bg-grey p-5 rounded-2xl;
+                @apply bg-grey-light p-8 rounded-2xl;
 
                 > #calendar {
-                    @apply w-full;
+                    thead {
+                        tr {
+                            @apply align-middle h-14;
+                        }
+                    }
 
-                    tr {
-                      @apply h-20;
+                    // Height of each cell
+                    tbody {
+                        tr {
+                            @apply h-20;
+                        }
                     }
 
                     tr, th, td {
                         @apply border-grey border-2;
-                    }
-
-                    th {
-                        @apply bg-grey-light border-b-0 h-2;
-                    }
-
-                    tr:first-child { // ne fonctionne pas ?
-                        @apply border-t-0;
                     }
                 }
             }

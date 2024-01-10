@@ -104,6 +104,7 @@ Router::post("/profile/delete-account/confirm",
 Router::get("/festival", InformationsFestivalController::class, "render")
     ->setName("informationsFestival");
 
+    
 Router::get("/informations-spectacle", InformationsSpectacleController::class, "render")
     ->setName("informationsSpectacle");
 
