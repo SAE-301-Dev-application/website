@@ -7,6 +7,7 @@ use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Engine\Model;
 use MvcLite\Models\Spectacle;
 use MvcLite\Models\Scene;
@@ -172,12 +173,10 @@ class Festival extends Model
     {
 
         $getSpectaclesQuery
-            = "SELECT DISTINCT spectacle.id_spectacle
+            = "SELECT DISTINCT festival_spectacle.id_spectacle
                FROM festival
-               JOIN festival_spectacle
+               INNER JOIN festival_spectacle
                ON festival.id_festival = festival_spectacle.id_festival
-               JOIN spectacle
-               ON festival_spectacle.id_spectacle = spectacle.id_spectacle
                WHERE festival.id_festival = ?;";
 
         $result = Database::query($getSpectaclesQuery, $this->getId());
@@ -194,7 +193,7 @@ class Festival extends Model
         $getSpectaclesQuery
             = "SELECT DISTINCT festival_scene.id_scene
                FROM festival
-               JOIN festival_scene
+               INNER JOIN festival_scene
                ON festival.id_festival = festival_scene.id_festival
                WHERE festival.id_festival = ?;";
 
@@ -209,16 +208,38 @@ class Festival extends Model
     public function getUtilisateurs(): array
     {
 
-        $getSpectaclesQuery
-            = "SELECT DISTINCT id_utilisateur, role_uti
-               FROM festival_utilisateur
-               WHERE id_festival = ?";
+        $getUsersQuery
+            = "SELECT DISTINCT id_utilisateur
+               FROM festival
+               INNER JOIN festival_utilisateur
+               ON festival.id_festival = festival_utilisateur.id_festival
+               WHERE festival.id_festival = ?";
 
-        $result = Database::query($getSpectaclesQuery, $this->getId());
+        $result = Database::query($getUsersQuery, $this->getId());
 
-        return $result->getAll();
+        return User::queryToArray($result);
     }
     
+    /**
+     * @return array Festival's scenes
+     */
+    public function getUtilisateurRole($userId): int
+    {
+
+        $getRolesQuery
+            = "SELECT DISTINCT role_uti
+               FROM festival
+               INNER JOIN festival_utilisateur
+               ON festival.id_festival = festival_utilisateur.id_festival
+               WHERE festival.id_festival = ?
+               AND id_utilisateur = ?;";
+
+        $result = Database::query($getUsersQuery, $id, $userId);
+
+        return $result['role_uti'];
+        
+    }
+
     /**
      * @return bool True if the festival is in progress, false otherwise.
      */
@@ -245,7 +266,7 @@ class Festival extends Model
                                   string $endingDate,
                                   array $categories): void
     {
-        $addFestivalQuery = "SELECT ajouterFestival(?, ?, ?, ?, ?) AS id;";
+        $addFestivalQuery = "SELECT ajouterFestival(?, ?, ?, ?, ?, ?) AS id;";
 
         $linkCategorieQuery = "CALL ajouterFestivalCategorie(?, ?);";
 
@@ -254,7 +275,8 @@ class Festival extends Model
                                       $description,
                                       $illustration ?? null,
                                       $beginningDate,
-                                      $endingDate);
+                                      $endingDate,
+                                      Session::getSessionId());
 
         $festivalId = $festivalId->get()["id"];
 
