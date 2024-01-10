@@ -7,7 +7,7 @@ use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Views\Engine\View;
 
-class PlanningGenerationController extends Controller
+class GeneratePlanificationController extends Controller
 {
     public function __construct()
     {
@@ -21,7 +21,7 @@ class PlanningGenerationController extends Controller
      */
     public function render(): void
     {
-        View::render("PlanningGeneration");
+        View::render("GeneratePlanification");
     }
 
 }

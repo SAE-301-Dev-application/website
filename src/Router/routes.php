@@ -6,18 +6,18 @@
  */
 
 
-use MvcLite\Controllers\CreateFestivalAddScenesController;
+use MvcLite\Controllers\IndexController;
+use MvcLite\Controllers\ProfileController;
 use MvcLite\Controllers\CreateFestivalController;
-use MvcLite\Controllers\CreateSceneController;
+use MvcLite\Controllers\CreateFestivalAddScenesController;
+use MvcLite\Controllers\CreateFestivalAddGrijController;
 use MvcLite\Controllers\CreateSpectacleController;
+use MvcLite\Controllers\CreateSceneController;
 use MvcLite\Controllers\DashboardController;
 use MvcLite\Controllers\FestivalsController;
-use MvcLite\Controllers\PlanningGenerationController;
-use MvcLite\Controllers\CreateFestivalAddGrijController;
-use MvcLite\Controllers\IndexController;
+use MvcLite\Controllers\GeneratePlanificationController;
 use MvcLite\Controllers\InformationsFestivalController;
 use MvcLite\Controllers\InformationsSpectacleController;
-use MvcLite\Controllers\ProfileController;
 use MvcLite\Controllers\RegisterController;
 use MvcLite\Controllers\SessionController;
 use MvcLite\Controllers\SpectaclesController;
@@ -111,5 +111,5 @@ Router::get("/informations-spectacle", InformationsSpectacleController::class, "
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");
 
-Router::get("/planning-generation", PlanningGenerationController::class, "render")
-    ->setName("planningGeneration");
+Router::get("/generate-planification", GeneratePlanificationController::class, "render")
+    ->setName("generatePlanification");

@@ -1,8 +1,6 @@
 <?php
-
 use MvcLite\Engine\InternalResources\Storage;
-
-
+use MvcLite\DevelomentUtilities\Debug;
 ?>
 
 <!doctype html>
@@ -25,7 +23,7 @@ use MvcLite\Engine\InternalResources\Storage;
   <script src="/website/node_modules/fullcalendar/index.global.min.js" defer></script>
 
   <?php
-  Storage::include("Js/planning/generation.js", importMethod: "defer");
+  Storage::include("Js/planification/generation.js", importMethod: "defer");
   ?>
 
   <!-- FontAwesome -->
@@ -36,11 +34,12 @@ use MvcLite\Engine\InternalResources\Storage;
 <body>
 <div id="generate_planification_main">
 
-    <?php
-    Storage::component("HeaderComponent");
-    ?>
+  <?php
+  Storage::component("HeaderComponent");
+  ?>
 
-  <div id="planification">
+  <div id="main">
+    <section id="planification">
       <div class="title-container">
         <h2 class="title">
           Génération de la planification
@@ -49,14 +48,14 @@ use MvcLite\Engine\InternalResources\Storage;
       </div>
 
       <div class="calendar-container">
-        <div id='calendar'>
-        </div>
+        <div id='calendar'></div>
       </div>
+    </section>
   </div>
 
-    <?php
-    Storage::component("FooterComponent");
-    ?>
+  <?php
+  Storage::component("FooterComponent");
+  ?>
 
 </div>
 </body>

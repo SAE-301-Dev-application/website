@@ -6,7 +6,7 @@
 @import "Views/Spectacles.css";
 @import "Views/Creator.css";
 @import "Views/Profile.css";
-@import "Views/PlanningGeneration.css";
+@import "Views/GeneratePlanification.css";
 
 @tailwind base;
 @tailwind components;

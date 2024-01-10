@@ -1,10 +1,10 @@
 let calendarElement = document.getElementById('calendar');
 
 var calendar = new FullCalendar.Calendar(calendarElement, {
-    initialView: 'nom',
+    initialView: 'festivalView',
 
     views: {
-        nom: {
+        festivalView: {
             type: 'timeGrid',
             duration: { days: 7 }
         }
@@ -15,7 +15,7 @@ var calendar = new FullCalendar.Calendar(calendarElement, {
         //end: new Date("2024-01-11T11:00:00")
     //},
 
-    contentHeight: 600,
+    contentHeight: 700,
     locale: 'fr',
 
     headerToolbar: {
@@ -55,6 +55,12 @@ var calendar = new FullCalendar.Calendar(calendarElement, {
         end: new Date("2024-01-12T18:20:30"),
         overlap: 'none',
         backgroundColor: '#ff0000'
-    }]
+    }, {
+      title: "test2",
+      start: new Date("2024-01-12T12:30:00"),
+      end: new Date("2024-01-12T18:21:00"),
+      overlap: 'none',
+      backgroundColor: '#ffff00'
+  }]
 });
 calendar.render();
