@@ -7,23 +7,10 @@ $errors = $props->hasValidator()
     ? $props->getValidator()->getErrors()
     : [];
 
-$hasRequest = $props->hasRequest();
-
-$firstname = $hasRequest
-    ? $props->getRequest()->getInput("firstname")
-    : Session::getUserAccount()->getFirstname();
-
-$lastname = $hasRequest
-    ? $props->getRequest()->getInput("lastname")
-    : Session::getUserAccount()->getLastname();
-
-$login = $hasRequest
-    ? $props->getRequest()->getInput("login")
-    : Session::getUserAccount()->getLogin();
-
-$email = $hasRequest
-    ? $props->getRequest()->getInput("email")
-    : Session::getUserAccount()->getEmail();
+$firstname = $props->getRequest()->getInput("firstname") ?? Session::getUserAccount()->getFirstname();
+$lastname = $props->getRequest()->getInput("lastname") ?? Session::getUserAccount()->getLastname();
+$login = $props->getRequest()->getInput("login") ?? Session::getUserAccount()->getLogin();
+$email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->getEmail();
 ?>
 
 <!doctype html>
@@ -60,7 +47,7 @@ $email = $hasRequest
       "id"      => "popup_confirm_account_deleting",
       "title"   => "Confirmation de désinscription",
 
-      "slot"    => "<p class='question'>Êtes vous sûr de vouloir vous désinscrire de la plateforme ?</p>
+      "slot"    => "<p class='question'>Êtes-vous sûr de vouloir vous désinscrire de la plateforme ?</p>
                     <p><i class='fa-solid fa-warning fa-2xl'></i> <strong>Attention</strong>, cette action est irréversible et le compte ne pourra pas être récupéré.</p>
                     <p>Tous les festivals et les spectacles dont vous êtes responsable seront également supprimés.</p>",
 
