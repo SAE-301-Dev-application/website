@@ -30,7 +30,7 @@ class SpectaclesController extends Controller
     {
         $pageNumber = $request->getParameter("page") ?? 1;
 
-        if (!is_numeric($pageNumber) && !self::getPageSpectacles($pageNumber))
+        if (!is_numeric($pageNumber) || !self::getPageSpectacles($pageNumber))
         {
             return Redirect::route("spectacles")
                 ->redirect();
