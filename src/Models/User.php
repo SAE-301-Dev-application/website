@@ -169,10 +169,7 @@ class User extends Model
     {
         $query = "SELECT *
                   FROM festival
-                  INNER JOIN festiplan.festival_utilisateur fu 
-                      on festival.id_festival = fu.id_festival
-                  WHERE fu.id_utilisateur = ?
-                  AND fu.role_uti = 2";
+                  WHERE id_createur = ?";
 
         $festivals = Database::query($query, $this->getId());
 
