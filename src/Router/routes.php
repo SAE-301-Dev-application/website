@@ -93,6 +93,11 @@ Router::post("/profile/new-password/save",
     "saveNewPassword")
     ->setName("post.profile.newPassword.save");
 
+Router::post("/profile/delete-account/confirm",
+    ProfileController::class,
+    "confirmDeleteAccount")
+    ->setName("post.profile.deleteAccount.confirm");
+
     
 Router::get("/informations-festival", InformationsFestivalController::class, "render")
     ->setName("informationsFestival");
