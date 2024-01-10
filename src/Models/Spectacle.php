@@ -12,11 +12,11 @@ use MvcLite\Models\Engine\Model;
 class Spectacle extends Model
 {
     /** Default spectacle illustration name. */
-    private const DEFAULT_SPECTACLE_ILLUSTRATION_NAME
+    public const DEFAULT_SPECTACLE_ILLUSTRATION_NAME
         = "default_illustration.png";
 
     /** Default spectacle illustration path. */
-    private const DEFAULT_SPECTACLE_ILLUSTRATION_PATH
+    public const DEFAULT_SPECTACLE_ILLUSTRATION_PATH
         = ROUTE_PATH_PREFIX . "src/Resources/Medias/Images/";
 
     /** Spectacle's id. */

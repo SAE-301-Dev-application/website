@@ -12,11 +12,11 @@ use MvcLite\Models\Engine\Model;
 class Festival extends Model
 {
     /** Default festival illustration name. */
-    private const DEFAULT_FESTIVAL_ILLUSTRATION_NAME
+    public const DEFAULT_FESTIVAL_ILLUSTRATION_NAME
         = "default_illustration.png";
 
     /** Default festival illustration path. */
-    private const DEFAULT_FESTIVAL_ILLUSTRATION_PATH
+    public const DEFAULT_FESTIVAL_ILLUSTRATION_PATH
         = ROUTE_PATH_PREFIX . "src/Resources/Medias/Images/";
 
     /** Festival's id. */
