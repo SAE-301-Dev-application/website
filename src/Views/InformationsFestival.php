@@ -2,8 +2,6 @@
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Models\Festival;
-
-$festivalsUploadsPath = Storage::getResourcesPath() . "/Medias/Images/FestivalsUploads/";
 ?>
 
 <!doctype html>
@@ -38,8 +36,7 @@ $festivalsUploadsPath = Storage::getResourcesPath() . "/Medias/Images/FestivalsU
       <section id="all_festivals">
         <div class="title-container">
           <h2 class="title">
-            <!-- A rendre dynamique -->
-            <?= $name ?>
+            <?= $festival->getName() ?>
           </h2>
 
           <a href="<?= route("")//TODO mettre la route ?>">
@@ -56,85 +53,95 @@ $festivalsUploadsPath = Storage::getResourcesPath() . "/Medias/Images/FestivalsU
             </button>
           </a>
         </div>
-        <!-- A rendre dynamique -->
         <?php
-            foreach ($categories as $categorie) {
-                echo $categorie;
+        // Debug::dd($festival->getCategories());
+            foreach ($festival->getCategories() as $categorie) {
+                echo $categorie->getName();
             }
-        ?>
-        
-        <div>
-          <!-- A rendre dynamique -->
-          <img src="<?= $festivalsUploadsPath . $illustration ?>" alt="logo du festival">
 
-        </div>
+        $isFestivalInProgress = $festival->isFestivalInProgress();?>
+        <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
+              style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;">
 
-
-
-
-
-
-
-
-
-        <div class="festivals-grid">
-
-          <?php for ($i = $startIndex, $count = 1;
-                     $count <= 6 && $i < count($festivals);
-                     $i++, $count++) {
-          
-          $isFestivalInProgress = $festivals[$i]["en_cours_fe"] === 1;
-          ?>
-
-          <a href="<?= route("dashboard") ?>"> <!--?festival=<?= ""//$festivals[$i]["id_festival"] ?>"> TODO changer pour page festival -->
-            <div class="festival-preview">
-              <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
-                  style="background: url('<?= Festival::getImagePathByName($festivals[$i]["illustration_fe"]) ?>') center / cover no-repeat;">
-                <?php if ($isFestivalInProgress) { ?>
-                <div class="filter-in-progress">
-                  <p>en cours</p>
-                </div>
-                <?php } ?>
+          <?php if ($isFestivalInProgress) { ?>
+              <div class="filter-in-progress">
+                <p>en cours</p>
               </div>
-
-              <div class="festival-identity">
-                <h3 class="festival-name">
-                <?= $festivals[$i]["nom_fe"] ?>
-                </h3>
-
-                <p class="festival-description">
-                <?= $festivals[$i]["description_fe"] ?>
-                </p>
-              </div>
-            </div>
-          </a>
-
           <?php } ?>
-
         </div>
+
+        <h3>
+          GriJ:
+        </h3>
+        <p>
+          Début des spectacles: ..
+          Fin des spectacles: ..
+          Durée des pauses: ..
+        </p>
+        <h3>
+          Description:
+        </h3>
+        <p>
+          ..
+        </p>
+
+        <h3>
+          Spectacles:
+        </h3>
+        <a href="<?= route("")//TODO mettre la route ?>">
+          <button class="button-blue">
+            <i class="fa-solid fa-plus"></i>
+            Voir plus
+          </button>
+        </a>
+        <!-- Si l'utilisateur est le responsable du festival -->
+        <a href="<?= route("")//TODO mettre la route ?>">
+          <button class="button-blue">
+            <i class="fa-solid fa-plus"></i>
+            Ajouter spectacles
+          </button>
+        </a>
+        ..
+
+        <h3>
+          Scènes:
+        </h3>
+        <a href="<?= route("")//TODO mettre la route ?>">
+          <button class="button-blue">
+            <i class="fa-solid fa-plus"></i>
+            Voir plus
+          </button>
+        </a>
+        <!-- Si l'utilisateur est le responsable du festival -->
+        <a href="<?= route("")//TODO mettre la route ?>">
+          <button class="button-blue">
+            <i class="fa-solid fa-plus"></i>
+            Ajouter scènes
+          </button>
+        </a>
+        <p>
+          ..
+        </p>
+
+        <h3>
+          Organisateurs:
+        </h3>
+        <a href="<?= route("")//TODO mettre la route ?>">
+          <button class="button-blue">
+            <i class="fa-solid fa-plus"></i>
+            Voir plus
+          </button>
+        </a>
+
+        <!-- Si l'utilisateur est le responsable du festival -->
+        <a href="<?= route("")//TODO mettre la route ?>">
+          <button class="button-blue">
+            <i class="fa-solid fa-plus"></i>
+            Ajouter organisateurs
+          </button>
+        </a>
+        ..
       </section>
-
-      <div class="pagination">
-        <div class="previous-links<?= $previousVisibility ?>">
-          <a href="<?= route("festivals") ?>?indice=0">
-            <i class="fa-solid fa-angles-left"></i>
-          </a>
-
-          <a href="<?= route("festivals") ?>?indice=<?= $startIndex - 6 ?>">
-            <i class="fa-solid fa-angle-left"></i>
-          </a>
-        </div>
-
-        <div class="next-links<?= $nextVisibility ?>">
-          <a href="<?= route("festivals") ?>?indice=<?= $startIndex + 6 ?>">
-            <i class="fa-solid fa-angle-right"></i>
-          </a>
-
-          <a href="<?= route("festivals") ?>?indice=<?= $indexLastPage ?>">
-            <i class="fa-solid fa-angles-right"></i>
-          </a>
-        </div>
-      </div>
     </div>
 
     <?php
