@@ -107,5 +107,9 @@ Router::get("/festival", InformationsFestivalController::class, "render")
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");
 
+Router::post("/add-scene/remove", CreateFestivalAddScenesController::class, "removeScene")
+    ->setName("addScene.removeScene");
+
+
 Router::get("/generate-planification", GeneratePlanificationController::class, "render")
     ->setName("generatePlanification");
