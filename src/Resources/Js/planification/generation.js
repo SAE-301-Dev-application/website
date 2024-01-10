@@ -1,6 +1,6 @@
-let calendarElement = document.getElementById('calendar');
+const CALENDAR_DIV = document.getElementById('calendar');
 
-var calendar = new FullCalendar.Calendar(calendarElement, {
+let calendar = new FullCalendar.Calendar(CALENDAR_DIV, {
     initialView: 'festivalView',
 
     views: {
@@ -10,10 +10,10 @@ var calendar = new FullCalendar.Calendar(calendarElement, {
         }
     },
 
-    //validRange: {
-        //start: new Date("2024-01-10T13:00:00"),
-        //end: new Date("2024-01-11T11:00:00")
-    //},
+    validRange: {
+        start: new Date("2024-01-15T10:00:00"),
+        end: new Date("2024-01-21T23:00:00")
+    },
 
     contentHeight: 700,
     locale: 'fr',
@@ -24,8 +24,14 @@ var calendar = new FullCalendar.Calendar(calendarElement, {
         right: ''
     },
 
-    slotMinTime: '10:30',
-    slotMaxTime: '22:30',
+    slotMinTime: '09:00',
+    slotMaxTime: '23:00',
+
+    titleFormat: {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    },
 
     dayHeaderFormat: {
         weekday: 'long',
@@ -34,8 +40,8 @@ var calendar = new FullCalendar.Calendar(calendarElement, {
     },
 
     allDaySlot: false,
-    slotDuration: '01:00:00',
-    snapDuration: '00:15:00',
+    slotDuration: '01:00',
+    snapDuration: '00:15',
 
     slotLabelFormat: {
         hour: 'numeric',
@@ -43,24 +49,28 @@ var calendar = new FullCalendar.Calendar(calendarElement, {
         omitZeroMinute: false
     },
 
-    scrollTime: '16:00:00',
-    initialDate: new Date("2024-01-12"),
+    scrollTime: '09:00',
+    initialDate: new Date("2024-01-15"),
 
     editable: false,
     eventDurationEditable: false,
 
-    events: [{
-        title: "test",
-        start: new Date("2024-01-12T12:20:30"),
-        end: new Date("2024-01-12T18:20:30"),
-        overlap: 'none',
-        backgroundColor: '#ff0000'
-    }, {
-      title: "test2",
-      start: new Date("2024-01-12T12:30:00"),
-      end: new Date("2024-01-12T18:21:00"),
-      overlap: 'none',
-      backgroundColor: '#ffff00'
-  }]
+    events: [
+        {
+            title: "Spectacle 1",
+            start: new Date("2024-01-15T09:00:00"),
+            end: new Date("2024-01-15T10:00:00"),
+            overlap: 'none',
+            backgroundColor: '#ff0000'
+        },
+        {
+            title: "Spectacle 2",
+            start: new Date("2024-01-15T10:00:00"),
+            end: new Date("2024-01-15T11:00:00"),
+            overlap: 'none',
+            backgroundColor: '#ff7f00'
+        }
+    ]
 });
+
 calendar.render();
