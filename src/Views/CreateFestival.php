@@ -1,56 +1,45 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Models\Festival;
 
-$errors = $props->hasValidator()
-    ? $props->getValidator()->getErrors()
-    : [];
+$errors = $props->getValidator()->getErrors() ?? [];
 
-$hasRequest = $props->hasRequest();
+$name = $props->getRequest()->getInput("name") ?? "";
 
-$name = $hasRequest
-    ? $props->getRequest()->getInput("name")
-    : "";
+$description = $props->getRequest()->getInput("description") ?? "";
 
-$description = $hasRequest
-    ? $props->getRequest()->getInput("description")
-    : "";
+$beginningDate = $props->getRequest()->getInput("beginning_date") ?? "";
 
-$beginningDate = $hasRequest
-    ? $props->getRequest()->getInput("beginning_date")
-    : "";
-
-$endingDate = $hasRequest
-    ? $props->getRequest()->getInput("ending_date")
-    : "";
+$endingDate = $props->getRequest()->getInput("ending_date") ?? "";
 
 $musicCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("music") !== null
+    = $props->getRequest()->getInput("music")
           ? "checked"
           : "";
 
 $theaterCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("theater") !== null
+    = $props->getRequest()->getInput("theater")
           ? "checked"
           : "";
 
 $circusCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("circus") !== null
+    = $props->getRequest()->getInput("circus")
           ? "checked"
           : "";
 
 $danceCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("dance") !== null
+    = $props->getRequest()->getInput("dance")
           ? "checked"
           : "";
 
 $filmScreeningCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("film_screening") !== null
+    = $props->getRequest()->getInput("film_screening")
           ? "checked"
-          : false;
+          : "";
 
-$illustrationPath = ROUTE_PATH_PREFIX
-    . "src/Resources/Medias/Images/default_illustration.png";
+$illustrationPath = Festival::DEFAULT_FESTIVAL_ILLUSTRATION_PATH
+    . Festival::DEFAULT_FESTIVAL_ILLUSTRATION_NAME;
 ?>
 
 <!doctype html>

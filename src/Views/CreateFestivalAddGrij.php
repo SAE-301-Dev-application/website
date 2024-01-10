@@ -2,23 +2,13 @@
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 
-$errors = $props->hasValidator()
-    ? $props->getValidator()->getErrors()
-    : [];
+$errors = $props->getValidator()->getErrors() ?? [];
 
-$hasRequest = $props->hasRequest();
+$beginningDate = $props->getRequest()->getInput("beginning_date") ?? "";
 
-$beginningDate = $hasRequest
-    ? $props->getRequest()->getInput("beginning_date")
-    : "";
+$endingDate = $props->getRequest()->getInput("ending_date") ?? "";
 
-$endingDate = $hasRequest
-    ? $props->getRequest()->getInput("ending_date")
-    : "";
-
-$pauseValue = $hasRequest
-    ? $props->getRequest()->getInput("pause_value")
-    : "";
+$pauseValue = $props->getRequest()->getInput("pause_value") ?? "";
 ?>
 
 <!doctype html>

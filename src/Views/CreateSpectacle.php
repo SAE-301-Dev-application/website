@@ -1,68 +1,52 @@
 <?php
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Models\Spectacle;
 
-$errors = $props->hasValidator()
-    ? $props->getValidator()->getErrors()
-    : [];
+$errors = $props->getValidator()->getErrors() ?? [];
 
-$hasRequest = $props->hasRequest();
+$title = $props->getRequest()->getInput("title") ?? "";
 
-$title = $hasRequest
-    ? $props->getRequest()->getInput("title")
-    : "";
+$description = $props->getRequest()->getInput("description") ?? "";
 
-$description = $hasRequest
-    ? $props->getRequest()->getInput("description")
-    : "";
+$duration = $props->getRequest()->getInput("duration") ?? "";
 
-$duration = $hasRequest
-    ? $props->getRequest()->getInput("duration")
-    : "";
-
-$sceneSize = $hasRequest
-    ? $props->getRequest()->getInput("scene_size")
-    : "";
+$sceneSize = $props->getRequest()->getInput("scene_size") ?? "";
 
 $smallCheck = $sceneSize === "small"
-    ? "checked"
+    ? "selected"
     : "";
 
 $mediumCheck = $sceneSize === "medium"
-    ? "checked"
+    ? "selected"
     : "";
 
 $largeCheck = $sceneSize === "large"
+    ? "selected"
+    : "";
+
+$musicCategoryCheck = $props->getRequest()->getInput("music")
     ? "checked"
     : "";
 
-$musicCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("music") !== null
-          ? "checked"
-          : "";
+$theaterCategoryCheck = $props->getRequest()->getInput("theater")
+    ? "checked"
+    : "";
 
-$theaterCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("theater") !== null
-          ? "checked"
-          : "";
+$circusCategoryCheck = $props->getRequest()->getInput("circus")
+    ? "checked"
+    : "";
 
-$circusCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("circus") !== null
-          ? "checked"
-          : "";
+$danceCategoryCheck = $props->getRequest()->getInput("dance")
+    ? "checked"
+    : "";
 
-$danceCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("dance") !== null
-          ? "checked"
-          : "";
+$filmScreeningCategoryCheck = $props->getRequest()->getInput("film_screening")
+    ? "checked"
+    : "";
 
-$filmScreeningCategoryCheck
-    = $hasRequest && $props->getRequest()->getInput("film_screening") !== null
-          ? "checked"
-          : false;
-
-$illustrationPath = ROUTE_PATH_PREFIX
-    . "src/Resources/Medias/Images/default_illustration.png";
+$illustrationPath = Spectacle::DEFAULT_SPECTACLE_ILLUSTRATION_PATH
+    . Spectacle::DEFAULT_SPECTACLE_ILLUSTRATION_NAME;
 ?>
 
 <!doctype html>

@@ -7,6 +7,7 @@ use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Engine\Model;
 use MvcLite\Models\Spectacle;
 use MvcLite\Models\Scene;
@@ -265,7 +266,7 @@ class Festival extends Model
                                   string $endingDate,
                                   array $categories): void
     {
-        $addFestivalQuery = "SELECT ajouterFestival(?, ?, ?, ?, ?) AS id;";
+        $addFestivalQuery = "SELECT ajouterFestival(?, ?, ?, ?, ?, ?) AS id;";
 
         $linkCategorieQuery = "CALL ajouterFestivalCategorie(?, ?);";
 
@@ -274,7 +275,8 @@ class Festival extends Model
                                       $description,
                                       $illustration ?? null,
                                       $beginningDate,
-                                      $endingDate);
+                                      $endingDate,
+                                      Session::getSessionId());
 
         $festivalId = $festivalId->get()["id"];
 
