@@ -9,6 +9,7 @@ use MvcLite\Router\Engine\Redirect;
 use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
 use MvcLite\Models\Festival;
+use MvcLite\Models\Spectacle;
 
 class InformationsFestivalController extends Controller
 {

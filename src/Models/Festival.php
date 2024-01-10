@@ -8,6 +8,8 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Models\Engine\Model;
+use MvcLite\Models\Spectacle;
+use MvcLite\Models\Scene;
 
 class Festival extends Model
 {
@@ -158,7 +160,7 @@ class Festival extends Model
                WHERE id_festival = ?
                ORDER BY id_categorie;";
 
-        $result = Database::query($getCategoriesQuery, $id);
+        $result = Database::query($getCategoriesQuery, $this->getId());
 
         return $result->getAll();
     }
@@ -170,14 +172,17 @@ class Festival extends Model
     {
 
         $getSpectaclesQuery
-            = "SELECT DISTINCT id_spectacle
-               FROM festival_spectacle
-               WHERE id_festival = ?
-               ORDER BY id_spectacle;";
+            = "SELECT DISTINCT spectacle.id_spectacle
+               FROM festival
+               JOIN festival_spectacle
+               ON festival.id_festival = festival_spectacle.id_festival
+               JOIN spectacle
+               ON festival_spectacle.id_spectacle = spectacle.id_spectacle
+               WHERE festival.id_festival = ?;";
 
-        $result = Database::query($getSpectaclesQuery, $id);
+        $result = Database::query($getSpectaclesQuery, $this->getId());
 
-        return $result->getAll();
+        return Spectacle::queryToArray($result);
     }
 
     /**
@@ -187,14 +192,15 @@ class Festival extends Model
     {
 
         $getSpectaclesQuery
-            = "SELECT DISTINCT id_scene
-               FROM festival_scene
-               WHERE id_festival = ?
-               ORDER BY id_scene;";
+            = "SELECT DISTINCT festival_scene.id_scene
+               FROM festival
+               JOIN festival_scene
+               ON festival.id_festival = festival_scene.id_festival
+               WHERE festival.id_festival = ?;";
 
-        $result = Database::query($getSpectaclesQuery, $id);
+        $result = Database::query($getSpectaclesQuery, $this->getId());
 
-        return $result->getAll();
+        return Scene::queryToArray($result);
     }
 
     /**
@@ -206,10 +212,9 @@ class Festival extends Model
         $getSpectaclesQuery
             = "SELECT DISTINCT id_utilisateur, role_uti
                FROM festival_utilisateur
-               WHERE id_festival = ?
-               ORDER BY id_utilisateur, role_uti;";
+               WHERE id_festival = ?";
 
-        $result = Database::query($getSpectaclesQuery, $id);
+        $result = Database::query($getSpectaclesQuery, $this->getId());
 
         return $result->getAll();
     }
