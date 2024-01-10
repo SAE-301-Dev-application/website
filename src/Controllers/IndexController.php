@@ -22,7 +22,8 @@ class IndexController extends Controller
 
     public function redirectionIndex()
     {
-        Redirect::route("index");
+        Redirect::route("index")
+            ->redirect();
     }
 
     public function render(): void

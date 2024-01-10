@@ -93,7 +93,8 @@ class RegisterController extends Controller
                          $request->getInput("login"),
                          $hash);
 
-            Redirect::route("index");
+            Redirect::route("index")
+                ->redirect();
         }
         else
         {

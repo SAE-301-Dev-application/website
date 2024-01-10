@@ -32,14 +32,16 @@ class SpectaclesController extends Controller
 
         if (!is_numeric($pageNumber) || $pageNumber < 1)
         {
-            return Redirect::route("spectacles");
+            return Redirect::route("spectacles")
+                ->redirect();
         }
 
         $pageSpectacles = self::getPageSpectacles($pageNumber);
 
         if (!$pageSpectacles)
         {
-            return Redirect::route("spectacles");
+            return Redirect::route("spectacles")
+                ->redirect();
         }
 
         View::render("Spectacles", [
