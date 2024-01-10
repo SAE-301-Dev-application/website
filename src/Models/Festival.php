@@ -37,8 +37,11 @@ class Festival extends Model
     /** Festival's ending date. */
     private string $endingDate;
 
-    /** Festival's illustration */
+    /** Festival's illustration. */
     private ?string $illustration;
+
+    /** Festival's owner. */
+    private User $owner;
 
     public function __construct()
     {
@@ -183,6 +186,23 @@ class Festival extends Model
     }
 
     /**
+     * Attempt to add a spectacle in a festival.
+     *
+     * @param int $id
+     * @param int $idSpectacle
+     */
+    public function addSpectacle(Spectacle $spectacle)
+    {
+
+        $addFestivalQuery = "SELECT ajouterFestivalSpectacle(?, ?) AS id;";
+
+        $spectacleAdding = Database::query($addFestivalQuery,
+                                           $this->getId(),
+                                           $spectacle->getId());
+
+    }
+
+    /**
      * @return array Festival's scenes
      */
     public function getScenes(): array
@@ -201,7 +221,7 @@ class Festival extends Model
     /**
      * @return array Festival's scenes
      */
-    public function getUtilisateurs(): array
+    public function getOrganizers(): array
     {
 
         $getUsersQuery
@@ -213,23 +233,37 @@ class Festival extends Model
 
         return User::queryToArray($result);
     }
-    
+
     /**
-     * @return array Festival's scenes
+     * Adds a user as organizer.
+     *
+     * @param int $idUser
      */
-    public function getUtilisateurRole($userId): int
+    public function addOrganizer(User $user)
     {
 
-        $getRolesQuery
-            = "SELECT DISTINCT role_uti
-               FROM festival_utilisateur
-               WHERE id_festival = ?
-               AND id_utilisateur = ?;";
+        $addFestivalQuery = "SELECT ajouterFestivalUtilisateur(?, ?) AS id;";
 
-        $result = Database::query($getUsersQuery, $id, $userId);
+        $festivalId = Database::query($addFestivalQuery,
+            $this->getId(),
+            $user->getId());
+    }
 
-        return $result['role_uti'];
-        
+    /**
+     * @return User Festival's owner
+     */
+    public function getOwner(): User
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param User $owner New festival's owner
+     * @return User New festival's owner
+     */
+    public function setOwner(User $owner): User
+    {
+        return $this->owner = $owner;
     }
 
     /**
@@ -246,7 +280,7 @@ class Festival extends Model
      *
      * @param string $name
      * @param string $description
-     * @param string $illustration
+     * @param string|null $illustration
      * @param string $beginningDate
      * @param string $endingDate
      * @param array $categories
@@ -260,7 +294,7 @@ class Festival extends Model
     {
         $addFestivalQuery = "SELECT ajouterFestival(?, ?, ?, ?, ?, ?) AS id;";
 
-        $linkCategorieQuery = "CALL ajouterFestivalCategorie(?, ?);";
+        $linkCategoryQuery = "CALL ajouterFestivalCategorie(?, ?);";
 
         $festivalId = Database::query($addFestivalQuery,
                                       $name,
@@ -272,24 +306,24 @@ class Festival extends Model
 
         $festivalId = $festivalId->get()["id"];
 
-        foreach ($categories as $categorie)
+        foreach ($categories as $category)
         {
-            Database::query($linkCategorieQuery,
+            Database::query($linkCategoryQuery,
                             $festivalId,
-                            $categorie);
+                            $category);
         }
     }
 
     /**
-     * Attempt to modify a festival's generals parameters 
+     * Attempt to modify a festival's generals parameters
      * and relink categories to it.
      *
+     * @param int $id
      * @param string $name
      * @param string $description
-     * @param string $illustration
+     * @param string|null $illustration
      * @param string $beginningDate
      * @param string $endingDate
-     * @param array $categories
      */
     public static function modifyGeneralParameters(int $id,
                                                    string $name,
@@ -320,89 +354,7 @@ class Festival extends Model
         }
     }
 
-    /**
-     * Attempt to add users as the ones who are responsible or who 
-     * organize a festival.
-     *
-     * @param int $id
-     * @param int $idUser
-     * @param string $role
-     */
-    public static function ajouterRolesUtilisateurs(int $id,
-                                                    int $idUser,
-                                                    int $role)
-    {
-
-        $addFestivalQuery = "SELECT ajouterFestivalUtilisateur(?, ?, ?) AS id;";
-
-        $festivalId = Database::query($addFestivalQuery,
-                                      $id,
-                                      $idUser,
-                                      $role);
-
-    }
-
-    /**
-     * Attempt to modify the roles of the users who
-     * are responsible or who organize a festival.
-     *
-     * @param int $id
-     * @param int $idUser
-     * @param string $role
-     */
-    public static function modifierRolesUtilisateurs(int $id,
-                                                     int $idUser,
-                                                     int $role)
-    {
-
-        $addFestivalQuery = "SELECT ajouterFestivalOrganisateurs(?, ?, ?) AS id;";
-
-        $festivalId = Database::query($addFestivalQuery,
-                                      $id,
-                                      $idUser,
-                                      $role);
-
-    }
-
-    /**
-     * Attempt to delete an user from the one who are
-     * responsible or who organiize a festival.
-     *
-     * @param int $id
-     * @param int $idUser
-     * @param string $role
-     */
-    public static function supprimerRolesUtilisateurs(int $id,
-                                                      int $idUser,
-                                                      int $role)
-    {
-
-        $addFestivalQuery = "SELECT ajouterFestivalOrganisateurs(?, ?, ?) AS id;";
-
-        $festivalId = Database::query($addFestivalQuery,
-                                      $id,
-                                      $idUser,
-                                      $role);
-
-    }
-
-    /**
-     * Attempt to add a spectacle in a festival.
-     *
-     * @param int $id
-     * @param int $idSpectacle
-     */
-    public static function ajouterSpectacle(int $id,
-                                            int $idSpectacle)
-    {
-
-        $addFestivalQuery = "SELECT ajouterFestivalSpectacle(?, ?) AS id;";
-
-        $festivalId = Database::query($addFestivalQuery,
-                                      $id,
-                                      $idSpectacle);
-
-    }
+    // TODO lecture
 
     /**
      * Attempt to delete a spectacle from a festival.
@@ -527,6 +479,9 @@ class Festival extends Model
 
             $festivalInstance
                 ->setIllustration($festival["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_NAME);
+
+            $festivalInstance
+                ->setOwner(User::getUserById($festival["id_createur"]));
 
             return $festivalInstance;
         }
