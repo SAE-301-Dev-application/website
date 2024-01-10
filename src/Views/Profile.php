@@ -79,9 +79,7 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                       </div>
                     </form>",
   ]);
-  ?>
 
-  <?php
   Storage::component("HeaderComponent");
   ?>
 
