@@ -18,9 +18,9 @@ $errors = $props->hasValidator()
   <title>Ajouter une scène - Festiplan</title>
 
   <!-- CSS -->
-    <?php
-    Storage::include("Css/ready.css");
-    ?>
+  <?php
+  Storage::include("Css/ready.css");
+  ?>
 
   <!-- JS -->
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
@@ -34,9 +34,9 @@ $errors = $props->hasValidator()
 </head>
 <body>
 <div id="add-scene">
-    <?php
-    Storage::component("HeaderComponent");
-    ?>
+  <?php
+  Storage::component("HeaderComponent");
+  ?>
 
   <div id="main">
     <section id="add-scene">
@@ -44,6 +44,13 @@ $errors = $props->hasValidator()
         <h2 class="title">
           Ajouter des scènes
         </h2>
+
+        <a href="<?= route("informationsFestival") ?>?id=<?= $festival->getId() ?>" target="_blank">
+          <button class="button-grey">
+            <i class="fa-solid fa-eye"></i>
+            Voir le festival
+          </button>
+        </a>
       </div>
 
       <div class="form-container">
@@ -72,9 +79,13 @@ $errors = $props->hasValidator()
                 </section>
 
                 <section id="current_scenes">
+                  <?php
+                  foreach ($festival->getScenes() as $scene)
+                  {
+                  ?>
                   <div class="scene-container">
                     <h3 class="scene-name">
-                      Ma scène
+                      <?= $scene->getName() ?>
                     </h3>
 
                     <button class="button-red">
@@ -82,6 +93,9 @@ $errors = $props->hasValidator()
                       Supprimer
                     </button>
                   </div>
+                  <?php
+                  }
+                  ?>
                 </section>
               </div>
 
@@ -107,29 +121,14 @@ $errors = $props->hasValidator()
               ?>
           </div>
 
-          <div class="buttons">
-            <a href="<?= route("createFestival") ?>">
-              <button class="button-grey" type="button">
-                Annuler
-              </button>
-            </a>
-
-            <button class="button-blue" type="submit">
-              Ajouter les scènes
-            </button>
-          </div>
-
         </form>
       </div>
     </section>
   </div>
-    <div class="mb-40">
 
-    </div>
-
-    <?php
-    Storage::component("FooterComponent");
-    ?>
+  <?php
+  Storage::component("FooterComponent");
+  ?>
 </div>
 </body>
 </html>
