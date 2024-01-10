@@ -84,9 +84,50 @@ $errors = $props->hasValidator()
                   {
                   ?>
                   <div class="scene-container">
-                    <h3 class="scene-name">
-                      <?= $scene->getName() ?>
-                    </h3>
+                    <div class="scene-information">
+                      <h3 class="scene-name">
+                          <?= $scene->getName() ?>
+                      </h3>
+                      
+                      <ul class="scene-details">
+                        <li>
+                          <i class="fa-solid fa-location-dot fa-fw"></i>
+                          Longitude : <?= $scene->getLongitude() ?> /
+                          Latitude : <?= $scene->getLatitude() ?>
+                        </li>
+
+                        <li>
+                          <i class="fa-solid fa-up-right-and-down-left-from-center fa-fw"></i>
+                          Taille :
+                          <?php
+                          switch ($scene->getSize())
+                          {
+                              case 1:
+                                echo "petite";
+                                break;
+
+                              case 2:
+                                echo "moyenne";
+                                break;
+
+                              case 3:
+                                echo "grande";
+                                break;
+
+                              default:
+                                echo "inconnue";
+                                break;
+                          }
+                          ?>
+                        </li>
+
+                        <li>
+                          <i class="fa-solid fa-chair fa-fw"></i>
+                          Nombre de places :
+                          <?= $scene->getMaxSeats() ?>
+                        </li>
+                      </ul>
+                    </div>
 
                     <button class="button-red">
                       <i class="fa-solid fa-trash"></i>
