@@ -15,9 +15,9 @@ use MvcLite\Engine\InternalResources\Storage;
   <title>Génération de la planification - Festiplan</title>
 
   <!-- CSS -->
-    <?php
-    Storage::include("Css/ready.css");
-    ?>
+  <?php
+  Storage::include("Css/ready.css");
+  ?>
 
   <!-- JS -->
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
@@ -40,8 +40,7 @@ use MvcLite\Engine\InternalResources\Storage;
     Storage::component("HeaderComponent");
     ?>
 
-  <div id="main">
-    <section id="planification">
+  <div id="planification">
       <div class="title-container">
         <h2 class="title">
           Génération de la planification
@@ -49,13 +48,10 @@ use MvcLite\Engine\InternalResources\Storage;
 
       </div>
 
-      <div style="overflow: scroll; width: 100%; .fc, tr: { height: 10vh; };">
+      <div class="calendar-container">
         <div id='calendar'>
         </div>
       </div>
-
-    </section>
-
   </div>
 
     <?php

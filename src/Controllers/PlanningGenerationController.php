@@ -3,6 +3,8 @@
 namespace MvcLite\Controllers;
 
 use MvcLite\Controllers\Engine\Controller;
+
+use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Views\Engine\View;
 
 class PlanningGenerationController extends Controller
@@ -11,13 +13,15 @@ class PlanningGenerationController extends Controller
     {
         parent::__construct();
 
-        // Empty constructor.
+        $this->middleware(AuthMiddleware::class);
     }
 
-
+    /**
+     * Festival creation view rendering.
+     */
     public function render(): void
     {
-        View::render("planningGeneration");
+        View::render("PlanningGeneration");
     }
 
 }
