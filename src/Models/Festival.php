@@ -173,11 +173,9 @@ class Festival extends Model
     {
 
         $getSpectaclesQuery
-            = "SELECT DISTINCT festival_spectacle.id_spectacle
-               FROM festival
-               INNER JOIN festival_spectacle
-               ON festival.id_festival = festival_spectacle.id_festival
-               WHERE festival.id_festival = ?;";
+            = "SELECT DISTINCT id_spectacle
+               FROM festival_spectacle
+               WHERE id_festival = ?;";
 
         $result = Database::query($getSpectaclesQuery, $this->getId());
 
@@ -191,11 +189,9 @@ class Festival extends Model
     {
 
         $getSpectaclesQuery
-            = "SELECT DISTINCT festival_scene.id_scene
-               FROM festival
-               INNER JOIN festival_scene
-               ON festival.id_festival = festival_scene.id_festival
-               WHERE festival.id_festival = ?;";
+            = "SELECT DISTINCT .id_scene
+               FROM festival_scene
+               WHERE id_festival = ?;";
 
         $result = Database::query($getSpectaclesQuery, $this->getId());
 
@@ -210,10 +206,8 @@ class Festival extends Model
 
         $getUsersQuery
             = "SELECT DISTINCT id_utilisateur
-               FROM festival
-               INNER JOIN festival_utilisateur
-               ON festival.id_festival = festival_utilisateur.id_festival
-               WHERE festival.id_festival = ?";
+               FROM festival_utilisateur
+               WHERE id_festival = ?";
 
         $result = Database::query($getUsersQuery, $this->getId());
 
@@ -228,10 +222,8 @@ class Festival extends Model
 
         $getRolesQuery
             = "SELECT DISTINCT role_uti
-               FROM festival
-               INNER JOIN festival_utilisateur
-               ON festival.id_festival = festival_utilisateur.id_festival
-               WHERE festival.id_festival = ?
+               FROM festival_utilisateur
+               WHERE id_festival = ?
                AND id_utilisateur = ?;";
 
         $result = Database::query($getUsersQuery, $id, $userId);
