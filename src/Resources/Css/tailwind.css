@@ -419,14 +419,16 @@
                 }
             }
 
-            > .buttons {
-                @apply flex justify-end gap-x-3 mt-5;
+            > form {
+                > .buttons {
+                    @apply flex justify-end gap-x-3 mt-5;
 
-                > button {
-                    @apply w-auto;
+                    > button {
+                        @apply w-auto;
 
-                    > i {
-                        @apply ml-1;
+                        > i {
+                            @apply ml-1;
+                        }
                     }
                 }
             }

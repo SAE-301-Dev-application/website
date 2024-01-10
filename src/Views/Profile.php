@@ -64,10 +64,29 @@ $email = $hasRequest
                     <p><i class='fa-solid fa-warning fa-2xl'></i> <strong>Attention</strong>, cette action est irréversible et le compte ne pourra pas être récupéré.</p>
                     <p>Tous les festivals et les spectacles dont vous êtes responsable seront également supprimés.</p>",
 
-      "buttons" => "<div class='buttons'>
-                      <button class='button-grey' id='popup_cancel_button'>Annuler</button>
-                      <button class='button-red'>Se désinscrire <i class='fa-solid fa-right-from-bracket'></i></button>
-                    </div>",
+      "buttons" => "<form id='password_form'>
+                      <div class='form-component'>
+                        <label for='password_verification'>
+                          <p>
+                              Saisissez votre mot de passe :
+                          </p>
+
+                          <input type='password'
+                                name='password_verification'
+                                id='password_verification' />
+
+                          <ul>
+                            <li class='input-error'>
+                            </li>
+                          </ul>
+                        </label>
+                      </div>
+      
+                      <div class='buttons'>
+                        <button class='button-grey' type='button' id='popup_cancel_button'>Annuler</button>
+                        <button class='button-red' id='popup_confirm_button'>Se désinscrire <i class='fa-solid fa-right-from-bracket'></i></button>
+                      </div>
+                    </form>",
     ]);
     ?>
 
