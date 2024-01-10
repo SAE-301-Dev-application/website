@@ -71,44 +71,43 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                           </ul>
                         </label>
                       </div>
-      
+
                       <div class='buttons'>
                         <button class='button-grey' type='button' id='popup_cancel_button'>Annuler</button>
                         <button class='button-red' id='popup_confirm_button'>Se désinscrire <i class='fa-solid fa-right-from-bracket'></i></button>
                       </div>
                     </form>",
-    ]);
-    ?>
+  ]);
+  ?>
 
-    <?php
-    Storage::component("HeaderComponent");
-    ?>
+  <?php
+  Storage::component("HeaderComponent");
+  ?>
 
-    <div id="main">
-      <h1 class="username">
-        <?= Session::getUserAccount()->getFirstname() ?>
-        <?= Session::getUserAccount()->getLastname() ?>
-      </h1>
+  <div id="main">
+    <h1 class="username">
+      <?= Session::getUserAccount()->getFirstname() ?>
+      <?= Session::getUserAccount()->getLastname() ?>
+    </h1>
 
-      <div class="main-grid">
-        <div class="left-side">
-          <div class="menu-container">
-            <a class="link active-link" href="#my_profile">
-              Mon profil
-            </a>
+    <div class="main-grid">
+      <div class="left-side">
+        <div class="menu-container">
+          <a class="link active-link" href="#my_profile">
+            Mon profil
+          </a>
 
-            <a class="link" href="#my_festivals">
-              Mes festivals
-            </a>
+          <a class="link" href="#my_festivals">
+            Mes festivals
+          </a>
 
-            <a class="link" href="#my_spectacles">
-              Mes spectacles
-            </a>
+          <a class="link" href="#my_spectacles">
+            Mes spectacles
+          </a>
 
-            <a class="link" href="#settings">
-              Paramètres
-            </a>
-          </div>
+          <a class="link" href="#settings">
+            Paramètres
+          </a>
         </div>
       </div>
 
