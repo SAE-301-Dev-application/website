@@ -153,7 +153,7 @@
             > a {
                 &:not(.active-link) {
                     &:hover {
-                        @apply opacity-80
+                        @apply opacity-80;
                     }
 
                     &:active {
@@ -213,8 +213,12 @@
                 @apply text-5xl font-black;
             }
 
+            > .buttons {
+                @apply flex gap-x-3;
+            }
+
             > button {
-                width: auto;
+                @apply w-auto;
             }
         }
     }
