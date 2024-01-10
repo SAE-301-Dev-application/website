@@ -30,20 +30,14 @@ class FestivalsController extends Controller
     {
         $pageNumber = $request->getParameter("page") ?? 1;
 
-        if (!is_numeric($pageNumber) || $pageNumber < 1)
+        if (!is_numeric($pageNumber) || !self::getPageFestivals($pageNumber))
         {
-            return Redirect::route("festivals");
-        }
-
-        $pageFestivals = self::getPageFestivals($pageNumber);
-
-        if (!$pageFestivals)
-        {
-            return Redirect::route("festivals");
+            return Redirect::route("festivals")
+                ->redirect();
         }
 
         View::render("Festivals", [
-            "festivals"     => $pageFestivals,
+            "festivals"     => self::getPageFestivals($pageNumber),
             "pagesCount"    => self::getPagesCount(),
         ]);
 
