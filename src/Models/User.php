@@ -182,7 +182,7 @@ class User extends Model
     public function getSpectacles(): DatabaseQuery
     {
         $query = "SELECT *
-                  FROM spectacleg
+                  FROM spectacle
                   INNER JOIN spectacle_intervenant si
                       on spectacle.id_spectacle = si.id_spectacle
                   WHERE si.id_intervenant = ?";
