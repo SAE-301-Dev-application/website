@@ -6,20 +6,21 @@
  */
 
 
+use MvcLite\Controllers\AddScenesFestivalController;
 use MvcLite\Controllers\CreateFestivalAddScenesController;
+use MvcLite\Controllers\CreateFestivalController;
 use MvcLite\Controllers\CreateSceneController;
-use MvcLite\Controllers\IndexController;
-use MvcLite\Controllers\ProfileController;
-use MvcLite\Controllers\RegisterController;
+use MvcLite\Controllers\CreateSpectacleController;
 use MvcLite\Controllers\DashboardController;
 use MvcLite\Controllers\FestivalsController;
-use MvcLite\Controllers\SpectaclesController;
-use MvcLite\Controllers\CreateFestivalController;
-use MvcLite\Controllers\CreateSpectacleController;
+use MvcLite\Controllers\GeneratePlanificationController;
 use MvcLite\Controllers\GrijFestivalController;
-use MvcLite\Controllers\SessionController;
-use MvcLite\Controllers\AddScenesFestivalController;
+use MvcLite\Controllers\IndexController;
 use MvcLite\Controllers\InformationsFestivalController;
+use MvcLite\Controllers\ProfileController;
+use MvcLite\Controllers\RegisterController;
+use MvcLite\Controllers\SessionController;
+use MvcLite\Controllers\SpectaclesController;
 use MvcLite\Router\Engine\Router;
 
 Router::get("/", IndexController::class, "redirectionIndex");
@@ -105,3 +106,6 @@ Router::get("/informations-festival", InformationsFestivalController::class, "re
 
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");
+
+Router::get("/generate-planification", GeneratePlanificationController::class, "render")
+    ->setName("generatePlanification");
