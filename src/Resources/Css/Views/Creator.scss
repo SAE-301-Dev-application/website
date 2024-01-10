@@ -109,6 +109,8 @@ $orange: #FF7A00;
         }
 
         &#current_scenes {
+          @apply flex flex-col gap-y-5;
+
           > .scene-container {
             @apply flex justify-between items-center gap-x-3;
 
