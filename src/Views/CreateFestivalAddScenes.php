@@ -18,9 +18,9 @@ $errors = $props->hasValidator()
   <title>Ajouter une scène - Festiplan</title>
 
   <!-- CSS -->
-    <?php
-    Storage::include("Css/ready.css");
-    ?>
+  <?php
+  Storage::include("Css/ready.css");
+  ?>
 
   <!-- JS -->
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
@@ -34,9 +34,9 @@ $errors = $props->hasValidator()
 </head>
 <body>
 <div id="add-scene">
-    <?php
-    Storage::component("HeaderComponent");
-    ?>
+  <?php
+  Storage::component("HeaderComponent");
+  ?>
 
   <div id="main">
     <section id="add-scene">
@@ -44,6 +44,13 @@ $errors = $props->hasValidator()
         <h2 class="title">
           Ajouter des scènes
         </h2>
+
+        <a href="<?= route("informationsFestival") ?>?id=<?= $festival->getId() ?>" target="_blank">
+          <button class="button-grey">
+            <i class="fa-solid fa-eye"></i>
+            Voir le festival
+          </button>
+        </a>
       </div>
 
       <div class="form-container">
@@ -72,16 +79,64 @@ $errors = $props->hasValidator()
                 </section>
 
                 <section id="current_scenes">
+                  <?php
+                  foreach ($festival->getScenes() as $scene)
+                  {
+                  ?>
                   <div class="scene-container">
-                    <h3 class="scene-name">
-                      Ma scène
-                    </h3>
+                    <div class="scene-information">
+                      <h3 class="scene-name">
+                          <?= $scene->getName() ?>
+                      </h3>
+                      
+                      <ul class="scene-details">
+                        <li>
+                          <i class="fa-solid fa-location-dot fa-fw"></i>
+                          Longitude : <?= $scene->getLongitude() ?> /
+                          Latitude : <?= $scene->getLatitude() ?>
+                        </li>
+
+                        <li>
+                          <i class="fa-solid fa-up-right-and-down-left-from-center fa-fw"></i>
+                          Taille :
+                          <?php
+                          switch ($scene->getSize())
+                          {
+                              case 1:
+                                echo "petite";
+                                break;
+
+                              case 2:
+                                echo "moyenne";
+                                break;
+
+                              case 3:
+                                echo "grande";
+                                break;
+
+                              default:
+                                echo "inconnue";
+                                break;
+                          }
+                          ?>
+                        </li>
+
+                        <li>
+                          <i class="fa-solid fa-chair fa-fw"></i>
+                          Nombre de places :
+                          <?= $scene->getMaxSeats() ?>
+                        </li>
+                      </ul>
+                    </div>
 
                     <button class="button-red">
                       <i class="fa-solid fa-trash"></i>
                       Supprimer
                     </button>
                   </div>
+                  <?php
+                  }
+                  ?>
                 </section>
               </div>
 
@@ -107,29 +162,14 @@ $errors = $props->hasValidator()
               ?>
           </div>
 
-          <div class="buttons">
-            <a href="<?= route("createFestival") ?>">
-              <button class="button-grey" type="button">
-                Annuler
-              </button>
-            </a>
-
-            <button class="button-blue" type="submit">
-              Ajouter les scènes
-            </button>
-          </div>
-
         </form>
       </div>
     </section>
   </div>
-    <div class="mb-40">
 
-    </div>
-
-    <?php
-    Storage::component("FooterComponent");
-    ?>
+  <?php
+  Storage::component("FooterComponent");
+  ?>
 </div>
 </body>
 </html>

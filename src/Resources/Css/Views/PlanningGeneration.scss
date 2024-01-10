@@ -1,0 +1,11 @@
+#generate_planification_main {
+    > #planification {
+        > .calendar-container {
+            @apply overflow-scroll w-1;
+
+            > .fc, tr {
+                @apply h-[10vh];
+            }
+        }
+    }
+}

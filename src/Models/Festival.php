@@ -188,7 +188,7 @@ class Festival extends Model
     {
 
         $getSpectaclesQuery
-            = "SELECT DISTINCT .id_scene
+            = "SELECT DISTINCT id_scene
                FROM festival_scene
                WHERE id_festival = ?;";
 

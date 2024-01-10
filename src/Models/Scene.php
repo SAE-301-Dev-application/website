@@ -21,7 +21,7 @@ class Scene extends Model
     private int $size;
 
     /* Maximum number of spectators in the scene */
-    private int $maxSpectateurs;
+    private int $maxSeats;
 
     /* Latitude coordinates of the scene */
     private string $latitude;
@@ -90,18 +90,18 @@ class Scene extends Model
     /**
      * @return string Scene's maximum capacity of spectators
      */
-    public function getMaxSpectateurs(): int
+    public function getMaxSeats(): int
     {
-        return $this->maxSpectateurs;
+        return $this->maxSeats;
     }
 
     /**
-     * @param string $maxSpectateurs New Scene's maximum capacity of spectators
+     * @param string $maxSeats New Scene's maximum capacity of spectators
      * @return string New Scene's maximum capacity of spectators
      */
-    public function setMaxSpectateurs(int $maxSpectateurs): int
+    public function setMaxSeats(int $maxSeats): int
     {
-        return $this->maxSpectateurs = $maxSpectateurs;
+        return $this->maxSeats = $maxSeats;
     }
 
     /**
@@ -143,14 +143,14 @@ class Scene extends Model
      *
      * @param string $nom
      * @param int $size
-     * @param int $maxSpectateurs
+     * @param int $maxSeats
      * @param string $latitude
      * @param string $longitude
      * @return bool If the scene is being created
      */
     public static function create(string $nom,
                                   int $size,
-                                  int $maxSpectateurs,
+                                  int $maxSeats,
                                   float $longitude,
                                   float $latitude): bool
     {
@@ -159,7 +159,7 @@ class Scene extends Model
         $user = Database::query($query,
                                 $nom,
                                 $size,
-                                $maxSpectateurs,
+                                $maxSeats,
                                 $latitude,
                                 $longitude);
 
@@ -194,7 +194,7 @@ class Scene extends Model
                 ->setSize($scene["taille_sc"]);
 
             $sceneInstance
-                ->setMaxSpectateurs($scene["nb_max_spectateurs"]);
+                ->setMaxSeats($scene["nb_max_spectateurs"]);
 
             $sceneInstance
                 ->setLatitude($scene["latitude_sc"]);

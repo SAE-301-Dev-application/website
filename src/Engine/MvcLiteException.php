@@ -76,7 +76,20 @@ class MvcLiteException extends Exception
      */
     public function render(): void
     {
+        self::importCss();
+
         echo $this->getDialog();
         die;
+    }
+
+    /**
+     * Import exception rendering CSS.
+     */
+    private static function importCss(): void
+    {
+        $exceptionsCss = file_get_contents(Storage::getEnginePath()
+            . "/InternalResources/ExceptionRendering/rendering.css");
+
+        echo "<style>$exceptionsCss</style>";
     }
 }

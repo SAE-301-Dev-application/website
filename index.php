@@ -11,14 +11,6 @@ require_once "vendor/autoload.php";
 
 require_once "config.php";
 
-$debugCss = file_get_contents(Storage::getEnginePath()
-    . "/DevelopmentUtilities/DebugRendering/rendering.css");
-
-$exceptionsCss = file_get_contents(Storage::getEnginePath()
-    . "/InternalResources/ExceptionRendering/rendering.css");
-
-echo "<style>$exceptionsCss $debugCss</style>";
-
 if (!isset($_SESSION[Delivery::DELIVER_POST_KEY]))
 {
     (new Delivery())

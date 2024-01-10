@@ -7,20 +7,21 @@
 
 
 use MvcLite\Controllers\CreateFestivalAddScenesController;
+use MvcLite\Controllers\CreateFestivalController;
 use MvcLite\Controllers\CreateSceneController;
-use MvcLite\Controllers\IndexController;
-use MvcLite\Controllers\ProfileController;
-use MvcLite\Controllers\RegisterController;
+use MvcLite\Controllers\CreateSpectacleController;
 use MvcLite\Controllers\DashboardController;
 use MvcLite\Controllers\FestivalsController;
-use MvcLite\Controllers\SpectaclesController;
-use MvcLite\Controllers\CreateFestivalController;
-use MvcLite\Controllers\CreateSpectacleController;
-use MvcLite\Controllers\GrijFestivalController;
-use MvcLite\Controllers\SessionController;
-use MvcLite\Controllers\AddScenesFestivalController;
+use MvcLite\Controllers\PlanningGenerationController;
+use MvcLite\Controllers\CreateFestivalAddGrijController;
+use MvcLite\Controllers\IndexController;
 use MvcLite\Controllers\InformationsFestivalController;
 use MvcLite\Controllers\InformationsSpectacleController;
+use MvcLite\Controllers\ProfileController;
+use MvcLite\Controllers\RegisterController;
+use MvcLite\Controllers\SessionController;
+use MvcLite\Controllers\SpectaclesController;
+
 use MvcLite\Router\Engine\Router;
 
 Router::get("/", IndexController::class, "redirectionIndex");
@@ -90,17 +91,17 @@ Router::post("/profile/general-information/save",
     ->setName("post.profile.generalInformation.save");
 
 Router::post("/profile/new-password/save",
-    ProfileController::class,
-    "saveNewPassword")
+             ProfileController::class,
+             "saveNewPassword")
     ->setName("post.profile.newPassword.save");
 
 Router::post("/profile/delete-account/confirm",
-    ProfileController::class,
-    "confirmDeleteAccount")
+             ProfileController::class,
+             "confirmDeleteAccount")
     ->setName("post.profile.deleteAccount.confirm");
 
     
-Router::get("/informations-festival", InformationsFestivalController::class, "render")
+Router::get("/festival", InformationsFestivalController::class, "render")
     ->setName("informationsFestival");
 
 Router::get("/informations-spectacle", InformationsSpectacleController::class, "render")
@@ -109,3 +110,6 @@ Router::get("/informations-spectacle", InformationsSpectacleController::class, "
 
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");
+
+Router::get("/planning-generation", PlanningGenerationController::class, "render")
+    ->setName("planningGeneration");

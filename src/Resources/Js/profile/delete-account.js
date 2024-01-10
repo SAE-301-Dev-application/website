@@ -12,8 +12,13 @@ TOGGLING_POPUP_ELEMENTS.on('click', () => {
 FORM.on('submit', (e) => {
     e.preventDefault();
 
-    $.post('/profile/delete-account/confirm', {password: PASSWORD_INPUT.val()})
-        .done(data => {
-            $("li.input-error").html(data);
+    $.post('/website/profile/delete-account/confirm', {password_verification: PASSWORD_INPUT.val()})
+        .done(data => {console.log(data);
+            if (data == 'success') {
+                window.location.href = '/website/logout/';
+            } else {
+              
+              $("li.input-error").html(data);
+            }
         });
 });
