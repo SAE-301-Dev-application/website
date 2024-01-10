@@ -89,13 +89,13 @@ Router::post("/profile/general-information/save",
     ->setName("post.profile.generalInformation.save");
 
 Router::post("/profile/new-password/save",
-    ProfileController::class,
-    "saveNewPassword")
+             ProfileController::class,
+             "saveNewPassword")
     ->setName("post.profile.newPassword.save");
 
 Router::post("/profile/delete-account/confirm",
-    ProfileController::class,
-    "confirmDeleteAccount")
+             ProfileController::class,
+             "confirmDeleteAccount")
     ->setName("post.profile.deleteAccount.confirm");
 
     

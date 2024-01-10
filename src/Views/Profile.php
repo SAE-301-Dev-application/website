@@ -62,8 +62,8 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                           </p>
 
                           <input type='password'
-                                name='password_verification'
-                                id='password_verification' />
+                                 name='password_verification'
+                                 id='password_verification' />
 
                           <ul>
                             <li class='input-error'>

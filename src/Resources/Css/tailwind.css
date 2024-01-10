@@ -397,7 +397,7 @@
         }
 
         > .popup {
-            @apply bg-white shadow-2xl rounded-lg p-7 pt-5 text-black w-full xl:w-1/2 relative mx-5;
+            @apply bg-white shadow-2xl rounded-lg px-7 pt-5 pb-3 text-black w-full xl:w-1/2 relative mx-5;
 
             > .popup-close-button {
                 @apply absolute right-5 top-5 text-xl;
@@ -412,7 +412,7 @@
             }
 
             > p {
-                @apply mb-3 text-sm font-semibold;
+                @apply mb-5 text-sm font-semibold;
 
                 > i {
                     @apply text-orange mr-1;
@@ -424,8 +424,12 @@
             }
 
             > form {
+                > div.form-component {
+                    @apply mb-6;
+                }
+
                 > .buttons {
-                    @apply flex justify-end gap-x-3 mt-5;
+                    @apply flex justify-end gap-x-3 mb-5;
 
                     > button {
                         @apply w-auto;
