@@ -39,12 +39,21 @@ $page = $props->getRequest()->getParameter("page") ?? 1;
           Tous les festivals
           </h2>
 
-          <a href="<?= route("createFestival") ?>">
-            <button class="button-blue">
-              <i class="fa-solid fa-plus"></i>
-              Créer un festival
-            </button>
-          </a>
+          <div class="buttons">
+            <a href="<?= route("createFestival") ?>">
+              <button class="button-blue">
+                <i class="fa-solid fa-plus"></i>
+                Créer un festival
+              </button>
+            </a>
+
+            <a href="<?= route("profile") ?>#my_festivals">
+              <button class="button-grey">
+                <i class="fa-solid fa-champagne-glasses"></i>
+                Mes festivals
+              </button>
+            </a>
+          </div>
         </div>
 
         <div class="festivals-grid">
