@@ -17,7 +17,6 @@ FORM.on('submit', (e) => {
             if (data == 'success') {
                 window.location.href = '/website/logout/';
             } else {
-              
               $("li.input-error").html(data);
             }
         });
