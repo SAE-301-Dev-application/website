@@ -216,27 +216,29 @@ class ProfileController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function confirmDeleteAccount(Request $request): RedirectResponse
+    public function confirmDeleteAccount(Request $request): void
     {
+        $validation = (new Validator($request))
+            ->required([
+                "password_verification",
+            ], self::ERROR_REQUIRED_FIELD)
 
-        echo "confirmDeleteAccount";
+            ->password("password_verification", self::ERROR_WRONG_PASSWORD);
         
-        // $validation = (new Validator($request));
-            // ->required([  TODO STUB
-            //     "password",
-            // ], self::ERROR_REQUIRED_FIELD)
+        if ($validation->hasFailed())
+        {
+            echo ($validation->getError("password_verification", "required")
+                  ?? $validation->getError("password_verification", "password"));
+        }
+        else
+        {
+            $user = Session::getUserAccount();
+    
+            //$user->delete();
 
-            // ->password("password", self::ERROR_WRONG_PASSWORD);
-
-        // if (!$validation->hasFailed())
-        // {
-        //     $user = Session::getUserAccount();
-
-        //     $user->delete();
-        // }
-
-        // return Redirect::route("logout")
-        //     ->redirect();
+            echo "success";
+        }
+        return;
     }
 
     /**
