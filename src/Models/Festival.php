@@ -531,6 +531,23 @@ class Festival extends Model
     }
 
     /**
+     * Removes given scene from current festival.
+     *
+     * @param \MvcLite\Models\Scene $scene
+     * @return bool If scene has been removed from festival
+     */
+    public function removeScene(Scene $scene): bool
+    {
+        $query = "DELETE FROM festival_scene
+                  WHERE id_festival = ?
+                  AND id_scene = ?";
+
+        $sceneRemoving = Database::query($query, $this->getId(), $scene->getId());
+
+        return $sceneRemoving->getExecutionState();
+    }
+
+    /**
      * Returns User array by using DatabaseQuery object.
      *
      * @param DatabaseQuery $queryObject
