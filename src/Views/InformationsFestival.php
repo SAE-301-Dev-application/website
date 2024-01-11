@@ -147,7 +147,7 @@ use MvcLite\Models\User;
         </a>
         <!-- Si l'utilisateur est responsable du festival -->
         <?php if ($festival->isUserOwner()) { ?>
-        <a href="<?= route("")//TODO mettre la route ?>">
+        <a href="<?= route("addScene")//TODO mettre la route ?>">
           <button class="button-blue">
             <i class="fa-solid fa-plus"></i>
             Ajouter scènes
