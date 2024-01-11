@@ -54,9 +54,8 @@ use MvcLite\Models\Festival;
           </a>
         </div>
         <?php
-        // Debug::dd($festival->getCategories());
-            foreach ($spectacle->getCategories() as $categorie) {
-                echo $categorie->getName()." ";
+            foreach ($spectacle->getSpectacleCategories() as $categorie) {
+                echo $categorie->getName() . " ";
             }
         ?>
 

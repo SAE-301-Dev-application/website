@@ -175,9 +175,11 @@ class Festival extends Model
     {
 
         $getCategoriesQuery
-            = "SELECT DISTINCT id_categorie
-               FROM festival_categorie
-               WHERE festival_categorie.id_festival = ?";
+            = "SELECT ca.*
+               FROM categorie ca
+               INNER JOIN festival_categorie fc
+               ON ca.id_categorie = fc.id_categorie
+               WHERE fc.id_festival = ?";
 
         $result = Database::query($getCategoriesQuery, $this->getId());
 
@@ -230,7 +232,7 @@ class Festival extends Model
                FROM scene sc
                INNER JOIN festival_scene fs
                ON sc.id_scene = fs.id_scene
-               WHERE id_scene = ?;";
+               WHERE sc.id_scene = ?;";
 
         $result = Database::query($getScenesQuery, $this->getId());
 
@@ -244,8 +246,10 @@ class Festival extends Model
     {
 
         $getUsersQuery
-            = "SELECT DISTINCT id_utilisateur
-               FROM festival_utilisateur
+            = "SELECT *
+               FROM utilisateur ut
+               INNER JOIN festival_utilisateur fu
+               ON ut.id_utilisateur = fu.id_utilisateur
                WHERE id_festival = ?";
 
         $result = Database::query($getUsersQuery, $this->getId());

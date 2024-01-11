@@ -7,6 +7,7 @@ use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\Security\Password;
+use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Engine\Model;
 
 class Spectacle extends Model
@@ -136,9 +137,11 @@ class Spectacle extends Model
     {
 
         $getCategoriesQuery
-            = "SELECT DISTINCT id_categorie
-               FROM spectacle_categorie
-               WHERE spectacle_categorie.id_spectacle = ?";
+            = "SELECT ca.*
+               FROM categorie ca
+               INNER JOIN spectacle_categorie sc
+               ON ca.id_categorie = sc.id_categorie
+               WHERE sc.id_spectacle = ?";
 
         $result = Database::query($getCategoriesQuery, $this->getId());
 
@@ -179,9 +182,11 @@ class Spectacle extends Model
     {
 
         $getUserQuery
-            = "SELECT DISTINCT id_intervenant, type_inter
-               FROM spectacle_intervenant
-               WHERE spectacle_intervenant.id_spectacle = ?";
+            = "SELECT ivn.*, si.type_inter
+               FROM intervenant ivn
+               INNER JOIN spectacle_intervenant si
+               ON ivn.id_intervenant = si.id_intervenant
+               WHERE si.id_spectacle = ?";
 
         $result = Database::query($getUserQuery, $this->getId());
 
@@ -205,7 +210,7 @@ class Spectacle extends Model
                                   string $sceneSize,
                                   array $categories): void
     {
-        $addSpectacleQuery = "SELECT ajouterSpectacle(?, ?, ?, ?, ?) AS id;";
+        $addSpectacleQuery = "SELECT ajouterSpectacle(?, ?, ?, ?, ?, ?) AS id;";
 
         $linkCategoryQuery = "CALL ajouterSpectacleCategorie(?, ?);";
 
@@ -223,12 +228,20 @@ class Spectacle extends Model
                 break;
         }
 
+        Debug::dump($addSpectacleQuery,
+        $title,
+        $description,
+        $illustration ?? null,
+        $duration,
+        $sceneSize,
+        Session::getUserAccount()->getId());
         $spectacleId = Database::query($addSpectacleQuery,
                                        $title,
                                        $description,
                                        $illustration ?? null,
-                                       $duration,
-                                       $sceneSize);
+                                       60,//$duration,
+                                       $sceneSize,
+                                       Session::getUserAccount()->getId());
 
         $spectacleId = $spectacleId->get()["id"];
 

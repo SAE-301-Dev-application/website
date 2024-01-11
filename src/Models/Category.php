@@ -50,8 +50,8 @@ class Category extends Model
     }
 
     /**
-     * @param string $title New Category's title
-     * @return string New Category's title
+     * @param string $name New Category's name
+     * @return string New Category's name
      */
     public function setName(string $name): string
     {
@@ -85,7 +85,7 @@ class Category extends Model
 
         $categoryInstance->setId($categoryData["id_categorie"]);
 
-        $categoryInstance->setTitle($categoryData["nom_cat"]);
+        $categoryInstance->setName($categoryData["nom_cat"]);
 
         return $categoryInstance;
     }

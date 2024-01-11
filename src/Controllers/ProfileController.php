@@ -88,8 +88,8 @@ class ProfileController extends Controller
     public function render(): void
     {
         View::render("Profile", [
-            "myFestivals" => self::getUserFestivals(),
-            "mySpectacles" => self::getUserSpectacles(),
+            "myFestivals" => self::getSessionUserFestivals(),
+            "mySpectacles" => self::getSessionUserSpectacles(),
         ]);
     }
 
@@ -241,7 +241,7 @@ class ProfileController extends Controller
     /**
      * @return array Session user's festivals
      */
-    private static function getUserFestivals(): array
+    private static function getSessionUserFestivals(): array
     {
         return Session::getUserAccount()->getUserFestivals();
     }
@@ -249,7 +249,7 @@ class ProfileController extends Controller
     /**
      * @return array Session user's spectacles
      */
-    private static function getUserSpectacles(): array
+    private static function getSessionUserSpectacles(): array
     {
         return Session::getUserAccount()->getUserSpectacles();
     }

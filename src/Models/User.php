@@ -165,16 +165,16 @@ class User extends Model
     }
 
     /**
-     * @return DatabaseQuery User's festivals
+     * @return array User's festivals
      */
-    public function getUserFestivals(): DatabaseQuery
+    public function getUserFestivals(): array
     {
         $query = "SELECT *
-                  FROM festival
-                  LEFT OUTER JOIN festiplan.festival_utilisateur fu 
-                      on festival.id_festival = fu.id_festival
+                  FROM festival fe
+                  LEFT OUTER JOIN festival_utilisateur fu 
+                  ON fe.id_festival = fu.id_festival
                   WHERE fu.id_utilisateur = ? OR id_createur = ?
-                  ORDER BY festival.id_festival;";
+                  ORDER BY fe.id_festival;";
 
         $festivals = Database::query($query, $this->getId(), $this->getId());
 
@@ -187,8 +187,8 @@ class User extends Model
     public function getUserSpectacles(): array
     {
         $query = "SELECT *
-                  FROM spectacle sp
-                  WHERE sp.id_createur = ?;";
+                  FROM spectacle
+                  WHERE id_createur = ?;";
 
         $spectacles = Database::query($query, $this->getId());
 
