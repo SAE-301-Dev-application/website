@@ -46,7 +46,7 @@ use MvcLite\Models\Festival;
             </button>
           </a>
           <!-- Si l'utilisateur est le créateur du spectacle -->
-          <?php if ($spectacle->isUserCreator()) { ?>
+          <?php if ($spectacle->isOwner()) { ?>
             <a href="<?= route("")//TODO mettre la route ?>">
               <button class="button-blue">
                 <i class="fa-solid fa-plus"></i>
@@ -90,7 +90,7 @@ use MvcLite\Models\Festival;
         </a>
 
         <!-- Si l'utilisateur est le créateur du spectacle -->
-        <?php if ($spectacle->isUserCreator()) { ?>
+        <?php if ($spectacle->isOwner()) { ?>
           <a href="<?= route("")//TODO mettre la route ?>">
             <button class="button-blue">
               <i class="fa-solid fa-plus"></i>

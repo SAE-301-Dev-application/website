@@ -39,8 +39,8 @@ class Spectacle extends Model implements JsonSerializable
     /** Spectacle's illustration */
     private string $illustration;
 
-    /** Spectacle's user creator */
-    private User $user_creator;
+    /** Spectacle's owner */
+    private User $owner;
 
     public function __construct()
     {
@@ -193,28 +193,27 @@ class Spectacle extends Model implements JsonSerializable
     }
 
     /**
-     * @return User Spectacle's user_creator
+     * @return User Spectacle's owner
      */
-    public function getUserCreator(): User
+    public function getOwner(): User
     {
-        return $this->user_creator;
+        return $this->owner;
     }
 
     /**
-     * @param User $user_creator New spectacle's user_creator
-     * @return User New spectacle's user_creator
+     * @param int $ownerId New spectacle's owner id
      */
-    public function setUserCreator(int $user_creator): void
+    public function setOwner(int $ownerId): void
     {
-        $this->user_creator = User::getUserById($user_creator);
+        $this->owner = User::getUserById($ownerId);
     }
 
     /**
-     * @return bool If the current user are Owner of this festival
+     * @return bool If the current user is owner of this festival
      */
-    public function isUserCreator(): bool
+    public function isOwner(): bool
     {
-        return Session::getUserAccount() == User::getUserById($this->getUserCreator()->getId());
+        return Session::getUserAccount() == User::getUserById($this->getOwner()->getId());
     }
 
     /**
@@ -348,7 +347,7 @@ class Spectacle extends Model implements JsonSerializable
             ->setSceneSize($spectacleData["taille_scene_sp"]);
 
         $spectacleInstance
-            ->setUserCreator($spectacleData["id_createur"]);
+            ->setOwner($spectacleData["id_createur"]);
 
         return $spectacleInstance;
     }
@@ -390,7 +389,7 @@ class Spectacle extends Model implements JsonSerializable
                 ->setSceneSize($spectacle["taille_scene_sp"]);
 
             $spectacleInstance
-                ->setUserCreator($spectacle["id_createur"]);
+                ->setOwner($spectacle["id_createur"]);
 
             return $spectacleInstance;
         }
