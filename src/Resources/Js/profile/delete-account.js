@@ -14,8 +14,6 @@ FORM.on('submit', (e) => {
 
     $.post('/website/profile/delete-account/confirm', {password_verification: PASSWORD_INPUT.val()})
         .done(data => {
-            console.log(data);
-            
             if (data == 'success') {
                 window.location.href = '/website/logout/';
             } else {
