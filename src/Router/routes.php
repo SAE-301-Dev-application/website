@@ -115,8 +115,11 @@ Router::get("/modify-festival", ModifyFestivalController::class, "render")
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");
 
-Router::get("/add-scene/get-scenes", CreateFestivalAddScenesController::class, "getScenes")
+Router::get("/add-scene/get", CreateFestivalAddScenesController::class, "getScenes")
     ->setName("addScene.getScenes");
+
+Router::get("/add-scene/search", CreateFestivalAddScenesController::class, "searchScene")
+    ->setName("addScene.searchScene");
 
 Router::post("/add-scene/remove", CreateFestivalAddScenesController::class, "removeScene")
     ->setName("addScene.removeScene");
