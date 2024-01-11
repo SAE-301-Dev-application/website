@@ -199,7 +199,6 @@ class Festival extends Model
      */
     public function getSpectacles(): array
     {
-
         $getSpectaclesQuery
             = "SELECT sp.*
                FROM spectacle sp 

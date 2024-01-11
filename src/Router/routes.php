@@ -135,6 +135,7 @@ Router::get("/generate-planification/get-grij", GeneratePlanificationController:
 Router::get("/generate-planification/get-spectacles", GeneratePlanificationController::class, "getSpectacles")
     ->setName("generatePlanification.getSpectacles");
 
+    
 Router::get("/add-spectacle", CreateFestivalAddSpectaclesController::class, "render")
     ->setName("addSpectacle");
 
