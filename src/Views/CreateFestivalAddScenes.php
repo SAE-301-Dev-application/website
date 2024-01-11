@@ -26,12 +26,96 @@ $errors = $props->hasValidator()
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
 
-  <?php
-  Storage::include("Js/async/ajax.js", importMethod: "defer");
-  ?>
-
   <script defer>
-    ajax("post", "<?= route("removeScene") ?>")
+      document.addEventListener("DOMContentLoaded", () => {
+          function updateScenesList() {  console.log("UPDATING SCENES LIST.");
+              const SCENES_LIST = $("section#current_scenes");
+
+              $.get("<?= route("addScene.getScenes") ?>?festival=<?= $festival->getId() ?>", {})
+                  .done(data => {
+                      console.log(data);
+
+                      data = JSON.parse(data);
+
+                      SCENES_LIST.empty();
+
+                      data.forEach(scene => {
+                          switch (scene.size) {
+                              case 1:
+                                  scene.size_label = "petite";
+                                  break;
+
+                              case 2:
+                                  scene.size_label = "moyenne";
+                                  break;
+
+                              case 3:
+                                  scene.size_label = "grande";
+                                  break;
+
+                              default:
+                                  scene.size_label = "inconnue";
+                                  break;
+                          }
+
+                          SCENES_LIST.append(`
+                          <div class=\"scene-container\">
+                            <div class=\"scene-information\">
+                              <h3 class=\"scene-name\">
+                                  ${scene.name}
+                              </h3>
+
+                              <ul class=\"scene-details\">
+                                <li>
+                                  <i class=\"fa-solid fa-location-dot fa-fw\"></i>
+                                  Longitude : ${scene.longitude} /
+                                  Latitude : ${scene.latitude}
+                                </li>
+
+                                <li>
+                                  <i class=\"fa-solid fa-up-right-and-down-left-from-center fa-fw\"></i>
+                                  Taille :
+                                  ${scene.size_label}
+                                </li>
+
+                                <li>
+                                  <i class=\"fa-solid fa-chair fa-fw\"></i>
+                                  Nombre de places :
+                                  ${scene.max_seats}
+                                </li>
+                              </ul>
+                            </div>
+
+                            <button class=\"button-red remove-scene-button\" id=\"remove_scene_${scene.id}\">
+                              <i class=\"fa-solid fa-trash\"></i>
+                              Supprimer
+                            </button>
+                          </div>
+                      `);
+                      });
+                });
+          }
+
+          updateScenesList();
+
+          $(document).on("click", "button[id^='remove_scene_']", e => {
+          e.preventDefault();
+
+          let button = $(e.currentTarget),
+              festivalId = button.attr("id").split('_')[2];
+
+          $.post("<?= route("addScene.removeScene") ?>?festival=<?= $festival->getId() ?>&scene=" + festivalId, {
+              festivalId,
+            })
+            .done(data => {
+                if (data === "success") {
+                    updateScenesList();
+                } else {
+                    button.after(`<p class="input-error">${data}</p>`);
+                }
+            });
+        });
+      });
   </script>
 
   <!-- FontAwesome -->
@@ -92,64 +176,7 @@ $errors = $props->hasValidator()
                 </section>
 
                 <section id="current_scenes">
-                  <?php
-                  foreach ($festival->getScenes() as $scene)
-                  {
-                  ?>
-                  <div class="scene-container">
-                    <div class="scene-information">
-                      <h3 class="scene-name">
-                          <?= $scene->getName() ?>
-                      </h3>
-                      
-                      <ul class="scene-details">
-                        <li>
-                          <i class="fa-solid fa-location-dot fa-fw"></i>
-                          Longitude : <?= $scene->getLongitude() ?> /
-                          Latitude : <?= $scene->getLatitude() ?>
-                        </li>
-
-                        <li>
-                          <i class="fa-solid fa-up-right-and-down-left-from-center fa-fw"></i>
-                          Taille :
-                          <?php
-                          switch ($scene->getSize())
-                          {
-                              case 1:
-                                echo "petite";
-                                break;
-
-                              case 2:
-                                echo "moyenne";
-                                break;
-
-                              case 3:
-                                echo "grande";
-                                break;
-
-                              default:
-                                echo "inconnue";
-                                break;
-                          }
-                          ?>
-                        </li>
-
-                        <li>
-                          <i class="fa-solid fa-chair fa-fw"></i>
-                          Nombre de places :
-                          <?= $scene->getMaxSeats() ?>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <button class="button-red">
-                      <i class="fa-solid fa-trash"></i>
-                      Supprimer
-                    </button>
-                  </div>
-                  <?php
-                  }
-                  ?>
+                  <!--  -->
                 </section>
               </div>
 
