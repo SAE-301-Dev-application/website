@@ -7,8 +7,8 @@
 
 
 use MvcLite\Controllers\IndexController;
-use MvcLite\Controllers\ProfileController;
 use MvcLite\Controllers\CreateFestivalController;
+use MvcLite\Controllers\ProfileController;
 use MvcLite\Controllers\CreateFestivalAddScenesController;
 use MvcLite\Controllers\CreateFestivalAddGrijController;
 use MvcLite\Controllers\CreateSpectacleController;
@@ -18,6 +18,7 @@ use MvcLite\Controllers\FestivalsController;
 use MvcLite\Controllers\GeneratePlanificationController;
 use MvcLite\Controllers\InformationsFestivalController;
 use MvcLite\Controllers\InformationsSpectacleController;
+use MvcLite\Controllers\ModifyFestivalController;
 use MvcLite\Controllers\RegisterController;
 use MvcLite\Controllers\SessionController;
 use MvcLite\Controllers\SpectaclesController;
@@ -101,13 +102,15 @@ Router::post("/profile/delete-account/confirm",
     ->setName("post.profile.deleteAccount.confirm");
 
     
-Router::get("/festival", InformationsFestivalController::class, "render")
+Router::get("/informations-festival", InformationsFestivalController::class, "render")
     ->setName("informationsFestival");
 
     
 Router::get("/informations-spectacle", InformationsSpectacleController::class, "render")
     ->setName("informationsSpectacle");
 
+Router::get("/modify-festival", ModifyFestivalController::class, "render")
+    ->setName("modifyFestival");
 
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");
