@@ -25,7 +25,7 @@ class GeneratePlanificationController extends Controller
     }
 
     /**
-     * Get grij of a festival and send it (ajax request).
+     * Get festival's GriJ and send it (ajax request).
      */
     public function getFestivalGrij(int $idFestival): void
     {
@@ -33,7 +33,32 @@ class GeneratePlanificationController extends Controller
         
         $grij = Festival::getGrij($festival->getId());
 
+
         echo serialize($grij);
+    }
+
+    /**
+     * Get festival's scenes and send it (ajax request).
+     */
+    public function getFestivalScenes(int $idFestival): void
+    {
+        $festival = Festival::getFestivalById($idFestival);
+
+        $scenes = Festival::getScenes($festival->getId());
+
+        echo serialize($scenes);
+    }
+
+    /**
+     * Get festival's spectacles and send it (ajax request).
+     */
+    public function getFestivalSpectacles(int $idFestival): void
+    {
+        $festival = Festival::getFestivalById($idFestival);
+
+        $spectacles = Festival::getSpectacles($festival->getId());
+
+        echo serialize($spectacles);
     }
 
 }
