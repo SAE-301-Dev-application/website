@@ -161,6 +161,14 @@ class Festival extends Model
     }
 
     /**
+     * @return bool If the current user are Owner of this festival
+     */
+    public function isUserOwner(): bool
+    {
+        return Session::getUserAccount() == User::getUserById($this->getOwner()->getId());
+    }
+
+    /**
      * @param string $owner
      */
     public function setOwner(int $owner): void
@@ -232,7 +240,7 @@ class Festival extends Model
                FROM scene sc
                INNER JOIN festival_scene fs
                ON sc.id_scene = fs.id_scene
-               WHERE sc.id_scene = ?;";
+               WHERE fs.id_festival = ?;";
 
         $result = Database::query($getScenesQuery, $this->getId());
 

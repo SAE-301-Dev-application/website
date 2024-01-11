@@ -1,7 +1,9 @@
 <?php
 use MvcLite\Engine\DevelopmentUtilities\Debug;
+use MvcLite\Engine\Session\Session;
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Models\Festival;
+use MvcLite\Models\User;
 ?>
 
 <!doctype html>
@@ -45,14 +47,18 @@ use MvcLite\Models\Festival;
               Voir la planification
             </button>
           </a>
-
-          <a href="<?= route("modifyFestival")?>?id=<?= $festival->getId()?>">
-            <button class="button-blue">
-              <i class="fa-solid fa-plus"></i>
-              Modifier festival
-            </button>
-          </a>
+          
+          <!-- Si l'utilisateur est responsable du festival -->
+          <?php if ($festival->isUserOwner()) { ?>
+            <a href="<?= route("modifyFestival")?>?id=<?= $festival->getId()?>">
+              <button class="button-blue">
+                <i class="fa-solid fa-plus"></i>
+                Modifier festival
+              </button>
+            </a>
+          <?php } ?>
         </div>
+
         <div>
         (
         <?php
@@ -103,29 +109,32 @@ use MvcLite\Models\Festival;
           </button>
         </a>
         <!-- Si l'utilisateur est le responsable du festival -->
+        <?php if ($festival->isUserOwner()) { ?>
         <a href="<?= route("")//TODO mettre la route ?>">
           <button class="button-blue">
             <i class="fa-solid fa-plus"></i>
             Ajouter spectacles
           </button>
         </a>
-        <div>
+        <?php } ?>
 
+        <div>
           <?php
             // Debug::dd($festival->getCategories());
             foreach ($festival->getIncludedSpectacles() as $spectacle) {?>
-          <div class="festival-preview">
-            <div class="festival-picture"
-                style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
-              
+            <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
+              <div class="festival-preview">
+                <div class="festival-picture"
+                  style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
+                </div>
+              </div>
             </div>
-          </div>
-          <div>
-          <?php 
-            echo $spectacle->getTitle();     
-            }
-          ?>
-          </div>
+            <div>
+            <?php 
+                echo $spectacle->getTitle();     
+                } 
+            ?>
+          </a>
 
         </div>
 
@@ -138,13 +147,15 @@ use MvcLite\Models\Festival;
             Voir plus
           </button>
         </a>
-        <!-- Si l'utilisateur est le responsable du festival -->
+        <!-- Si l'utilisateur est responsable du festival -->
+        <?php if ($festival->isUserOwner()) { ?>
         <a href="<?= route("")//TODO mettre la route ?>">
           <button class="button-blue">
             <i class="fa-solid fa-plus"></i>
             Ajouter scènes
           </button>
         </a>
+        <?php } ?>
         <?php
           // Debug::dd($festival->getCategories());
           foreach ($festival->getScenes() as $scene) {
@@ -182,12 +193,14 @@ use MvcLite\Models\Festival;
         </a>
 
         <!-- Si l'utilisateur est le responsable du festival -->
+        <?php if ($festival->isUserOwner()) { ?>
         <a href="<?= route("")//TODO mettre la route ?>">
           <button class="button-blue">
             <i class="fa-solid fa-plus"></i>
             Ajouter organisateurs
           </button>
         </a>
+        <?php } ?>
         <?php
 
           $owner = $festival->getOwner();
