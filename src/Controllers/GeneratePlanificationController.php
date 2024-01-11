@@ -5,6 +5,7 @@ namespace MvcLite\Controllers;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Models\Festival;
 use MvcLite\Middlewares\AuthMiddleware;
+use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
 
 class GeneratePlanificationController extends Controller
@@ -26,15 +27,25 @@ class GeneratePlanificationController extends Controller
 
     /**
      * Get festival's GriJ and send it (ajax request).
+     * 
+     * @param Request $request
      */
-    public function getFestivalGrij(int $idFestival): void
+    public function getFestivalGrij(Request $request): void
     {
-        $festival = Festival::getFestivalById($idFestival);
+        $festivalId = $request->getInput("id");
+
+        if (!is_numeric($festivalId)) {
+            echo "error";
+            return;
+        }
+
+        $festivalId = intval($festivalId);
+
+        $festival = Festival::getFestivalById($festivalId);
         
         $grij = Festival::getGrij($festival->getId());
 
-
-        echo serialize($grij);
+        echo json_encode($grij);
     }
 
     /**
