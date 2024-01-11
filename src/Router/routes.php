@@ -112,6 +112,9 @@ Router::get("/informations-spectacle", InformationsSpectacleController::class, "
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");
 
+Router::get("/add-scene/get-scenes", CreateFestivalAddScenesController::class, "getScenes")
+    ->setName("addScene.getScenes");
+
 Router::post("/add-scene/remove", CreateFestivalAddScenesController::class, "removeScene")
     ->setName("addScene.removeScene");
 
