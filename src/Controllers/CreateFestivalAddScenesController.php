@@ -66,6 +66,55 @@ class CreateFestivalAddScenesController extends Controller
         return true;
     }
 
+    public function searchScene(Request $request): void
+    {
+        $searchValue = $request->getParameter("search");
+
+        if ($searchValue === null)
+        {
+            echo json_encode([
+                "type" => "error",
+                "message" => "Aucun terme de recherche n'est précisé.",
+            ]);
+
+            return;
+        }
+
+        echo json_encode(Scene::searchSceneByName($searchValue));
+    }
+
+    public function addScene(Request $request): void
+    {
+        $festivalId = $request->getParameter("festival");
+        $sceneId = $request->getParameter("scene");
+
+        if ($festivalId === null
+            || $sceneId === null
+            || !self::isRetrievableFestival($festivalId)
+            || !self::isManageableFestival($festivalId))
+        {
+            Redirect::route("festivals")
+                ->redirect();
+
+            return;
+        }
+
+        if (!self::isRetrievableScene($sceneId))
+        {
+            echo self::ERROR_IRRETRIEVABLE_SCENE;
+            return;
+        }
+
+        $scene = Scene::getSceneById($sceneId);
+        $festival = Festival::getFestivalById($festivalId);
+
+        if (!$festival->hasScene($scene))
+        {
+            $festival->addScene($scene);
+            echo "success";
+        }
+    }
+
     public function removeScene(Request $request): void
     {
         $festivalId = $request->getParameter("festival");
@@ -89,11 +138,13 @@ class CreateFestivalAddScenesController extends Controller
         }
 
         $scene = Scene::getSceneById($sceneId);
-
         $festival = Festival::getFestivalById($festivalId);
-        $festival->removeScene($scene);
 
-        echo "success";
+        if ($festival->hasScene($scene))
+        {
+            $festival->removeScene($scene);
+            echo "success";
+        }
     }
 
     /**
