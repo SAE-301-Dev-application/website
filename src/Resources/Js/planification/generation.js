@@ -268,11 +268,6 @@ async function organizeSpectacles(grijData, spectaclesData, scenesData) {
         }
     }
 
-    // Afficher la liste des spectacles non organisés via une alerte
-    if (unorganizedSpectacles.length > 0) {
-        alert(`Spectacles non organisés :\n${unorganizedSpectacles.map(spectacle => spectacle.titre_sp).join('\n')}`);
-    }
-
     return {
         organizedSpectacles: organizedSpectacles,
         unorganizedSpectacles: unorganizedSpectacles
@@ -384,4 +379,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     calendar.render();
 
     $('.fc-event-content, .fc-event-time, .fc-event-title').css('font-size', '20px');
+
+    // Display a message with unorganized spectacles after 3 seconds
+    setTimeout(() => {
+        if (unorganizedSpectacles.length > 0) {
+            alert(`Spectacles non planifiés (impossible) :\n${unorganizedSpectacles.map(spectacle => spectacle.titre_sp).join('\n')}`);
+        }
+    }, 2000);
 });
