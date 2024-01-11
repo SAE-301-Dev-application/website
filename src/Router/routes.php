@@ -132,6 +132,9 @@ Router::post("/add-scene/remove", CreateFestivalAddScenesController::class, "rem
 Router::get("/generate-planification", GeneratePlanificationController::class, "render")
     ->setName("generatePlanification");
 
+Router::get("/generate-planification/get-festival", GeneratePlanificationController::class, "getFestival")
+    ->setName("generatePlanification.getFestival");
+
 Router::get("/generate-planification/get-grij", GeneratePlanificationController::class, "getGrij")
     ->setName("generatePlanification.getGrij");
 
