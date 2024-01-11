@@ -2,6 +2,7 @@
 
 namespace MvcLite\Models;
 
+use JsonSerializable;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
@@ -9,7 +10,7 @@ use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Models\Engine\Model;
 
-class Scene extends Model
+class Scene extends Model implements JsonSerializable
 {
     /** User id. */
     private int $id;
@@ -224,5 +225,20 @@ class Scene extends Model
         }
 
         return $modelArray;
+    }
+
+    /**
+     * @return array JSON serializing original array
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            "id" => $this->getId(),
+            "name" => $this->getName(),
+            "size" => $this->getSize(),
+            "max_seats" => $this->getMaxSeats(),
+            "longitude" => $this->getLongitude(),
+            "latitude" => $this->getLatitude(),
+        ];
     }
 }
