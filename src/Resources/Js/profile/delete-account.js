@@ -13,11 +13,13 @@ FORM.on('submit', (e) => {
     e.preventDefault();
 
     $.post('/website/profile/delete-account/confirm', {password_verification: PASSWORD_INPUT.val()})
-        .done(data => {console.log(data);
+        .done(data => {
+            console.log(data);
+            
             if (data == 'success') {
                 window.location.href = '/website/logout/';
             } else {
-              $("li.input-error").html(data);
+                $("li.input-error").html(data);
             }
         });
 });
