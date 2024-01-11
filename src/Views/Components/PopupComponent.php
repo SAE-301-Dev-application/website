@@ -9,7 +9,5 @@
     </h3>
 
     <?= $slot ?>
-
-    <?= $buttons ?>
   </div>
 </div>
