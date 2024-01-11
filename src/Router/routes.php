@@ -130,11 +130,13 @@ Router::get("/generate-planification", GeneratePlanificationController::class, "
     ->setName("generatePlanification");
 
 Router::get("/generate-planification/get-grij", GeneratePlanificationController::class, "getGrij")
-->setName("generatePlanification.getGrij");
+    ->setName("generatePlanification.getGrij");
 
-Router::get("/add-spectacle", CreateFestivalAddSpectaclesController::class,
-        "render")
-->setName("addSpectacle");
+Router::get("/generate-planification/get-spectacles", GeneratePlanificationController::class, "getSpectacles")
+    ->setName("generatePlanification.getSpectacles");
+
+Router::get("/add-spectacle", CreateFestivalAddSpectaclesController::class, "render")
+    ->setName("addSpectacle");
 
 Router::get("/add-spectacle/get-spectacles", CreateFestivalAddSpectaclesController::class, "getSpectacles")
     ->setName("addSpectacle.getSpectacles");
