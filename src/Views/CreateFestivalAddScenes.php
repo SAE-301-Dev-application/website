@@ -28,6 +28,8 @@ $errors = $props->hasValidator()
 
   <script defer>
       document.addEventListener("DOMContentLoaded", () => {
+          const SCENE_SEARCHING_POPUP = $("#search_scene_popup");
+
           function updateScenesList() {  console.log("UPDATING SCENES LIST.");
               const SCENES_LIST = $("section#current_scenes");
 
@@ -96,25 +98,44 @@ $errors = $props->hasValidator()
                 });
           }
 
+          function searchScene(search) {
+              $.get("<?= route("addScene.searchScene") ?>", {
+                  search,
+              })
+                  .done(data => {
+                      console.log(data);
+                  });
+          }
+
           updateScenesList();
 
           $(document).on("click", "button[id^='remove_scene_']", e => {
-          e.preventDefault();
+              e.preventDefault();
 
-          let button = $(e.currentTarget),
-              festivalId = button.attr("id").split('_')[2];
+              let button = $(e.currentTarget),
+                  festivalId = button.attr("id").split('_')[2];
 
-          $.post("<?= route("addScene.removeScene") ?>?festival=<?= $festival->getId() ?>&scene=" + festivalId, {
-              festivalId,
-            })
-            .done(data => {
-                if (data === "success") {
-                    updateScenesList();
-                } else {
-                    button.after(`<p class="input-error">${data}</p>`);
-                }
-            });
-        });
+              $.post("<?= route("addScene.removeScene") ?>?festival=<?= $festival->getId() ?>&scene=" + festivalId,
+                  {
+                    festivalId,
+                  })
+                  .done(data => {
+                      if (data === "success") {
+                          updateScenesList();
+                      } else {
+                          button.after(`<p class="input-error">${data}</p>`);
+                      }
+                  });
+              });
+
+          $(document).on("submit", "form#initial_search_scene_form", e => {
+              e.preventDefault();
+
+              let searchValue = $("input#initial_search_scene_input").val();
+
+              searchScene(searchValue);
+              SCENE_SEARCHING_POPUP.removeClass("popup-hidden");
+          });
       });
   </script>
 
@@ -128,7 +149,8 @@ $errors = $props->hasValidator()
   <?php
   Storage::component("PopupComponent", [
       "id"    => "search_scene_popup",
-      ""
+      "title" => "0 intervenants trouvés",
+      "slot" => "",
   ]);
 
   Storage::component("HeaderComponent");
@@ -150,59 +172,58 @@ $errors = $props->hasValidator()
       </div>
 
       <div class="form-container">
-        <form action="<?= route("festivals") ?>"
-              method="post"
-              enctype="multipart/form-data">
+        <div class="form-grid">
+          <div class="main-container">
+            <section id="initial_search_scene">
+              <form id="initial_search_scene_form">
+                <div class="form-component">
+                  <label for="initial_search_scene_input">
+                    <p>
+                      Rechercher une scène :
+                    </p>
 
-          <div class="form-grid">
-              <div class="main-container">
-                <section id="search_scene">
-                  <div class="form-component">
-                    <label for="search_scene_input">
-                      <p>
-                        Rechercher une scène :
-                      </p>
+                    <div class="form-input-button">
+                      <input type="text"
+                             name="search_scene"
+                             id="initial_search_scene_input"
+                             required />
 
-                      <div class="form-input-button">
-                        <input type="text" name="search_scene" id="search_scene_input" />
+                      <button class="button-blue">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Rechercher
+                      </button>
+                    </div>
+                  </label>
+                </div>
+              </form>
+            </section>
 
-                        <button class="button-blue">
-                          <i class="fa-solid fa-magnifying-glass"></i>
-                          Rechercher
-                        </button>
-                      </div>
-                    </label>
-                  </div>
-                </section>
-
-                <section id="current_scenes">
-                  <!--  -->
-                </section>
-              </div>
-
-              <?php
-              Storage::component("FormHelpBoxComponent", [
-                  "icon" => "fa-regular fa-question-circle",
-                  "title" => "Ajouter une scène au festival",
-                  "content"
-                  => "<p>
-                        Pour ses représentations, un festival nécessite des scènes. Autrement dit, des lieux 
-                        de représentations de spectacles.
-                      </p>
-                        
-                      <p>
-                        Saisissez le nom de la scène et sélectionnez parmi les résultats de recherche présentés.
-                      </p>
-                      
-                      <p>
-                        Vous pouvez, d’autre part, retirer des scènes de votre sélection en
-                        cliquant sur son bouton Supprimer.
-                      </p>",
-              ]);
-              ?>
+            <section id="current_scenes">
+              <!--  -->
+            </section>
           </div>
 
-        </form>
+          <?php
+          Storage::component("FormHelpBoxComponent", [
+              "icon" => "fa-regular fa-question-circle",
+              "title" => "Ajouter une scène au festival",
+              "content"
+              => "<p>
+                    Pour ses représentations, un festival nécessite des scènes. Autrement dit, des lieux 
+                    de représentations de spectacles.
+                  </p>
+                    
+                  <p>
+                    Saisissez le nom de la scène et sélectionnez parmi les résultats de recherche présentés.
+                  </p>
+                  
+                  <p>
+                    Vous pouvez, d’autre part, retirer des scènes de votre sélection en
+                    cliquant sur son bouton Supprimer.
+                  </p>",
+          ]);
+          ?>
+        </div>
       </div>
     </section>
   </div>
