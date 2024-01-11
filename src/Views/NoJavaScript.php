@@ -19,7 +19,7 @@ use MvcLite\Engine\InternalResources\Storage;
 <body>
   <div id="nojs_main">
     <h2>
-      Nous avons besoin de JavaScript poue fonctionner…
+      Ce site internet a besoin de JavaScript pour fonctionner…
     </h2>
   </div>
 </body>

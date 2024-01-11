@@ -18,10 +18,23 @@ const FESTIVAL_ID = Number(URL_PARAMS.get('id')) ?? null;
 const CALENDAR_DIV = $('.calendar-container > #calendar')[0];
 
 let calendar,
-    festivalData,
+    beginningDate,
+    endingDate,
+    lastEndTime;
+
+let festivalData,
     grijData,
     spectaclesData,
     scenesData;
+
+let scenesColors = [
+  '#90EE90', '#ADD8E6', '#FFB6C1', '#9400d3', '#ff0000', '#ff7f00', '#ffff00',
+  '#a80070', '#0097a8', '#00a85d', '#00a800', '#a8a800', '#a87000', '#a80000',
+  '#a8005d', '#a800a8', '#5d00a8', '#0000a8', '#005da8', '#00a8a8',
+];
+
+let organizedSpectacles = [],
+    unorganizedSpectacles = [];
 
 /**
  * Recover the festival data from the database with an AJAX request.
@@ -153,12 +166,122 @@ function formatTime(date) {
 }
 
 /**
+ * Generate an array of scenes with associated colors.
+ * 
+ * @param {Object[]} scenesData Array of scene data.
+ * @param {string[]} scenesColors Array of scene colors.
+ * @returns {Object[]} Array of scenes with associated colors.
+ */
+function generateScenesWithColors(scenesData, scenesColors) {
+    return scenesData.map((scene, index) => ({
+        ...scene,
+        color: scenesColors[index % scenesColors.length],
+    }));
+}
+
+/**
+ * Organize spectacles based on festival, GriJ, spectacles, and scenes data.
+ * 
+ * @param {Object} grijData - GriJ data.
+ * @param {Object[]} spectaclesData - Array of spectacle data.
+ * @param {Object[]} scenesData - Array of scene data with colors.
+ * @returns {Object[]} - Array of organized spectacles.
+ */
+async function organizeSpectacles(grijData, spectaclesData, scenesData) {
+    let organizedSpectacles = [];
+    let unorganizedSpectacles = [];
+    let currentDay = beginningDate;
+
+    function canFitInScene(spectacle, scene) {
+        return spectacle.taille_scene_sp <= scene.size;
+    }
+
+    function getNextAvailableTime() {
+        if (!lastEndTime) {
+            // If it's the first spectacle, use the Grij beginning date
+            lastEndTime = new Date(beginningDate);
+            return lastEndTime;
+        }
+    
+        // Calculate the next available time based on the last spectacle's end time
+        let nextAvailableTime = new Date(lastEndTime.getTime() + grijData.duree_min_entre_spectacles * 60000);
+    
+        // Verify if the next available time is after the end of the day
+        const grijEndTime = new Date(`${currentDay.toISOString().split('T')[0]}T${grijData.heure_fin_spectacles}`);
+    
+        if (nextAvailableTime > grijEndTime) {
+            // Set the next available time to the beginning of the next day
+            currentDay = new Date(currentDay.getTime() + 24 * 60 * 60 * 1000);
+            nextAvailableTime = new Date(`${currentDay.toISOString().split('T')[0]}T${grijData.heure_debut_spectacles}`);
+            lastEndTime = nextAvailableTime;
+        } else {
+            lastEndTime = new Date(nextAvailableTime);
+        }
+    
+        return nextAvailableTime;
+    }
+
+    // Sort scenes by size, so we can assign spectacles to appropriate-sized scenes first
+    scenesData.sort((a, b) => a.size - b.size);
+
+    // Iterate over each spectacle and try to organize it
+    for (const spectacle of spectaclesData) {
+        let isSpectacleOrganized = false;
+
+        // Iterate over scenes to find an appropriate one for the spectacle
+        for (const scene of scenesData) {
+
+            // Check if the scene can accommodate the spectacle
+            if (canFitInScene(spectacle, scene)) {
+
+                // Get the next available time based on GriJ constraints
+                const nextAvailableTime = getNextAvailableTime();
+
+                // Check if the spectacle can fit within the festival duration
+                const spectacleEndDate = new Date(nextAvailableTime.getTime() + spectacle.duree_sp * 60000);
+
+                if (spectacleEndDate <= endingDate) {
+                    // Organize the spectacle in the scene at the calculated time
+                    organizedSpectacles.push({
+                        title: spectacle.titre_sp,
+                        start: nextAvailableTime,
+                        end: spectacleEndDate,
+                        overlap: 'none',
+                        backgroundColor: scene.color,
+                    });
+
+                    isSpectacleOrganized = true;
+
+                    // Update the lastEndTime for the next spectacle
+                    lastEndTime = spectacleEndDate;
+
+                    break;
+                }
+            }
+        }
+
+        // If the spectacle couldn't be organized, add it to a list of unorganized spectacles
+        if (!isSpectacleOrganized) {
+            // Handle unorganized spectacles as needed
+            console.log(`Spectacle "${spectacle.titre_sp}" couldn't be organized.`);
+            unorganizedSpectacles.push(spectacle);
+        }
+    }
+
+    return {
+        organizedSpectacles: organizedSpectacles,
+        unorganizedSpectacles: unorganizedSpectacles
+    };
+}
+
+
+/**
  * Create the calendar.
  * 
- * @param {Date} beginningDate 
- * @param {Date} endingDate 
+ * @param {Date} beginningDate
+ * @param {Date} endingDate
  */
-const createCalendar = async (beginningDate, endingDate) => {
+const createCalendar = async (beginningDate, endingDate, organizedSpectacles) => {
     calendar = new FullCalendar.Calendar(CALENDAR_DIV, {
         initialView: 'festivalView',
 
@@ -210,28 +333,15 @@ const createCalendar = async (beginningDate, endingDate) => {
             omitZeroMinute: false
         },
 
-        scrollTime: formatTime(beginningDate), // STUB mettre l'heure du premier spectacle
+        scrollTime: formatTime(beginningDate),
         initialDate: beginningDate,
 
         editable: false,
         eventDurationEditable: false,
 
-        events: [
-            {
-                title: "Spectacle 1",
-                start: new Date("2024-01-15T09:00:00"),
-                end: new Date("2024-01-15T10:00:00"),
-                overlap: 'none',
-                backgroundColor: '#ff0000'
-            },
-            {
-                title: "Spectacle 2",
-                start: new Date("2024-01-15T10:00:00"),
-                end: new Date("2024-01-15T11:00:00"),
-                overlap: 'none',
-                backgroundColor: '#ff7f00'
-            }
-        ]
+        events: organizedSpectacles,
+
+        eventTextColor: 'black',
     });
 };
 
@@ -249,15 +359,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!festivalData || !grijData || !spectaclesData || !scenesData)
         return redirectToFestivals();
 
-    let beginningDate = new Date(festivalData.date_debut_fe
-                                 + "T"
-                                 + grijData.heure_debut_spectacles);
+    beginningDate = new Date(festivalData.date_debut_fe
+                             + "T"
+                             + grijData.heure_debut_spectacles);
 
-    let endDate = new Date(festivalData.date_fin_fe
-                           + "T"
-                           + grijData.heure_fin_spectacles);
+    endingDate = new Date(festivalData.date_fin_fe
+                       + "T"
+                       + grijData.heure_fin_spectacles);
 
-    await createCalendar(beginningDate, endDate);
+    let { organizedSpectacles, unorganizedSpectacles } = await organizeSpectacles(
+        grijData,
+        spectaclesData,
+        generateScenesWithColors(scenesData, scenesColors));
+
+    console.log(organizedSpectacles, unorganizedSpectacles);
+
+    await createCalendar(beginningDate, endingDate, organizedSpectacles);
     
     calendar.render();
+
+    $('.fc-event-content, .fc-event-time, .fc-event-title').css('font-size', '20px');
+
+    // Display a message with unorganized spectacles after 3 seconds
+    setTimeout(() => {
+        if (unorganizedSpectacles.length > 0) {
+            alert(`Spectacles non planifiés (impossible) :\n${unorganizedSpectacles.map(spectacle => spectacle.titre_sp).join('\n')}`);
+        }
+    }, 2000);
 });
