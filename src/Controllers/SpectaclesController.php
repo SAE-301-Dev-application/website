@@ -46,7 +46,7 @@ class SpectaclesController extends Controller
 
     private static function getSpectaclesPagination(): Pagination
     {
-        $spectacles = Spectacle::queryToArray(Spectacle::getAllSpectacles());
+        $spectacles = Spectacle::queryToArray(Spectacle::getSpectacles());
 
         return new Pagination($spectacles, 6);
     }

@@ -167,7 +167,7 @@ class User extends Model
     /**
      * @return array User's festivals
      */
-    public function getUserFestivals(): array
+    public function getFestivals(): array
     {
         $query = "SELECT *
                   FROM festival fe

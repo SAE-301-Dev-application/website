@@ -46,7 +46,7 @@ class FestivalsController extends Controller
 
     private static function getFestivalsPagination(): Pagination
     {
-        $festivals = Festival::queryToArray(Festival::getAllFestivals());
+        $festivals = Festival::queryToArray(Festival::getFestivals());
 
         return new Pagination($festivals, 6);
     }

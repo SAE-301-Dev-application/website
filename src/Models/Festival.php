@@ -171,7 +171,7 @@ class Festival extends Model
     /**
      * @return array Festival's categories
      */
-    public function getFestivalCategories(): array
+    public function getCategories(): array
     {
 
         $getCategoriesQuery
@@ -436,7 +436,7 @@ class Festival extends Model
      * 
      * @return DatabaseQuery All festivals DatabaseQuery object
      */
-    public static function getAllFestivals(): DatabaseQuery
+    public static function getFestivals(): DatabaseQuery
     {
         $getFestivalsQuery
             = "SELECT *,

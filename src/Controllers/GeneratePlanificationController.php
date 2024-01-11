@@ -30,7 +30,7 @@ class GeneratePlanificationController extends Controller
      * 
      * @param Request $request
      */
-    public function getFestivalGrij(Request $request): void
+    public function getGrij(Request $request): void
     {
         $festivalId = $request->getParameter("id");
 

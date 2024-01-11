@@ -56,10 +56,10 @@ use MvcLite\Models\Festival;
         <div>
         (
         <?php
-        // Debug::dd($festival->getFestivalCategories());
-            foreach ($festival->getFestivalCategories() as $categorie) {
+        // Debug::dd($festival->getCategories());
+            foreach ($festival->getCategories() as $categorie) {
                   echo $categorie->getName();
-                  if ($categorie != $festival->getFestivalCategories()[count($festival->getFestivalCategories())-1]) {
+                  if ($categorie != $festival->getCategories()[count($festival->getCategories())-1]) {
                     echo ", ";
                   }
             }
@@ -112,7 +112,7 @@ use MvcLite\Models\Festival;
         <div>
 
           <?php
-            // Debug::dd($festival->getFestivalCategories());
+            // Debug::dd($festival->getCategories());
             foreach ($festival->getIncludedSpectacles() as $spectacle) {?>
           <div class="festival-preview">
             <div class="festival-picture"
@@ -146,7 +146,7 @@ use MvcLite\Models\Festival;
           </button>
         </a>
         <?php
-          // Debug::dd($festival->getFestivalCategories());
+          // Debug::dd($festival->getCategories());
           foreach ($festival->getScenes() as $scene) {
           ?>
         

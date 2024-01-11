@@ -15,7 +15,7 @@ $endingDate = $festival->getEndingDate();
 
 $illustrationPath = $festival->getIllustration();
 
-$categories = $festival->getFestivalCategories();
+$categories = $festival->getCategories();
 
 $musicCategoryCheck = "";
 

@@ -133,7 +133,7 @@ class Spectacle extends Model
     /**
      * @return array Spectacle's categories
      */
-    public function getSpectacleCategories(): array
+    public function getCategories(): array
     {
 
         $getCategoriesQuery
@@ -273,7 +273,7 @@ class Spectacle extends Model
      * 
      * @return DatabaseQuery Spectacles
      */
-    public static function getAllSpectacles(): DatabaseQuery
+    public static function getSpectacles(): DatabaseQuery
     {
         $getSpectaclesQuery
             = "SELECT *

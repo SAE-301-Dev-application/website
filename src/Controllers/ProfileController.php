@@ -243,7 +243,7 @@ class ProfileController extends Controller
      */
     private static function getSessionUserFestivals(): array
     {
-        return Session::getUserAccount()->getUserFestivals();
+        return Session::getUserAccount()->getFestivals();
     }
 
     /**
