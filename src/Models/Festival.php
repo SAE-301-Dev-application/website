@@ -153,6 +153,22 @@ class Festival extends Model
     }
 
     /**
+     * @return string Festival's owner
+     */
+    public function getOwner(): User
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param string $owner
+     */
+    public function setOwner(int $owner): void
+    {
+        $this->owner = User::getUserById($owner);
+    }
+
+    /**
      * @return array Festival's categories
      */
     public function getCategories(): array
@@ -175,9 +191,11 @@ class Festival extends Model
     {
 
         $getSpectaclesQuery
-            = "SELECT DISTINCT id_spectacle
-               FROM festival_spectacle
-               WHERE id_festival = ?;";
+            = "SELECT sp.*
+               FROM spectacle sp 
+               INNER JOIN festival_spectacle fs
+               ON sp.id_spectacle = fs.id_spectacle
+               WHERE fs.id_festival = ?;";
 
         $result = Database::query($getSpectaclesQuery, $this->getId());
 
@@ -249,23 +267,6 @@ class Festival extends Model
     }
 
     /**
-     * @return User Festival's owner
-     */
-    public function getOwner(): User
-    {
-        return $this->owner;
-    }
-
-    /**
-     * @param User $owner New festival's owner
-     * @return User New festival's owner
-     */
-    public function setOwner(User $owner): User
-    {
-        return $this->owner = $owner;
-    }
-
-    /**
      * @return bool True if the festival is in progress, false otherwise.
      */
     public function isFestivalInProgress(): bool
@@ -301,7 +302,7 @@ class Festival extends Model
                                       $illustration ?? null,
                                       $beginningDate,
                                       $endingDate,
-                                      Session::getSessionId());
+                                      Session::getUserAccount()->getId());
 
         $festivalId = $festivalId->get()["id"];
 
@@ -324,14 +325,13 @@ class Festival extends Model
      * @param string $beginningDate
      * @param string $endingDate
      */
-    public static function modifyGeneralParameters(int $id,
-                                                   string $name,
+    public static function modifyGeneralParameters(string $name,
                                                    string $description,
                                                    ?string $illustration,
                                                    string $beginningDate,
                                                    string $endingDate): void
     {
-        $addFestivalQuery = "SELECT modifierFestival(?, ?, ?, ?, ?) AS id;";
+        $addFestivalQuery = "SELECT modifierFestival(?, ?, ?, ?, ?, ?) AS id;";
 
         $linkCategorieQuery = "CALL ajouterFestivalCategorie(?, ?);";
 
@@ -341,7 +341,8 @@ class Festival extends Model
                                       $description,
                                       $illustration ?? null,
                                       $beginningDate,
-                                      $endingDate);
+                                      $endingDate,
+                                      $this->owner);
 
         $festivalId = $festivalId->get()["id"];
 
@@ -480,7 +481,7 @@ class Festival extends Model
                 ->setIllustration($festival["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_NAME);
 
             $festivalInstance
-                ->setOwner(User::getUserById($festival["id_createur"]));
+                ->setOwner($festival["id_createur"]);
 
             return $festivalInstance;
         }
@@ -524,6 +525,9 @@ class Festival extends Model
             $festivalInstance
                 ->setIllustration($festival["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_NAME);
 
+             $festivalInstance
+                ->setOwner($festival["id_createur"]);
+                
             return $festivalInstance;
         }
 

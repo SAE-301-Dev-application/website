@@ -8,6 +8,7 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Engine\Model;
+use MvcLite\Models\Spectacle;
 
 class User extends Model
 {
@@ -180,9 +181,9 @@ class User extends Model
     }
 
     /**
-     * @return DatabaseQuery User's spectacles
+     * @return array User's spectacles instances
      */
-    public function getSpectacles(): DatabaseQuery
+    public function getSpectacles(): array
     {
         $query = "SELECT *
                   FROM spectacle sp
@@ -190,7 +191,7 @@ class User extends Model
 
         $spectacles = Database::query($query, $this->getId());
 
-            return $spectacles;
+        return Spectacle::queryToArray($spectacles);
     }
 
     /**

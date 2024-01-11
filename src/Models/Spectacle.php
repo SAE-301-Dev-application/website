@@ -290,6 +290,37 @@ class Spectacle extends Model
     }
 
     /**
+     * Searches and returns Spectacle instance by its data.
+     *
+     * @param array $spectacleData Spectacle data
+     * @return Spectacle Spectacle object
+     */
+    public static function getSpectacleInstance(array $spectacleData): Spectacle
+    {
+        $spectacleInstance = new Spectacle();
+
+        $spectacleInstance
+            ->setId($spectacleData["id_spectacle"]);
+
+        $spectacleInstance
+            ->setTitle($spectacleData["titre_sp"]);
+
+        $spectacleInstance
+            ->setDescription($spectacleData["description_sp"]);
+
+        $spectacleInstance
+            ->setIllustration($spectacleData["illustration_sp"] ?? self::DEFAULT_SPECTACLE_ILLUSTRATION_NAME);
+
+        $spectacleInstance
+            ->setDuration($spectacleData["duree_sp"]);
+
+        $spectacleInstance
+            ->setSceneSize($spectacleData["taille_scene_sp"]);
+
+        return $spectacleInstance;
+    }
+
+    /**
      * Searches and returns Spectacle instance by its id.
      *
      * @param int $id Spectacle id
@@ -355,9 +386,9 @@ class Spectacle extends Model
     {
         $modelArray = [];
 
-        while ($line = $queryObject->get())
+        foreach($queryObject->getAll() as $spectacle)
         {
-            $modelArray[] = self::getSpectacleById($line["id_spectacle"]);
+            $modelArray[] = self::getSpectacleInstance($spectacle);
         }
 
         return $modelArray;
