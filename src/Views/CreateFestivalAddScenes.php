@@ -41,6 +41,22 @@ $errors = $props->hasValidator()
 
                       SCENES_LIST.empty();
 
+                      if (data.length) {
+
+                      } else {
+                          SCENES_LIST.append(`
+                          <div class="alert alert-grey">
+                            <div class="alert-icon">
+                              <i class="fa-solid fa-info-circle"></i>
+                            </div>
+
+                            <div class="alert-content">
+                              <p>Aucune scène n'est liée à ce festival.</p>
+                            </div>
+                          </div>
+                          `)
+                      }
+
                       data.forEach(scene => {
                           switch (scene.size) {
                               case 1:
@@ -93,7 +109,7 @@ $errors = $props->hasValidator()
                               Supprimer
                             </button>
                           </div>
-                      `);
+                          `);
                       });
                 });
           }
