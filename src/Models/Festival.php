@@ -109,6 +109,36 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
+     * @param format format of date
+     * @return string date with format of date
+     */
+    public function getBeginningDateWithFormat(string $format): string
+    {
+        $query = "SELECT DATE_FORMAT(date_debut_fe, '$format') AS formatted_date_debut
+                  FROM festival
+                  WHERE id_festival = ?";
+        
+        $result = Database::query($query, $this->getId());
+
+        return $result->get()["formatted_date_debut"];
+    }
+   
+    /**
+     * @param format format of date
+     * @return string date with format of date
+     */
+    public function getEndingDateWithFormat(string $format): string
+    {
+        $query = "SELECT DATE_FORMAT(date_fin_fe, '$format') AS formatted_date_fin
+                  FROM festival
+                  WHERE id_festival = ?";
+        
+        $result = Database::query($query, $this->getId());
+
+        return $result->get()["formatted_date_fin"];
+    }
+
+    /**
      * @param string $beginningDate
      */
     public function setBeginningDate(string $beginningDate): void
@@ -586,6 +616,21 @@ class Festival extends Model implements JsonSerializable
         $sceneRemoving = Database::query($query, $this->getId(), $scene->getId());
 
         return $sceneRemoving->getExecutionState();
+    }
+
+    /**
+     * @return array Three last id of festivals 
+     */
+    public static function lastFestivals(): array
+    {
+        $query = "SELECT id_festival
+                  FROM festival
+                  WHERE date_debut_fe <= CURDATE()
+                  LIMIT 3;";
+        
+        $threeLastFestivals = Database::query($query);
+
+        return $threeLastFestivals->getAll();
     }
 
     /**

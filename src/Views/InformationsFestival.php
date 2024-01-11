@@ -122,19 +122,17 @@ use MvcLite\Models\User;
           <?php
             // Debug::dd($festival->getCategories());
             foreach ($festival->getSpectacles() as $spectacle) {?>
-            <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
-              <div class="festival-preview">
-                <div class="festival-picture"
-                  style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
+              <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
+                <div class="festival-preview">
+                  <div class="festival-picture"
+                    style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
+                  </div>
                 </div>
-              </div>
-              <div>
-              <?php 
-                  echo $spectacle->getTitle();     
-                  } 
-              ?>
-            </a>
-            </div>
+                <?= $spectacle->getTitle(); ?>
+              </a>
+            <?php
+                } 
+            ?>
 
         <h3>
           Scènes:
@@ -147,7 +145,7 @@ use MvcLite\Models\User;
         </a>
         <!-- Si l'utilisateur est responsable du festival -->
         <?php if ($festival->isUserOwner()) { ?>
-        <a href="<?= route("addScene")//TODO mettre la route ?>">
+        <a href="<?= route("addScene")?>?festival=<?= $festival->getId() ?>">
           <button class="button-blue">
             <i class="fa-solid fa-plus"></i>
             Ajouter scènes
