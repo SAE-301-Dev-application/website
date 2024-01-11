@@ -2,6 +2,7 @@
 
 namespace MvcLite\Models;
 
+use JsonSerializable;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
@@ -12,7 +13,7 @@ use MvcLite\Models\Engine\Model;
 use MvcLite\Models\Scene;
 use MvcLite\Models\Spectacle;
 
-class Festival extends Model
+class Festival extends Model implements JsonSerializable
 {
     /** Default festival illustration name. */
     public const DEFAULT_FESTIVAL_ILLUSTRATION_NAME
@@ -617,5 +618,21 @@ class Festival extends Model
         }
 
         return $modelArray;
+    }
+
+    /**
+     * @return array JSON serializing original array
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            "id_festival" => $this->getId(),
+            "nom_fe" => $this->getName(),
+            "description_fe" => $this->getDescription(),
+            "illustration_fe" => $this->getIllustration(),
+            "date_debut_fe" => $this->getBeginningDate(),
+            "date_fin_fe" => $this->getEndingDate(),
+            "id_createur" => $this->getOwner()->getId(),
+        ];
     }
 }

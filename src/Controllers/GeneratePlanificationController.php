@@ -41,6 +41,32 @@ class GeneratePlanificationController extends Controller
     }
 
     /**
+     * Get festival data and send it (ajax request).
+     * 
+     * @param Request $request
+     */
+    public function getFestival(Request $request): void
+    {
+        $festivalId = $request->getParameter("id");
+
+        if ($festivalId === null || !is_numeric($festivalId)) {
+            echo "error, id = " . $festivalId ?? "null";
+            return;
+        }
+
+        $festivalId = intval($festivalId);
+
+        $festival = Festival::getFestivalById($festivalId);
+
+        if (!$festival) {
+            echo "error, festival is null";
+            return;
+        }
+
+        echo json_encode($festival);
+    }
+
+    /**
      * Get festival's GriJ and send it (ajax request).
      * 
      * @param Request $request
