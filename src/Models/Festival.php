@@ -541,9 +541,7 @@ class Festival extends Model
 
         $getGrij = Database::query($query, $idFestival);
 
-        $grij = $getGrij->get();
-
-        echo serialize($grij);
+        return $getGrij->get();
     }
 
     /**
