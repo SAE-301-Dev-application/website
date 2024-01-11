@@ -26,18 +26,23 @@ $errors = $props->hasValidator()
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
 
-  <script defer>
+  <?php
+  Storage::include("Js/festival-add-scene/popup.js", importMethod: "defer");
+  ?>
+
+  <script defer>  /* Usage d'une balise script pour le code source JS, car présence de PHP. */
       document.addEventListener("DOMContentLoaded", () => {
-          const SCENE_SEARCHING_POPUP = $("#search_scene_popup");
+          const SCENE_SEARCHING_POPUP = $("#search_scene_popup"),
+                SCENE_SEARCHING_LIST = $("#scene_searching_results"),
+                SCENES_LIST = $("section#current_scenes");
 
-          function updateScenesList() {  console.log("UPDATING SCENES LIST.");
-              const SCENES_LIST = $("section#current_scenes");
+          let loadedScenes = [];
 
+          function updateScenesList() {
               $.get("<?= route("addScene.getScenes") ?>?festival=<?= $festival->getId() ?>", {})
                   .done(data => {
-                      console.log(data);
-
                       data = JSON.parse(data);
+                      loadedScenes = data;
 
                       SCENES_LIST.empty();
 
@@ -119,11 +124,114 @@ $errors = $props->hasValidator()
                   search,
               })
                   .done(data => {
-                      console.log(data);
+                      data = JSON.parse(data);
+
+                      const SEARCH_RESULT_POPUP_TITLE = $("#search_scene_popup > .popup > h3.popup-title");
+
+                      let scenePlurality = data.length > 1 ? "s" : "";
+
+                      SEARCH_RESULT_POPUP_TITLE.text(`${data.length} scène${scenePlurality} trouvée${scenePlurality}`);
+                      SCENE_SEARCHING_LIST.empty();
+
+                      data.forEach(scene => {
+                          let button;
+
+                          if (loadedScenes.find(loadedScene => loadedScene.id === scene.id)) {
+                              button = `
+                                <button class=\"button-red remove-scene-button\" id=\"remove_scene_${scene.id}\">
+                                  <i class=\"fa-solid fa-trash\"></i>
+                                  Supprimer
+                                </button>`;
+                          } else {
+                              button = `
+                                <button class=\"button-blue add-scene-button\" id=\"add_scene_${scene.id}\">
+                                  <i class=\"fa-solid fa-plus\"></i>
+                                  Ajouter
+                                </button>`;
+                          }
+
+                          switch (scene.size) {
+                              case 1:
+                                  scene.size_label = "petite";
+                                  break;
+
+                              case 2:
+                                  scene.size_label = "moyenne";
+                                  break;
+
+                              case 3:
+                                  scene.size_label = "grande";
+                                  break;
+
+                              default:
+                                  scene.size_label = "inconnue";
+                                  break;
+                          }
+
+                          SCENE_SEARCHING_LIST.append(`
+                          <div class=\"scene-container\">
+                            <div class=\"scene-information\">
+                              <h3 class=\"scene-name\">
+                                  ${scene.name}
+                              </h3>
+
+                              <ul class=\"scene-details\">
+                                <li>
+                                  <i class=\"fa-solid fa-location-dot fa-fw\"></i>
+                                  Longitude : ${scene.longitude} /
+                                  Latitude : ${scene.latitude}
+                                </li>
+
+                                <li>
+                                  <i class=\"fa-solid fa-up-right-and-down-left-from-center fa-fw\"></i>
+                                  Taille :
+                                  ${scene.size_label}
+                                </li>
+
+                                <li>
+                                  <i class=\"fa-solid fa-chair fa-fw\"></i>
+                                  Nombre de places :
+                                  ${scene.max_seats}
+                                </li>
+                              </ul>
+                            </div>
+
+                            ${button}
+                          </div>
+                          `);
+                      });
                   });
           }
 
           updateScenesList();
+
+          $(document).on("click", "button[id^='add_scene_']", e => {
+              e.preventDefault();
+
+              let button = $(e.currentTarget),
+                  festivalId = button.attr("id").split('_')[2];
+
+              $.post("<?= route("addScene.addScene") ?>?festival=<?= $festival->getId() ?>&scene="
+                  + festivalId,
+                  {
+                      festivalId,
+                  })
+                  .done(data => {  console.log(data);
+                      if (data === "success") {
+                          updateScenesList();
+
+                          $(`#search_scene_popup button[id^="add_scene_${festivalId}"]`)
+                              .replaceWith(`
+                              <button class=\"button-red remove-scene-button\" id=\"remove_scene_${festivalId}\">
+                                <i class=\"fa-solid fa-trash\"></i>
+                                Supprimer
+                              </button>
+                              `);
+                      } else {
+                          button.after(`<p class="input-error">${data}</p>`);
+                      }
+                  });
+          });
 
           $(document).on("click", "button[id^='remove_scene_']", e => {
               e.preventDefault();
@@ -131,13 +239,22 @@ $errors = $props->hasValidator()
               let button = $(e.currentTarget),
                   festivalId = button.attr("id").split('_')[2];
 
-              $.post("<?= route("addScene.removeScene") ?>?festival=<?= $festival->getId() ?>&scene=" + festivalId,
+              $.post("<?= route("addScene.removeScene") ?>?festival=<?= $festival->getId() ?>&scene="
+                     + festivalId,
                   {
                     festivalId,
                   })
                   .done(data => {
                       if (data === "success") {
                           updateScenesList();
+
+                          $(`#search_scene_popup button[id^="remove_scene_${festivalId}"]`)
+                              .replaceWith(`
+                              <button class=\"button-blue add-scene-button\" id=\"add_scene_${festivalId}\">
+                                <i class=\"fa-solid fa-plus\"></i>
+                                Ajouter
+                              </button>
+                              `);
                       } else {
                           button.after(`<p class="input-error">${data}</p>`);
                       }
@@ -151,6 +268,7 @@ $errors = $props->hasValidator()
 
               searchScene(searchValue);
               SCENE_SEARCHING_POPUP.removeClass("popup-hidden");
+              $("body").addClass("body-overflow-clip");
           });
       });
   </script>
@@ -161,12 +279,12 @@ $errors = $props->hasValidator()
         crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-<div id="add-scene">
+<div id="add_scene">
   <?php
   Storage::component("PopupComponent", [
       "id"    => "search_scene_popup",
-      "title" => "0 intervenants trouvés",
-      "slot" => "",
+      "title" => "0 scène trouvée",
+      "slot" => "<div id='scene_searching_results'></div>",
   ]);
 
   Storage::component("HeaderComponent");

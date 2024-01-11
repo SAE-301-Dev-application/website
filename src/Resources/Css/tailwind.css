@@ -391,14 +391,15 @@
     }
 
     .popup-container {
-        @apply z-[100] fixed inset-0 bg-[rgba(0,0,0,.4)] flex justify-center items-center;
+        @apply z-[100] fixed inset-0 bg-[rgba(0,0,0,.4)] flex justify-center items-center py-5 xl:py-10;
 
         &.popup-hidden {
             @apply hidden;
         }
 
         > .popup {
-            @apply bg-white shadow-2xl rounded-lg px-7 pt-5 pb-3 text-black w-full xl:w-1/2 relative mx-5;
+            @apply bg-white shadow-2xl rounded-lg px-7 pt-5 pb-3 text-black w-full xl:w-1/2 relative mx-5
+                   overflow-y-auto max-h-full;
 
             > .popup-close-button {
                 @apply absolute right-5 top-5 text-xl;

@@ -210,6 +210,25 @@ class Scene extends Model implements JsonSerializable
     }
 
     /**
+     * Returns an array of scenes that have given search value
+     * in their name.
+     *
+     * @param string $searchValue
+     * @return array Search result array
+     */
+    public static function searchSceneByName(string $searchValue): array
+    {
+        $query = "SELECT *
+                  FROM scene
+                  WHERE nom_sc LIKE ?
+                  ORDER BY nom_sc";
+
+        $searching = Database::query($query, "%$searchValue%");
+
+        return self::queryToArray($searching);
+    }
+
+    /**
      * Returns User array by using DatabaseQuery object.
      *
      * @param DatabaseQuery $queryObject
