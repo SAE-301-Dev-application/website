@@ -5,6 +5,7 @@ namespace MvcLite\Controllers;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Session\Session;
+use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Models\Festival;
 use MvcLite\Models\Scene;
 use MvcLite\Router\Engine\Redirect;
@@ -23,7 +24,7 @@ class CreateFestivalAddScenesController extends Controller
     {
         parent::__construct();
 
-        // Empty constructor.
+        $this->middleware(AuthMiddleware::class);
     }
 
     public function render(Request $request): RedirectResponse|true
