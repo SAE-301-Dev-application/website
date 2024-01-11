@@ -251,6 +251,6 @@ class ProfileController extends Controller
      */
     private static function getUserSpectacles(): array
     {
-        return Spectacle::queryToArray(Session::getUserAccount()->getSpectacles());
+        return Session::getUserAccount()->getSpectacles();
     }
 }
