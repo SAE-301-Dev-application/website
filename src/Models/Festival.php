@@ -531,6 +531,22 @@ class Festival extends Model
     }
 
     /**
+     * Searches and returns grij by festival id.
+     */
+    public static function getGrij(int $idFestival): array
+    {
+        $query = "SELECT *
+                  FROM grij
+                  WHERE id_festival = ?";
+
+        $getGrij = Database::query($query, $idFestival);
+
+        $grij = $getGrij->get();
+
+        echo serialize($grij);
+    }
+
+    /**
      * Returns User array by using DatabaseQuery object.
      *
      * @param DatabaseQuery $queryObject
