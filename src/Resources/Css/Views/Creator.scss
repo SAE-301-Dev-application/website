@@ -3,7 +3,7 @@ $orange: #FF7A00;
 #create_festival,
 #create_spectacle,
 #grij_festival,
-#add-scene,
+#add_scene,
 #create_scene {
   #main {
     @apply pt-24;
@@ -110,24 +110,6 @@ $orange: #FF7A00;
 
         &#current_scenes {
           @apply flex flex-col gap-y-5;
-
-          > .scene-container {
-            @apply flex justify-between items-start gap-x-3;
-
-            > .scene-information {
-              > h3.scene-name {
-                @apply font-black text-3xl mb-1;
-              }
-
-              > ul.scene-details {
-                @apply text-grey text-sm;
-              }
-            }
-
-            > button {
-              @apply w-auto;
-            }
-          }
         }
       }
 
@@ -146,6 +128,32 @@ $orange: #FF7A00;
       > button {
         @apply w-auto;
       }
+    }
+  }
+}
+
+#add_scene {
+  #search_scene_popup {
+    #scene_searching_results {
+      @apply flex flex-col gap-y-5;
+    }
+  }
+
+  .scene-container {
+    @apply flex justify-between items-start gap-x-3;
+
+    > .scene-information {
+      > h3.scene-name {
+        @apply font-black text-3xl mb-1;
+      }
+
+      > ul.scene-details {
+        @apply text-grey text-sm;
+      }
+    }
+
+    > button {
+      @apply w-auto;
     }
   }
 }
