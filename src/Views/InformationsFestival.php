@@ -41,7 +41,7 @@ use MvcLite\Models\User;
             <?= $festival->getName() ?>
           </h2>
 
-          <a href="<?= route("")//TODO mettre la route ?>">
+          <a href="<?= route("generatePlanification") ?>?id=<?= $festival->getId()?>">
             <button class="button-blue">
               <i class="fa-solid fa-plus"></i>
               Voir la planification

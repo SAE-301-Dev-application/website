@@ -6,6 +6,7 @@ use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Models\Festival;
 use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Router\Engine\Request;
+use MvcLite\Router\Engine\Redirect;
 use MvcLite\Views\Engine\View;
 
 class GeneratePlanificationController extends Controller
@@ -19,10 +20,24 @@ class GeneratePlanificationController extends Controller
 
     /**
      * Festival creation view rendering.
+     * 
+     * @param Request $request
      */
-    public function render(): void
+    public function render(Request $request): void
     {
-        View::render("GeneratePlanification");
+        $festivalId = $request->getParameter("id");
+
+        if ($festivalId === null || !is_numeric($festivalId)
+            || Festival::getFestivalById($festivalId) === null) {
+            Redirect::route("festivals")
+                ->redirect();
+        }
+        else
+        {
+            View::render("GeneratePlanification", [
+                "id" => $festivalId
+            ]);
+        }
     }
 
     /**
@@ -34,7 +49,7 @@ class GeneratePlanificationController extends Controller
     {
         $festivalId = $request->getParameter("id");
 
-        if (!is_numeric($festivalId)) {
+        if ($festivalId === null || !is_numeric($festivalId)) {
             echo "error, id = " . $festivalId ?? "null";
             return;
         }
@@ -62,7 +77,7 @@ class GeneratePlanificationController extends Controller
     {
         $festivalId = $request->getParameter("id");
 
-        if (!is_numeric($festivalId)) {
+        if ($festivalId === null || !is_numeric($festivalId)) {
             echo "error, id = " . $festivalId ?? "null";
             return;
         }
@@ -88,19 +103,24 @@ class GeneratePlanificationController extends Controller
      */
     public function getScenes(Request $request): void
     {
-        $festivalId = $request->getInput("id");
+        $festivalId = $request->getParameter("id");
 
-        if (!is_numeric($festivalId)) {
-            echo "error";
+        if ($festivalId === null || !is_numeric($festivalId)) {
+            echo "error, id = " . $festivalId ?? "null";
             return;
         }
 
         $festivalId = intval($festivalId);
 
         $festival = Festival::getFestivalById($festivalId);
-        
-        $scenes = Festival::getScenes($festival->getId());
 
+        if (!$festival) {
+            echo "error, festival is null";
+            return;
+        }
+        
+        $scenes = $festival->getScenes();
+        
         echo json_encode($scenes);
     }
 

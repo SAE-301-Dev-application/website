@@ -1,16 +1,27 @@
 const TEXT_GRIJ_DATA_RECEIVED       = "Données GriJ reçues :\n",
-      TEXT_SPECTACLES_DATA_RECEIVED = "Données spectacles reçues :\n";
+      TEXT_SPECTACLES_DATA_RECEIVED = "Données spectacles reçues :\n",
+      TEXT_SCENES_DATA_RECEIVED     = "Données scènes reçues :\n";
 
 const ERROR_GET_DATA = "Erreur lors de la récupération des données ",
       GRIJ_DATA_NAME = "de la GriJ",
-      SPECTACLES_DATA_NAME = "des spectacles";
+      SPECTACLES_DATA_NAME = "des spectacles",
+      SCENES_DATA_NAME = "des scènes";
+
+const URL_PARAMS = new URLSearchParams(window.location.search);
+
+const FESTIVAL_ID = URL_PARAMS.get('id')
+console.log(FESTIVAL_ID);
 
 const CALENDAR_DIV = document.getElementById('calendar');
 
 let calendar,
     grij,
-    spectacles;
+    spectacles,
+    scenes;
 
+/**
+ * Recover the GriJ data from the database with an AJAX request.
+ */
 const getGrij = async () => {
     $.get("/website/generate-planification/get-grij", {id: "1"})
         .done(data => {
@@ -29,6 +40,9 @@ const getGrij = async () => {
         });
 };
 
+/**
+ * Recover the spectacles data from the database with an AJAX request.
+ */
 const getSpectacles = async () => {
     $.get("/website/generate-planification/get-spectacles", {id: "1"})
         .done(data => {
@@ -45,6 +59,27 @@ const getSpectacles = async () => {
             console.log(ERROR_GET_DATA + SPECTACLES_DATA_NAME);
             spectacles = null;
         });
+};
+
+/**
+ * Recover the scenes data from the database with an AJAX request.
+ */
+const getScenes = async () => {
+  $.get("/website/generate-planification/get-scenes", {id: "1"})
+      .done(data => {
+          console.log(TEXT_SCENES_DATA_RECEIVED + data);
+
+          if (data.startsWith("error")) {
+              console.log(ERROR_GET_DATA + SCENES_DATA_NAME + " :\n" + data);
+              scenes = null;
+          } else {
+              scenes = JSON.parse(data);
+          }
+      })
+      .fail(() => {
+          console.log(ERROR_GET_DATA + SCENES_DATA_NAME);
+          scenes = null;
+      });
 };
 
 const createCalendar = async () => {
@@ -124,8 +159,8 @@ const createCalendar = async () => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     await getGrij();
-
     await getSpectacles();
+    await getScenes();
 
     await createCalendar();
     
