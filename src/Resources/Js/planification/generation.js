@@ -30,83 +30,79 @@ const getGrij = async () => {
 };
 
 const getSpectacles = async () => {
-  $.get("/website/generate-planification/get-spectacles", {id: "1"})
-      .done(data => {
-          console.log(TEXT_SPECTACLES_DATA_RECEIVED + data);
+    $.get("/website/generate-planification/get-spectacles", {id: "1"})
+        .done(data => {
+            console.log(TEXT_SPECTACLES_DATA_RECEIVED + data);
 
-          if (data.startsWith("error")) {
-              console.log(ERROR_GET_DATA + SPECTACLES_DATA_NAME + " :\n" + data);
-              spectacles = null;
-          } else {
-              spectacles = JSON.parse(data);
-          }
-      })
-      .fail(() => {
-          console.log(ERROR_GET_DATA + SPECTACLES_DATA_NAME);
-          spectacles = null;
-      });
+            if (data.startsWith("error")) {
+                console.log(ERROR_GET_DATA + SPECTACLES_DATA_NAME + " :\n" + data);
+                spectacles = null;
+            } else {
+                spectacles = JSON.parse(data);
+            }
+        })
+        .fail(() => {
+            console.log(ERROR_GET_DATA + SPECTACLES_DATA_NAME);
+            spectacles = null;
+        });
 };
 
-document.addEventListener("DOMContentLoaded", async () => {
-    await getGrij();
-
-    await getSpectacles();
-
+const createCalendar = async () => {
     calendar = new FullCalendar.Calendar(CALENDAR_DIV, {
         initialView: 'festivalView',
-    
+
         views: {
             festivalView: {
                 type: 'timeGrid',
                 duration: { days: 7 }
             }
         },
-    
+
         validRange: {
             start: new Date("2024-01-15T10:00:00"),
             end: new Date("2024-01-21T23:00:00")
         },
-    
+
         contentHeight: 700,
         locale: 'fr',
-    
+
         headerToolbar: {
             left: '',
             center: 'title',
             right: ''
         },
-    
+
         slotMinTime: '09:00',
         slotMaxTime: '23:00',
-    
+
         titleFormat: {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
         },
-    
+
         dayHeaderFormat: {
             weekday: 'long',
             day: 'numeric',
             month: 'numeric'
         },
-    
+
         allDaySlot: false,
         slotDuration: '01:00',
         snapDuration: '00:15',
-    
+
         slotLabelFormat: {
             hour: 'numeric',
             minute: '2-digit',
             omitZeroMinute: false
         },
-    
+
         scrollTime: '09:00',
         initialDate: new Date("2024-01-15"),
-    
+
         editable: false,
         eventDurationEditable: false,
-    
+
         events: [
             {
                 title: "Spectacle 1",
@@ -124,6 +120,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         ]
     });
+};
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await getGrij();
+
+    await getSpectacles();
+
+    await createCalendar();
     
     calendar.render();
 });

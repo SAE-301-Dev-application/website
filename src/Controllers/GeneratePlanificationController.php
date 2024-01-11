@@ -76,7 +76,7 @@ class GeneratePlanificationController extends Controller
             return;
         }
         
-        $spectacles = Festival::getSpectaclesByFestivalId($festival->getId());
+        $spectacles = $festival->getSpectacles();
         
         echo json_encode($spectacles);
     }

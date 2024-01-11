@@ -2,6 +2,7 @@
 
 namespace MvcLite\Models;
 
+use JsonSerializable;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
@@ -10,7 +11,7 @@ use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Engine\Model;
 
-class Spectacle extends Model
+class Spectacle extends Model implements JsonSerializable
 {
     /** Default spectacle illustration name. */
     public const DEFAULT_SPECTACLE_ILLUSTRATION_NAME
@@ -228,18 +229,11 @@ class Spectacle extends Model
                 break;
         }
 
-        Debug::dump($addSpectacleQuery,
-        $title,
-        $description,
-        $illustration ?? null,
-        $duration,
-        $sceneSize,
-        Session::getUserAccount()->getId());
         $spectacleId = Database::query($addSpectacleQuery,
                                        $title,
                                        $description,
                                        $illustration ?? null,
-                                       60,//$duration,
+                                       $duration,
                                        $sceneSize,
                                        Session::getUserAccount()->getId());
 
@@ -405,5 +399,21 @@ class Spectacle extends Model
         }
 
         return $modelArray;
+    }
+
+    /**
+     * @return array JSON serializing original array
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            "id_spectacle" => $this->getId(),
+            "titre_sp" => $this->getTitle(),
+            "description_sp" => $this->getDescription(),
+            "illustration_sp" => $this->getIllustration(),
+            "duree_sp" => $this->getDuration(),
+            "taille_scene_sp" => $this->getSceneSize(),
+            "id_createur" => $this->getOwner()->getId(),
+        ];
     }
 }
