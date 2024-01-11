@@ -54,7 +54,7 @@ $page = $props->getRequest()->getParameter("page") ?? 1;
           {
           ?>
 
-          <a href="<?= route("dashboard") ?>"> <!--?id=<?= ""//$spectacles[$i]->getId() ?>"> TODO changer pour page spectacle -->
+          <a href="<?= route("informationsSpectacle") ?>?id=<?=$spectacle->getId() ?>">
             <div class="spectacle-preview">
               <div class="spectacle-picture"
                    style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">

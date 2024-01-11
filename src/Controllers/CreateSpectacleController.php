@@ -144,7 +144,7 @@ class CreateSpectacleController extends Controller
 
         if (count($checkedCategories) === 0)
         {
-            $validation->addError("noCategorieChecked", "categories",
+            $validation->addError("noCategoryChecked", "categories",
                 self::ERROR_NO_CATEGORY_CHECKED);
         }
 

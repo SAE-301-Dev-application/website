@@ -171,7 +171,7 @@ class Festival extends Model
     /**
      * @return array Festival's categories
      */
-    public function getCategories(): array
+    public function getFestivalCategories(): array
     {
 
         $getCategoriesQuery
@@ -181,13 +181,13 @@ class Festival extends Model
 
         $result = Database::query($getCategoriesQuery, $this->getId());
 
-        return Categorie::queryToArray($result);
+        return Category::queryToArray($result);
     }
 
     /**
      * @return array Festival's spectacles
      */
-    public function getSpectacles(): array
+    public function getIncludedSpectacles(): array
     {
 
         $getSpectaclesQuery
@@ -225,12 +225,14 @@ class Festival extends Model
     public function getScenes(): array
     {
 
-        $getSpectaclesQuery
-            = "SELECT DISTINCT id_scene
-               FROM festival_scene
-               WHERE id_festival = ?;";
+        $getScenesQuery
+            = "SELECT sc.*
+               FROM scene sc
+               INNER JOIN festival_scene fs
+               ON sc.id_scene = fs.id_scene
+               WHERE id_scene = ?;";
 
-        $result = Database::query($getSpectaclesQuery, $this->getId());
+        $result = Database::query($getScenesQuery, $this->getId());
 
         return Scene::queryToArray($result);
     }
@@ -333,7 +335,7 @@ class Festival extends Model
     {
         $addFestivalQuery = "SELECT modifierFestival(?, ?, ?, ?, ?, ?) AS id;";
 
-        $linkCategorieQuery = "CALL ajouterFestivalCategorie(?, ?);";
+        $linkCategoryQuery = "CALL ajouterFestivalCategorie(?, ?);";
 
         $festivalId = Database::query($addFestivalQuery,
                                       $id,
@@ -348,7 +350,7 @@ class Festival extends Model
 
         foreach ($categories as $categorie)
         {
-            Database::query($linkCategorieQuery,
+            Database::query($linkCategoryQuery,
                             $festivalId,
                             $categorie);
         }
@@ -430,7 +432,7 @@ class Festival extends Model
      * 
      * @return DatabaseQuery All festivals DatabaseQuery object
      */
-    public static function getFestivals(): DatabaseQuery
+    public static function getAllFestivals(): DatabaseQuery
     {
         $getFestivalsQuery
             = "SELECT *,
@@ -442,6 +444,40 @@ class Festival extends Model
                ORDER BY en_cours_fe DESC, date_debut_fe ASC, date_fin_fe ASC;";
 
         return Database::query($getFestivalsQuery);
+    }
+
+    /**
+     * Searches and returns Festival instance by its data.
+     *
+     * @param array $festivalData Festival data
+     * @return Festival Festival object
+     */
+    public static function getFestivalInstance(array $festivalData): Festival
+    {
+        $festivalInstance = new Festival();
+
+        $festivalInstance
+            ->setId($festivalData["id_festival"]);
+
+        $festivalInstance
+            ->setName($festivalData["nom_fe"]);
+
+        $festivalInstance
+            ->setDescription($festivalData["description_fe"]);
+
+        $festivalInstance
+            ->setBeginningDate($festivalData["date_debut_fe"]);
+
+        $festivalInstance
+            ->setEndingDate($festivalData["date_fin_fe"]);
+
+        $festivalInstance
+            ->setIllustration($festivalData["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_NAME);
+
+        $festivalInstance
+            ->setOwner($festivalData["id_createur"]);
+
+        return $festivalInstance;
     }
 
     /**
@@ -490,54 +526,9 @@ class Festival extends Model
     }
 
     /**
-     * Searches and returns Festival instance by its name.
-     *
-     * @param string $nom Festival name
-     * @return Festival|null Festival object if exists;
-     *                       else NULL
-     */
-    public static function getFestivalByName(string $nom): ?Festival
-    {
-        $query = "SELECT * FROM festival WHERE nom_fe = ?";
-
-        $getFestival = Database::query($query, $nom);
-        $festival = $getFestival->get();
-
-        if ($festival)
-        {
-            $festivalInstance = new Festival();
-
-            $festivalInstance
-                ->setId($festival["nom_fe"]);
-
-            $festivalInstance
-                ->setName($nom);
-
-            $festivalInstance
-                ->setDescription($festival["description_fe"]);
-
-            $festivalInstance
-                ->setBeginningDate($festival["date_debut_fe"]);
-
-            $festivalInstance
-                ->setEndingDate($festival["date_fin_fe"]);
-
-            $festivalInstance
-                ->setIllustration($festival["illustration_fe"] ?? self::DEFAULT_FESTIVAL_ILLUSTRATION_NAME);
-
-             $festivalInstance
-                ->setOwner($festival["id_createur"]);
-                
-            return $festivalInstance;
-        }
-
-        return null;
-    }
-
-    /**
      * Removes given scene from current festival.
      *
-     * @param \MvcLite\Models\Scene $scene
+     * @param Scene $scene
      * @return bool If scene has been removed from festival
      */
     public function removeScene(Scene $scene): bool
@@ -566,18 +557,18 @@ class Festival extends Model
     }
 
     /**
-     * Returns User array by using DatabaseQuery object.
+     * Returns Festival array by using DatabaseQuery object.
      *
      * @param DatabaseQuery $queryObject
-     * @return array users array
+     * @return array festival array
      */
     public static function queryToArray(DatabaseQuery $queryObject): array
     {
         $modelArray = [];
 
-        while ($line = $queryObject->get())
+        foreach($queryObject->getAll() as $festival)
         {
-            $modelArray[] = self::getFestivalById($line["id_festival"]);
+            $modelArray[] = self::getFestivalInstance($festival);
         }
 
         return $modelArray;

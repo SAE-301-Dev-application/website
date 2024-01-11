@@ -56,10 +56,10 @@ use MvcLite\Models\Festival;
         <div>
         (
         <?php
-        // Debug::dd($festival->getCategories());
-            foreach ($festival->getCategories() as $categorie) {
+        // Debug::dd($festival->getFestivalCategories());
+            foreach ($festival->getFestivalCategories() as $categorie) {
                   echo $categorie->getName();
-                  if ($categorie != $festival->getCategories()[count($festival->getCategories())-1]) {
+                  if ($categorie != $festival->getFestivalCategories()[count($festival->getFestivalCategories())-1]) {
                     echo ", ";
                   }
             }
@@ -112,8 +112,8 @@ use MvcLite\Models\Festival;
         <div>
 
           <?php
-            // Debug::dd($festival->getCategories());
-            foreach ($festival->getSpectacles() as $spectacle) {?>
+            // Debug::dd($festival->getFestivalCategories());
+            foreach ($festival->getIncludedSpectacles() as $spectacle) {?>
           <div class="festival-preview">
             <div class="festival-picture"
                 style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
@@ -146,7 +146,7 @@ use MvcLite\Models\Festival;
           </button>
         </a>
         <?php
-          // Debug::dd($festival->getCategories());
+          // Debug::dd($festival->getFestivalCategories());
           foreach ($festival->getScenes() as $scene) {
           ?>
         
@@ -192,9 +192,9 @@ use MvcLite\Models\Festival;
 
           $owner = $festival->getOwner();
 
-          echo $owner->getFirstname()." ".$owner->getLastname()."<br>".$owner->getLogin()."<br>Responsable<br>";
-        
-          foreach ($festival->getUtilisateurs() as $user) {
+          echo $owner->getFirstname()." ".$owner->getLastname()."<br>".$owner->getLogin()."<br>Responsable<br><br>";
+
+          foreach ($festival->getOrganizers() as $user) {
 
             echo $user->getFirstname()." ".$user->getLastname()."<br>".$user->getLogin()."<br>Organisateur<br>";
 

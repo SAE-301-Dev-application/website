@@ -9,6 +9,7 @@ use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Engine\Model;
 use MvcLite\Models\Spectacle;
+use MvcLite\Models\Festival;
 
 class User extends Model
 {
@@ -166,7 +167,7 @@ class User extends Model
     /**
      * @return DatabaseQuery User's festivals
      */
-    public function getFestivals(): DatabaseQuery
+    public function getUserFestivals(): DatabaseQuery
     {
         $query = "SELECT *
                   FROM festival
@@ -175,15 +176,15 @@ class User extends Model
                   WHERE fu.id_utilisateur = ? OR id_createur = ?
                   ORDER BY festival.id_festival;";
 
-        $festivals = Database::query($query, $this->getId(),$this->getId());
+        $festivals = Database::query($query, $this->getId(), $this->getId());
 
-        return $festivals;
+        return Festival::queryToArray($festivals);
     }
 
     /**
      * @return array User's spectacles instances
      */
-    public function getSpectacles(): array
+    public function getUserSpectacles(): array
     {
         $query = "SELECT *
                   FROM spectacle sp

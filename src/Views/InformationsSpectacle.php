@@ -49,7 +49,7 @@ use MvcLite\Models\Festival;
           <a href="<?= route("")//TODO mettre la route ?>">
             <button class="button-blue">
               <i class="fa-solid fa-plus"></i>
-              Modifier festival
+              Modifier spectacle
             </button>
           </a>
         </div>
@@ -91,12 +91,12 @@ use MvcLite\Models\Festival;
         <a href="<?= route("")//TODO mettre la route ?>">
           <button class="button-blue">
             <i class="fa-solid fa-plus"></i>
-            Ajouter organisateurs
+            Ajouter intervenants
           </button>
         </a>
         <?php
-            foreach ($spectacle->getContributor() as $contributor) {
-                echo $contributor->getLastname() . " " . $contributor->getFirstname(). ", ";
+            foreach ($spectacle->getContributors() as $contributor) {
+                echo $contributor->getLastname() . " " . $contributor->getFirstname()."<br>".$contributor->getEmail()."<br>";
             }
         ?>
       </section>

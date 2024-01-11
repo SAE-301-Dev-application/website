@@ -132,7 +132,7 @@ class Spectacle extends Model
     /**
      * @return array Spectacle's categories
      */
-    public function getCategories(): array
+    public function getSpectacleCategories(): array
     {
 
         $getCategoriesQuery
@@ -142,7 +142,7 @@ class Spectacle extends Model
 
         $result = Database::query($getCategoriesQuery, $this->getId());
 
-        return Categorie::queryToArray($result);
+        return Category::queryToArray($result);
     }
 
 
@@ -175,7 +175,7 @@ class Spectacle extends Model
     /**
      * @return array Spectacle's contributor
      */
-    public function getContributor(): array
+    public function getContributors(): array
     {
 
         $getUserQuery
@@ -207,7 +207,7 @@ class Spectacle extends Model
     {
         $addSpectacleQuery = "SELECT ajouterSpectacle(?, ?, ?, ?, ?) AS id;";
 
-        $linkCategorieQuery = "CALL ajouterSpectacleCategorie(?, ?);";
+        $linkCategoryQuery = "CALL ajouterSpectacleCategorie(?, ?);";
 
         switch ($sceneSize)
         {
@@ -234,7 +234,7 @@ class Spectacle extends Model
 
         foreach ($categories as $categorie)
         {
-            Database::query($linkCategorieQuery,
+            Database::query($linkCategoryQuery,
                             $spectacleId,
                             $categorie);
         }
@@ -260,7 +260,7 @@ class Spectacle extends Model
      * 
      * @return DatabaseQuery Spectacles
      */
-    public static function getSpectacles(): DatabaseQuery
+    public static function getAllSpectacles(): DatabaseQuery
     {
         $getSpectaclesQuery
             = "SELECT *

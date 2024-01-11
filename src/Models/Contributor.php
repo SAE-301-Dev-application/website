@@ -118,7 +118,7 @@ class Contributor extends Model
     /**
      * @return DatabaseQuery User's spectacles
      */
-    public function getSpectacles(): DatabaseQuery
+    public function getContributorSpectacles(): DatabaseQuery
     {
         $query = "SELECT *
                   FROM spectacle
@@ -131,43 +131,22 @@ class Contributor extends Model
         return $spectacles;
     }
 
-    // A MODIFIER
-    // /**
-    //  * Delete current user account.
-    //  * 
-    //  * @return bool If the account is being deleted
-    //  */
-    // public function delete(): bool
-    // {
-    //     $query = "CALL supprimerUtilisateur(?);";
+    /**
+     * Searches and returns Contributor instance by its data.
+     *
+     * @param array $contributorData Contributor data
+     * @return Contributor Contributor object
+     */
+    public static function getContributorInstance(array $contributorData): Contributor
+    {
+        $contributorInstance = new Contributor();
+        $contributorInstance->setId($contributor["id_intervenant"]);
+        $contributorInstance->setLastname($contributor["nom_inter"]);
+        $contributorInstance->setFirstname($contributor["prenom_inter"]);
+        $contributorInstance->setEmail($contributor["email_inter"]);
 
-    //     $deletion = Database::query($query, $this->getId());
-
-    //     return $deletion->getExecutionState();
-    // }
-
-    // A MODIFIER
-    // /**
-    //  * Attempt to create an account with given information.
-    //  *
-    //  * @param string $name
-    //  * @param string $firstname
-    //  * @param string $email
-    //  * @return bool If the account is being created
-    //  */
-    // public static function create(string $name,
-    //                               string $firstname,
-    //                               string $email): bool
-    // {
-    //     $query = "CALL ajouterUtilisateur(?, ?, ?);";
-
-    //     $user = Database::query($query,
-    //                             $name,
-    //                             $firstname,
-    //                             $email);
-
-    //     return $user->getExecutionState();
-    // }
+        return $contributorInstance;
+    }
 
     /**
      * Searches and returns Contributor instance by its id.
@@ -207,9 +186,9 @@ class Contributor extends Model
     {
         $modelArray = [];
         
-        while ($line = $queryObject->get())
+        foreach($queryObject->getAll() as $contributor)
         {
-            $modelArray[] = self::getContributorById($line["id_intervenant"]);
+            $modelArray[] = self::getContributorInstance($contributor);
         }
 
         return $modelArray;

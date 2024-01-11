@@ -9,12 +9,12 @@ use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Models\Engine\Model;
 
-class Categorie extends Model
+class Category extends Model
 {
-    /** Categorie's id. */
+    /** Category's id. */
     private int $id;
 
-    /** Categorie's name. */
+    /** Category's name. */
     private string $name;
 
     public function __construct()
@@ -25,7 +25,7 @@ class Categorie extends Model
     }
 
     /**
-     * @return int Categorie's id
+     * @return int Category's id
      */
     public function getId(): int
     {
@@ -33,8 +33,8 @@ class Categorie extends Model
     }
 
     /**
-     * @param int $id Categorie's id
-     * @return int Categorie's id
+     * @param int $id Category's id
+     * @return int Category's id
      */
     private function setId(int $id): int
     {
@@ -42,7 +42,7 @@ class Categorie extends Model
     }
 
     /**
-     * @return string Categorie's name
+     * @return string Category's name
      */
     public function getName(): string
     {
@@ -50,8 +50,8 @@ class Categorie extends Model
     }
 
     /**
-     * @param string $title New Categorie's title
-     * @return string New Categorie's title
+     * @param string $title New Category's title
+     * @return string New Category's title
      */
     public function setName(string $name): string
     {
@@ -59,11 +59,11 @@ class Categorie extends Model
     }
 
     /**
-     * Get all categorie.
+     * Get all categories.
      * 
-     * @return DatabaseQuery Categorie
+     * @return DatabaseQuery Category
      */
-    public static function getCategorie(): DatabaseQuery
+    public static function getAllCategories(): DatabaseQuery
     {
         $getCategoriesQuery
             = "SELECT *
@@ -74,48 +74,65 @@ class Categorie extends Model
     }
 
     /**
+     * Searches and returns category instance by its data.
+     *
+     * @param array $categoryData Category data
+     * @return Category Category object
+     */
+    public static function getCategoryInstance(array $categoryData): Category
+    {
+        $categoryInstance = new Category();
+
+        $categoryInstance->setId($categoryData["id_categorie"]);
+
+        $categoryInstance->setTitle($categoryData["nom_cat"]);
+
+        return $categoryInstance;
+    }
+
+    /**
      * Searches and returns Spectacle instance by its id.
      *
      * @param int $id Spectacle id
      * @return Spectacle|null Spectacle object if exists;
      *                       else NULL
      */
-    public static function getCategorieById(int $id): ?Categorie
+    public static function getCategoryById(int $id): ?Category
     {
         $query = "SELECT * FROM categorie WHERE id_categorie = ?";
 
-        $getCategorie = Database::query($query, $id);
-        $categorie = $getCategorie->get();
+        $getCategory = Database::query($query, $id);
+        $category = $getCategory->get();
 
-        if ($categorie)
+        if ($category)
         {
-            $categorieInstance = new Categorie();
+            $categoryInstance = new Category();
 
-            $categorieInstance
+            $categoryInstance
                 ->setId($id);
 
-            $categorieInstance
-                ->setName($categorie["nom_cat"]);
+            $categoryInstance
+                ->setName($category["nom_cat"]);
 
-            return $categorieInstance;
+            return $categoryInstance;
         }
 
         return null;
     }
 
     /**
-     * Returns Categorie array by using DatabaseQuery object.
+     * Returns Category array by using DatabaseQuery object.
      *
      * @param DatabaseQuery $queryObject
-     * @return array Categorie array
+     * @return array Category array
      */
     public static function queryToArray(DatabaseQuery $queryObject): array
     {
         $modelArray = [];
 
-        while ($line = $queryObject->get())
+        foreach($queryObject->getAll() as $category)
         {
-            $modelArray[] = self::getCategorieById($line["id_categorie"]);
+            $modelArray[] = self::getCategoryInstance($category);
         }
 
         return $modelArray;
