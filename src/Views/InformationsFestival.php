@@ -121,7 +121,7 @@ use MvcLite\Models\User;
         <div>
           <?php
             // Debug::dd($festival->getCategories());
-            foreach ($festival->getIncludedSpectacles() as $spectacle) {?>
+            foreach ($festival->getSpectacles() as $spectacle) {?>
             <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
               <div class="festival-preview">
                 <div class="festival-picture"

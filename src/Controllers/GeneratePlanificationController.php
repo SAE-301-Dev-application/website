@@ -58,7 +58,7 @@ class GeneratePlanificationController extends Controller
      * 
      * @param Request $request
      */
-    public function getFestivalSpectacles(Request $request): void
+    public function getSpectacles(Request $request): void
     {
         $festivalId = $request->getParameter("id");
 
@@ -77,7 +77,7 @@ class GeneratePlanificationController extends Controller
         }
         
         $spectacles = Festival::getSpectaclesByFestivalId($festival->getId());
-
+        
         echo json_encode($spectacles);
     }
 
@@ -86,7 +86,7 @@ class GeneratePlanificationController extends Controller
      * 
      * @param Request $request
      */
-    public function getFestivalScenes(Request $request): void
+    public function getScenes(Request $request): void
     {
         $festivalId = $request->getInput("id");
 

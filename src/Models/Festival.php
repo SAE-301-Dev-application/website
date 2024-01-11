@@ -197,7 +197,7 @@ class Festival extends Model
     /**
      * @return array Festival's spectacles
      */
-    public function getIncludedSpectacles(): array
+    public function getSpectacles(): array
     {
 
         $getSpectaclesQuery
@@ -554,7 +554,7 @@ class Festival extends Model
         return $sceneRemoving->getExecutionState();
     }
 
-    /*
+    /**
      * Searches and returns grij by festival id.
      */
     public static function getGrij(int $idFestival): array
