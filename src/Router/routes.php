@@ -112,9 +112,17 @@ Router::get("/informations-spectacle", InformationsSpectacleController::class, "
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");
 
+Router::get("/add-scene/get-scenes", CreateFestivalAddScenesController::class, "getScenes")
+    ->setName("addScene.getScenes");
+
 Router::post("/add-scene/remove", CreateFestivalAddScenesController::class, "removeScene")
     ->setName("addScene.removeScene");
 
 
 Router::get("/generate-planification", GeneratePlanificationController::class, "render")
     ->setName("generatePlanification");
+
+Router::get("/generate-planification/get-grij",
+             GeneratePlanificationController::class,
+             "getFestivalGrij")
+->setName("get.generatePlanification.getGrij");

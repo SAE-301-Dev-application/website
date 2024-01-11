@@ -535,6 +535,23 @@ class Festival extends Model
     }
 
     /**
+     * Removes given scene from current festival.
+     *
+     * @param \MvcLite\Models\Scene $scene
+     * @return bool If scene has been removed from festival
+     */
+    public function removeScene(Scene $scene): bool
+    {
+        $query = "DELETE FROM festival_scene
+                  WHERE id_festival = ?
+                  AND id_scene = ?";
+
+        $sceneRemoving = Database::query($query, $this->getId(), $scene->getId());
+
+        return $sceneRemoving->getExecutionState();
+    }
+
+    /*
      * Searches and returns grij by festival id.
      */
     public static function getGrij(int $idFestival): array
@@ -545,9 +562,7 @@ class Festival extends Model
 
         $getGrij = Database::query($query, $idFestival);
 
-        $grij = $getGrij->get();
-
-        echo serialize($grij);
+        return $getGrij->get();
     }
 
     /**

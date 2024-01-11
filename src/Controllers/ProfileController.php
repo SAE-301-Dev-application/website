@@ -214,7 +214,6 @@ class ProfileController extends Controller
      * Current account deletion confirmation.
      * 
      * @param Request $request
-     * @return RedirectResponse
      */
     public function confirmDeleteAccount(Request $request): void
     {
