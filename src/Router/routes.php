@@ -6,6 +6,7 @@
  */
 
 
+use MvcLite\Controllers\CreateFestivalAddSpectaclesController;
 use MvcLite\Controllers\IndexController;
 use MvcLite\Controllers\CreateFestivalController;
 use MvcLite\Controllers\ProfileController;
@@ -125,7 +126,16 @@ Router::post("/add-scene/remove", CreateFestivalAddScenesController::class, "rem
 Router::get("/generate-planification", GeneratePlanificationController::class, "render")
     ->setName("generatePlanification");
 
-Router::get("/generate-planification/get-grij",
-             GeneratePlanificationController::class,
-             "getFestivalGrij")
-->setName("get.generatePlanification.getGrij");
+Router::get("/generate-planification/get-grij", GeneratePlanificationController::class,
+    "getFestivalGrij")
+->setName("generatePlanification.getGrij");
+
+Router::get("/add-spectacle", CreateFestivalAddSpectaclesController::class,
+        "render")
+->setName("addSpectacle");
+
+Router::get("/add-spectacle/get-spectacles", CreateFestivalAddSpectaclesController::class, "getSpectacles")
+    ->setName("addSpectacle.getSpectacles");
+
+Router::post("/add-spectacle/remove", CreateFestivalAddSpectaclesController::class, "removeSpectacle")
+    ->setName("addSpectacle.removeSpectacle");
