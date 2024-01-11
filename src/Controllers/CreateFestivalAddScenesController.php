@@ -5,6 +5,7 @@ namespace MvcLite\Controllers;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Session\Session;
+use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Models\Festival;
 use MvcLite\Models\Scene;
 use MvcLite\Router\Engine\Redirect;
@@ -23,14 +24,15 @@ class CreateFestivalAddScenesController extends Controller
     {
         parent::__construct();
 
-        // Empty constructor.
+        $this->middleware(AuthMiddleware::class);
     }
 
     public function render(Request $request): RedirectResponse|true
     {
         $festivalId = $request->getParameter("festival");
 
-        if (!self::isRetrievableFestival($festivalId)
+        if ($festivalId === null
+            || !self::isRetrievableFestival($festivalId)
             || !self::isManageableFestival($festivalId))
         {
             return Redirect::route("festivals")
@@ -50,7 +52,8 @@ class CreateFestivalAddScenesController extends Controller
     {
         $festivalId = $request->getParameter("festival");
 
-        if (!self::isRetrievableFestival($festivalId)
+        if ($festivalId === null
+            || !self::isRetrievableFestival($festivalId)
             || !self::isManageableFestival($festivalId))
         {
             return Redirect::route("festivals")
@@ -68,7 +71,9 @@ class CreateFestivalAddScenesController extends Controller
         $festivalId = $request->getParameter("festival");
         $sceneId = $request->getParameter("scene");
 
-        if (!self::isRetrievableFestival($festivalId)
+        if ($festivalId === null
+            || $sceneId === null
+            || !self::isRetrievableFestival($festivalId)
             || !self::isManageableFestival($festivalId))
         {
             Redirect::route("festivals")

@@ -52,9 +52,9 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
 
       "slot" => "<p class='question'>Êtes-vous sûr de vouloir vous désinscrire de la plateforme ?</p>
                   <p><i class='fa-solid fa-warning fa-2xl'></i> <strong>Attention</strong>, cette action est irréversible et le compte ne pourra pas être récupéré.</p>
-                  <p>Tous les festivals et les spectacles dont vous êtes responsable seront également supprimés.</p>",
-
-      "buttons" => "<form id='password_form'>
+                  <p>Tous les festivals et les spectacles dont vous êtes responsable seront également supprimés.</p>
+                  
+                  <form id='password_form'>
                       <div class='form-component'>
                         <label for='password_verification'>
                           <p>
