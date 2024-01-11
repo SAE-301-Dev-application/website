@@ -354,6 +354,7 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                 <div class="alert-icon">
                   <i class="fa-solid fa-info-circle"></i>
                 </div>
+
                 <div class="alert-content">
                   <p>
                     Vous n'organisez aucun festival.
