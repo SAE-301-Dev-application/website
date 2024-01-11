@@ -32,6 +32,62 @@ class GeneratePlanificationController extends Controller
      */
     public function getFestivalGrij(Request $request): void
     {
+        $festivalId = $request->getParameter("id");
+
+        if (!is_numeric($festivalId)) {
+            echo "error, id = " . $festivalId ?? "null";
+            return;
+        }
+
+        $festivalId = intval($festivalId);
+
+        $festival = Festival::getFestivalById($festivalId);
+
+        if (!$festival) {
+            echo "error, festival is null";
+            return;
+        }
+        
+        $grij = Festival::getGrij($festival->getId());
+
+        echo json_encode($grij);
+    }
+
+    /**
+     * Get festival's spectacles and send it (ajax request).
+     * 
+     * @param Request $request
+     */
+    public function getFestivalSpectacles(Request $request): void
+    {
+        $festivalId = $request->getParameter("id");
+
+        if (!is_numeric($festivalId)) {
+            echo "error, id = " . $festivalId ?? "null";
+            return;
+        }
+
+        $festivalId = intval($festivalId);
+
+        $festival = Festival::getFestivalById($festivalId);
+
+        if (!$festival) {
+            echo "error, festival is null";
+            return;
+        }
+        
+        $spectacles = Festival::getSpectaclesByFestivalId($festival->getId());
+
+        echo json_encode($spectacles);
+    }
+
+    /**
+     * Get festival's scenes and send it (ajax request).
+     * 
+     * @param Request $request
+     */
+    public function getFestivalScenes(Request $request): void
+    {
         $festivalId = $request->getInput("id");
 
         if (!is_numeric($festivalId)) {
@@ -43,33 +99,9 @@ class GeneratePlanificationController extends Controller
 
         $festival = Festival::getFestivalById($festivalId);
         
-        $grij = Festival::getGrij($festival->getId());
-
-        echo json_encode($grij);
-    }
-
-    /**
-     * Get festival's scenes and send it (ajax request).
-     */
-    public function getFestivalScenes(int $idFestival): void
-    {
-        $festival = Festival::getFestivalById($idFestival);
-
         $scenes = Festival::getScenes($festival->getId());
 
-        echo serialize($scenes);
-    }
-
-    /**
-     * Get festival's spectacles and send it (ajax request).
-     */
-    public function getFestivalSpectacles(int $idFestival): void
-    {
-        $festival = Festival::getFestivalById($idFestival);
-
-        $spectacles = Festival::getSpectacles($festival->getId());
-
-        echo serialize($spectacles);
+        echo json_encode($scenes);
     }
 
 }

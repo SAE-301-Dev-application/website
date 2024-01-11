@@ -1,25 +1,56 @@
+const TEXT_GRIJ_DATA_RECEIVED       = "Données GriJ reçues :\n",
+      TEXT_SPECTACLES_DATA_RECEIVED = "Données spectacles reçues :\n";
+
+const ERROR_GET_DATA = "Erreur lors de la récupération des données ",
+      GRIJ_DATA_NAME = "de la GriJ",
+      SPECTACLES_DATA_NAME = "des spectacles";
+
 const CALENDAR_DIV = document.getElementById('calendar');
 
 let calendar,
     grij,
     spectacles;
 
-getGrij = async () => {
-  return $.get("/website/generate-planification/get-grij", {id: 1})
-      .done(data => {
-          if (data === "error") return null;
+const getGrij = async () => {
+    $.get("/website/generate-planification/get-grij", {id: "1"})
+        .done(data => {
+            console.log(TEXT_GRIJ_DATA_RECEIVED + data);
 
-          console.log(data);
-          
-          return data;
+            if (data.startsWith("error")) {
+                console.log(ERROR_GET_DATA + GRIJ_DATA_NAME + " :\n" + data);
+                grij = null;
+            } else {
+                grij = JSON.parse(data);
+            }
+        })
+        .fail(() => {
+            console.log(ERROR_GET_DATA + GRIJ_DATA_NAME);
+            grij = null;
+        });
+};
+
+const getSpectacles = async () => {
+  $.get("/website/generate-planification/get-spectacles", {id: "1"})
+      .done(data => {
+          console.log(TEXT_SPECTACLES_DATA_RECEIVED + data);
+
+          if (data.startsWith("error")) {
+              console.log(ERROR_GET_DATA + SPECTACLES_DATA_NAME + " :\n" + data);
+              spectacles = null;
+          } else {
+              spectacles = JSON.parse(data);
+          }
       })
-      .fail(() => { return null; });
-}
+      .fail(() => {
+          console.log(ERROR_GET_DATA + SPECTACLES_DATA_NAME);
+          spectacles = null;
+      });
+};
 
 document.addEventListener("DOMContentLoaded", async () => {
     await getGrij();
 
-    // console.log(grij);
+    await getSpectacles();
 
     calendar = new FullCalendar.Calendar(CALENDAR_DIV, {
         initialView: 'festivalView',
