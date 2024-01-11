@@ -9,8 +9,8 @@ use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Engine\Model;
-use MvcLite\Models\Spectacle;
 use MvcLite\Models\Scene;
+use MvcLite\Models\Spectacle;
 
 class Festival extends Model
 {
@@ -534,6 +534,40 @@ class Festival extends Model
         }
 
         return null;
+    }
+
+    /**
+     * @param Scene $scene Searched scene object
+     * @return bool If given scene is used by current festival
+     */
+    public function hasScene(Scene $scene): bool
+    {
+        $query = "SELECT COUNT(*) as count
+                  FROM festival
+                  INNER JOIN festiplan.festival_scene fs on festival.id_festival = fs.id_festival
+                  WHERE festival.id_festival = ? 
+                  AND fs.id_scene = ?";
+
+        $sceneRemoving = Database::query($query, $this->getId(), $scene->getId());
+
+        return $sceneRemoving->get()["count"];
+    }
+
+    /**
+     * Adds given scene from current festival.
+     *
+     * @param Scene $scene
+     * @return bool If scene has been removed from festival
+     */
+    public function addScene(Scene $scene): bool
+    {
+        $query = "INSERT INTO festival_scene
+                  (id_festival, id_scene) 
+                  VALUES (?, ?)";
+
+        $sceneRemoving = Database::query($query, $this->getId(), $scene->getId());
+
+        return $sceneRemoving->getExecutionState();
     }
 
     /**
