@@ -169,9 +169,12 @@ class User extends Model
     {
         $query = "SELECT *
                   FROM festival
-                  WHERE id_createur = ?";
+                  LEFT OUTER JOIN festiplan.festival_utilisateur fu 
+                      on festival.id_festival = fu.id_festival
+                  WHERE fu.id_utilisateur = ? OR id_createur = ?
+                  ORDER BY festival.id_festival;";
 
-        $festivals = Database::query($query, $this->getId());
+        $festivals = Database::query($query, $this->getId(),$this->getId());
 
         return $festivals;
     }
@@ -182,14 +185,12 @@ class User extends Model
     public function getSpectacles(): DatabaseQuery
     {
         $query = "SELECT *
-                  FROM spectacle
-                  INNER JOIN spectacle_intervenant si
-                      on spectacle.id_spectacle = si.id_spectacle
-                  WHERE si.id_intervenant = ?";
+                  FROM spectacle sp
+                  WHERE sp.id_createur = ?;";
 
         $spectacles = Database::query($query, $this->getId());
 
-        return $spectacles;
+            return $spectacles;
     }
 
     /**
@@ -211,7 +212,7 @@ class User extends Model
                       email_uti = ?,
                       login_uti = ?,
                       mdp_uti = ?
-                  WHERE id_utilisateur = ?";
+                  WHERE id_utilisateur = ?;";
 
         $userSaving = Database::query($query,
                                       $this->getFirstname(),
@@ -338,7 +339,6 @@ class User extends Model
         {
             $modelArray[] = self::getUserById($line["id_utilisateur"]);
         }
-
         return $modelArray;
     }
 }
