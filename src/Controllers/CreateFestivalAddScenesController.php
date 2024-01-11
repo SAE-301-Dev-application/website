@@ -30,7 +30,8 @@ class CreateFestivalAddScenesController extends Controller
     {
         $festivalId = $request->getParameter("festival");
 
-        if (!self::isRetrievableFestival($festivalId)
+        if ($festivalId === null
+            || !self::isRetrievableFestival($festivalId)
             || !self::isManageableFestival($festivalId))
         {
             return Redirect::route("festivals")
@@ -50,7 +51,8 @@ class CreateFestivalAddScenesController extends Controller
     {
         $festivalId = $request->getParameter("festival");
 
-        if (!self::isRetrievableFestival($festivalId)
+        if ($festivalId === null
+            || !self::isRetrievableFestival($festivalId)
             || !self::isManageableFestival($festivalId))
         {
             return Redirect::route("festivals")
@@ -68,7 +70,9 @@ class CreateFestivalAddScenesController extends Controller
         $festivalId = $request->getParameter("festival");
         $sceneId = $request->getParameter("scene");
 
-        if (!self::isRetrievableFestival($festivalId)
+        if ($festivalId === null
+            || $sceneId === null
+            || !self::isRetrievableFestival($festivalId)
             || !self::isManageableFestival($festivalId))
         {
             Redirect::route("festivals")
