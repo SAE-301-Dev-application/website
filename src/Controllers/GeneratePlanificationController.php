@@ -24,10 +24,16 @@ class GeneratePlanificationController extends Controller
         View::render("GeneratePlanification");
     }
 
+    /**
+     * Get grij of a festival and send it (ajax request).
+     */
     public function getFestivalGrij(int $idFestival): void
     {
         $festival = Festival::getFestivalById($idFestival);
-        $festival->getGrij();
+        
+        $grij = Festival::getGrij($festival->getId());
+
+        echo serialize($grij);
     }
 
 }
