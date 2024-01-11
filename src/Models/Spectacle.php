@@ -39,6 +39,9 @@ class Spectacle extends Model implements JsonSerializable
     /** Spectacle's illustration */
     private string $illustration;
 
+    /** Spectacle's user creator */
+    private User $user_creator;
+
     public function __construct()
     {
         parent::__construct();
@@ -58,9 +61,9 @@ class Spectacle extends Model implements JsonSerializable
      * @param int $id Spectacle's id
      * @return int Spectacle's id
      */
-    private function setId(int $id): int
+    private function setId(int $id): void
     {
-        return $this->id = $id;
+        $this->id = $id;
     }
 
     /**
@@ -75,9 +78,9 @@ class Spectacle extends Model implements JsonSerializable
      * @param string $title New spectacle's title
      * @return string New spectacle's title
      */
-    public function setTitle(string $title): string
+    public function setTitle(string $title): void
     {
-        return $this->title = $title;
+        $this->title = $title;
     }
 
     /**
@@ -92,9 +95,9 @@ class Spectacle extends Model implements JsonSerializable
      * @param string $description New spectacle's description
      * @return string New spectacle's description
      */
-    public function setDescription(string $description): string
+    public function setDescription(string $description): void
     {
-        return $this->description = $description;
+        $this->description = $description;
     }
 
     /**
@@ -109,9 +112,9 @@ class Spectacle extends Model implements JsonSerializable
      * @param string $duration New spectacle's duration
      * @return string New spectacle's duration
      */
-    public function setDuration(string $duration): string
+    public function setDuration(string $duration): void
     {
-        return $this->duration = $duration;
+        $this->duration = $duration;
     }
 
     /**
@@ -126,9 +129,9 @@ class Spectacle extends Model implements JsonSerializable
      * @param string $sceneSize New spectacle's scene size
      * @return string New spectacle's scene size
      */
-    public function setSceneSize(string $sceneSize): string
+    public function setSceneSize(string $sceneSize): void
     {
-        return $this->sceneSize = $sceneSize;
+        $this->sceneSize = $sceneSize;
     }
 
     /**
@@ -166,14 +169,9 @@ class Spectacle extends Model implements JsonSerializable
      * @param string $illustration New spectacle's illustration
      * @return string New spectacle's illustration
      */
-    public function setIllustration(string $illustration): string
+    public function setIllustration(string $illustration): void
     {
-        return $this->illustration = $illustration;
-    }
-
-    public function getOwner(): ?User
-    {
-        return new User();  // TODO STUB
+        $this->illustration = $illustration;
     }
 
     /**
@@ -192,6 +190,31 @@ class Spectacle extends Model implements JsonSerializable
         $result = Database::query($getUserQuery, $this->getId());
 
         return Contributor::queryToArray($result);
+    }
+
+    /**
+     * @return User Spectacle's user_creator
+     */
+    public function getUserCreator(): User
+    {
+        return $this->user_creator;
+    }
+
+    /**
+     * @param User $user_creator New spectacle's user_creator
+     * @return User New spectacle's user_creator
+     */
+    public function setUserCreator(int $user_creator): void
+    {
+        $this->user_creator = User::getUserById($user_creator);
+    }
+
+    /**
+     * @return bool If the current user are Owner of this festival
+     */
+    public function isUserCreator(): bool
+    {
+        return Session::getUserAccount() == User::getUserById($this->getUserCreator()->getId());
     }
 
     /**
@@ -324,6 +347,9 @@ class Spectacle extends Model implements JsonSerializable
         $spectacleInstance
             ->setSceneSize($spectacleData["taille_scene_sp"]);
 
+        $spectacleInstance
+            ->setUserCreator($spectacleData["id_createur"]);
+
         return $spectacleInstance;
     }
 
@@ -362,6 +388,9 @@ class Spectacle extends Model implements JsonSerializable
 
             $spectacleInstance
                 ->setSceneSize($spectacle["taille_scene_sp"]);
+
+            $spectacleInstance
+                ->setUserCreator($spectacle["id_createur"]);
 
             return $spectacleInstance;
         }

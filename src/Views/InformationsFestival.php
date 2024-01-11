@@ -128,15 +128,13 @@ use MvcLite\Models\User;
                   style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
                 </div>
               </div>
+              <div>
+              <?php 
+                  echo $spectacle->getTitle();     
+                  } 
+              ?>
+            </a>
             </div>
-            <div>
-            <?php 
-                echo $spectacle->getTitle();     
-                } 
-            ?>
-          </a>
-
-        </div>
 
         <h3>
           Scènes:

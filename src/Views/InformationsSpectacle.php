@@ -45,13 +45,15 @@ use MvcLite\Models\Festival;
               Voir la planification
             </button>
           </a>
-
-          <a href="<?= route("")//TODO mettre la route ?>">
-            <button class="button-blue">
-              <i class="fa-solid fa-plus"></i>
-              Modifier spectacle
-            </button>
-          </a>
+          <!-- Si l'utilisateur est le créateur du spectacle -->
+          <?php if ($spectacle->isUserCreator()) { ?>
+            <a href="<?= route("")//TODO mettre la route ?>">
+              <button class="button-blue">
+                <i class="fa-solid fa-plus"></i>
+                Modifier spectacle
+              </button>
+            </a>
+          <?php } ?>  
         </div>
         <?php
             foreach ($spectacle->getCategories() as $categorie) {
@@ -63,7 +65,8 @@ use MvcLite\Models\Festival;
           <div style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
 
                 <div class="filter-in-progress">
-                  <p>en cours</p>
+                  <!-- si on écrit rien sur l'image elle est pas affiché (modifier le css) -->
+                  blablabla
                 </div>
 
           </div>
@@ -86,13 +89,16 @@ use MvcLite\Models\Festival;
           </button>
         </a>
 
-        <!-- Si l'utilisateur est le responsable du festival -->
-        <a href="<?= route("")//TODO mettre la route ?>">
-          <button class="button-blue">
-            <i class="fa-solid fa-plus"></i>
-            Ajouter intervenants
-          </button>
-        </a>
+        <!-- Si l'utilisateur est le créateur du spectacle -->
+        <?php if ($spectacle->isUserCreator()) { ?>
+          <a href="<?= route("")//TODO mettre la route ?>">
+            <button class="button-blue">
+              <i class="fa-solid fa-plus"></i>
+              Ajouter intervenants
+            </button>
+          </a>
+        <?php } ?>
+
         <?php
             foreach ($spectacle->getContributors() as $contributor) {
                 echo $contributor->getLastname() . " " . $contributor->getFirstname()."<br>".$contributor->getEmail()."<br>";

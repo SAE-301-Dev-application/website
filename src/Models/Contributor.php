@@ -140,10 +140,10 @@ class Contributor extends Model
     public static function getContributorInstance(array $contributorData): Contributor
     {
         $contributorInstance = new Contributor();
-        $contributorInstance->setId($contributor["id_intervenant"]);
-        $contributorInstance->setLastname($contributor["nom_inter"]);
-        $contributorInstance->setFirstname($contributor["prenom_inter"]);
-        $contributorInstance->setEmail($contributor["email_inter"]);
+        $contributorInstance->setId($contributorData["id_intervenant"]);
+        $contributorInstance->setLastname($contributorData["nom_inter"]);
+        $contributorInstance->setFirstname($contributorData["prenom_inter"]);
+        $contributorInstance->setEmail($contributorData["email_inter"]);
 
         return $contributorInstance;
     }
