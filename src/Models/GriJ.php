@@ -3,6 +3,7 @@
 namespace MvcLite\Models;
 
 use JsonSerializable;
+use MvcLite\Database\Engine\Database;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Models\Engine\Model;
 
@@ -18,10 +19,10 @@ class GriJ extends Model implements JsonSerializable
     private string $endingSpectacleHour;
 
     /** GriJ's min duration between spectacle. */
-    private int $minDurationBetweenSpectacle;
+    private string $minDurationBetweenSpectacle;
 
     /** GriJ's id festival*/
-    private int $idFestival;
+    private int $festivalId;
 
     public function __construct()
     {
@@ -82,38 +83,79 @@ class GriJ extends Model implements JsonSerializable
     }
 
     /**
-     * @return int GriJ's minDurationBetweenSpectacle
+     * @return string GriJ's minDurationBetweenSpectacle
      */
-    public function getMinDurationBetweenSpectacle(): int
+    public function getMinDurationBetweenSpectacle(): string
     {
         return $this->minDurationBetweenSpectacle;
     }
 
     /**
-     * @param int $id New GriJ's minDurationBetweenSpectacle
-     * @return int New GriJ's minDurationBetweenSpectacle
+     * @param string $id New GriJ's minDurationBetweenSpectacle
+     * @return string New GriJ's minDurationBetweenSpectacle
      */
-    private function setMinDurationBetweenSpectacle(int $minDurationBetweenSpectacle): int
+    private function setMinDurationBetweenSpectacle(string $minDurationBetweenSpectacle): string
     {
         return $this->minDurationBetweenSpectacle = $minDurationBetweenSpectacle;
     }
 
     /**
-     * @return int GriJ's idFestival
+     * @return int GriJ's festivalId
      */
-    public function getIdFestival(): int
+    public function getFestivalId(): int
     {
-        return $this->idFestival;
+        return $this->festivalId;
     }
 
     /**
-     * @param int $id New GriJ's idFestival
-     * @return int New GriJ's idFestival
+     * @param int $id New GriJ's festivalId
+     * @return int New GriJ's festivalId
      */
-    private function setIdFestival(int $idFestival): int
+    private function setFestivalId(int $festivalId): int
     {
-        return $this->idFestival = $idFestival;
+        return $this->festivalId = $festivalId;
     }
+
+    /**
+     * @param int $festivalId id festival of GriJ
+     * @return GriJ|null GriJ object if exists;
+     *                       else NULL  
+     */
+    public static function getGriJByFestivalId(int $festivalId): ?GriJ
+    {
+        $query = "SELECT *
+                  FROM grij
+                  WHERE id_festival = ?";
+
+        $getGriJ = Database::query($query, $festivalId);   
+        $grij = $getGriJ->get();     
+
+        if ($grij)
+        {
+            $grijInstance = new GriJ();
+
+            $grijInstance
+                ->setId($grij["id_grij"]);
+
+            $grijInstance
+                ->setBginningSpectacleHour($grij["heure_debut_spectacles"]);
+
+            $grijInstance
+                ->setEndingSpectacleHour($grij["heure_fin_spectacles"]);
+
+            $grijInstance
+                ->setMinDurationBetweenSpectacle($grij["duree_min_entre_spectacles"]);
+
+            $grijInstance
+                ->setFestivalId($festivalId);
+
+            return $grijInstance;
+        }
+
+        return null;
+    }
+
+
 
     /**
      * Attempt to create a GriJ.
@@ -121,12 +163,12 @@ class GriJ extends Model implements JsonSerializable
      * @param string $beginningSpectacleHour
      * @param string $endingSpectacleHour
      * @param string $minDurationBetweenSpectacle
-     * @param string $minDurationBetweenSpectacle
+     * @param string $festivalId
      */
     public static function create(string $beginningSpectacleHour,
                                   string $endingSpectacleHour,
                                   string $minDurationBetweenSpectacle,
-                                  string $idFestival): void
+                                  string $festivalId): void
     {
         /* Créer la fonction ajouterGriJ */
         $addGriJQuery = "SELECT ajouterGriJ(?, ?, ?, ?) AS id;";
@@ -135,7 +177,7 @@ class GriJ extends Model implements JsonSerializable
                                   $beginningSpectacleHour,
                                   $endingSpectacleHour,
                                   $minDurationBetweenSpectacle,
-                                  $idFestival);
+                                  $festivalId);
     }
 
     /**
@@ -154,5 +196,19 @@ class GriJ extends Model implements JsonSerializable
         }
 
         return $modelArray;
+    }
+
+    /**
+     * @return array JSON serializing original array
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            "id_grij" => $this->getId(),
+            "heure_debut_spectacles" => $this->getBeginningSpectacleHour(),
+            "heure_fin_spectacles" => $this->getEndingSpectacleHour(),
+            "duree_min_entre_spectacles" => $this->getMinDurationBetweenSpectacle(),
+            "id_festival" => $this->getFestivalId(),
+        ];
     }
 }

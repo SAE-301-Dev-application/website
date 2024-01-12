@@ -23,6 +23,7 @@ use MvcLite\Controllers\ModifyFestivalController;
 use MvcLite\Controllers\RegisterController;
 use MvcLite\Controllers\SessionController;
 use MvcLite\Controllers\SpectaclesController;
+use MvcLite\Controllers\CreateSpectacleAddIntervenantsController;
 
 use MvcLite\Router\Engine\Router;
 
@@ -159,3 +160,8 @@ Router::post("/add-spectacle/add", CreateFestivalAddSpectaclesController::class,
 
 Router::post("/add-spectacle/remove", CreateFestivalAddSpectaclesController::class, "removeSpectacle")
     ->setName("post.addSpectacle.removeSpectacle");
+
+
+Router::get("/add-intervenants", CreateSpectacleAddIntervenantsController::class, "render")
+    ->setName("addIntervenants");
+

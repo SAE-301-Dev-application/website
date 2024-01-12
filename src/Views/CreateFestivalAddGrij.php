@@ -4,11 +4,17 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 
 $errors = $props->getValidator()->getErrors() ?? [];
 
-$beginningHour = $props->getRequest()->getInput("beginning_hour") ?? "";
+$beginningHour = $grij->getBeginningSpectacleHour();
 
-$endingHour = $props->getRequest()->getInput("ending_hour") ?? "";
+$endingHour = $grij->getEndingSpectacleHour();
 
-$pauseValue = $props->getRequest()->getInput("pause_value") ?? "";
+$pauseValue = $grij->getMinDurationBetweenSpectacle();
+
+// $beginningHour = $props->getRequest()->getInput("beginning_hour") ?? "";
+
+// $endingHour = $props->getRequest()->getInput("ending_hour") ?? "";
+
+// $pauseValue = $props->getRequest()->getInput("pause_value") ?? "";
 ?>
 
 <!doctype html>
@@ -52,7 +58,7 @@ $pauseValue = $props->getRequest()->getInput("pause_value") ?? "";
         </div>
 
         <div class="form-container">
-          <form action="<?= route("get.horairesFestival") ?>"
+          <form action="<?= route("horairesFestival") ?>"
                 method="get"
                 enctype="multipart/form-data">
             <div class="form-grid">

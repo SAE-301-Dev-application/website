@@ -33,7 +33,7 @@ use MvcLite\Models\Festival;
     ?>
 
     <div id="main">
-      <section id="all_festivals">
+      <section id="all_spectacles">
         <div class="title-container">
           <h2 class="title">
             <?= $spectacle->getTitle() ?>
@@ -55,8 +55,8 @@ use MvcLite\Models\Festival;
             }
         ?>
 
-        <div class="festival-preview">
-          <div class ="festival-picture"
+        <div class="spectacle-preview">
+          <div class ="spectacle-picture"
                style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
           </div>
         </div>
@@ -88,7 +88,7 @@ use MvcLite\Models\Festival;
 
         <!-- Si l'utilisateur est le créateur du spectacle -->
         <?php if ($spectacle->isOwner()) { ?>
-          <a href="<?= route("")//TODO mettre la route ?>">
+          <a href="<?= route("addIntervenants")?>?id=<?= $spectacle->getId() ?>">
             <button class="button-blue">
               <i class="fa-solid fa-plus"></i>
               Ajouter intervenants

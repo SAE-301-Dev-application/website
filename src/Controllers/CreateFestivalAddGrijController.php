@@ -12,6 +12,7 @@ use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Router\Engine\Redirect;
 use MvcLite\Views\Engine\View;
 use MvcLite\Models\Festival;
+use MvcLite\Models\GriJ;
 
 class CreateFestivalAddGrijController extends Controller
 {
@@ -50,18 +51,21 @@ class CreateFestivalAddGrijController extends Controller
 
         $festival = new Festival();
         $festival = Festival::getFestivalById($id);
+        $grij = GriJ::getGriJByFestivalId($id);
 
         View::render("CreateFestivalAddGrij", [
+            "grij" => $grij,
             "festival" => $festival
         ]);
     }
 
+    /* NON TERMINE */
     /**
      * Attempt to create the festival.
      *
      * @param Request $request
      */
-    public function createFestival(Request $request): RedirectResponse
+    public function confirmGriJ(Request $request): RedirectResponse
     {
 
         $validation = (new Validator($request))
