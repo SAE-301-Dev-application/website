@@ -1,0 +1,77 @@
+#informations_festival_main {
+  > #main {
+    @apply pt-24;
+
+    section {
+      &#festival_informations {
+        > .title-container {
+          @apply mb-px;
+      
+          button {
+            @apply w-auto;
+          }
+        }
+      
+        > .form-container {
+          @apply grid grid-cols-3 gap-x-20 mb-7;
+
+          h3.subtitle {
+            @apply text-2xl font-black;
+          }
+          
+          p:not(.in-progress) {
+            @apply font-medium;
+          }
+          
+          > .right-side {
+            @apply bg-blue col-span-2 pt-5;
+
+            .festival-data-row {
+              @apply grid grid-cols-4 gap-x-5 mb-5;
+
+              > .description-container {
+                @apply col-span-3;
+
+                > h3 {
+                  @apply mb-3;
+                }
+              }
+
+              > .dates-container {
+                @pply col-span-1;
+              }
+            }
+          }
+
+          > .left-side {
+            @apply col-span-1;
+
+            > p.categories {
+              @apply text-2xl;
+            }
+
+            > .festival-preview {
+              @apply mt-6 mb-5;
+
+              > .festival-picture {
+                @apply w-96 h-80;
+
+                p.in-progress {
+                  @apply text-5xl;
+                }
+              }
+            }
+
+            > .grij-grid {
+              @apply grid grid-cols-2 gap-x-0;
+
+              .grij-column {
+                @apply font-bold;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
