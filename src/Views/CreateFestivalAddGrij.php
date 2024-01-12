@@ -4,9 +4,9 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 
 $errors = $props->getValidator()->getErrors() ?? [];
 
-$beginningDate = $props->getRequest()->getInput("beginning_date") ?? "";
+$beginningHour = $props->getRequest()->getInput("beginning_hour") ?? "";
 
-$endingDate = $props->getRequest()->getInput("ending_date") ?? "";
+$endingHour = $props->getRequest()->getInput("ending_hour") ?? "";
 
 $pauseValue = $props->getRequest()->getInput("pause_value") ?? "";
 ?>
@@ -59,15 +59,15 @@ $pauseValue = $props->getRequest()->getInput("pause_value") ?? "";
               <section id="general_information">
                 <div class="form-duo">
                   <div class="form-component">
-                    <label for="beginning_date">
+                    <label for="beginning_hour">
                       <p>
                         Heure de début :
                       </p>
 
-                      <input type="date"
-                             name="beginning_date"
-                             id="beginning_date"
-                             value="<?= $beginningDate ?>"
+                      <input type="time"
+                             name="beginning_hour"
+                             id="beginning_hour"
+                             value="<?= $beginningHour ?>"
                              required />
 
                       <?php
@@ -80,15 +80,15 @@ $pauseValue = $props->getRequest()->getInput("pause_value") ?? "";
                   </div>
 
                   <div class="form-component">
-                    <label for="ending_date">
+                    <label for="ending_hour">
                       <p>
                         Heure de fin :
                       </p>
 
-                      <input type="date"
-                             name="ending_date"
-                             id="ending_date"
-                             value="<?= $endingDate ?>"
+                      <input type="time"
+                             name="ending_hour"
+                             id="ending_hour"
+                             value="<?= $endingHour ?>"
                              required />
 
                       <?php
@@ -106,7 +106,7 @@ $pauseValue = $props->getRequest()->getInput("pause_value") ?? "";
                         Durée des pauses :
                       </p>
 
-                      <input type="int"
+                      <input type="time"
                              name="pause_value"
                              id="pause_value"
                              value="<?= $pauseValue ?>"
@@ -151,7 +151,7 @@ $pauseValue = $props->getRequest()->getInput("pause_value") ?? "";
               </a>
 
               <button class="button-blue" type="submit">
-                Créer le festival
+                Confirmer la GriJ
               </button>
             </div>
           </form>
