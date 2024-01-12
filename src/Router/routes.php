@@ -151,5 +151,11 @@ Router::get("/add-spectacle", CreateFestivalAddSpectaclesController::class, "ren
 Router::get("/add-spectacle/get-spectacles", CreateFestivalAddSpectaclesController::class, "getSpectacles")
     ->setName("addSpectacle.getSpectacles");
 
+Router::get("/add-spectacle/search", CreateFestivalAddSpectaclesController::class, "searchSpectacle")
+    ->setName("addSpectacle.searchSpectacle");
+
+Router::post("/add-spectacle/add", CreateFestivalAddSpectaclesController::class, "addSpectacle")
+    ->setName("addSpectacle.addSpectacle");
+
 Router::post("/add-spectacle/remove", CreateFestivalAddSpectaclesController::class, "removeSpectacle")
-    ->setName("addSpectacle.removeSpectacle");
+    ->setName("post.addSpectacle.removeSpectacle");
