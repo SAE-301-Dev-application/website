@@ -50,14 +50,20 @@ use MvcLite\Models\User;
           
           <!-- Si l'utilisateur est responsable du festival -->
           <?php if ($festival->isUserOwner()) { ?>
+            <div class="buttons">
+              <a href="<?= route("addScene")?>?festival=<?= $festival->getId() ?>">
+                <button class="button-blue">
+                  <i class="fa-solid fa-plus"></i>
+                  Ajouter scènes
+                </button>
 
-            <a href="<?= route("modifyFestival")?>?id=<?= $festival->getId()?>">
-              <button class="button-blue">
-                <i class="fa-solid fa-plus"></i>
-                Modifier festival
-              </button>
-            </a>
-
+              <a href="<?= route("modifyFestival")?>?id=<?= $festival->getId()?>">
+                <button class="button-blue">
+                  <i class="fa-solid fa-plus"></i>
+                  Modifier festival
+                </button>
+              </a>
+            </div>
           <?php } ?>
         </div>
 
@@ -65,12 +71,11 @@ use MvcLite\Models\User;
           <div class="left-side">
             <p class="categories">
               (<?php
-                // Debug::dd($festival->getCategories());
                 foreach ($festival->getCategories() as $categorie) {
-                    echo $categorie->getName();
-                    if ($categorie != $festival->getCategories()[count($festival->getCategories())-1]) {
-                      echo ", ";
-                    }
+                  echo $categorie->getName();
+                  if ($categorie != $festival->getCategories()[count($festival->getCategories())-1]) {
+                    echo ", ";
+                  }
                 }
 
                 $isFestivalInProgress = $festival->isFestivalInProgress();
@@ -89,9 +94,22 @@ use MvcLite\Models\User;
               </div>
             </div>
 
-            <h3 class="subtitle">
-              GriJ :
-            </h3>
+            <div class="grij-title-row">
+              <div class="grij-title">
+                <h3 class="subtitle">
+                  GriJ :
+                </h3>
+              </div>
+
+              <div class="add-button">
+                <a href="<?= route("grijFestival")?>?id=<?= $festival->getId()?>">
+                  <button class="button-blue">
+                    <i class="fa-solid fa-plus"></i>
+                    Ajouter GriJ
+                  </button>
+                </a>
+              </div>
+            </div>
 
             <div class="grij-grid">
               <div class="grij-colums">
@@ -128,7 +146,7 @@ use MvcLite\Models\User;
                 </h3>
 
                 <p class="description-value">
-                  <?= $festival->getDescription() ?>
+                  <?= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat nisl libero, et bibendum dolor mattis at. Aenean tincidunt sit amet neque vitae varius. Aenean a pulvinar risus. In dignissim faucibus urna, et bibendum elit luctus in. In hac habitasse platea dictumst. Vivamus risus ligula, viverra vel maximus a, tincidunt et augue. Sed leo nisl, euismod id ni"//$festival->getDescription() ?>
                 </p>
               </div>
 
@@ -149,87 +167,108 @@ use MvcLite\Models\User;
               </div>
             </div>
 
-            <h3 class="subtitle">
-              Spectacles :
-            </h3>
-
-            <!-- <a href="<?= "" // route("informationsSpectacle")//TODO mettre la route ?>">
-              <button class="button-blue">
-                <i class="fa-solid fa-plus"></i>
-                Voir plus
-              </button>
-            </a> -->
-
-            <!-- Si l'utilisateur est le responsable du festival -->
-            <?php if ($festival->isUserOwner()) { ?>
-              <a href="<?= route("")//TODO mettre la route ?>">
-                <button class="button-blue">
-                  <i class="fa-solid fa-plus"></i>
-                  Ajouter spectacles
-                </button>
-              </a>
-            <?php } ?>
-
-            <?php
-            //foreach ($festival->getSpectacles() as $spectacle) {?>
-
-              <!-- <a href="<?= "" // route("informationsSpectacle") ?>?id=<?= "" // $spectacle->getId() ?>">
-                <div class="festival-preview">
-                  <div class="festival-picture"
-                    style="background: url('<?= "" // $spectacle->getIllustration() ?>') center / cover no-repeat;">
-                  </div>
+            <div class="spectacles-container">
+              <div class="spectacles-title-row">
+                <div class="spectacles-title">
+                  <h3 class="subtitle">
+                    Spectacles :
+                  </h3>
                 </div>
-                <?= "" //$spectacle->getTitle(); ?>
-              </a> -->
 
-            <?php
-              //}
-            ?>
+                <div class="spectacles-buttons">
+                  <a href="<?= route("informationsSpectacle") // TODO mettre la route ?>">
+                    <button class="button-blue">
+                      <i class="fa-solid fa-plus"></i>
+                      Voir plus
+                    </button>
+                  </a>
 
-            <!-- <h3>
-              Scènes:
-            </h3> -->
-            <!-- <a href="<?= "" // route("")//TODO mettre la route ?>">
-              <button class="button-blue">
-                <i class="fa-solid fa-plus"></i>
-                Voir plus
-              </button>
-            </a> -->
-            <!-- Si l'utilisateur est responsable du festival -->
-            <?php if (false && $festival->isUserOwner()) { ?>
-              <!-- <a href="<?= route("addScene")?>?festival=<?= $festival->getId() ?>">
-                <button class="button-blue">
-                  <i class="fa-solid fa-plus"></i>
-                  Ajouter scènes
-                </button>
-              </a> -->
-            <?php } ?>
+                  <!-- Si l'utilisateur est le responsable du festival -->
+                  <?php if ($festival->isUserOwner()) { ?>
+                    <a href="<?= route("")//TODO mettre la route ?>">
+                      <button class="button-blue">
+                        <i class="fa-solid fa-plus"></i>
+                        Ajouter spectacles
+                      </button>
+                    </a>
+                  <?php } ?>
+                </div>
+              </div>
 
-            <?php
-              // Debug::dd($festival->getCategories());
-              // foreach ($festival->getScenes() as $scene) {
-              ?>
-            
-            <!-- <div> -->
-              <?php 
-                // $size = $scene->getSize();
+              <div class="spectacles-grid">
+                <?php
+                foreach ($festival->getSpectacles() as $spectacle) {?>
 
-                // switch($scene->getSize()) {
-                //   case 1:
-                //     $size = "Petite";
-                //     break;
-                //   case 2:
-                //     $size = "Moyenne";
-                //     break;
-                //   case 3:
-                //     $size = "Grande";
-                //     break;
+                  <div>
+                    <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
+                      <div class="festival-preview">
+                        <div class="festival-picture"
+                          style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
+                        </div>
+                      </div>
+                      <?= $spectacle->getTitle(); ?>
+                    </a>
+                  </div>
 
-                // }
-                // echo $scene->getName()." (".$size.")";     
-                // }
-              ?>
-            <!-- </div> -->
+                <?php
+                }
+                ?>
+              </div>
+            </div>
+
+            <div class="scenes-container">
+              <div class="spectacles-title-row">
+                <div class="spectacles-title">
+                  <h3>
+                    Scènes:
+                  </h3>
+                </div>
+                
+                <div class="spectacles-buttons">
+                  <a href="<?= route("")//TODO mettre la route ?>">
+                    <button class="button-blue">
+                      <i class="fa-solid fa-plus"></i>
+                      Voir plus
+                    </button>
+                  </a>
+
+                  <!-- Si l'utilisateur est responsable du festival -->
+                  <?php if (false && $festival->isUserOwner()) { ?>
+                    <a href="<?= route("addScene")?>?festival=<?= $festival->getId() ?>">
+                      <button class="button-blue">
+                        <i class="fa-solid fa-plus"></i>
+                        Ajouter scènes
+                      </button>
+                    </a>
+                  <?php } ?>
+                </div>
+              </div>
+
+              <div class="scenes-grid">
+                <?php
+                foreach ($festival->getScenes() as $scene) {
+                  $size = $scene->getSize();
+
+                  switch ($scene->getSize()) {
+                    case 1:
+                      $size = "Petite";
+                      break;
+                    case 2:
+                      $size = "Moyenne";
+                      break;
+                    case 3:
+                      $size = "Grande";
+                      break;
+
+                  }
+
+                  echo "<div>";
+                  echo $scene->getName()." (".$size.")";
+                  echo "</div>";
+                }
+                ?>
+              </div>
+            </div>
 
             <!-- <h3>
               Organisateurs:
