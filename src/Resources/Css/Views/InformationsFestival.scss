@@ -24,7 +24,7 @@
           }
           
           > .right-side {
-            @apply bg-blue col-span-2 pt-5;
+            @apply bg-red col-span-2 pt-5 pl-10;
 
             .festival-data-row {
               @apply grid grid-cols-4 gap-x-5 mb-5;
@@ -37,8 +37,8 @@
                 }
               }
 
-              > .dates-container {
-                @pply col-span-1;
+              > .festival-duration {
+                @apply col-span-1;
               }
             }
           }
@@ -48,6 +48,10 @@
 
             > p.categories {
               @apply text-2xl;
+            }
+
+            > .border-in-progress {
+              @apply border-6 border-red;
             }
 
             > .festival-preview {

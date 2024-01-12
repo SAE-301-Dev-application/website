@@ -229,7 +229,9 @@
         @apply text-red text-sm;
     }
 
-    .festival-preview, .spectacle-preview {
+    .festival-preview,
+    .spectacle-preview,
+    .festival-data-row {
         @apply flex gap-x-5;
 
         > .border-in-progress {

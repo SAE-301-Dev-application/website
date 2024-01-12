@@ -49,13 +49,15 @@ use MvcLite\Models\User;
           </a>
           
           <!-- Si l'utilisateur est responsable du festival -->
-          <?php if (false && $festival->isUserOwner()) { ?>
-            <!-- <a href="<?= "" // route("modifyFestival")?>?id=<?= "" // $festival->getId()?>"> -->
-              <!-- <button class="button-blue">
+          <?php if ($festival->isUserOwner()) { ?>
+
+            <a href="<?= route("modifyFestival")?>?id=<?= $festival->getId()?>">
+              <button class="button-blue">
                 <i class="fa-solid fa-plus"></i>
                 Modifier festival
-              </button> -->
-            <!-- </a> -->
+              </button>
+            </a>
+
           <?php } ?>
         </div>
 
@@ -77,7 +79,7 @@ use MvcLite\Models\User;
 
             <div class="festival-preview">
               <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
-                  style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;">
+                   style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;">
 
                 <?php if ($isFestivalInProgress) { ?>
                   <div class="filter-in-progress">
@@ -130,8 +132,20 @@ use MvcLite\Models\User;
                 </p>
               </div>
 
-              <div class="dates-container">
-                  test
+              <div class="festival-duration">
+                <div class="beginning-date">
+                <?= $festival->getBeginningDateWithFormat("%d %b. %Y") ?>
+                </div>
+
+                <div class="duration-arrow">
+                <svg width="61" height="19" viewBox="0 0 61 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L30.5 17.5L60.1045 1" stroke="#686868"/>
+                </svg>
+                </div>
+
+                <div class="ending-date">
+                <?= $festival->getEndingDateWithFormat("%d %b. %Y") ?>
+                </div>
               </div>
             </div>
 
