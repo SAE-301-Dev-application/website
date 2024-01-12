@@ -260,6 +260,24 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
+     * Removes given spectacle from current festival.
+     *
+     * @param Spectacle $spectacle
+     * @return bool If spectacle has been removed from festival
+     */
+    public function removeSpectacle(Spectacle $spectacle): bool
+    {
+        $query = "DELETE FROM festival_spectacle
+                  WHERE id_festival = ?
+                  AND id_spectacle = ?";
+
+        $spectacleRemoving = Database::query($query, $this->getId(), $spectacle->getId());
+
+        return $spectacleRemoving->getExecutionState();
+    }
+
+
+    /**
      * @return array Festival's scenes
      */
     public function getScenes(): array

@@ -26,36 +26,62 @@ $errors = $props->hasValidator()
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
 
+    <?php
+    Storage::include("Js/festival-add-spectacle/popup.js", importMethod: "defer");
+    ?>
+
   <script defer>
       document.addEventListener("DOMContentLoaded", () => {
+          const SPECTACLES_LIST = $("section#current_spectacles"),
+              SPECTACLES_SEARCHING_LIST = $("#spectacle_searching_results"),
+              SPECTACLES_SEARCHING_POPUP = $("#search_spectacle_popup");
+
+          let loadedSpectacles = [];
+
           function updateSpectaclesList() {
               console.log("UPDATING SPECTACLES LIST.");
-              const SPECTACLES_LIST = $("section#current_spectacles");
+
               console.log("<?=$festival->getId()?>");
               $.get("<?= route("addSpectacle.getSpectacles") ?>?festival=<?= $festival->getId() ?>", {})
                   .done(data => {
                       console.log(data);
 
                       data = JSON.parse(data);
-
+                      loadedScenes = data;
                       SPECTACLES_LIST.empty();
 
+
+                      if (data.length) {
+                      } else {
+                          SPECTACLES_LIST.append(`
+                          <div class="alert alert-grey">
+                            <div class="alert-icon">
+                              <i class="fa-solid fa-info-circle"></i>
+                            </div>
+                            <div class="alert-content">
+                              <p>Aucun spectacle n'est lié à ce festival.</p>
+                            </div>
+                          </div>
+                          `)
+                      }
+
+
                       data.forEach(spectacle => {
-                          switch (spectacle.size) {
+                          switch (spectacle.taille_scene_sp) {
                               case 1:
-                                  spectacle.size_label = "petite";
+                                  spectacle.taille_scene_sp_label = "petite";
                                   break;
 
                               case 2:
-                                  spectacle.size_label = "moyenne";
+                                  spectacle.taille_scene_sp_label = "moyenne";
                                   break;
 
                               case 3:
-                                  spectacle.size_label = "grande";
+                                  spectacle.taille_scene_sp_label = "grande";
                                   break;
 
                               default:
-                                  spectacle.size_label = "inconnue";
+                                  spectacle.taille_scene_sp_label = "inconnue";
                                   break;
                           }
 
@@ -63,7 +89,7 @@ $errors = $props->hasValidator()
                           <div class=\"spectacle-container\">
                             <div class=\"spectacle-information\">
                               <h3 class=\"spectacle-name\">
-                                  ${spectacle.name}
+                                  ${spectacle.titre_sp}
                               </h3>
 
                               <ul class=\"spectacle-details\">
@@ -71,12 +97,12 @@ $errors = $props->hasValidator()
                                 <li>
                                   <i class=\"fa-solid fa-up-right-and-down-left-from-center fa-fw\"></i>
                                   Taille :
-                                  ${spectacle.size_label}
+                                  ${spectacle.taille_scene_sp_label}
                                 </li>
                               </ul>
                             </div>
 
-                            <button class=\"button-red remove-spectacle-button\" id=\"remove_spectacle_${spectacle.id}\">
+                            <button class=\"button-red remove-spectacle-button\" id=\"remove_spectacle_${spectacle.id_spectacle}\">
                               <i class=\"fa-solid fa-trash\"></i>
                               Supprimer
                             </button>
@@ -86,7 +112,108 @@ $errors = $props->hasValidator()
                   });
           }
 
+          function searchSpectacle(search) {
+              $.get("<?= route("addSpectacle.searchSpectacle") ?>", {
+                  search,
+              })
+                  .done(data => {
+                      data = JSON.parse(data);
+
+                      const SEARCH_RESULT_POPUP_TITLE = $("#search_spectacle_popup > .popup > h3.popup-title");
+
+                      let spectaclePlurality = data.length > 1 ? "s" : "";
+
+                      SEARCH_RESULT_POPUP_TITLE.text(`${data.length} spectacle${spectaclePlurality} trouvé${spectaclePlurality}`);
+                      SPECTACLES_SEARCHING_LIST.empty();
+
+                      data.forEach(spectacle => {
+                          let button;
+
+                          if (loadedSpectacles.find(loadedSpectacle => loadedSpectacle.id_spectacle === spectacle.id_spectacle)) {
+                              button = `
+                                <button class=\"button-red remove-spectacle-button\" id=\"remove_spectacle_${spectacle.id_spectacle}\">
+                                  <i class=\"fa-solid fa-trash\"></i>
+                                  Supprimer
+                                </button>`;
+                          } else {
+                              button = `
+                                <button class=\"button-blue add-spectacle-button\" id=\"add_spectacle_${spectacle.id_spectacle}\">
+                                  <i class=\"fa-solid fa-plus\"></i>
+                                  Ajouter
+                                </button>`;
+                          }
+
+                          switch (spectacle.taille_scene_sp) {
+                              case 1:
+                                  spectacle.taille_scene_sp_label = "petite";
+                                  break;
+
+                              case 2:
+                                  spectacle.taille_scene_sp_label = "moyenne";
+                                  break;
+
+                              case 3:
+                                  spectacle.taille_scene_sp_label = "grande";
+                                  break;
+
+                              default:
+                                  spectacle.taille_scene_sp_label = "inconnue";
+                                  break;
+                          }
+
+                          SPECTACLES_SEARCHING_LIST.append(`
+                          <div class=\"spectacle-container\">
+                            <div class=\"spectacle-information\">
+                              <h3 class=\"spectacle-name\">
+                                  ${spectacle.titre_sp}
+                              </h3>
+
+                              <ul class=\"spectacle-details\">
+                                <li>
+                                  <i class=\"fa-solid fa-up-right-and-down-left-from-center fa-fw\"></i>
+                                  Taille :
+                                  ${spectacle.taille_scene_sp_label}
+                                </li>
+                              </ul>
+                            </div>
+
+                            ${button}
+                          </div>
+                          `);
+                      });
+                  });
+          }
+
           updateSpectaclesList();
+
+          $(document).on("click", "button[id^='add_spectacle_']", e => {
+              e.preventDefault();
+
+              let button = $(e.currentTarget),
+                  festivalId = button.attr("id").split('_')[2];
+
+              $.post("<?= route("addSpectacle.addSpectacles") ?>?festival=<?= $festival->getId() ?>&spectacle="
+                  + festivalId,
+                  {
+                      festivalId,
+                  })
+                  .done(data => {
+                      console.log(data);
+                      if (data === "success") {
+                          updateSpectaclesList();
+
+                          $(`#search_spectacle_popup button[id^="add_spectacle_${festivalId}"]`)
+                              .replaceWith(`
+                              <button class=\"button-red remove-spectacle-button\" id=\"remove_spectacle_${festivalId}\">
+                                <i class=\"fa-solid fa-trash\"></i>
+                                Supprimer
+                              </button>
+                              `);
+                      } else {
+                          button.after(`<p class="input-error">${data}</p>`);
+                      }
+                  });
+          });
 
           $(document).on("click", "button[id^='remove_spectacle_']", e => {
               e.preventDefault();
@@ -94,16 +221,36 @@ $errors = $props->hasValidator()
               let button = $(e.currentTarget),
                   festivalId = button.attr("id").split('_')[2];
 
-              $.post("<?= route("addSpectacle.removeSpectacle") ?>?festival=<?= $festival->getId() ?>&spectacle=" + festivalId, {
-                  festivalId,
-              })
+              $.post("<?= route("addSpectacle.removeSpectacle") ?>?festival=<?= $festival->getId() ?>&spectacle="
+                  + festivalId,
+                  {
+                      festivalId,
+                  })
                   .done(data => {
                       if (data === "success") {
                           updateSpectaclesList();
+
+                          $(`#search_spectacle_popup button[id^="remove_spectacle_${festivalId}"]`)
+                              .replaceWith(`
+                              <button class=\"button-blue add-spectacle-button\" id=\"add_spectacle_${festivalId}\">
+                                <i class=\"fa-solid fa-plus\"></i>
+                                Ajouter
+                              </button>
+                              `);
                       } else {
                           button.after(`<p class="input-error">${data}</p>`);
                       }
                   });
+          });
+
+          $(document).on("submit", "form#initial_search_spectacle_form", e => {
+              e.preventDefault();
+
+              let searchValue = $("input#initial_search_spectacle_input").val();
+
+              searchSpectacle(searchValue);
+              SPECTACLES_SEARCHING_POPUP.removeClass("popup-hidden");
+              $("body").addClass("body-overflow-clip");
           });
       });
   </script>
@@ -118,7 +265,8 @@ $errors = $props->hasValidator()
     <?php
     Storage::component("PopupComponent", [
         "id" => "search_spectacle_popup",
-        ""
+        "title" => "0 spectacle trouvé",
+        "slot" => "<div id='spectacle_searching_results'></div>",
     ]);
 
     Storage::component("HeaderComponent");
@@ -140,21 +288,21 @@ $errors = $props->hasValidator()
       </div>
 
       <div class="form-container">
-        <form action="<?= route("festivals") ?>"
-              method="post"
-              enctype="multipart/form-data">
-
-          <div class="form-grid">
-            <div class="main-container">
-              <section id="search_spectacle">
+        <div class="form-grid">
+          <div class="main-container">
+            <section id="initial_search_spectacle">
+              <form id="initial_search_spectacle_form">
                 <div class="form-component">
-                  <label for="search_spectacle_input">
+                  <label for="initial_search_spectacle_input">
                     <p>
                       Rechercher un spectacle :
                     </p>
 
                     <div class="form-input-button">
-                      <input type="text" name="search_spectacle" id="search_spectacle_input"/>
+                      <input type="text"
+                             name="search_spectacle"
+                             id="initial_search_spectacle_input"
+                             required/>
 
                       <button class="button-blue">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -163,19 +311,20 @@ $errors = $props->hasValidator()
                     </div>
                   </label>
                 </div>
-              </section>
+              </form>
+            </section>
 
-              <section id="current_spectacles">
-                <!--  -->
-              </section>
-            </div>
+            <section id="current_spectacles">
+              <!--  -->
+            </section>
+          </div>
 
-              <?php
-              Storage::component("FormHelpBoxComponent", [
-                  "icon" => "fa-regular fa-question-circle",
-                  "title" => "Ajouter un spectacle au festival",
-                  "content"
-                  => "<p>
+            <?php
+            Storage::component("FormHelpBoxComponent", [
+                "icon" => "fa-regular fa-question-circle",
+                "title" => "Ajouter un spectacle au festival",
+                "content"
+                => "<p>
                         Pour son déroulement, un festival nécessite des spectacles. Ceux-ci vont permettre 
                         d’animer le festival.
                       </p>
@@ -188,11 +337,9 @@ $errors = $props->hasValidator()
                         Vous pouvez, d’autre part, retirer des spectacles de votre sélection 
                         en cliquant sur son bouton Supprimer.
                       </p>",
-              ]);
-              ?>
-          </div>
-
-        </form>
+            ]);
+            ?>
+        </div>
       </div>
     </section>
   </div>

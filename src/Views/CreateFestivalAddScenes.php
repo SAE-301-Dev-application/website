@@ -18,23 +18,23 @@ $errors = $props->hasValidator()
   <title>Ajouter une scène - Festiplan</title>
 
   <!-- CSS -->
-  <?php
-  Storage::include("Css/ready.css");
-  ?>
+    <?php
+    Storage::include("Css/ready.css");
+    ?>
 
   <!-- JS -->
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
 
-  <?php
-  Storage::include("Js/festival-add-scene/popup.js", importMethod: "defer");
-  ?>
+    <?php
+    Storage::include("Js/festival-add-scene/popup.js", importMethod: "defer");
+    ?>
 
   <script defer>  /* Usage d'une balise script pour le code source JS, car présence de PHP. */
       document.addEventListener("DOMContentLoaded", () => {
           const SCENE_SEARCHING_POPUP = $("#search_scene_popup"),
-                SCENE_SEARCHING_LIST = $("#scene_searching_results"),
-                SCENES_LIST = $("section#current_scenes");
+              SCENE_SEARCHING_LIST = $("#scene_searching_results"),
+              SCENES_LIST = $("section#current_scenes");
 
           let loadedScenes = [];
 
@@ -116,7 +116,7 @@ $errors = $props->hasValidator()
                           </div>
                           `);
                       });
-                });
+                  });
           }
 
           function searchScene(search) {
@@ -216,7 +216,8 @@ $errors = $props->hasValidator()
                   {
                       festivalId,
                   })
-                  .done(data => {  console.log(data);
+                  .done(data => {
+                      console.log(data);
                       if (data === "success") {
                           updateScenesList();
 
@@ -240,9 +241,9 @@ $errors = $props->hasValidator()
                   festivalId = button.attr("id").split('_')[2];
 
               $.post("<?= route("addScene.removeScene") ?>?festival=<?= $festival->getId() ?>&scene="
-                     + festivalId,
+                  + festivalId,
                   {
-                    festivalId,
+                      festivalId,
                   })
                   .done(data => {
                       if (data === "success") {
@@ -259,7 +260,7 @@ $errors = $props->hasValidator()
                           button.after(`<p class="input-error">${data}</p>`);
                       }
                   });
-              });
+          });
 
           $(document).on("submit", "form#initial_search_scene_form", e => {
               e.preventDefault();
@@ -280,15 +281,15 @@ $errors = $props->hasValidator()
 </head>
 <body>
 <div id="add_scene">
-  <?php
-  Storage::component("PopupComponent", [
-      "id"    => "search_scene_popup",
-      "title" => "0 scène trouvée",
-      "slot" => "<div id='scene_searching_results'></div>",
-  ]);
+    <?php
+    Storage::component("PopupComponent", [
+        "id" => "search_scene_popup",
+        "title" => "0 scène trouvée",
+        "slot" => "<div id='scene_searching_results'></div>",
+    ]);
 
-  Storage::component("HeaderComponent");
-  ?>
+    Storage::component("HeaderComponent");
+    ?>
 
   <div id="main">
     <section id="add-scene">
@@ -320,7 +321,7 @@ $errors = $props->hasValidator()
                       <input type="text"
                              name="search_scene"
                              id="initial_search_scene_input"
-                             required />
+                             required/>
 
                       <button class="button-blue">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -337,12 +338,12 @@ $errors = $props->hasValidator()
             </section>
           </div>
 
-          <?php
-          Storage::component("FormHelpBoxComponent", [
-              "icon" => "fa-regular fa-question-circle",
-              "title" => "Ajouter une scène au festival",
-              "content"
-              => "<p>
+            <?php
+            Storage::component("FormHelpBoxComponent", [
+                "icon" => "fa-regular fa-question-circle",
+                "title" => "Ajouter une scène au festival",
+                "content"
+                => "<p>
                     Pour ses représentations, un festival nécessite des scènes. Autrement dit, des lieux 
                     de représentations de spectacles.
                   </p>
@@ -355,16 +356,16 @@ $errors = $props->hasValidator()
                     Vous pouvez, d’autre part, retirer des scènes de votre sélection en
                     cliquant sur son bouton Supprimer.
                   </p>",
-          ]);
-          ?>
+            ]);
+            ?>
         </div>
       </div>
     </section>
   </div>
 
-  <?php
-  Storage::component("FooterComponent");
-  ?>
+    <?php
+    Storage::component("FooterComponent");
+    ?>
 </div>
 </body>
 </html>

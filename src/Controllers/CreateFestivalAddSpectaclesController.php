@@ -7,6 +7,7 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Festival;
 use MvcLite\Models\Scene;
+use MvcLite\Models\Spectacle;
 use MvcLite\Router\Engine\Redirect;
 use MvcLite\Router\Engine\RedirectResponse;
 use MvcLite\Router\Engine\Request;
@@ -17,7 +18,7 @@ class CreateFestivalAddSpectaclesController extends Controller
 
     private const REGEX_ID_PARAMETER = "/^([1-9])([0-9]*)$/";
 
-    private const ERROR_IRRETRIEVABLE_SCENE
+    private const ERROR_IRRETRIEVABLE_SPECTACLE
         = "Cette scène n'existe pas ou plus.";
 
 
@@ -32,14 +33,14 @@ class CreateFestivalAddSpectaclesController extends Controller
     {
         $festivalId = $request->getParameter("festival");
 
-            if ($festivalId == null
-                ||!self::isRetrievableFestival($festivalId)
-                || !self::isManageableFestival($festivalId))
+        if ($festivalId == null
+            || !self::isRetrievableFestival($festivalId)
+            || !self::isManageableFestival($festivalId))
         {
             return Redirect::route("festivals")
                 ->redirect();
         }
-        
+
         $festival = Festival::getFestivalById($festivalId);
 
         View::render("CreateFestivalAddSpectacles", [
@@ -55,8 +56,7 @@ class CreateFestivalAddSpectaclesController extends Controller
 
         if ($festivalId == null
             || !self::isRetrievableFestival($festivalId)
-            || !self::isManageableFestival($festivalId))
-        {
+            || !self::isManageableFestival($festivalId)) {
             return Redirect::route("festivals")
                 ->redirect();
         }
@@ -67,13 +67,13 @@ class CreateFestivalAddSpectaclesController extends Controller
         return true;
     }
 
-    public function removeSpectacle(Request $request): void
+    public function addSpectacle(Request $request): void
     {
         $festivalId = $request->getParameter("festival");
         $spectacleId = $request->getParameter("spectacle");
 
-        if ($festivalId == null
-            || $spectacleId == null
+        if ($festivalId === null
+            || $spectacleId === null
             || !self::isRetrievableFestival($festivalId)
             || !self::isManageableFestival($festivalId))
         {
@@ -83,19 +83,67 @@ class CreateFestivalAddSpectaclesController extends Controller
             return;
         }
 
-        if (!self::isRetrievableScene($spectacleId))
+        if (!self::isRetrievableSpectacle($spectacleId))
         {
-            echo self::ERROR_IRRETRIEVABLE_SCENE;
+            echo self::ERROR_IRRETRIEVABLE_SPECTACLE;
             return;
         }
 
         $spectacle = Scene::getSceneById($spectacleId);
+        $festival = Festival::getFestivalById($festivalId);
+
+        if (!$festival->hasScene($spectacle))
+        {
+            $festival->addScene($spectacle);
+            echo "success";
+        }
+    }
+
+    public function removeSpectacle(Request $request): void
+    {
+        $festivalId = $request->getParameter("festival");
+        $spectacleId = $request->getParameter("spectacle");
+
+        if ($festivalId == null
+            || $spectacleId == null
+            || !self::isRetrievableFestival($festivalId)
+            || !self::isManageableFestival($festivalId)) {
+            Redirect::route("festivals")
+                ->redirect();
+
+            return;
+        }
+
+        if (!self::isRetrievableSpectacle($spectacleId)) {
+            echo self::ERROR_IRRETRIEVABLE_SPECTACLE;
+            return;
+        }
+
+        $spectacle = Spectacle::getSpectacleById($spectacleId);
 
         $festival = Festival::getFestivalById($festivalId);
-        $festival->removeScene($spectacle);
+        $festival->removeSpectacle($spectacle);
 
         echo "success";
     }
+
+
+    public function searchSpectacle(Request $request): void
+    {
+        $searchValue = $request->getParameter("search");
+
+        if ($searchValue === null)
+        {
+            echo json_encode([
+                "type" => "error",
+                "message" => "Aucun terme de recherche n'est précisé.",
+            ]);
+
+            return;
+        }
+        echo json_encode(Spectacle::searchSpectacleByName($searchValue));
+    }
+
 
     /**
      * @param string $festivalId
@@ -104,7 +152,7 @@ class CreateFestivalAddSpectaclesController extends Controller
     private static function isRetrievableFestival(string $festivalId): bool
     {
         return preg_match(self::REGEX_ID_PARAMETER, $festivalId)
-               && Festival::getFestivalById($festivalId) !== null;
+            && Festival::getFestivalById($festivalId) !== null;
     }
 
     /**
@@ -118,11 +166,11 @@ class CreateFestivalAddSpectaclesController extends Controller
 
     /**
      * @param string $spectacleId
-     * @return bool If given scene id is valid (non-negative and non-null integer)
+     * @return bool If given spectacle id is valid (non-negative and non-null integer)
      */
     private static function isRetrievableSpectacle(string $spectacleId): bool
     {
         return preg_match(self::REGEX_ID_PARAMETER, $spectacleId)
-               && Scene::getSceneById($spectacleId) !== null;
+            && Spectacle::getSpectacleById($spectacleId) !== null;
     }
 }
