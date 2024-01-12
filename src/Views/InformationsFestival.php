@@ -315,8 +315,8 @@ use MvcLite\Models\User;
                     <?= $user->getFirstname() . " " . $user->getLastname() ?>
                   </div>
 
-                  <div class="login">
-                    <?= $user->getLogin() ?>
+                  <div class="email">
+                    <?= $user->getEmail() ?>
                   </div>
                   
                   <div class="role">

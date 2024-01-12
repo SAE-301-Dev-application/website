@@ -76,6 +76,17 @@
 
                 .name {
                   @apply text-xl font-semibold;
+                  grid-row: 1;
+                }
+
+                .email {
+                  @apply text-sm font-semibold;
+                  grid-row-start: 2;
+
+                }
+                .role {
+                  @apply text-sm font-semibold;
+                  grid-row-start: 3;
                 }
               }
             }

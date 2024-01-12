@@ -132,6 +132,26 @@ class Contributor extends Model
     }
 
     /**
+     * @param int $spectacleId id of spectacle
+     * @return string role of Contributor
+     */
+    public function getRoleById(int $spectacleId): string
+    {
+        $query = "SELECT type_inter
+                  FROM spectacle_intervenant
+                  WHERE id_intervenant = ?
+                  AND id_spectacle = ?";
+        
+        $role = Database::query($query, $this->getId(), $spectacleId);
+
+        if ($role->get()["type_inter"] == 1) {
+            return "Hors scène";
+        } else {
+            return "Sur scène";
+        }
+    }
+
+    /**
      * Searches and returns Contributor instance by its data.
      *
      * @param array $contributorData Contributor data

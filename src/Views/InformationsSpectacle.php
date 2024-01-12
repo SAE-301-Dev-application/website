@@ -117,10 +117,17 @@ use MvcLite\Models\Festival;
               </div>
               <div class="users-grid">
                 <?php
-                    foreach ($spectacle->getContributors() as $contributor) {
-                        echo $contributor->getLastname() . " " . $contributor->getFirstname()."<br>".$contributor->getEmail()."<br>";
-                    }
-                ?>
+                    foreach ($spectacle->getContributors() as $contributor) {?>
+                      <div class="name">
+                        <?= $contributor->getLastname() . " " . $contributor->getFirstname() ?>
+                      </div>
+                      <div class="email">
+                        <?= $contributor->getEmail()?>
+                      </div>
+                      <div class="role">
+                        <?= $contributor->getRoleById($spectacle->getId())?>
+                      </div>
+                <?php } ?>
               </div>
             </div>
           </div>
