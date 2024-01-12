@@ -57,6 +57,20 @@ class GriJ extends Model implements JsonSerializable
     }
 
     /**
+     * @return int GriJ's beginningSpectacleHour with format
+     */
+    public function getBeginningSpectacleHourWithFormat(string $format): string
+    {
+        $query = "SELECT TIME_FORMAT(heure_debut_spectacles, '$format') AS formatted_heure_debut
+                  FROM grij
+                  WHERE id_grij = ?";
+                  
+        $result = Database::query($query, $this->getId());
+
+        return $result->get()["formatted_heure_debut"];
+    }
+
+    /**
      * @param int $id New GriJ's beginningSpectacleHour
      * @return int New GriJ's beginningSpectacleHour
      */
@@ -71,6 +85,20 @@ class GriJ extends Model implements JsonSerializable
     public function getEndingSpectacleHour(): string
     {
         return $this->endingSpectacleHour;
+    }
+
+    /**
+     * @return int GriJ's endingSpectacleHour with format
+     */
+    public function getEndingSpectacleHourWithFormat(string $format): string
+    {
+        $query = "SELECT TIME_FORMAT(heure_fin_spectacles, '$format') AS formatted_heure_fin
+                  FROM grij
+                  WHERE id_grij = ?";
+                  
+        $result = Database::query($query, $this->getId());
+
+        return $result->get()["formatted_heure_fin"];
     }
 
     /**
@@ -89,6 +117,20 @@ class GriJ extends Model implements JsonSerializable
     {
         return $this->minDurationBetweenSpectacle;
     }
+
+    /**
+     * @return int GriJ's minDurationBetweenSpectacle with format
+     */
+    public function getMinDurationBetweenSpectacleWithFormat(string $format): string
+    {
+        $query = "SELECT TIME_FORMAT(duree_min_entre_spectacles, '$format') AS formatted_duree_min
+                  FROM grij
+                  WHERE id_grij = ?";
+                  
+        $result = Database::query($query, $this->getId());
+
+        return $result->get()["formatted_duree_min"];
+    }    
 
     /**
      * @param string $id New GriJ's minDurationBetweenSpectacle

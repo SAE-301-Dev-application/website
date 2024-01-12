@@ -3,6 +3,7 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Models\Festival;
+use MvcLite\Models\Grij;
 use MvcLite\Models\User;
 ?>
 
@@ -41,22 +42,18 @@ use MvcLite\Models\User;
             <?= $festival->getName() ?>
           </h2>
 
-          <a href="<?= route("generatePlanification") ?>?id=<?= $festival->getId()?>">
-            <button class="button-blue">
-              <i class="fa-solid fa-plus"></i>
-              Voir la planification TODO cacher si impossible
-            </button>
-          </a>
+          <?php if (Grij::getGriJByFestivalId($festival->getId()) !== null) { ?>
+            <a href="<?= route("generatePlanification") ?>?id=<?= $festival->getId()?>">
+              <button class="button-blue">
+                <i class="fa-solid fa-plus"></i>
+                Voir la planification
+              </button>
+            </a>
+          <?php } ?>
           
           <!-- Si l'utilisateur est responsable du festival -->
           <?php if ($festival->isUserOwner()) { ?>
             <div class="buttons">
-              <a href="<?= route("addScene")?>?festival=<?= $festival->getId() ?>">
-                <button class="button-blue">
-                  <i class="fa-solid fa-plus"></i>
-                  Ajouter scènes
-                </button>
-
               <a href="<?= route("modifyFestival")?>?id=<?= $festival->getId()?>">
                 <button class="button-blue">
                   <i class="fa-solid fa-plus"></i>
@@ -100,15 +97,16 @@ use MvcLite\Models\User;
                   GriJ :
                 </h3>
               </div>
-
-              <div class="add-button">
+              
+              <!-- N'est pas dans la maquette -->
+              <!-- <div class="add-button">
                 <a href="<?= route("grijFestival")?>?id=<?= $festival->getId()?>">
                   <button class="button-blue">
                     <i class="fa-solid fa-plus"></i>
                     Ajouter GriJ
                   </button>
                 </a>
-              </div>
+              </div> -->
             </div>
 
             <div class="grij-grid">
@@ -126,13 +124,19 @@ use MvcLite\Models\User;
 
               <div class="grij-values">
                 <p class="beginning grij-value">
-                  15h00
+                  <?= $grij !== null ?
+                      $grij->getBeginningSpectacleHourWithFormat("%Hh%i") :
+                      "non défini"?>
                 </p>
                 <p class="ending grij-value">
-                  22h00
+                  <?= $grij !== null ?
+                      $grij->getEndingSpectacleHourWithFormat("%Hh%i") : 
+                      "non défini" ?>
                 </p>
                 <p class="duration grij-value">
-                  60 minutes
+                  <?= $grij !== null ?
+                      $grij->getMinDurationBetweenSpectacleWithFormat("%H heure(s) %i minute(s)") :
+                      "non défini" ?>
                 </p>
               </div>
             </div>
@@ -176,7 +180,7 @@ use MvcLite\Models\User;
                 </div>
 
                 <div class="buttons">
-                  <a href="<?= route("informationsSpectacle") // TODO mettre la route ?>">
+                  <a href="<?= route("") // TODO mettre la route ?>">
                     <button class="button-blue">
                       <i class="fa-solid fa-plus"></i>
                       Voir plus
@@ -197,7 +201,7 @@ use MvcLite\Models\User;
 
               <div class="spectacles-grid">
                 <?php
-                foreach ($festival->getSpectacles() as $spectacle) {?>
+                foreach ($festival->getSpectaclesWithLimit(5) as $spectacle) {?>
 
                   <div>
                     <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
@@ -233,7 +237,7 @@ use MvcLite\Models\User;
                   </a>
 
                   <!-- Si l'utilisateur est responsable du festival -->
-                  <?php if (false && $festival->isUserOwner()) { ?>
+                  <?php if ($festival->isUserOwner()) { ?>
                     <a href="<?= route("addScene")?>?festival=<?= $festival->getId() ?>">
                       <button class="button-blue">
                         <i class="fa-solid fa-plus"></i>
@@ -246,7 +250,7 @@ use MvcLite\Models\User;
 
               <div class="scenes-grid">
                 <?php
-                foreach ($festival->getScenes() as $scene) {
+                foreach ($festival->getScenesWithLimit(6) as $scene) {
                   $size = $scene->getSize();
 
                   switch ($scene->getSize()) {
@@ -287,7 +291,7 @@ use MvcLite\Models\User;
                   </a>
 
                   <!-- Si l'utilisateur est responsable du festival -->
-                  <?php if (false && $festival->isUserOwner()) { ?>
+                  <?php if ($festival->isUserOwner()) { ?>
                     <a href="<?= route("")?>?festival=<?= $festival->getId() ?>">
                       <button class="button-blue">
                         <i class="fa-solid fa-plus"></i>
@@ -304,7 +308,7 @@ use MvcLite\Models\User;
 
                   echo $owner->getFirstname()." ".$owner->getLastname()."<br>".$owner->getLogin()."<br>Responsable<br><br>";
 
-                  foreach ($festival->getOrganizers() as $user) {
+                  foreach ($festival->getOrganizersWithLimit(2) as $user) {
                 ?>
                   
                   <div class="name">

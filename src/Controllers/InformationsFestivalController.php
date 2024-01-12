@@ -10,6 +10,7 @@ use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
 use MvcLite\Models\Festival;
 use MvcLite\Models\Spectacle;
+use MvcLite\Models\GriJ;
 
 class InformationsFestivalController extends Controller
 {
@@ -32,9 +33,11 @@ class InformationsFestivalController extends Controller
 
         $festival = new Festival();
         $festival = Festival::getFestivalById($id);
+        $grij = GriJ::getGriJByFestivalId($id);
         
         View::render("InformationsFestival", [
-            "festival" => $festival
+            "festival" => $festival,
+            "grij" => $grij
         ]);
     }
 }

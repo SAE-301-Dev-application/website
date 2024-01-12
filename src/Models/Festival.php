@@ -243,6 +243,25 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
+     * @param int $limit Limit row returned
+     * @return array Festival's spectacles with limit
+     */
+    public function getSpectaclesWithLimit(int $limit): array
+    {
+        $getSpectaclesQuery
+            = "SELECT sp.*
+               FROM spectacle sp 
+               INNER JOIN festival_spectacle fs
+               ON sp.id_spectacle = fs.id_spectacle
+               WHERE fs.id_festival = ?
+               LIMIt ?;";
+
+        $result = Database::query($getSpectaclesQuery, $this->getId(), $limit);
+
+        return Spectacle::queryToArray($result);
+    }
+
+    /**
      * @param Spectacle $spectacle Searched spectacle object
      * @return bool If given spectacle is used by current festival
      */
@@ -313,7 +332,26 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
-     * @return array Festival's scenes
+     * @param int $limit Limit row returned
+     * @return array Festival's scenes with limit
+     */
+    public function getScenesWithLimit(int $limit): array
+    {
+        $query
+            = "SELECT sc.*
+               FROM scene sc
+               INNER JOIN festival_scene fs
+               ON sc.id_scene = fs.id_scene
+               WHERE fs.id_festival = ?
+               LIMIt ?;";
+
+        $result = Database::query($query, $this->getId(), $limit);
+
+        return Scene::queryToArray($result);
+    }
+
+    /**
+     * @return array Festival's organizers
      */
     public function getOrganizers(): array
     {
@@ -326,6 +364,25 @@ class Festival extends Model implements JsonSerializable
                WHERE id_festival = ?";
 
         $result = Database::query($getUsersQuery, $this->getId());
+
+        return User::queryToArray($result);
+    }
+
+    /**
+     * @param int $limit Limit row returned
+     * @return array Festival's organizers with limit
+     */
+    public function getOrganizersWithLimit(int $limit): array
+    {
+        $query
+            = "SELECT *
+               FROM utilisateur ut
+               INNER JOIN festival_utilisateur fu
+               ON ut.id_utilisateur = fu.id_utilisateur
+               WHERE id_festival = ?
+               LIMIt ?;";
+
+        $result = Database::query($query, $this->getId(), $limit);
 
         return User::queryToArray($result);
     }
