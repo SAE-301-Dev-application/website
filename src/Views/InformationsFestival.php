@@ -44,7 +44,7 @@ use MvcLite\Models\User;
           <a href="<?= route("generatePlanification") ?>?id=<?= $festival->getId()?>">
             <button class="button-blue">
               <i class="fa-solid fa-plus"></i>
-              Voir la planification
+              Voir la planification TODO cacher si impossible
             </button>
           </a>
           
@@ -169,13 +169,13 @@ use MvcLite\Models\User;
 
             <div class="spectacles-container">
               <div class="spectacles-title-row">
-                <div class="spectacles-title">
+                <div class="data-title">
                   <h3 class="subtitle">
                     Spectacles :
                   </h3>
                 </div>
 
-                <div class="spectacles-buttons">
+                <div class="buttons">
                   <a href="<?= route("informationsSpectacle") // TODO mettre la route ?>">
                     <button class="button-blue">
                       <i class="fa-solid fa-plus"></i>
@@ -218,13 +218,13 @@ use MvcLite\Models\User;
 
             <div class="scenes-container">
               <div class="spectacles-title-row">
-                <div class="spectacles-title">
-                  <h3>
-                    Scènes:
+                <div class="data-title">
+                  <h3 class="subtitle">
+                    Scènes :
                   </h3>
                 </div>
                 
-                <div class="spectacles-buttons">
+                <div class="buttons">
                   <a href="<?= route("")//TODO mettre la route ?>">
                     <button class="button-blue">
                       <i class="fa-solid fa-plus"></i>
@@ -262,7 +262,7 @@ use MvcLite\Models\User;
 
                   }
 
-                  echo "<div>";
+                  echo "<div class=\"name\">";
                   echo $scene->getName()." (".$size.")";
                   echo "</div>";
                 }
@@ -270,37 +270,58 @@ use MvcLite\Models\User;
               </div>
             </div>
 
-            <!-- <h3>
-              Organisateurs:
-            </h3> -->
-            <!-- <a href="<?= "" // route("")//TODO mettre la route ?>">
-              <button class="button-blue">
-                <i class="fa-solid fa-plus"></i>
-                Voir plus
-              </button>
-            </a> -->
+            <div class="users-container">
+              <div class="users-title-row">
+                <div class="data-title">
+                  <h3 class="subtitle">
+                    Organisateurs :
+                  </h3>
+                </div>
+                
+                <div class="buttons">
+                  <a href="<?= route("")//TODO mettre la route ?>">
+                    <button class="button-blue">
+                      <i class="fa-solid fa-plus"></i>
+                      Voir plus
+                    </button>
+                  </a>
 
-            <!-- Si l'utilisateur est le responsable du festival -->
-            <?php if (false && $festival->isUserOwner()) { ?>
-            <a href="<?= route("")//TODO mettre la route ?>">
-              <button class="button-blue">
-                <i class="fa-solid fa-plus"></i>
-                Ajouter organisateurs
-              </button>
-            </a>
-            <?php } ?>
-            <?php
+                  <!-- Si l'utilisateur est responsable du festival -->
+                  <?php if (false && $festival->isUserOwner()) { ?>
+                    <a href="<?= route("")?>?festival=<?= $festival->getId() ?>">
+                      <button class="button-blue">
+                        <i class="fa-solid fa-plus"></i>
+                        Ajouter organisateurs
+                      </button>
+                    </a>
+                  <?php } ?>
+                </div>
+              </div>
 
-              // $owner = $festival->getOwner();
+              <div class="users-grid">
+                <?php
+                  $owner = $festival->getOwner();
 
-              // echo $owner->getFirstname()." ".$owner->getLastname()."<br>".$owner->getLogin()."<br>Responsable<br><br>";
+                  echo $owner->getFirstname()." ".$owner->getLastname()."<br>".$owner->getLogin()."<br>Responsable<br><br>";
 
-              // foreach ($festival->getOrganizers() as $user) {
+                  foreach ($festival->getOrganizers() as $user) {
+                ?>
+                  
+                  <div class="name">
+                    <?= $user->getFirstname() . " " . $user->getLastname() ?>
+                  </div>
 
-              //   echo $user->getFirstname()." ".$user->getLastname()."<br>".$user->getLogin()."<br>Organisateur<br>";
+                  <div class="login">
+                    <?= $user->getLogin() ?>
+                  </div>
+                  
+                  <div class="role">
+                    Organisateur
+                  </div>
 
-              // }
-            ?>
+                <?php } ?>
+              </div>
+            </div>
           </div>
         </div>
       </section>

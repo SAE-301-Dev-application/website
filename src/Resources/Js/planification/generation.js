@@ -132,7 +132,7 @@ async function getScenes() {
  * Redirect to the festivals page.
  */
 const redirectToFestivals = () => {
-    window.location.href = ROUTE_PATH_PREFIX + "festivals";
+    window.location.href = ROUTE_PATH_PREFIX + "informations-festival?id=" + FESTIVAL_ID;
 };
 
 /**
