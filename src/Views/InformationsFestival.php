@@ -87,8 +87,16 @@ use MvcLite\Models\User;
         <h3>
           GriJ:
         </h3>
+          <?php if ($festival->isUserOwner()) { ?>
+            <a href="<?= route("grijFestival")?>?id=<?= $festival->getId()?>">
+              <button class="button-blue">
+                <i class="fa-solid fa-plus"></i>
+                Modifier la GriJ
+              </button>
+            </a>
+          <?php } ?>
         <p>
-          Début des spectacles: ..
+          Début des spectacles: 
           Fin des spectacles: ..
           Durée des pauses: ..
         </p>
