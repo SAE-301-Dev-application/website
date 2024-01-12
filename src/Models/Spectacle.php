@@ -109,6 +109,17 @@ class Spectacle extends Model implements JsonSerializable
     }
 
     /**
+     * @return string Spectacle's duration with hours and minutes
+     */
+    public function getDurationHoursMinutes(): array
+    {
+        $hours = intdiv($this->duration, 60);
+        $minutes = $this->duration % 60;
+
+        return array($hours, $minutes);
+    }
+
+    /**
      * @param string $duration New spectacle's duration
      * @return string New spectacle's duration
      */

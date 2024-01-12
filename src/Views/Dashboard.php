@@ -46,11 +46,18 @@ use MvcLite\Models\Festival;
                     $threeLastFestivals = Festival::lastFestivals();
                     foreach ($threeLastFestivals as $idFestival) {
                         $festival = Festival::getFestivalById($idFestival["id_festival"]);
+                        $isFestivalInProgress = $festival->isFestivalInProgress();
                 ?>
                 <div class="festivals-list">
                     <div class="festival-preview">
-                        <div class="festival-picture">
-                            <img src="<?= $festival->getIllustration() ?>" alt="logo festival">
+                        <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
+                             style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;"
+                             alt="logo festival">
+                            <?php if ($isFestivalInProgress) { ?>
+                                <div class="filter-in-progress">
+                                <p>en cours</p>
+                                </div>
+                            <?php } ?>
                         </div>
 
                         <div class="festival-identity">

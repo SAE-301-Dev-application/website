@@ -362,7 +362,6 @@ class Festival extends Model implements JsonSerializable
      * Attempt to modify a festival's generals parameters
      * and relink categories to it.
      *
-     * @param int $id
      * @param string $name
      * @param string $description
      * @param string|null $illustration

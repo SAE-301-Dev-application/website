@@ -39,12 +39,6 @@ use MvcLite\Models\Festival;
             <?= $spectacle->getTitle() ?>
           </h2>
 
-          <a href="<?= route("")//TODO mettre la route ?>">
-            <button class="button-blue">
-              <i class="fa-solid fa-plus"></i>
-              Voir la planification
-            </button>
-          </a>
           <!-- Si l'utilisateur est le créateur du spectacle -->
           <?php if ($spectacle->isOwner()) { ?>
             <a href="<?= route("")//TODO mettre la route ?>">
@@ -62,13 +56,8 @@ use MvcLite\Models\Festival;
         ?>
 
         <div class="festival-preview">
-          <div style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
-
-                <div class="filter-in-progress">
-                  <!-- si on écrit rien sur l'image elle est pas affiché (modifier le css) -->
-                  blablabla
-                </div>
-
+          <div class ="festival-picture"
+               style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
           </div>
         </div>
 
@@ -77,6 +66,14 @@ use MvcLite\Models\Festival;
         </h3>
         <p>
           <?= $spectacle->getDescription() ?>
+        </p>
+
+        <p>
+          Durée :
+          <?= $spectacle->getDurationHoursMinutes()[0] .
+              " Heure(s) " .
+              $spectacle->getDurationHoursMinutes()[1] .
+              " Minute(s)"?>
         </p>
 
         <h3>

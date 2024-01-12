@@ -59,7 +59,6 @@ use MvcLite\Models\User;
           <?php } ?>
         </div>
 
-        <div>
         (
         <?php
         // Debug::dd($festival->getCategories());
@@ -70,17 +69,18 @@ use MvcLite\Models\User;
                   }
             }
 
-        $isFestivalInProgress = $festival->isFestivalInProgress();?>
-        )
+            $isFestivalInProgress = $festival->isFestivalInProgress();?>
+          )
+          
+        <div class="festival-preview">
+          <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
+                style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;">
 
-        <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
-              style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;">
-
-            <?php if ($isFestivalInProgress) { ?>
-                <div class="filter-in-progress">
-                  <p>en cours</p>
-                </div>
-            <?php } ?>
+              <?php if ($isFestivalInProgress) { ?>
+                  <div class="filter-in-progress">
+                    <p>en cours</p>
+                  </div>
+              <?php } ?>
           </div>
         </div>
 

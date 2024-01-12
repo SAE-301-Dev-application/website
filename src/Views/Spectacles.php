@@ -39,12 +39,21 @@ $page = $props->getRequest()->getParameter("page") ?? 1;
           Tous les spectacles
           </h2>
 
-          <a href="<?= route("createSpectacle") ?>">
-            <button class="button-blue">
-              <i class="fa-solid fa-plus"></i>
-              Créer un spectacle
-            </button>
-          </a>
+          <div class="buttons">
+            <a href="<?= route("createSpectacle") ?>">
+              <button class="button-blue">
+                <i class="fa-solid fa-plus"></i>
+                Créer un spectacle
+              </button>
+            </a>
+  
+            <a href="<?= route("profile") ?>#my_spectacles">
+              <button class="button-grey">
+                <i class="fa-solid fa-champagne-glasses"></i>
+                  Mes spectacles
+              </button>
+            </a>
+          </div>
         </div>
 
         <div class="spectacles-grid">
