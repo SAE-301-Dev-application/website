@@ -5,6 +5,7 @@ namespace MvcLite\Controllers;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Session\Session;
+use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Models\Festival;
 use MvcLite\Models\Scene;
 use MvcLite\Models\Spectacle;
@@ -26,7 +27,7 @@ class CreateFestivalAddSpectaclesController extends Controller
     {
         parent::__construct();
 
-        // Empty constructor.
+        $this->middleware(AuthMiddleware::class);
     }
 
     public function render(Request $request): RedirectResponse|true
@@ -65,6 +66,22 @@ class CreateFestivalAddSpectaclesController extends Controller
 
         echo json_encode($festival->getSpectacles());
         return true;
+    }
+
+    public function searchSpectacle(Request $request): void
+    {
+        $searchValue = $request->getParameter("search");
+
+        if ($searchValue === null)
+        {
+            echo json_encode([
+                "type" => "error",
+                "message" => "Aucun terme de recherche n'est précisé.",
+            ]);
+
+            return;
+        }
+        echo json_encode(Spectacle::searchSpectacleByName($searchValue));
     }
 
     public function addSpectacle(Request $request): void
@@ -125,23 +142,6 @@ class CreateFestivalAddSpectaclesController extends Controller
         $festival->removeSpectacle($spectacle);
 
         echo "success";
-    }
-
-
-    public function searchSpectacle(Request $request): void
-    {
-        $searchValue = $request->getParameter("search");
-
-        if ($searchValue === null)
-        {
-            echo json_encode([
-                "type" => "error",
-                "message" => "Aucun terme de recherche n'est précisé.",
-            ]);
-
-            return;
-        }
-        echo json_encode(Spectacle::searchSpectacleByName($searchValue));
     }
 
 

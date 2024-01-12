@@ -47,7 +47,7 @@ $errors = $props->hasValidator()
                       console.log(data);
 
                       data = JSON.parse(data);
-                      loadedScenes = data;
+                      loadedSpectacles = data;
                       SPECTACLES_LIST.empty();
 
 
