@@ -28,7 +28,7 @@ let festivalData,
     scenesData;
 
 let scenesColors = [
-  '#90EE90', '#ADD8E6', '#FFB6C1', '#9400d3', '#ff0000', '#ff7f00', '#ffff00',
+  '#90EE90', '#ADD8E6', '#FFB6C1', '#c233ff', '#ff4747', '#ffa042', '#ffff30',
   '#a80070', '#0097a8', '#00a85d', '#00a800', '#a8a800', '#a87000', '#a80000',
   '#a8005d', '#a800a8', '#5d00a8', '#0000a8', '#005da8', '#00a8a8',
 ];
