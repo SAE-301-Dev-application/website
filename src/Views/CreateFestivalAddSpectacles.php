@@ -18,9 +18,9 @@ $errors = $props->hasValidator()
   <title>Ajouter un spectacle - Festiplan</title>
 
   <!-- CSS -->
-  <?php
-  Storage::include("Css/ready.css");
-  ?>
+    <?php
+    Storage::include("Css/ready.css");
+    ?>
 
   <!-- JS -->
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
@@ -28,9 +28,10 @@ $errors = $props->hasValidator()
 
   <script defer>
       document.addEventListener("DOMContentLoaded", () => {
-          function updateSpectaclesList() {  console.log("UPDATING SPECTACLES LIST.");
+          function updateSpectaclesList() {
+              console.log("UPDATING SPECTACLES LIST.");
               const SPECTACLES_LIST = $("section#current_spectacles");
-
+              console.log("<?=$festival->getId()?>");
               $.get("<?= route("addSpectacle.getSpectacles") ?>?festival=<?= $festival->getId() ?>", {})
                   .done(data => {
                       console.log(data);
@@ -66,11 +67,6 @@ $errors = $props->hasValidator()
                               </h3>
 
                               <ul class=\"spectacle-details\">
-                                <li>
-                                  <i class=\"fa-solid fa-location-dot fa-fw\"></i>
-                                  Longitude : ${spectacle.longitude} /
-                                  Latitude : ${spectacle.latitude}
-                                </li>
 
                                 <li>
                                   <i class=\"fa-solid fa-up-right-and-down-left-from-center fa-fw\"></i>
@@ -87,28 +83,28 @@ $errors = $props->hasValidator()
                           </div>
                       `);
                       });
-                });
+                  });
           }
 
           updateSpectaclesList();
 
           $(document).on("click", "button[id^='remove_spectacle_']", e => {
-          e.preventDefault();
+              e.preventDefault();
 
-          let button = $(e.currentTarget),
-              festivalId = button.attr("id").split('_')[2];
+              let button = $(e.currentTarget),
+                  festivalId = button.attr("id").split('_')[2];
 
-          $.post("<?= route("addSpectacle.removeSpectacle") ?>?festival=<?= $festival->getId() ?>&spectacle=" + festivalId, {
-              festivalId,
-            })
-            .done(data => {
-                if (data === "success") {
-                    updateSpectaclesList();
-                } else {
-                    button.after(`<p class="input-error">${data}</p>`);
-                }
-            });
-        });
+              $.post("<?= route("addSpectacle.removeSpectacle") ?>?festival=<?= $festival->getId() ?>&spectacle=" + festivalId, {
+                  festivalId,
+              })
+                  .done(data => {
+                      if (data === "success") {
+                          updateSpectaclesList();
+                      } else {
+                          button.after(`<p class="input-error">${data}</p>`);
+                      }
+                  });
+          });
       });
   </script>
 
@@ -119,14 +115,14 @@ $errors = $props->hasValidator()
 </head>
 <body>
 <div id="add-spectacle">
-  <?php
-  Storage::component("PopupComponent", [
-      "id"    => "search_spectacle_popup",
-      ""
-  ]);
+    <?php
+    Storage::component("PopupComponent", [
+        "id" => "search_spectacle_popup",
+        ""
+    ]);
 
-  Storage::component("HeaderComponent");
-  ?>
+    Storage::component("HeaderComponent");
+    ?>
 
   <div id="main">
     <section id="add-spectacle">
@@ -149,30 +145,30 @@ $errors = $props->hasValidator()
               enctype="multipart/form-data">
 
           <div class="form-grid">
-              <div class="main-container">
-                <section id="search_spectacle">
-                  <div class="form-component">
-                    <label for="search_spectacle_input">
-                      <p>
-                        Rechercher un spectacle :
-                      </p>
+            <div class="main-container">
+              <section id="search_spectacle">
+                <div class="form-component">
+                  <label for="search_spectacle_input">
+                    <p>
+                      Rechercher un spectacle :
+                    </p>
 
-                      <div class="form-input-button">
-                        <input type="text" name="search_spectacle" id="search_spectacle_input" />
+                    <div class="form-input-button">
+                      <input type="text" name="search_spectacle" id="search_spectacle_input"/>
 
-                        <button class="button-blue">
-                          <i class="fa-solid fa-magnifying-glass"></i>
-                          Rechercher
-                        </button>
-                      </div>
-                    </label>
-                  </div>
-                </section>
+                      <button class="button-blue">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Rechercher
+                      </button>
+                    </div>
+                  </label>
+                </div>
+              </section>
 
-                <section id="current_spectacles">
-                  <!--  -->
-                </section>
-              </div>
+              <section id="current_spectacles">
+                <!--  -->
+              </section>
+            </div>
 
               <?php
               Storage::component("FormHelpBoxComponent", [
@@ -201,9 +197,9 @@ $errors = $props->hasValidator()
     </section>
   </div>
 
-  <?php
-  Storage::component("FooterComponent");
-  ?>
+    <?php
+    Storage::component("FooterComponent");
+    ?>
 </div>
 </body>
 </html>
