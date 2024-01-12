@@ -423,6 +423,24 @@ class Spectacle extends Model implements JsonSerializable
     }
 
     /**
+     * Returns an array of spectacles that have given search value
+     * in their name.
+     *
+     * @param string $searchValue
+     * @return array Search result array
+     */
+    public static function searchSpectacleByName(string $searchValue): array
+    {
+        $query = "SELECT *
+                  FROM spectacle
+                  WHERE titre_sp LIKE ?
+                  ORDER BY titre_sp";
+
+        $searching = Database::query($query, "%$searchValue%");
+        return self::queryToArray($searching);
+    }
+
+    /**
      * Returns User array by using DatabaseQuery object.
      *
      * @param DatabaseQuery $queryObject
