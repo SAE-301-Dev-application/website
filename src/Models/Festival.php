@@ -243,20 +243,37 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
+     * @param Spectacle $spectacle Searched spectacle object
+     * @return bool If given spectacle is used by current festival
+     */
+    public function hasSpectacle(Spectacle $spectacle): bool
+    {
+        $query = "SELECT COUNT(*) as count
+                  FROM festival
+                  INNER JOIN festiplan.festival_spectacle fs on festival.id_festival = fs.id_festival
+                  WHERE festival.id_festival = ? 
+                  AND fs.id_spectacle = ?";
+
+        $spectacleRemoving = Database::query($query, $this->getId(), $spectacle->getId());
+
+        return $spectacleRemoving->get()["count"];
+    }
+
+    /**
      * Attempt to add a spectacle in a festival.
      *
-     * @param int $id
      * @param int $idSpectacle
      */
     public function addSpectacle(Spectacle $spectacle)
     {
 
-        $addFestivalQuery = "SELECT ajouterFestivalSpectacle(?, ?) AS id;";
+        $addFestivalQuery = "CALL ajouterFestivalSpectacle(?, ?);";
 
         $spectacleAdding = Database::query($addFestivalQuery,
                                            $this->getId(),
                                            $spectacle->getId());
 
+        return $spectacleAdding->getExecutionState();
     }
 
     /**
@@ -321,7 +338,7 @@ class Festival extends Model implements JsonSerializable
     public function addOrganizer(User $user)
     {
 
-        $addFestivalQuery = "SELECT ajouterFestivalUtilisateur(?, ?) AS id;";
+        $addFestivalQuery = "CALL ajouterFestivalUtilisateur(?, ?);";
 
         $festivalId = Database::query($addFestivalQuery,
             $this->getId(),
@@ -392,7 +409,7 @@ class Festival extends Model implements JsonSerializable
                                                    string $beginningDate,
                                                    string $endingDate): void
     {
-        $addFestivalQuery = "SELECT modifierFestival(?, ?, ?, ?, ?, ?) AS id;";
+        $addFestivalQuery = "CALL modifierFestival(?, ?, ?, ?, ?, ?);";
 
         $linkCategoryQuery = "CALL ajouterFestivalCategorie(?, ?);";
 
@@ -427,7 +444,7 @@ class Festival extends Model implements JsonSerializable
                                               int $idSpectacle)
     {
 
-        $addFestivalQuery = "SELECT supprimerFestivalSpectacle(?, ?) AS id;";
+        $addFestivalQuery = "CALL supprimerFestivalSpectacle(?, ?);";
 
         $festivalId = Database::query($addFestivalQuery,
                                       $id,
@@ -445,7 +462,7 @@ class Festival extends Model implements JsonSerializable
                                         int $idScene)
     {
 
-        $addFestivalQuery = "SELECT ajouterFestivalScene(?, ?) AS id;";
+        $addFestivalQuery = "CALL ajouterFestivalScene(?, ?);";
 
         $festivalId = Database::query($addFestivalQuery,
                                       $id,
@@ -457,13 +474,13 @@ class Festival extends Model implements JsonSerializable
      * Attempt to delete a scene from a festival.
      *
      * @param int $id
-     * @param int $idSpectacle
+     * @param int $idScene
      */
     public static function supprimerScene(int $id,
                                           int $idScene)
     {
 
-        $addFestivalQuery = "SELECT supprimerFestivalScene(?, ?) AS id;";
+        $addFestivalQuery = "CALL supprimerFestivalScene(?, ?);";
 
         $festivalId = Database::query($addFestivalQuery,
                                       $id,
@@ -609,9 +626,7 @@ class Festival extends Model implements JsonSerializable
      */
     public function addScene(Scene $scene): bool
     {
-        $query = "INSERT INTO festival_scene
-                  (id_festival, id_scene) 
-                  VALUES (?, ?)";
+        $query = "CALL ajouterFestivalScene(?, ?);";
 
         $sceneRemoving = Database::query($query, $this->getId(), $scene->getId());
 
