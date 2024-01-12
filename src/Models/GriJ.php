@@ -171,7 +171,7 @@ class GriJ extends Model implements JsonSerializable
                                   string $festivalId): void
     {
         /* Créer la fonction ajouterGriJ */
-        $addGriJQuery = "SELECT ajouterGriJ(?, ?, ?, ?) AS id;";
+        $addGriJQuery = "SELECT ajouterGriJ(?, ?, ?, ?);";
 
         $griJId = Database::query($addGriJQuery,
                                   $beginningSpectacleHour,
