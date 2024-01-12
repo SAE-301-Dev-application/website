@@ -31,7 +31,7 @@
             @apply col-span-2 pt-5 pl-10;
 
             .festival-data-row {
-              @apply grid grid-cols-4 gap-x-5 mb-5;
+              @apply grid grid-cols-4 gap-x-5 mb-7;
 
               > .description-container {
                 @apply col-span-3;
@@ -46,18 +46,22 @@
               }
             }
 
-            .spectacles-container, .scenes-container {
-              @apply mb-5;
+            .spectacles-container,
+            .scenes-container
+            .users-container {
+              @apply mb-7;
 
-              > .spectacles-title-row, .scenes-title-row {
+              .spectacles-title-row,
+              .scenes-title-row,
+              .users-title-row {
                 @apply grid grid-cols-2 gap-x-5;
 
-                .spectacles-title, .scenes-title {
+                .data-title {
                   @apply ml-0 mb-5;
                 }
 
-                .spectacles-buttons, .scenes-buttons {
-                  @apply flex inset-y-0 right-0;
+                .buttons {
+                  @apply flex right-0;
 
                   button {
                     @apply w-auto mx-3;
@@ -65,8 +69,14 @@
                 }
               }
 
-              > .spectacles-grid, .scenes-grid {
+              > .spectacles-grid,
+              > .scenes-grid,
+              > .users-grid {
                 @apply grid grid-cols-3 gap-x-5;
+
+                .name {
+                  @apply text-xl font-semibold;
+                }
               }
             }
           }
@@ -75,7 +85,7 @@
             @apply col-span-1;
 
             > p.categories {
-              @apply text-2xl;
+              @apply text-lg;
             }
 
             > .festival-preview {
@@ -95,7 +105,7 @@
             }
 
             > .grij-title-row {
-              @apply grid grid-cols-2 gap-x-5;
+              @apply grid grid-cols-2 gap-x-5 mb-3;
 
               .grij-title,
               .add-button {
@@ -108,7 +118,7 @@
             }
 
             > .grij-grid {
-              @apply grid grid-cols-2 gap-x-0;
+              @apply grid grid-cols-2 gap-x-0 text-sm;
 
               .grij-column {
                 @apply font-bold;
