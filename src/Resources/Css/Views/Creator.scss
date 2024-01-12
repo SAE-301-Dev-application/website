@@ -4,6 +4,7 @@ $orange: #FF7A00;
 #create_spectacle,
 #grij_festival,
 #add_scene,
+#add_spectacle,
 #create_scene {
   #main {
     @apply pt-24;
@@ -136,21 +137,27 @@ $orange: #FF7A00;
 
 #add_scene,
 #add_spectacle {
-  #search_scene_popup {
-    #scene_searching_results {
+  #search_scene_popup,
+  #search_spectacle_popup {
+    #scene_searching_results,
+    #spectacle_searching_results {
       @apply flex flex-col gap-y-5;
     }
   }
 
-  .scene-container {
+  .scene-container,
+  .spectacle-container {
     @apply flex justify-between items-start gap-x-3;
 
-    > .scene-information {
-      > h3.scene-name {
+    > .scene-information,
+    .spectacle-information {
+      > h3.scene-name,
+      h3.spectacle-name {
         @apply font-black text-3xl mb-1;
       }
 
-      > ul.scene-details {
+      > ul.scene-details,
+      ul.spectacle-details {
         @apply text-grey text-sm;
       }
     }
