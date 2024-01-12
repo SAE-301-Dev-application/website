@@ -1,0 +1,132 @@
+#informations_spectacle_main {
+  > #main {
+    @apply pt-24;
+
+    section {
+      &#spectacle_informations {
+        > .title-container {
+          @apply mb-px;
+
+          .buttons {
+            @apply flex inset-y-0 right-0;
+
+            button {
+              @apply w-auto;
+            }
+          }
+        }
+      
+        > .form-container {
+          @apply grid grid-cols-3 gap-x-20 mb-7;
+
+          h3.subtitle {
+            @apply text-2xl font-black;
+          }
+          
+          p:not(.in-progress) {
+            @apply font-medium;
+          }
+          
+          > .right-side {
+            @apply col-span-2 pt-5 pl-10;
+
+            .spectacle-data-row {
+              @apply grid grid-cols-4 gap-x-5 mb-7;
+
+              > .description-container {
+                @apply col-span-3;
+
+                > h3 {
+                  @apply mb-3;
+                }
+              }
+
+              > .spectacle-duration {
+                @apply col-span-1;
+              }
+            }
+
+            .spectacles-container,
+            .scenes-container
+            .users-container {
+              @apply mb-7;
+
+              .spectacles-title-row,
+              .scenes-title-row,
+              .users-title-row {
+                @apply grid grid-cols-2 gap-x-5;
+
+                .data-title {
+                  @apply ml-0 mb-5;
+                }
+
+                .buttons {
+                  @apply flex right-0;
+
+                  button {
+                    @apply w-auto mx-3;
+                  }
+                }
+              }
+
+              > .spectacles-grid,
+              > .scenes-grid,
+              > .users-grid {
+                @apply grid grid-cols-3 gap-x-5;
+
+                .name {
+                  @apply text-xl font-semibold;
+                }
+              }
+            }
+          }
+
+          > .left-side {
+            @apply col-span-1;
+
+            > p.categories {
+              @apply text-lg;
+            }
+
+            > .spectacle-preview {
+              @apply mt-6 mb-5;
+
+              > .border-in-progress {
+                @apply border-["8px"];
+              }
+
+              > .spectacle-picture {
+                @apply w-96 h-80;
+
+                p.in-progress {
+                  @apply text-5xl;
+                }
+              }
+            }
+
+            > .grij-title-row {
+              @apply grid grid-cols-2 gap-x-5 mb-3;
+
+              .grij-title,
+              .add-button {
+                @apply my-auto ml-0;
+              }
+
+              button {
+                @apply w-auto;
+              }
+            }
+
+            > .grij-grid {
+              @apply grid grid-cols-2 gap-x-0 text-sm;
+
+              .grij-column {
+                @apply font-bold;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

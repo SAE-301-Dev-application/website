@@ -8,6 +8,7 @@
 @import "Views/Profile.css";
 @import "Views/GeneratePlanification.css";
 @import "Views/InformationsFestival.scss";
+@import "Views/InformationsSpectacle.scss";
 
 @tailwind base;
 @tailwind components;
