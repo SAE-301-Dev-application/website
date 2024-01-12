@@ -192,7 +192,7 @@ $errors = $props->hasValidator()
               let button = $(e.currentTarget),
                   festivalId = button.attr("id").split('_')[2];
 
-              $.post("<?= route("addSpectacle.addSpectacles") ?>?festival=<?= $festival->getId() ?>&spectacle="
+              $.post("<?= route("post.addSpectacle.addSpectacle") ?>?festival=<?= $festival->getId() ?>&spectacle="
                   + festivalId,
                   {
                       festivalId,
@@ -221,7 +221,7 @@ $errors = $props->hasValidator()
               let button = $(e.currentTarget),
                   festivalId = button.attr("id").split('_')[2];
 
-              $.post("<?= route("addSpectacle.removeSpectacle") ?>?festival=<?= $festival->getId() ?>&spectacle="
+              $.post("<?= route("post.addSpectacle.removeSpectacle") ?>?festival=<?= $festival->getId() ?>&spectacle="
                   + festivalId,
                   {
                       festivalId,

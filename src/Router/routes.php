@@ -155,7 +155,7 @@ Router::get("/add-spectacle/search", CreateFestivalAddSpectaclesController::clas
     ->setName("addSpectacle.searchSpectacle");
 
 Router::post("/add-spectacle/add", CreateFestivalAddSpectaclesController::class, "addSpectacle")
-    ->setName("addSpectacle.addSpectacle");
+    ->setName("post.addSpectacle.addSpectacle");
 
 Router::post("/add-spectacle/remove", CreateFestivalAddSpectaclesController::class, "removeSpectacle")
     ->setName("post.addSpectacle.removeSpectacle");

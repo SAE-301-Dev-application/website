@@ -89,12 +89,12 @@ class CreateFestivalAddSpectaclesController extends Controller
             return;
         }
 
-        $spectacle = Scene::getSceneById($spectacleId);
+        $spectacle = Spectacle::getSpectacleById($spectacleId);
         $festival = Festival::getFestivalById($festivalId);
 
-        if (!$festival->hasScene($spectacle))
+        if (!$festival->hasSpectacle($spectacle))
         {
-            $festival->addScene($spectacle);
+            $festival->addSpectacle($spectacle);
             echo "success";
         }
     }
