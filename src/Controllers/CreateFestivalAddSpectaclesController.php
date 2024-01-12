@@ -7,7 +7,6 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Models\Festival;
-use MvcLite\Models\Scene;
 use MvcLite\Models\Spectacle;
 use MvcLite\Router\Engine\Redirect;
 use MvcLite\Router\Engine\RedirectResponse;
