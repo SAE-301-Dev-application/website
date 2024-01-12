@@ -43,9 +43,17 @@ class CreateFestivalAddGrijController extends Controller
     /**
      * Festival creation view rendering.
      */
-    public function render(): void
+    public function render(Request $request): void
     {
-        View::render("CreateFestivalAddGrij");
+
+        $id = $request->getParameter("id");
+
+        $festival = new Festival();
+        $festival = Festival::getFestivalById($id);
+
+        View::render("CreateFestivalAddGrij", [
+            "festival" => $festival
+        ]);
     }
 
     /**
