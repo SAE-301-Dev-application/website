@@ -336,11 +336,12 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                               </button>
                             </a>
 
-
-                            <button class="button-red">
-                              <i class="fa-solid fa-trash"></i>
-                              Supprimer
-                            </button>
+                            <?php if ($festival->isUserOwner()) { ?>
+                              <button class="button-red">
+                                <i class="fa-solid fa-trash"></i>
+                                Supprimer
+                              </button>
+                            <?php } ?>
                           </div>
                         </div>
 
