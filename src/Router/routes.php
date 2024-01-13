@@ -88,6 +88,12 @@ Router::get("/grij-festival", CreateFestivalAddGrijController::class, "render")
 Router::get("/profile", ProfileController::class, "render")
     ->setName("profile");
 
+Router::get("/profile/get", ProfileController::class, "getSessionUserFestivals")
+    ->setName("profile.getFestivals");
+
+Router::post("/profile/delete", ProfileController::class, "deleteFestival")
+    ->setName("post.profile.deleteFestival");
+
 Router::post("/profile/general-information/save",
              ProfileController::class,
              "saveGeneralInformation")
