@@ -115,6 +115,11 @@ class CreateFestivalAddScenesController extends Controller
         }
     }
 
+    /**
+     * Remove a festival's scene given their id
+     *
+     * @param Request $request
+     */
     public function removeScene(Request $request): void
     {
         $festivalId = $request->getParameter("festival");
