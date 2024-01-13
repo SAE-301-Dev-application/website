@@ -48,7 +48,7 @@ use MvcLite\Models\Festival;
         <?php
         $threeLastFestivals = $festival->lastFestivals();
         foreach ($threeLastFestivals as $currentFestival) {
-            $isFestivalInProgress = $currentFestival->isFestivalInProgress();
+            $isFestivalInProgress = $currentFestival->isInProgress();
         ?>
           <div class="festivals-list">
             <div class="festival-preview">

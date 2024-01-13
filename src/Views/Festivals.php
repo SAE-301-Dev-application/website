@@ -61,7 +61,7 @@ $page = $props->getRequest()->getParameter("page") ?? 1;
           <?php
           foreach ($festivals as $festival)
           {
-              $isFestivalInProgress = $festival->isFestivalInProgress();
+              $isFestivalInProgress = $festival->isInProgress();
           ?>
 
           <a href="<?= route("informationsFestival") ?>?id=<?= $festival->getId() ?>">
