@@ -209,21 +209,20 @@ $errors = $props->hasValidator()
               e.preventDefault();
 
               let button = $(e.currentTarget),
-                  festivalId = button.attr("id").split('_')[2];
+                  sceneId = button.attr("id").split('_')[2];
 
-              $.post("<?= route("addScene.addScene") ?>?festival=<?= $festival->getId() ?>&scene="
-                  + festivalId,
+              $.post("<?= route("addScene.addScene") ?>?festival=<?= $festival->getId() ?>",
                   {
-                      festivalId,
+                      sceneId,
                   })
                   .done(data => {
                       console.log(data);
                       if (data === "success") {
                           updateScenesList();
 
-                          $(`#search_scene_popup button[id^="add_scene_${festivalId}"]`)
+                          $(`#search_scene_popup button[id^="add_scene_${sceneId}"]`)
                               .replaceWith(`
-                              <button class=\"button-red remove-scene-button\" id=\"remove_scene_${festivalId}\">
+                              <button class=\"button-red remove-scene-button\" id=\"remove_scene_${sceneId}\">
                                 <i class=\"fa-solid fa-trash\"></i>
                                 Supprimer
                               </button>
@@ -238,20 +237,19 @@ $errors = $props->hasValidator()
               e.preventDefault();
 
               let button = $(e.currentTarget),
-                  festivalId = button.attr("id").split('_')[2];
+                  sceneId = button.attr("id").split('_')[2];
 
-              $.post("<?= route("addScene.removeScene") ?>?festival=<?= $festival->getId() ?>&scene="
-                  + festivalId,
+              $.post("<?= route("addScene.removeScene") ?>?festival=<?= $festival->getId() ?>",
                   {
-                      festivalId,
+                      sceneId,
                   })
                   .done(data => {
                       if (data === "success") {
                           updateScenesList();
 
-                          $(`#search_scene_popup button[id^="remove_scene_${festivalId}"]`)
+                          $(`#search_scene_popup button[id^="remove_scene_${sceneId}"]`)
                               .replaceWith(`
-                              <button class=\"button-blue add-scene-button\" id=\"add_scene_${festivalId}\">
+                              <button class=\"button-blue add-scene-button\" id=\"add_scene_${sceneId}\">
                                 <i class=\"fa-solid fa-plus\"></i>
                                 Ajouter
                               </button>
