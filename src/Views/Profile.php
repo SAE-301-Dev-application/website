@@ -399,10 +399,12 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                           </div>
 
                           <div class="festival-buttons-container">
+                            <a href="<?= route("modifySpectacle")?>?id=<?= $spectacle->getId()?>">
                             <button class="button-grey">
                               <i class="fa-solid fa-pen"></i>
                               Éditer
                             </button>
+                            </a>
 
                             <button class="button-red">
                               <i class="fa-solid fa-trash"></i>

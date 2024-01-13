@@ -165,3 +165,6 @@ Router::post("/add-spectacle/remove", CreateFestivalAddSpectaclesController::cla
 Router::get("/add-intervenants", CreateSpectacleAddIntervenantsController::class, "render")
     ->setName("addIntervenants");
 
+// Page pas encore créée, route pour redirection "Profil" → "Modifier spectacle"
+Router::get("/modify-spectacle", ModifySpectacleController::class, "render")
+    ->setName("modifySpectacle");
