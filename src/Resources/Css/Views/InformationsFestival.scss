@@ -47,10 +47,13 @@
             }
           }
 
+          &#spectacles > .spectacles-grid,
+          &#organizers > .organizers-grid {
+            @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-5 gap-y-7;
+          }
+
           &#spectacles {
             > .spectacles-grid {
-              @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5;
-
               > a {
                 > .spectacle-card {
                   @apply flex gap-x-2;
@@ -70,6 +73,20 @@
                       @apply text-sm text-grey;
                     }
                   }
+                }
+              }
+            }
+          }
+
+          &#organizers {
+            > .organizers-grid {
+              > .organizer-card {
+                > h4.organizer-name {
+                  @apply font-black text-2xl;
+                }
+
+                > p.organizer-role {
+                  @apply font-bold;
                 }
               }
             }
