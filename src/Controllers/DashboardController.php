@@ -6,6 +6,7 @@ use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Router\Engine\Redirect;
 use MvcLite\Views\Engine\View;
+use MvcLite\Models\Festival;
 
 class DashboardController extends Controller
 {
@@ -18,6 +19,10 @@ class DashboardController extends Controller
 
     public function render(): void
     {
-        View::render("Dashboard");
+        $festival = new Festival();
+        
+        View::render("Dashboard", [
+            "festival" => $festival,
+        ]);
     }
 }

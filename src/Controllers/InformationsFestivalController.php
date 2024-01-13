@@ -33,11 +33,9 @@ class InformationsFestivalController extends Controller
 
         $festival = new Festival();
         $festival = Festival::getFestivalById($id);
-        $grij = GriJ::getGriJByFestivalId($id);
         
         View::render("InformationsFestival", [
             "festival" => $festival,
-            "grij" => $grij
         ]);
     }
 }

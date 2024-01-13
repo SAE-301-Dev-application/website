@@ -4,6 +4,7 @@ namespace MvcLite\Models;
 
 use JsonSerializable;
 use MvcLite\Database\Engine\Database;
+use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Models\Engine\Model;
 
@@ -159,47 +160,6 @@ class GriJ extends Model implements JsonSerializable
     }
 
     /**
-     * @param int $festivalId id festival of GriJ
-     * @return GriJ|null GriJ object if exists;
-     *                       else NULL  
-     */
-    public static function getGriJByFestivalId(int $festivalId): ?GriJ
-    {
-        $query = "SELECT *
-                  FROM grij
-                  WHERE id_festival = ?";
-
-        $getGriJ = Database::query($query, $festivalId);   
-        $grij = $getGriJ->get();     
-
-        if ($grij)
-        {
-            $grijInstance = new GriJ();
-
-            $grijInstance
-                ->setId($grij["id_grij"]);
-
-            $grijInstance
-                ->setBginningSpectacleHour($grij["heure_debut_spectacles"]);
-
-            $grijInstance
-                ->setEndingSpectacleHour($grij["heure_fin_spectacles"]);
-
-            $grijInstance
-                ->setMinDurationBetweenSpectacle($grij["duree_min_entre_spectacles"]);
-
-            $grijInstance
-                ->setFestivalId($festivalId);
-
-            return $grijInstance;
-        }
-
-        return null;
-    }
-
-
-
-    /**
      * Attempt to create a GriJ.
      *
      * @param string $beginningSpectacleHour
@@ -223,6 +183,34 @@ class GriJ extends Model implements JsonSerializable
     }
 
     /**
+     * Searches and returns GriJ instance by its data.
+     *
+     * @param array $grijData GriJ data
+     * @return GriJ GriJ object
+     */
+    public static function getGriJInstance(array $grijData): GriJ
+    {
+        $griJInstance = new GriJ();
+
+        $griJInstance
+            ->setId($grijData["id_grij"]);
+
+        $griJInstance
+            ->setBginningSpectacleHour($grijData["heure_debut_spectacles"]);
+
+        $griJInstance
+            ->setEndingSpectacleHour($grijData["heure_fin_spectacles"]);
+
+        $griJInstance
+            ->setMinDurationBetweenSpectacle($grijData["duree_min_entre_spectacles"]);
+
+        $griJInstance
+            ->setFestivalId($grijData["id_festival"]);
+
+        return $griJInstance;
+    }
+
+    /**
      * Returns GriJ array by using DatabaseQuery object.
      *
      * @param DatabaseQuery $queryObject
@@ -234,7 +222,7 @@ class GriJ extends Model implements JsonSerializable
 
         foreach($queryObject->getAll() as $griJ)
         {
-            $modelArray[] = self::getFestivalInstance($griJ);
+            $modelArray[] = self::getGriJInstance($griJ);
         }
 
         return $modelArray;

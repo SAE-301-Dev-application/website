@@ -43,15 +43,15 @@ use MvcLite\Models\Festival;
                 </div>
                 <?php
                     // Debug::dd(Festival::lastFestivals());
-                    $threeLastFestivals = Festival::lastFestivals();
-                    foreach ($threeLastFestivals as $idFestival) {
-                        $festival = Festival::getFestivalById($idFestival["id_festival"]);
-                        $isFestivalInProgress = $festival->isFestivalInProgress();
+                    $threeLastFestivals = $festival->lastFestivals();
+                    foreach ($threeLastFestivals as $currentFestival) {
+                        
+                        $isFestivalInProgress = $currentFestival->isFestivalInProgress();
                 ?>
                 <div class="festivals-list">
                     <div class="festival-preview">
                         <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
-                             style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;"
+                             style="background: url('<?= $currentFestival->getIllustration() ?>') center / cover no-repeat;"
                              alt="logo festival">
                             <?php if ($isFestivalInProgress) { ?>
                                 <div class="filter-in-progress">
@@ -62,17 +62,17 @@ use MvcLite\Models\Festival;
 
                         <div class="festival-identity">
                             <h3 class="festival-name">
-                            <?= $festival->getName() ?>
+                            <?= $currentFestival->getName() ?>
                             </h3>
 
                             <p class="festival-description">
-                            <?= $festival->getDescription() ?>
+                            <?= $currentFestival->getDescription() ?>
                             </p>
                         </div>
 
                         <div class="festival-duration">
                             <div class="beginning-date">
-                            <?= $festival->getBeginningDateWithFormat("%d %b. %Y") ?>
+                            <?= $currentFestival->getBeginningDateWithFormat("%d %b. %Y") ?>
                             </div>
 
                             <div class="duration-arrow">
@@ -82,7 +82,7 @@ use MvcLite\Models\Festival;
                             </div>
 
                             <div class="ending-date">
-                            <?= $festival->getEndingDateWithFormat("%d %b. %Y") ?>
+                            <?= $currentFestival->getEndingDateWithFormat("%d %b. %Y") ?>
                             </div>
                         </div>
                     </div>

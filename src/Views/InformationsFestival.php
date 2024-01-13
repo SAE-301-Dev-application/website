@@ -42,7 +42,7 @@ use MvcLite\Models\User;
             <?= $festival->getName() ?>
           </h2>
 
-          <?php if (Grij::getGriJByFestivalId($festival->getId()) !== null) { ?>
+          <?php if ($festival->getGriJWIthId() !== null) { ?>
             <a href="<?= route("generatePlanification") ?>?id=<?= $festival->getId()?>">
               <button class="button-blue">
                 <i class="fa-solid fa-plus"></i>
@@ -124,18 +124,19 @@ use MvcLite\Models\User;
 
               <div class="grij-values">
                 <p class="beginning grij-value">
-                  <?= $grij !== null ?
-                      $grij->getBeginningSpectacleHourWithFormat("%Hh%i") :
+                  <?= $festival->getGriJWIthId() !== null ?
+                      // Debug::dump()
+                      $festival->getGriJWIthId()[0]->getBeginningSpectacleHourWithFormat("%Hh%i") :
                       "non défini"?>
                 </p>
                 <p class="ending grij-value">
-                  <?= $grij !== null ?
-                      $grij->getEndingSpectacleHourWithFormat("%Hh%i") : 
+                  <?= $festival->getGriJWIthId() !== null ?
+                      $festival->getGriJWIthId()[0]->getEndingSpectacleHourWithFormat("%Hh%i") : 
                       "non défini" ?>
                 </p>
                 <p class="duration grij-value">
-                  <?= $grij !== null ?
-                      $grij->getMinDurationBetweenSpectacleWithFormat("%H heure(s) %i minute(s)") :
+                  <?= $festival->getGriJWIthId() !== null ?
+                      $festival->getGriJWIthId()[0]->getMinDurationBetweenSpectacleWithFormat("%H heure(s) %i minute(s)") :
                       "non défini" ?>
                 </p>
               </div>

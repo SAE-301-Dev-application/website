@@ -262,6 +262,22 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
+     * @return GriJ|null GriJ object if exists;
+     *                       else NULL  
+     */
+    public function getGriJWIthId(): array
+    {
+        $query = "SELECT *
+                  FROM grij
+                  WHERE id_festival = ?";
+
+        $getGriJ = Database::query($query, $this->getId());
+        
+        return GriJ::queryToArray($getGriJ);  
+
+    }
+
+    /**
      * @param Spectacle $spectacle Searched spectacle object
      * @return bool If given spectacle is used by current festival
      */
@@ -710,16 +726,16 @@ class Festival extends Model implements JsonSerializable
     /**
      * @return array Three last id of festivals 
      */
-    public static function lastFestivals(): array
+    public function lastFestivals(): array
     {
-        $query = "SELECT id_festival
+        $query = "SELECT *
                   FROM festival
                   WHERE date_debut_fe <= CURDATE()
                   LIMIT 3;";
         
         $threeLastFestivals = Database::query($query);
 
-        return $threeLastFestivals->getAll();
+        return Festival::queryToArray($threeLastFestivals);
     }
 
     /**
