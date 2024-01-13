@@ -149,7 +149,7 @@ foreach ($categories as $categorie) {
                       </p>
 
                       <?php
-                        $isFestivalInProgress = $festival->isFestivalInProgress();
+                        $isFestivalInProgress = $festival->isInProgress();
                       ?>
                       <input type="date"
                              name="beginning_date"
