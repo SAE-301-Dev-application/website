@@ -535,42 +535,6 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
-     * Attempt to add a scene in a festival.
-     *
-     * @param int $id
-     * @param int $idSpectacle
-     */
-    public static function ajouterScene(int $id,
-                                        int $idScene)
-    {
-
-        $addFestivalQuery = "CALL ajouterFestivalScene(?, ?);";
-
-        $festivalId = Database::query($addFestivalQuery,
-                                      $id,
-                                      $idScene);
-
-    }
-
-    /**
-     * Attempt to delete a scene from a festival.
-     *
-     * @param int $id
-     * @param int $idScene
-     */
-    public static function supprimerScene(int $id,
-                                          int $idScene)
-    {
-
-        $addFestivalQuery = "CALL supprimerFestivalScene(?, ?);";
-
-        $festivalId = Database::query($addFestivalQuery,
-                                      $id,
-                                      $idScene);
-
-    }
-
-    /**
      * Check if a festival exists.
      * 
      * @param string $name
