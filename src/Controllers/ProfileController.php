@@ -8,6 +8,8 @@ use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Middlewares\AuthMiddleware;
+use MvcLite\Models\Festival;
+use MvcLite\Models\Scene;
 use MvcLite\Models\Spectacle;
 use MvcLite\Models\User;
 use MvcLite\Router\Engine\Redirect;
@@ -73,6 +75,11 @@ class ProfileController extends Controller
     private const ERROR_NEW_PASSWORD_CONFIRMATION
         = "Les nouveaux mots de passe ne correspondent pas.";
 
+    private const REGEX_ID_PARAMETER = "/^([1-9])([0-9]*)$/";
+
+    private const ERROR_IRRETRIEVABLE_FESTIVAL
+        = "Ce festival n'existe pas ou plus.";
+
     public function __construct()
     {
         parent::__construct();
@@ -85,9 +92,10 @@ class ProfileController extends Controller
      */
     public function render(): void
     {
+
         View::render("Profile", [
-            "myFestivals" => self::getSessionUserFestivals(),
             "mySpectacles" => self::getSessionUserSpectacles(),
+
         ]);
     }
 
@@ -193,6 +201,30 @@ class ProfileController extends Controller
             ->redirect();
     }
 
+    /**
+     * Delete a user's festival given its id
+     *
+     * @param Request $request
+     */
+    public function deleteFestival(Request $request): void
+    {
+        $festivalId = $request->getInput("festivalId");
+
+        if (!self::isRetrievableFestival($festivalId))
+        {
+            echo self::ERROR_IRRETRIEVABLE_FESTIVAL;
+            return;
+        }
+
+        $festival = Festival::getFestivalById($festivalId);
+
+        if ($festivalId !== null && $festival !== null)
+        {
+            $festival->delete();
+            echo "success";
+        }
+    }
+
     public function deleteSpectacle(Request $request): RedirectResponse
     {
         $spectacleId = $request->getParameter("spectacleId");
@@ -239,9 +271,9 @@ class ProfileController extends Controller
     /**
      * @return array Session user's festivals
      */
-    private static function getSessionUserFestivals(): array
+    public static function getSessionUserFestivals(): void
     {
-        return Session::getUserAccount()->getFestivals();
+        echo json_encode(Session::getUserAccount()->getFestivals());
     }
 
     /**
@@ -250,5 +282,15 @@ class ProfileController extends Controller
     private static function getSessionUserSpectacles(): array
     {
         return Session::getUserAccount()->getUserSpectacles();
+    }
+
+    /**
+     * @param string $festivalId
+     * @return bool If given festival id is valid (non-negative and non-null integer)
+     */
+    private static function isRetrievableFestival(string $festivalId): bool
+    {
+        return preg_match(self::REGEX_ID_PARAMETER, $festivalId)
+            && Festival::getFestivalById($festivalId) !== null;
     }
 }
