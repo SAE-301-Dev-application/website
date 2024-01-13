@@ -86,7 +86,7 @@ class CreateFestivalAddScenesController extends Controller
     public function addScene(Request $request): void
     {
         $festivalId = $request->getParameter("festival");
-        $sceneId = $request->getParameter("scene");
+        $sceneId = $request->getInput("sceneId");
 
         if ($festivalId === null
             || $sceneId === null
@@ -118,7 +118,7 @@ class CreateFestivalAddScenesController extends Controller
     public function removeScene(Request $request): void
     {
         $festivalId = $request->getParameter("festival");
-        $sceneId = $request->getParameter("scene");
+        $sceneId = $request->getInput("sceneId");
 
         if ($festivalId === null
             || $sceneId === null
