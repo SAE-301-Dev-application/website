@@ -278,6 +278,7 @@ use MvcLite\Models\User;
 
               <div class="organizers-grid">
                 <?php
+                
                 foreach ($festival->getOrganizers() as $organizer)
                 {
                 ?>
