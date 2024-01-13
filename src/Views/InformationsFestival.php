@@ -36,297 +36,269 @@ use MvcLite\Models\User;
     ?>
 
     <div id="main">
-      <section id="festival_informations">
-        <div class="title-container">
+      <section id="festival">
+        <div class="title-container no-mb">
           <h2 class="title">
             <?= $festival->getName() ?>
           </h2>
 
-          <?php if ($festival->getGriJWIthId() !== null) { ?>
+          <?php
+          if ($festival->getGriJWIthId() !== null)
+          {
+          ?>
+          <div class="buttons">
             <a href="<?= route("generatePlanification") ?>?id=<?= $festival->getId()?>">
               <button class="button-blue">
-                <i class="fa-solid fa-plus"></i>
+                <i class="fa-regular fa-calendar-days"></i>
                 Voir la planification
               </button>
             </a>
-          <?php } ?>
-          
-          <!-- Si l'utilisateur est responsable du festival -->
-          <?php if ($festival->isUserOwner()) { ?>
-            <div class="buttons">
-              <a href="<?= route("modifyFestival")?>?id=<?= $festival->getId()?>">
-                <button class="button-blue">
-                  <i class="fa-solid fa-plus"></i>
-                  Modifier festival
-                </button>
-              </a>
-            </div>
-          <?php } ?>
+
+            <a href="#">
+              <button class="button-grey">
+                <i class="fa-solid fa-pen"></i>
+                Modifier le festival
+              </button>
+            </a>
+          </div>
+          <?php
+          }
+          ?>
         </div>
 
-        <div class="form-container">
+        <p class="festival-categories">
+          <?php
+          $categoriesNames = [];
+
+          foreach ($festival->getCategories() as $category)
+          {
+            $categoriesNames[] = $category->getName();
+          }
+
+          echo implode(', ', $categoriesNames);
+          ?>
+        </p>
+
+        <div class="festival-grid">
           <div class="left-side">
-            <p class="categories">
-              (<?php
-                foreach ($festival->getCategories() as $categorie) {
-                  echo $categorie->getName();
-                  if ($categorie != $festival->getCategories()[count($festival->getCategories())-1]) {
-                    echo ", ";
-                  }
-                }
+            <div class="festival-picture
+                        <?php
+                        if ($festival->isInProgress())
+                        {
+                          echo "border-in-progress";
+                        }
+                        ?>"
+                 <?php
+                 if ($festival->isInProgress())
+                 {
+                 ?>
+                 style="background-image: url('<?= $festival->getIllustration() ?>');"
+                 <?php
+                 }
+                 ?>>
 
-                $isFestivalInProgress = $festival->isFestivalInProgress();
-              ?>)
-            </p>
-
-            <div class="festival-preview">
-              <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
-                   style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;">
-
-                <?php if ($isFestivalInProgress) { ?>
-                  <div class="filter-in-progress">
-                    <p class="in-progress">en cours</p>
-                  </div>
-                <?php } ?>
+              <?php
+              if ($festival->isInProgress())
+              {
+              ?>
+              <div class="filter-in-progress">
+                <p>
+                  en cours
+                </p>
               </div>
+              <?php
+              }
+              ?>
+
             </div>
 
-            <div class="grij-title-row">
-              <div class="grij-title">
-                <h3 class="subtitle">
-                  GriJ :
-                </h3>
+            <section id="grij">
+              <div class="section-title-container short-size">
+                <div class="left-side">
+                  <h3 class="section-title">
+                    Horaires des spectacles :
+                  </h3>
+                </div>
               </div>
-              
-              <!-- N'est pas dans la maquette -->
-              <!-- <div class="add-button">
-                <a href="<?= route("grijFestival")?>?id=<?= $festival->getId()?>">
-                  <button class="button-blue">
-                    <i class="fa-solid fa-plus"></i>
-                    Ajouter GriJ
-                  </button>
-                </a>
-              </div> -->
-            </div>
 
-            <div class="grij-grid">
-              <div class="grij-colums">
-                <p class="grij-column">
+              <p>
+                <strong>
                   Début des spectacles :
-                </p>
-                <p class="grij-column">
-                  Fin des spectacles :
-                </p>
-                <p class="grij-column">
-                  Durée des pauses :
-                </p>
-              </div>
+                </strong>
 
-              <div class="grij-values">
-                <p class="beginning grij-value">
-                  <?= $festival->getGriJWIthId() !== null ?
-                      // Debug::dump()
-                      $festival->getGriJWIthId()[0]->getBeginningSpectacleHourWithFormat("%Hh%i") :
-                      "non défini"?>
-                </p>
-                <p class="ending grij-value">
-                  <?= $festival->getGriJWIthId() !== null ?
-                      $festival->getGriJWIthId()[0]->getEndingSpectacleHourWithFormat("%Hh%i") : 
-                      "non défini" ?>
-                </p>
-                <p class="duration grij-value">
-                  <?= $festival->getGriJWIthId() !== null ?
-                      $festival->getGriJWIthId()[0]->getMinDurationBetweenSpectacleWithFormat("%H heure(s) %i minute(s)") :
-                      "non défini" ?>
-                </p>
-              </div>
-            </div>
+                <?=
+                $festival->getGriJWIthId() !== null
+                    ? $festival
+                        ->getGriJWIthId()[0]
+                        ->getBeginningSpectacleHourWithFormat("%Hh%i")
+                    : "non défini"
+                ?>
+              </p>
+
+              <p>
+                <strong>
+                  Fin des spectacles :
+                </strong>
+
+                <?=
+                $festival->getGriJWIthId() !== null
+                    ? $festival
+                        ->getGriJWIthId()[0]
+                        ->getEndingSpectacleHourWithFormat("%Hh%i")
+                    : "non défini"
+                ?>
+              </p>
+
+              <p>
+                <strong>
+                  Durée des pauses :
+                </strong>
+
+                <?=
+                $festival->getGriJWIthId() !== null
+                    ? $festival
+                        ->getGriJWIthId()[0]
+                        ->getMinDurationBetweenSpectacleWithFormat("%H heure(s) %i minute(s)")
+                    : "non défini"
+                ?>
+              </p>
+            </section>
           </div>
 
-          <div class="right-side">
-            <div class="festival-data-row">
-              <div class="description-container">
-                <h3 class="subtitle">
-                  Description :
-                </h3>
-
-                <p class="description-value">
-                  <?= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat nisl libero, et bibendum dolor mattis at. Aenean tincidunt sit amet neque vitae varius. Aenean a pulvinar risus. In dignissim faucibus urna, et bibendum elit luctus in. In hac habitasse platea dictumst. Vivamus risus ligula, viverra vel maximus a, tincidunt et augue. Sed leo nisl, euismod id ni"//$festival->getDescription() ?>
-                </p>
-              </div>
-
-              <div class="festival-duration">
-                <div class="beginning-date">
-                <?= $festival->getBeginningDateWithFormat("%d %b. %Y") ?>
-                </div>
-
-                <div class="duration-arrow">
-                <svg width="61" height="19" viewBox="0 0 61 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 1L30.5 17.5L60.1045 1" stroke="#686868"/>
-                </svg>
-                </div>
-
-                <div class="ending-date">
-                <?= $festival->getEndingDateWithFormat("%d %b. %Y") ?>
+          <div class="main-side">
+            <section id="description">
+              <div class="section-title-container">
+                <div class="left-side">
+                  <h3 class="section-title">
+                    Description :
+                  </h3>
                 </div>
               </div>
-            </div>
 
-            <div class="spectacles-container">
-              <div class="spectacles-title-row">
-                <div class="data-title">
-                  <h3 class="subtitle">
+              <div class="content">
+                <div class="description">
+                  <p>
+                    <?= $festival->getDescription() ?>
+                  </p>
+                </div>
+
+                <div class="duration">
+                  <div class="festival-duration">
+                    <div class="beginning-date">
+                        <?= $festival->getBeginningDateWithFormat("%d %b. %Y") ?>
+                    </div>
+
+                    <div class="duration-arrow">
+                      <svg width="61" height="19" viewBox="0 0 61 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L30.5 17.5L60.1045 1" stroke="#686868"/>
+                      </svg>
+                    </div>
+
+                    <div class="ending-date">
+                        <?= $festival->getEndingDateWithFormat("%d %b. %Y") ?>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section id="spectacles">
+              <div class="section-title-container">
+                <div class="left-side">
+                  <h3 class="section-title">
                     Spectacles :
                   </h3>
                 </div>
 
-                <div class="buttons">
-                  <a href="<?= route("") // TODO mettre la route ?>">
-                    <button class="button-blue">
-                      <i class="fa-solid fa-plus"></i>
-                      Voir plus
+                <div class="right-side">
+                  <div class="buttons">
+                    <button class="button-grey">
+                      <i class="fa-solid fa-angle-down"></i>
+                      Voir tout (<?= count($festival->getSpectacles()) ?>)
                     </button>
-                  </a>
 
-                  <!-- Si l'utilisateur est le responsable du festival -->
-                  <?php if ($festival->isUserOwner()) { ?>
-                    <a href="<?= route("")//TODO mettre la route ?>">
+                    <a href="<?= route("addSpectacle") ?>?festival=<?= $festival->getId() ?>"
+                       target="_blank">
                       <button class="button-blue">
                         <i class="fa-solid fa-plus"></i>
-                        Ajouter spectacles
+                        Ajouter un spectacle
                       </button>
                     </a>
-                  <?php } ?>
+                  </div>
                 </div>
               </div>
 
               <div class="spectacles-grid">
                 <?php
-                foreach ($festival->getSpectaclesWithLimit(5) as $spectacle) {?>
+                foreach ($festival->getSpectacles() as $spectacle)
+                {
+                ?>
+                <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
+                  <div class="spectacle-card">
+                    <div class="spectacle-picture"
+                         style="background-image: url('<?= $spectacle->getIllustration() ?>')"></div>
 
-                  <div>
-                    <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
-                      <div class="festival-preview">
-                        <div class="festival-picture"
-                          style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;">
-                        </div>
-                      </div>
-                      <?= $spectacle->getTitle(); ?>
-                    </a>
+                    <div class="spectacle-presentation">
+                      <h4 class="spectacle-name">
+                          <?= $spectacle->getTitle() ?>
+                      </h4>
+
+                      <p class="spectacle-location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        spectacle_location
+                      </p>
+                    </div>
                   </div>
-
+                </a>
                 <?php
                 }
                 ?>
               </div>
-            </div>
+            </section>
 
-            <div class="scenes-container">
-              <div class="spectacles-title-row">
-                <div class="data-title">
-                  <h3 class="subtitle">
-                    Scènes :
-                  </h3>
-                </div>
-                
-                <div class="buttons">
-                  <a href="<?= route("")//TODO mettre la route ?>">
-                    <button class="button-blue">
-                      <i class="fa-solid fa-plus"></i>
-                      Voir plus
-                    </button>
-                  </a>
-
-                  <!-- Si l'utilisateur est responsable du festival -->
-                  <?php if ($festival->isUserOwner()) { ?>
-                    <a href="<?= route("addScene")?>?festival=<?= $festival->getId() ?>">
-                      <button class="button-blue">
-                        <i class="fa-solid fa-plus"></i>
-                        Ajouter scènes
-                      </button>
-                    </a>
-                  <?php } ?>
-                </div>
-              </div>
-
-              <div class="scenes-grid">
-                <?php
-                foreach ($festival->getScenesWithLimit(6) as $scene) {
-                  $size = $scene->getSize();
-
-                  switch ($scene->getSize()) {
-                    case 1:
-                      $size = "Petite";
-                      break;
-                    case 2:
-                      $size = "Moyenne";
-                      break;
-                    case 3:
-                      $size = "Grande";
-                      break;
-
-                  }
-
-                  echo "<div class=\"name\">";
-                  echo $scene->getName()." (".$size.")";
-                  echo "</div>";
-                }
-                ?>
-              </div>
-            </div>
-
-            <div class="users-container">
-              <div class="users-title-row">
-                <div class="data-title">
-                  <h3 class="subtitle">
+            <section id="organizers">
+              <div class="section-title-container">
+                <div class="left-side">
+                  <h3 class="section-title">
                     Organisateurs :
                   </h3>
                 </div>
-                
-                <div class="buttons">
-                  <a href="<?= route("")//TODO mettre la route ?>">
-                    <button class="button-blue">
-                      <i class="fa-solid fa-plus"></i>
-                      Voir plus
-                    </button>
-                  </a>
 
-                  <!-- Si l'utilisateur est responsable du festival -->
-                  <?php if ($festival->isUserOwner()) { ?>
-                    <a href="<?= route("")?>?festival=<?= $festival->getId() ?>">
-                      <button class="button-blue">
-                        <i class="fa-solid fa-plus"></i>
-                        Ajouter organisateurs
+                <div class="right-side">
+                  <div class="buttons">
+                    <a href="#">
+                      <button class="button-grey">
+                        <i class="fa-solid fa-angle-down"></i>
+                        Voir tout (X)
                       </button>
                     </a>
-                  <?php } ?>
+
+                    <a href="#">
+                      <button class="button-blue">
+                        <i class="fa-solid fa-plus"></i>
+                        Ajouter un organisateur
+                      </button>
+                    </a>
+                  </div>
                 </div>
               </div>
 
-              <div class="users-grid">
-                <?php
-                  $owner = $festival->getOwner();
+              <div class="organizers-grid">
+                <div class="organizer-card">
+                  <h4 class="organizer-name">
+                    name
+                  </h4>
 
-                  echo $owner->getFirstname()." ".$owner->getLastname()."<br>".$owner->getLogin()."<br>Responsable<br><br>";
+                  <p class="organizer-login">
+                    login
+                  </p>
 
-                  foreach ($festival->getOrganizersWithLimit(2) as $user) {
-                ?>
-                  
-                  <div class="name">
-                    <?= $user->getFirstname() . " " . $user->getLastname() ?>
-                  </div>
-
-                  <div class="email">
-                    <?= $user->getEmail() ?>
-                  </div>
-                  
-                  <div class="role">
-                    Organisateur
-                  </div>
-
-                <?php } ?>
+                  <p class="organizer-role">
+                    role
+                  </p>
+                </div>
               </div>
-            </div>
+            </section>
           </div>
         </div>
       </section>
