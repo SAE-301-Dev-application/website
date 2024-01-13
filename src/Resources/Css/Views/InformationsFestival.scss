@@ -19,7 +19,7 @@
 
           > .filter-in-progress {
             > p {
-              @apply text-5xl;
+              @apply text-xl lg:text-5xl;
             }
           }
         }

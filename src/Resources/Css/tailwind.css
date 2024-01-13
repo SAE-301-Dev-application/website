@@ -17,6 +17,8 @@
 @layer base {
 
   body {
+    @apply overflow-x-hidden;
+
     font-family: "Inter", sans-serif;
 
     &.body-overflow-clip {
@@ -230,7 +232,7 @@
     }
 
     .section-title-container {
-      @apply flex items-center justify-between gap-x-10 border-b border-neutral-300 mb-5 pb-5;
+      @apply flex flex-wrap items-center justify-between gap-x-10 gap-y-5 border-b border-neutral-300 mb-5 pb-5;
 
       &.short-size {
         @apply pb-3 mb-3;
