@@ -88,14 +88,7 @@ use MvcLite\Models\User;
                           echo "border-in-progress";
                         }
                         ?>"
-                 <?php
-                 if ($festival->isInProgress())
-                 {
-                 ?>
-                 style="background-image: url('<?= $festival->getIllustration() ?>');"
-                 <?php
-                 }
-                 ?>>
+                 style="background-image: url('<?= $festival->getIllustration() ?>');">
 
               <?php
               if ($festival->isInProgress())
