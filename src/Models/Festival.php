@@ -517,24 +517,6 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
-     * Attempt to delete a spectacle from a festival.
-     *
-     * @param int $id
-     * @param int $idSpectacle
-     */
-    public static function supprimerSpectacle(int $id,
-                                              int $idSpectacle)
-    {
-
-        $addFestivalQuery = "CALL supprimerFestivalSpectacle(?, ?);";
-
-        $festivalId = Database::query($addFestivalQuery,
-                                      $id,
-                                      $idSpectacle);
-
-    }
-
-    /**
      * Check if a festival exists.
      * 
      * @param string $name
