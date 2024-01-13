@@ -16,437 +16,489 @@
 
 @layer base {
 
-    body {
-        font-family: "Inter", sans-serif;
+  body {
+    font-family: "Inter", sans-serif;
 
-        &.body-overflow-clip {
-            @apply overflow-clip;
-        }
+    &.body-overflow-clip {
+      @apply overflow-clip;
     }
+  }
 
-    #main {
-        @apply p-10 xl:p-24;
-    }
+  #main {
+    @apply p-10 xl:p-24;
+  }
 
 }
 
 @layer components {
 
-    .logo {
-        &::before {
-            @apply content-["Festiplan"] text-4xl;
-            font-family: "Kaushan Script", sans-serif;
-        }
+  .logo {
+    &::before {
+      @apply content-["Festiplan"] text-4xl;
+      font-family: "Kaushan Script", sans-serif;
+    }
+  }
+
+  form {
+    .form-duo {
+      @apply grid grid-cols-1 md:grid-cols-2 gap-5;
     }
 
-    form {
-        .form-duo {
-            @apply grid grid-cols-1 md:grid-cols-2 gap-5;
+    .form-component {
+      > label {
+        @apply block w-full;
+
+        > p {
+          @apply text-sm font-bold;
         }
-
-        .form-component {
-            > label {
-                @apply block w-full;
-
-                > p {
-                    @apply text-sm font-bold;
-                }
-            }
-        }
-
-        .form-input-button {
-            @apply flex gap-x-3;
-
-            > input,
-            > select,
-            > textarea {
-                @apply flex-1;
-            }
-
-            > button {
-                @apply flex-none w-auto;
-            }
-        }
-
-        .form-buttons,
-        .form-buttons-column {
-            @apply flex gap-5;
-        }
-
-        .form-buttons {
-            @apply flex-row;
-
-            > * {
-                @apply block w-full;
-            }
-        }
-
-        .form-buttons-column {
-            @apply flex-col;
-        }
+      }
     }
 
-    input:not([type="checkbox"]):not([type="radio"]),
-    select,
-    textarea,
-    button {
-        @apply border-0 rounded-xl p-3 text-sm block w-full;
+    .form-input-button {
+      @apply flex gap-x-3;
+
+      > input,
+      > select,
+      > textarea {
+        @apply flex-1;
+      }
+
+      > button {
+        @apply flex-none w-auto;
+      }
     }
 
-    input:not([type="checkbox"]):not([type="radio"]),
-    select,
-    textarea {
-        @apply bg-grey-light;
+    .form-buttons,
+    .form-buttons-column {
+      @apply flex gap-5;
     }
 
-    button {
-        &:hover {
+    .form-buttons {
+      @apply flex-row;
+
+      > * {
+        @apply block w-full;
+      }
+    }
+
+    .form-buttons-column {
+      @apply flex-col;
+    }
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea,
+  button {
+    @apply border-0 rounded-xl p-3 text-sm block w-full;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    @apply bg-grey-light;
+  }
+
+  button {
+    &:hover {
+      @apply opacity-80;
+    }
+
+    &:active {
+      @apply opacity-60;
+    }
+
+    &.button-blue,
+    &.button-grey,
+    &.button-red {
+      @apply text-white;
+    }
+
+    &.button-blue {
+      @apply bg-blue;
+    }
+
+    &.button-grey {
+      @apply bg-grey;
+    }
+
+    &.button-red {
+      @apply bg-red;
+    }
+
+    > i {
+      @apply mr-1;
+    }
+  }
+
+  hr {
+    @apply border-grey-light;
+  }
+
+  nav {
+    @apply bg-orange text-white justify-between;
+
+    > h1.logo,
+    > .user-menu {
+      @apply flex-none;
+    }
+
+    > .links,
+    > .user-menu > .user-name {
+      @apply font-bold text-lg cursor-pointer;
+
+      text-shadow: 1px 1px 0 rgba(0 0 0 / .25);
+    }
+
+    > .links {
+      @apply flex gap-x-10 flex-1;
+
+      > a {
+        &:not(.active-link) {
+          &:hover {
             @apply opacity-80;
-        }
+          }
 
-        &:active {
+          &:active {
             @apply opacity-60;
+          }
         }
 
-        &.button-blue,
-        &.button-grey,
-        &.button-red {
-            @apply text-white;
-        }
-
-        &.button-blue {
-            @apply bg-blue;
-        }
-
-        &.button-grey {
-            @apply bg-grey;
-        }
-
-        &.button-red {
-            @apply bg-red;
+        &.active-link {
+          @apply text-orange-light;
         }
 
         > i {
-            @apply mr-1;
+          @apply mr-1;
         }
+      }
     }
 
-    hr {
-        @apply border-grey-light;
+    > .user-menu {
+      @apply relative;
+
+      &:hover {
+        > .menu-dropdown-container {
+          @apply block;
+        }
+      }
+
+      > .user-name {
+        @apply flex items-center justify-end;
+
+        & i {
+          @apply mr-1;
+        }
+      }
+
+      > .menu-dropdown-container {
+        @apply absolute pt-5 hidden min-w-[250px] right-0;
+
+        > .menu-dropdown {
+          @apply border border-neutral-300 bg-grey-light rounded-lg shadow
+          text-black text-base font-medium p-3 flex flex-col gap-y-1;
+
+          > a {
+            > i {
+              @apply mr-1;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  section {
+    > .title-container {
+      @apply flex flex-wrap items-center gap-10;
+
+      &:not(.no-mb) {
+        @apply mb-10;
+      }
+
+      > h2.title {
+        @apply text-5xl font-black;
+      }
+
+      > .buttons {
+        @apply flex gap-x-3;
+      }
+
+      > button {
+        @apply w-auto;
+      }
     }
 
-    nav {
-        @apply bg-orange text-white justify-between;
+    .section-title-container {
+      @apply flex items-center justify-between gap-x-10 border-b border-neutral-300 mb-5 pb-5;
 
-        > h1.logo,
-        > .user-menu {
+      &.short-size {
+        @apply pb-3 mb-3;
+
+        > .left-side {
+          > h3.section-title {
+            @apply text-2xl;
+          }
+        }
+      }
+
+      * {
+        @apply flex-none;
+      }
+
+      > .left-side,
+      > .right-side {
+        > .buttons {
+          @apply flex gap-x-5;
+        }
+      }
+
+      > .left-side {
+        @apply flex gap-x-10 justify-start items-center;
+
+        > h3.section-title {
+          @apply font-black text-4xl;
+        }
+      }
+
+      > .right-side {
+        @apply flex gap-x-10 justify-end items-center;
+      }
+
+      & button {
+        @apply w-auto;
+      }
+    }
+  }
+
+  .input-error {
+    @apply text-red text-sm;
+  }
+
+  .festival-picture,
+  .spectacle-picture {
+    @apply rounded-lg bg-blue flex-none relative overflow-hidden aspect-illustration select-none cursor-default
+           bg-center bg-cover bg-no-repeat;
+
+    &.border-in-progress {
+      @apply border-4 border-green;
+    }
+
+    > .filter-in-progress {
+      @apply absolute inset-0 bg-[rgba(0,198,55,0.5)] flex justify-center items-center;
+
+      > p {
+        @apply font-black text-white text-center text-xl;
+      }
+    }
+  }
+
+  .festival-preview,
+  .spectacle-preview,
+  .festival-data-row {
+    @apply flex gap-x-5;
+
+    > .festival-picture,
+    > .spectacle-picture {
+      @apply w-40 h-32;
+    }
+
+    > .festival-identity, .spectacle-identity {
+      @apply flex-1 flex flex-col;
+
+      & > .festival-header {
+        @apply flex flex-col xl:flex-row gap-y-2 justify-between gap-x-5;
+
+        & > .festival-name-container {
+          @apply flex items-center gap-x-5;
+
+          > * {
             @apply flex-none;
+          }
+
+          > i {
+            @apply text-orange;
+          }
         }
 
-        > .links,
-        > .user-menu > .user-name {
-            @apply font-bold text-lg cursor-pointer;
+        & > .festival-buttons-container {
+          @apply flex xl:justify-end gap-x-3;
 
-            text-shadow: 1px 1px 0 rgba(0 0 0 / .25);
+          > button {
+            @apply flex-none w-auto;
+          }
         }
+      }
 
-        > .links {
-            @apply flex gap-x-10 flex-1;
+      & h3.festival-name,
+      & h3.spectacle-title {
+        @apply font-black text-3xl lg:text-4xl mb-1;
+      }
+    }
+  }
 
-            > a {
-                &:not(.active-link) {
-                    &:hover {
-                        @apply opacity-80;
-                    }
+  .festival-duration {
+    @apply flex-none flex flex-col justify-center gap-y-1;
 
-                    &:active {
-                        @apply opacity-60;
-                    }
-                }
-
-                &.active-link {
-                    @apply text-orange-light;
-                }
-
-                > i {
-                    @apply mr-1;
-                }
-            }
-        }
-
-        > .user-menu {
-            @apply relative;
-
-            &:hover {
-                > .menu-dropdown-container {
-                    @apply block;
-                }
-            }
-
-            > .user-name {
-                @apply flex items-center justify-end;
-
-                & i {
-                    @apply mr-1;
-                }
-            }
-
-            > .menu-dropdown-container {
-                @apply absolute pt-5 hidden min-w-[250px] right-0;
-
-                > .menu-dropdown {
-                    @apply border border-neutral-300 bg-grey-light rounded-lg shadow
-                    text-black text-base font-medium p-3 flex flex-col gap-y-1;
-
-                    > a {
-                        > i {
-                            @apply mr-1;
-                        }
-                    }
-                }
-            }
-        }
+    > .beginning-date,
+    > .ending-date {
+      @apply text-2xl font-light text-center text-grey;
     }
 
-    section {
-        > .title-container {
-            @apply flex flex-wrap items-center gap-10 mb-10;
+    > .duration-arrow {
+      @apply flex justify-center;
+    }
+  }
 
-            > h2.title {
-                @apply text-5xl font-black;
-            }
+  .pagination {
+    @apply flex justify-between items-center text-grey text-3xl;
 
-            > .buttons {
-                @apply flex gap-x-3;
-            }
+    > .previous-links,
+    > .next-links {
+      @apply flex gap-x-2;
 
-            > button {
-                @apply w-auto;
-            }
+      > a {
+        &:hover {
+          @apply opacity-80;
         }
+
+        &:active {
+          @apply opacity-60;
+        }
+      }
     }
 
-    .input-error {
-        @apply text-red text-sm;
+    > .previous-links {
+      @apply justify-start;
     }
 
-    .festival-preview,
-    .spectacle-preview,
-    .festival-data-row {
-        @apply flex gap-x-5;
+    > .next-links {
+      @apply justify-end;
+    }
+  }
 
-        > .border-in-progress {
-            @apply border-4 border-green;
-        }
+  nav,
+  footer.grey-footer {
+    @apply px-10 py-5 flex items-center
+    gap-x-20;
+  }
 
-        > .festival-picture, .spectacle-picture {
-            @apply w-40 h-32 rounded-lg bg-blue flex-none relative overflow-hidden;
-          
-            > .filter-in-progress {
-              @apply absolute inset-0 bg-[rgba(0,198,55,0.5)] flex justify-center items-center;
-          
-              > p {
-                @apply font-black text-white text-center text-xl;
-              }
-            }
-        }
+  footer.grey-footer {
+    @apply bg-grey-light text-grey;
 
-        > .festival-identity, .spectacle-identity {
-            @apply flex-1 flex flex-col;
+    > h1.logo {
+      @apply flex-none;
 
-            & > .festival-header {
-                @apply flex flex-col xl:flex-row gap-y-2 justify-between gap-x-5;
-
-                & > .festival-name-container {
-                    @apply flex items-center gap-x-5;
-
-                    > * {
-                        @apply flex-none;
-                    }
-
-                    > i {
-                        @apply text-orange;
-                    }
-                }
-
-                & > .festival-buttons-container {
-                    @apply flex xl:justify-end gap-x-3;
-
-                    > button {
-                        @apply flex-none w-auto;
-                    }
-                }
-            }
-
-            & h3.festival-name,
-            & h3.spectacle-title {
-                @apply font-black text-3xl lg:text-4xl mb-1;
-            }
-        }
-
-        > .festival-duration {
-            @apply flex-none flex flex-col justify-center gap-y-1;
-
-            > .beginning-date,
-            > .ending-date {
-                @apply text-2xl font-light text-center text-grey;
-            }
-
-            > .duration-arrow {
-                @apply flex justify-center;
-            }
-        }
+      &:last-child {
+        @apply opacity-0;
+      }
     }
 
-    .pagination {
-        @apply flex justify-between items-center text-grey text-3xl;
+    > .copyrights {
+      @apply text-center flex-1 font-bold;
+    }
+  }
 
-        > .previous-links,
-        > .next-links {
-            @apply flex gap-x-2;
+  label.checkbox,
+  label.radio {
+    @apply font-medium text-sm flex items-center gap-x-3;
 
-            > a {
-                &:hover {
-                    @apply opacity-80;
-                }
+    > input {
+      @apply h-5 w-5;
+    }
+  }
 
-                &:active {
-                    @apply opacity-60;
-                }
-            }
-        }
+  .form-help-box {
+    @apply rounded-xl bg-grey-light text-grey p-5 hidden xl:block;
 
-        > .previous-links {
-            @apply justify-start;
-        }
+    > .box-header {
+      @apply flex items-center mb-5;
 
-        > .next-links {
-            @apply justify-end;
-        }
+      > i {
+        @apply mr-5 text-4xl;
+      }
+
+      > h3.box-title {
+        @apply text-xl font-bold;
+      }
     }
 
-    nav,
-    footer.grey-footer {
-        @apply px-10 py-5 flex items-center
-               gap-x-20;
+    & p {
+      &:not(:last-child) {
+        @apply mb-5;
+      }
+    }
+  }
+
+  .alert {
+    @apply rounded-xl p-5 font-semibold flex gap-x-5 items-center;
+
+    &.alert-grey {
+      @apply bg-grey text-white;
     }
 
-    footer.grey-footer {
-        @apply bg-grey-light text-grey;
-
-        > h1.logo {
-            @apply flex-none;
-
-            &:last-child {
-                @apply opacity-0;
-            }
-        }
-
-        > .copyrights {
-            @apply text-center flex-1 font-bold;
-        }
+    > .alert-icon {
+      @apply flex-none text-3xl;
     }
 
-    label.checkbox,
-    label.radio {
-        @apply font-medium text-sm flex items-center gap-x-3;
+    > .alert-content {
+      @apply flex-1;
+    }
+  }
 
-        > input {
-            @apply h-5 w-5;
-        }
+  .popup-container {
+    @apply z-[100] fixed inset-0 bg-[rgba(0,0,0,.4)] flex justify-center items-center py-5 xl:py-10;
+
+    &.popup-hidden {
+      @apply hidden;
     }
 
-    .form-help-box {
-        @apply rounded-xl bg-grey-light text-grey p-5 hidden xl:block;
+    > .popup {
+      @apply bg-white shadow-2xl rounded-lg px-7 pt-5 pb-3 text-black w-full xl:w-1/2 relative mx-5
+      overflow-y-auto max-h-full;
 
-        > .box-header {
-            @apply flex items-center mb-5;
+      > .popup-close-button {
+        @apply absolute right-5 top-5 text-xl;
+
+        &:hover {
+          @apply cursor-pointer opacity-60;
+        }
+      }
+
+      > h3.popup-title {
+        @apply font-black text-3xl mb-5;
+      }
+
+      > p {
+        @apply mb-5 text-sm font-semibold;
+
+        > i {
+          @apply text-orange mr-1;
+        }
+
+        &.question {
+          @apply text-lg;
+        }
+      }
+
+      > form {
+        > div.form-component {
+          @apply mb-6;
+        }
+
+        > .buttons {
+          @apply flex justify-end gap-x-3 mb-5;
+
+          > button {
+            @apply w-auto;
 
             > i {
-                @apply mr-5 text-4xl;
+              @apply ml-1;
             }
-
-            > h3.box-title {
-                @apply text-xl font-bold;
-            }
+          }
         }
-
-        & p {
-            &:not(:last-child) {
-                @apply mb-5;
-            }
-        }
+      }
     }
-
-    .alert {
-        @apply rounded-xl p-5 font-semibold flex gap-x-5 items-center;
-
-        &.alert-grey {
-            @apply bg-grey text-white;
-        }
-
-        > .alert-icon {
-            @apply flex-none text-3xl;
-        }
-
-        > .alert-content {
-            @apply flex-1;
-        }
-    }
-
-    .popup-container {
-        @apply z-[100] fixed inset-0 bg-[rgba(0,0,0,.4)] flex justify-center items-center py-5 xl:py-10;
-
-        &.popup-hidden {
-            @apply hidden;
-        }
-
-        > .popup {
-            @apply bg-white shadow-2xl rounded-lg px-7 pt-5 pb-3 text-black w-full xl:w-1/2 relative mx-5
-                   overflow-y-auto max-h-full;
-
-            > .popup-close-button {
-                @apply absolute right-5 top-5 text-xl;
-
-                &:hover {
-                    @apply cursor-pointer opacity-60;
-                }
-            }
-
-            > h3.popup-title {
-                @apply font-black text-3xl mb-5;
-            }
-
-            > p {
-                @apply mb-5 text-sm font-semibold;
-
-                > i {
-                    @apply text-orange mr-1;
-                }
-
-                &.question {
-                    @apply text-lg;
-                }
-            }
-
-            > form {
-                > div.form-component {
-                    @apply mb-6;
-                }
-
-                > .buttons {
-                    @apply flex justify-end gap-x-3 mb-5;
-
-                    > button {
-                        @apply w-auto;
-
-                        > i {
-                            @apply ml-1;
-                        }
-                    }
-                }
-            }
-        }
-    }
+  }
 
 }
