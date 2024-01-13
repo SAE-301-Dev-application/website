@@ -726,6 +726,21 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
+     * Attempts to delete a festival by its id.
+     *
+     * @return bool If festival is successfully deleted
+     */
+    public function delete(): bool
+    {
+        $query = "DELETE FROM festival WHERE id_festival = ?";
+
+        $festivalDeleting = Database::query($query, $this->getId());
+
+        return $festivalDeleting->getExecutionState();
+    }
+
+
+    /**
      * @return array JSON serializing original array
      */
     public function jsonSerialize(): array
