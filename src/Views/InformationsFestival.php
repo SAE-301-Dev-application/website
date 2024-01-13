@@ -269,7 +269,7 @@ use MvcLite\Models\User;
                     <a href="#">
                       <button class="button-grey">
                         <i class="fa-solid fa-angle-down"></i>
-                        Voir tout (X)
+                        Voir tout (<?= count($festival->getOrganizers()) ?>)
                       </button>
                     </a>
 
@@ -284,19 +284,26 @@ use MvcLite\Models\User;
               </div>
 
               <div class="organizers-grid">
+                <?php
+                foreach ($festival->getOrganizers() as $organizer)
+                {
+                ?>
                 <div class="organizer-card">
                   <h4 class="organizer-name">
-                    name
+                    <?= $organizer->getFirstname() ?>
+                    <?= $organizer->getLastname() ?>
                   </h4>
 
-                  <p class="organizer-login">
-                    login
-                  </p>
-
                   <p class="organizer-role">
-                    role
+                    <?= $festival->getOwner()->getId() == $organizer->getId()
+                            ? "Responsable"
+                            : "Organisateur"
+                    ?>
                   </p>
                 </div>
+                <?php
+                }
+                ?>
               </div>
             </section>
           </div>
