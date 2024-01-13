@@ -169,12 +169,13 @@ class User extends Model
      */
     public function getFestivals(): array
     {
-        $query = "SELECT *
-                  FROM festival fe
-                  LEFT OUTER JOIN festival_utilisateur fu 
-                  ON fe.id_festival = fu.id_festival
-                  WHERE fu.id_utilisateur = ? OR id_createur = ?
-                  ORDER BY fe.id_festival;";
+        $query = "SELECT f.id_festival,f.nom_fe,f.description_fe,
+                  f.illustration_fe,f.date_debut_fe,f.date_fin_fe,f.id_createur 
+                  FROM festival f 
+                  LEFT OUTER JOIN festival_utilisateur fu
+                  ON f.id_festival = fu.id_festival 
+                  WHERE fu.id_utilisateur = ? 
+                  OR f.id_createur = ?;";
 
         $festivals = Database::query($query, $this->getId(), $this->getId());
 
