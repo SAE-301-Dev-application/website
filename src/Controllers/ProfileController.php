@@ -3,13 +3,11 @@
 namespace MvcLite\Controllers;
 
 use MvcLite\Controllers\Engine\Controller;
-use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Middlewares\AuthMiddleware;
-use MvcLite\Models\Festival;
 use MvcLite\Models\Spectacle;
 use MvcLite\Models\User;
 use MvcLite\Router\Engine\Redirect;
