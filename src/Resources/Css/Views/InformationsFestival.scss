@@ -1,138 +1,76 @@
 #informations_festival_main {
-  > #main {
-    @apply pt-24;
+  & section#festival {
+    > .title-container {
+      @apply mb-2;
+    }
 
-    section {
-      &#festival_informations {
-        > .title-container {
-          @apply mb-px;
+    > p.festival-categories {
+      @apply text-grey text-xl font-medium mb-10;
+    }
 
-          .buttons {
-            @apply flex inset-y-0 right-0;
+    > .festival-grid {
+      @apply grid grid-cols-1 lg:grid-cols-3 gap-x-40 gap-y-10;
 
-            button {
-              @apply w-auto;
+      > .left-side {
+        @apply lg:col-span-1 flex flex-col gap-y-10 justify-center;
+
+        > .festival-picture {
+          @apply w-1/2 mx-auto lg:w-full;
+
+          > .filter-in-progress {
+            > p {
+              @apply text-5xl;
             }
           }
         }
-      
-        > .form-container {
-          @apply grid grid-cols-3 gap-x-20 mb-7;
+      }
 
-          h3.subtitle {
-            @apply text-2xl font-black;
-          }
-          
-          p:not(.in-progress) {
-            @apply font-medium;
-          }
-          
-          > .right-side {
-            @apply col-span-2 pt-5 pl-10;
+      > .main-side {
+        @apply lg:col-span-2 flex flex-col gap-y-10;
 
-            .festival-data-row {
-              @apply grid grid-cols-4 gap-x-5 mb-7;
+        > section {
+          &#description {
+            > .content {
+              @apply flex gap-x-10;
 
-              > .description-container {
-                @apply col-span-3;
+              > .description {
+                @apply flex-1;
 
-                > h3 {
-                  @apply mb-3;
+                > p {
+                  @apply font-medium;
                 }
               }
 
-              > .festival-duration {
-                @apply col-span-1;
+              > .duration {
+                @apply flex-none;
               }
             }
+          }
 
-            .spectacles-container,
-            .scenes-container
-            .users-container {
-              @apply mb-7;
+          &#spectacles {
+            > .spectacles-grid {
+              @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5;
 
-              .spectacles-title-row,
-              .scenes-title-row,
-              .users-title-row {
-                @apply grid grid-cols-2 gap-x-5;
+              > a {
+                > .spectacle-card {
+                  @apply flex gap-x-2;
 
-                .data-title {
-                  @apply ml-0 mb-5;
-                }
+                  > .spectacle-picture {
+                    @apply flex-none w-32;
+                  }
 
-                .buttons {
-                  @apply flex right-0;
+                  > .spectacle-presentation {
+                    @apply flex-1;
 
-                  button {
-                    @apply w-auto mx-3;
+                    > h4.spectacle-name {
+                      @apply font-black text-2xl;
+                    }
+
+                    > p.spectacle-location {
+                      @apply text-sm text-grey;
+                    }
                   }
                 }
-              }
-
-              > .spectacles-grid,
-              > .scenes-grid,
-              > .users-grid {
-                @apply grid grid-cols-3 gap-x-5;
-
-                .name {
-                  @apply text-xl font-semibold;
-                  grid-row: 1;
-                }
-
-                .email {
-                  @apply text-sm font-semibold;
-                  grid-row-start: 2;
-
-                }
-                .role {
-                  @apply text-sm font-semibold;
-                  grid-row-start: 3;
-                }
-              }
-            }
-          }
-
-          > .left-side {
-            @apply col-span-1;
-
-            > p.categories {
-              @apply text-lg;
-            }
-
-            > .festival-preview {
-              @apply mt-6 mb-5;
-
-              > .border-in-progress {
-                @apply border-["8px"];
-              }
-
-              > .festival-picture {
-                @apply w-96 h-80;
-
-                p.in-progress {
-                  @apply text-5xl;
-                }
-              }
-            }
-
-            > .grij-title-row {
-              @apply grid grid-cols-2 gap-x-5 mb-3;
-
-              .grij-title,
-              .add-button {
-                @apply my-auto ml-0;
-              }
-
-              button {
-                @apply w-auto;
-              }
-            }
-
-            > .grij-grid {
-              @apply grid grid-cols-2 gap-x-0 text-sm;
-
-              .grij-column {
-                @apply font-bold;
               }
             }
           }

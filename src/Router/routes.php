@@ -111,8 +111,10 @@ Router::get("/informations-festival", InformationsFestivalController::class, "re
 Router::get("/informations-spectacle", InformationsSpectacleController::class, "render")
     ->setName("informationsSpectacle");
 
+
 Router::get("/modify-festival", ModifyFestivalController::class, "render")
     ->setName("modifyFestival");
+
 
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");

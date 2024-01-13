@@ -421,7 +421,7 @@ class Festival extends Model implements JsonSerializable
     /**
      * @return bool True if the festival is in progress, false otherwise.
      */
-    public function isFestivalInProgress(): bool
+    public function isInProgress(): bool
     {
         $now = time();
         return $now >= strtotime($this->beginningDate) && $now <= strtotime($this->endingDate);
@@ -504,8 +504,6 @@ class Festival extends Model implements JsonSerializable
                             $categorie);
         }
     }
-
-    // TODO lecture
 
     /**
      * Attempt to delete a spectacle from a festival.
