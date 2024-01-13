@@ -16,6 +16,10 @@ module.exports = {
         "red": "#FB0D0D",
         "green": "#00C637"
       },
+
+      aspectRatio: {
+        "illustration": "4/3",
+      },
     },
   },
   plugins: [],
