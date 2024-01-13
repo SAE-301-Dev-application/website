@@ -12,6 +12,8 @@ $firstname = $props->getRequest()->getInput("firstname") ?? Session::getUserAcco
 $lastname = $props->getRequest()->getInput("lastname") ?? Session::getUserAccount()->getLastname();
 $login = $props->getRequest()->getInput("login") ?? Session::getUserAccount()->getLogin();
 $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->getEmail();
+
+
 ?>
 
 <!doctype html>
@@ -24,17 +26,124 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
   <title>Mon profil - Festiplan</title>
 
   <!-- CSS -->
-  <?php
-  Storage::include("Css/ready.css");
-  ?>
+    <?php
+    Storage::include("Css/ready.css");
+    ?>
 
   <!-- JS -->
   <script src="/website/node_modules/jquery/dist/jquery.min.js" defer></script>
   <script src="/website/node_modules/gsap/dist/gsap.min.js" defer></script>
-  <?php
-  Storage::include("Js/profile/navigation-links-manager.js", importMethod: "defer");
-  Storage::include("Js/profile/delete-account.js", importMethod: "defer");
-  ?>
+    <?php
+    Storage::include("Js/profile/navigation-links-manager.js", importMethod: "defer");
+    Storage::include("Js/profile/delete-account.js", importMethod: "defer");
+    ?>
+
+  <script defer>  /* Usage d'une balise script pour le code source JS, car présence de PHP. */
+      document.addEventListener("DOMContentLoaded", () => {
+          const FESTIVALS_LIST = $("div.festivals-container");
+
+          let loadedFestivals = [];
+
+          function updateFestivalsList() {
+              $.get("<?= route("profile.getFestivals") ?>", {})
+                  .done(data => {
+
+                      data = JSON.parse(data);
+
+                      loadedFestivals = data;
+
+                      FESTIVALS_LIST.empty();
+
+                      if (data.length) {
+
+                      } else {
+                          FESTIVALS_LIST.append(`
+                          <div class="alert alert-grey">
+                            <div class="alert-icon">
+                              <i class="fa-solid fa-info-circle"></i>
+                            </div>
+
+                            <div class="alert-content">
+                              <p>
+                                Vous n'organisez aucun festival.
+                              </p>
+                            </div>
+                          </div>
+                          `)
+                      }
+
+                      data.forEach(festival => {
+                          let delete_btn = festival.id_createur === <?= Session::getSessionId()?>
+                              ? `<button class="button-red" id=\"delete_festival_${festival.id_festival}\">
+                                  <i class="fa-solid fa-trash"></i>
+                                  Supprimer
+                              </button>`
+                              : "";
+
+                          FESTIVALS_LIST.append(`
+                          <div class=\"festival-preview\">
+                            <div class=\"festival-picture\"
+                              style=\"background: url(\'${festival.illustration_fe}\') center / cover no-repeat;\"></div>
+
+                                <div class=\"festival-identity\">
+                                  <div class=\"festival-header\">
+                                    <div class=\"festival-name-container\">
+                                      <h3 class=\"festival-name\">
+                                          ${festival.nom_fe}
+                                      </h3>
+
+                                      <i class=\"fa-solid fa-warning fa-2xl\"
+                                        title=\"La configuration de ce festival n'est pas terminée !\">
+                                      </i>
+                                    </div>
+
+                                    <div class=\"festival-buttons-container\">
+                                      <a href=\"<?= route("modifyFestival")?>?id=${festival.id_festival}\">
+                                        <button class=\"button-grey\" id=\"modify_festival_${festival.id_festival}\">
+                                          <i class=\"fa-solid fa-pen\"></i>
+                                          Éditer
+                                        </button>
+                                      </a>`
+                              + delete_btn +
+                              `</div>
+                                  </div>
+
+                                  <p class=\"festival-description\">
+                                      ${festival.description_fe}
+                                  </p>
+                                </div>
+                              </div>
+                             </div>
+                         `);
+                      });
+                  });
+          }
+
+          updateFestivalsList();
+
+          $(document).on("click", "button[id^='delete_festival_']", e => {
+              e.preventDefault();
+
+              let button = $(e.currentTarget),
+                  festivalId = button.attr("id").split('_')[2];
+
+              $.post("<?= route("post.profile.deleteFestival")?>",
+                  {
+                      festivalId,
+                  })
+
+                  .done(data => {
+                      if (data === "success") {
+                          updateFestivalsList();
+
+                      } else {
+                          button.after(`<p class="input-error">${data}</p>`);
+                      }
+                  });
+          });
+      });
+
+  </script>
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -45,12 +154,13 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
 <body>
 <div id="profile_main">
 
-  <?php
-  Storage::component("PopupComponent", [
-      "id" => "popup_confirm_account_deleting",
-      "title" => "Confirmation de désinscription",
 
-      "slot" => "<p class='question'>Êtes-vous sûr de vouloir vous désinscrire de la plateforme ?</p>
+    <?php
+    Storage::component("PopupComponent", [
+        "id" => "popup_confirm_account_deleting",
+        "title" => "Confirmation de désinscription",
+
+        "slot" => "<p class='question'>Êtes-vous sûr de vouloir vous désinscrire de la plateforme ?</p>
                   <p><i class='fa-solid fa-warning fa-2xl'></i> <strong>Attention</strong>, cette action est irréversible et le compte ne pourra pas être récupéré.</p>
                   <p>Tous les festivals et les spectacles dont vous êtes responsable seront également supprimés.</p>
                   
@@ -78,15 +188,15 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                         <button class='button-red' id='popup_confirm_button'>Se désinscrire <i class='fa-solid fa-right-from-bracket'></i></button>
                       </div>
                     </form>",
-  ]);
+    ]);
 
-  Storage::component("HeaderComponent");
-  ?>
+    Storage::component("HeaderComponent");
+    ?>
 
   <div id="main">
     <h1 class="username">
-      <?= Session::getUserAccount()->getFirstname() ?>
-      <?= Session::getUserAccount()->getLastname() ?>
+        <?= Session::getUserAccount()->getFirstname() ?>
+        <?= Session::getUserAccount()->getLastname() ?>
     </h1>
 
     <div class="main-grid">
@@ -134,12 +244,12 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                          value="<?= $firstname ?>"
                          maxlength="<?= User::FIRSTNAME_MAX_LENGTH ?>"/>
 
-                  <?php
-                  Storage::component("InputErrorComponent", [
-                      "errors" => $errors,
-                      "input" => "firstname",
-                  ]);
-                  ?>
+                    <?php
+                    Storage::component("InputErrorComponent", [
+                        "errors" => $errors,
+                        "input" => "firstname",
+                    ]);
+                    ?>
                 </label>
               </div>
 
@@ -155,12 +265,12 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                          value="<?= $lastname ?>"
                          maxlength="<?= User::LASTNAME_MAX_LENGTH ?>"/>
 
-                  <?php
-                  Storage::component("InputErrorComponent", [
-                      "errors" => $errors,
-                      "input" => "lastname",
-                  ]);
-                  ?>
+                    <?php
+                    Storage::component("InputErrorComponent", [
+                        "errors" => $errors,
+                        "input" => "lastname",
+                    ]);
+                    ?>
                 </label>
               </div>
 
@@ -177,12 +287,12 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                          minlength="<?= User::LOGIN_MIN_LENGTH ?>"
                          maxlength="<?= User::LOGIN_MAX_LENGTH ?>"/>
 
-                  <?php
-                  Storage::component("InputErrorComponent", [
-                      "errors" => $errors,
-                      "input" => "login",
-                  ]);
-                  ?>
+                    <?php
+                    Storage::component("InputErrorComponent", [
+                        "errors" => $errors,
+                        "input" => "login",
+                    ]);
+                    ?>
                 </label>
               </div>
 
@@ -199,12 +309,12 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                          minlength="<?= User::EMAIL_MIN_LENGTH ?>"
                          maxlength="<?= User::EMAIL_MAX_LENGTH ?>"/>
 
-                  <?php
-                  Storage::component("InputErrorComponent", [
-                      "errors" => $errors,
-                      "input" => "email",
-                  ]);
-                  ?>
+                    <?php
+                    Storage::component("InputErrorComponent", [
+                        "errors" => $errors,
+                        "input" => "email",
+                    ]);
+                    ?>
                 </label>
               </div>
 
@@ -234,12 +344,12 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                          name="current_password"
                          id="current_password"/>
 
-                  <?php
-                  Storage::component("InputErrorComponent", [
-                      "errors" => $errors,
-                      "input" => "current_password",
-                  ]);
-                  ?>
+                    <?php
+                    Storage::component("InputErrorComponent", [
+                        "errors" => $errors,
+                        "input" => "current_password",
+                    ]);
+                    ?>
                 </label>
               </div>
 
@@ -254,12 +364,12 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                            name="new_password"
                            id="new_password"/>
 
-                    <?php
-                    Storage::component("InputErrorComponent", [
-                        "errors" => $errors,
-                        "input" => "new_password",
-                    ]);
-                    ?>
+                      <?php
+                      Storage::component("InputErrorComponent", [
+                          "errors" => $errors,
+                          "input" => "new_password",
+                      ]);
+                      ?>
                   </label>
                 </div>
 
@@ -273,12 +383,12 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                            name="new_password_confirmation"
                            id="new_password_confirmation"/>
 
-                    <?php
-                    Storage::component("InputErrorComponent", [
-                        "errors" => $errors,
-                        "input" => "new_password_confirmation",
-                    ]);
-                    ?>
+                      <?php
+                      Storage::component("InputErrorComponent", [
+                          "errors" => $errors,
+                          "input" => "new_password_confirmation",
+                      ]);
+                      ?>
                   </label>
                 </div>
               </div>
@@ -293,6 +403,7 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
           </div>
         </section>
 
+        
         <section id="my_festivals">
           <div class="section-title-container">
             <div class="left-side">
@@ -309,65 +420,8 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
           </div>
 
           <div class="festivals-container">
-            <?php
-            if (count($myFestivals)) {
-                  foreach ($myFestivals as $festival) {
-                      ?>
-                    <div class="festival-preview">
-                      <div class="festival-picture"
-                           style="background: url('<?= $festival->getIllustration() ?>') center / cover no-repeat;"></div>
 
-                      <div class="festival-identity">
-                        <div class="festival-header">
-                          <div class="festival-name-container">
-                            <h3 class="festival-name">
-                                <?= $festival->getName() ?>
-                            </h3>
 
-                            <i class="fa-solid fa-warning fa-2xl"
-                               title="La configuration de ce festival n'est pas terminée !"></i>
-                          </div>
-
-                          <div class="festival-buttons-container">
-                            <a href="<?= route("modifyFestival")?>?id=<?= $festival->getId()?>">
-                              <button class="button-grey">
-                                <i class="fa-solid fa-pen"></i>
-                                Éditer
-                              </button>
-                            </a>
-
-                            <?php if ($festival->isUserOwner()) { ?>
-                              <button class="button-red">
-                                <i class="fa-solid fa-trash"></i>
-                                Supprimer
-                              </button>
-                            <?php } ?>
-                          </div>
-                        </div>
-
-                        <p class="festival-description">
-                            <?= $festival->getDescription() ?>
-                        </p>
-                      </div>
-                    </div>
-                      <?php
-                  }
-              } else {
-            ?>
-              <div class="alert alert-grey">
-                <div class="alert-icon">
-                  <i class="fa-solid fa-info-circle"></i>
-                </div>
-
-                <div class="alert-content">
-                  <p>
-                    Vous n'organisez aucun festival.
-                  </p>
-                </div>
-              </div>
-            <?php
-            }
-            ?>
           </div>
         </section>
 
@@ -381,8 +435,8 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
           </div>
 
           <div class="festivals-container">
-            <?php
-            if (count($mySpectacles)) {
+              <?php
+              if (count($mySpectacles)) {
                   foreach ($mySpectacles as $spectacle) {
                       ?>
                     <div class="festival-preview">
@@ -400,11 +454,11 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                           </div>
 
                           <div class="festival-buttons-container">
-                            <a href="<?= route("modifySpectacle")?>?id=<?= $spectacle->getId()?>">
-                            <button class="button-grey">
-                              <i class="fa-solid fa-pen"></i>
-                              Éditer
-                            </button>
+                            <a href="<?= route("modifySpectacle") ?>?id=<?= $spectacle->getId() ?>">
+                              <button class="button-grey">
+                                <i class="fa-solid fa-pen"></i>
+                                Éditer
+                              </button>
                             </a>
 
                             <button class="button-red">
@@ -422,20 +476,20 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                       <?php
                   }
               } else {
-            ?>
-              <div class="alert alert-grey">
-                <div class="alert-icon">
-                  <i class="fa-solid fa-info-circle"></i>
+                  ?>
+                <div class="alert alert-grey">
+                  <div class="alert-icon">
+                    <i class="fa-solid fa-info-circle"></i>
+                  </div>
+                  <div class="alert-content">
+                    <p>
+                      Vous n'êtes responsable d'aucun spectacle.
+                    </p>
+                  </div>
                 </div>
-                <div class="alert-content">
-                  <p>
-                    Vous n'êtes responsable d'aucun spectacle.
-                  </p>
-                </div>
-              </div>
-            <?php
-            }
-            ?>
+                  <?php
+              }
+              ?>
           </div>
         </section>
 
@@ -459,9 +513,9 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
     </div>
   </div>
 
-  <?php
-  Storage::component("FooterComponent");
-  ?>
+    <?php
+    Storage::component("FooterComponent");
+    ?>
 </div>
 </body>
 </html>
