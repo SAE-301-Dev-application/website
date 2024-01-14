@@ -20,13 +20,30 @@ class CreateSpectacleAddContributorsController extends Controller
 
     private const REGEX_ID_PARAMETER = "/^([1-9])([0-9]*)$/";
 
+    private const ERROR_IRRETRIEVABLE_USER
+        = "Cet utilisateur n'existe pas ou plus.";
+
     private const ERROR_IMPOSSIBLE_TO_MANAGE_THIS_SPECTACLE
         = "Vous ne pouvez pas gérer ce spectacle.";
 
+    private const ERROR_USER_ALREADY_CONTRIBUTOR
+        = "%s %s est déjà un intervenant de ce spectacle.";
+
+    private const ERROR_NON_CONTRIBUTOR_USER
+        = "%s %s n'est pas un intervenant de ce spectacle.";
+
+    private const ERROR_OWNER_REMOVES_HIMSELF
+        = "Vous ne pouvez pas vous retirer vous-même du spectacle.";
+
+    private const ERROR_OWNER_GIVES_HIMSELF
+        = "Vous êtes déjà le responsable de ce spectacle.";
+
+    private const ERROR_FUTURE_OWNER_NOT_CONTRIBUTOR
+        = "L'utilisateur auquel vous souhaitez transférer le spectacle
+           doit déjà en être un intervenant.";
+
     public function __construct()
     {
-        parent::__construct();
-
         parent::__construct();
 
         $this->middleware(AuthMiddleware::class);
@@ -34,24 +51,22 @@ class CreateSpectacleAddContributorsController extends Controller
 
     public function render(Request $request): RedirectResponse|true
     {
+        $spectacleId = $request->getParameter("id");
+        
+        if ($spectacleId === null
+            || !self::isRetrievableSpectacle($spectacleId)
+            || !self::isManageableSpectacle($spectacleId))
         {
-            $spectacleId = $request->getParameter("id");
-    
-            if ($spectacleId === null
-                || !self::isRetrievableSpectacle($spectacleId)
-                || !self::isManageableSpectacle($spectacleId))
-            {
-                echo self::ERROR_IMPOSSIBLE_TO_MANAGE_THIS_SPECTACLE;
-            }
-            
-            $spectacle = Spectacle::getSpectacleById($spectacleId);
-    
-            View::render("CreateSpectacleAddContributors", [
-                "spectacle" => $spectacle,
-            ]);
-    
-            return true;
+            echo self::ERROR_IMPOSSIBLE_TO_MANAGE_THIS_SPECTACLE;
         }
+        
+        $spectacle = Spectacle::getSpectacleById($spectacleId);
+
+        View::render("CreateSpectacleAddContributors", [
+            "spectacle" => $spectacle,
+        ]);
+
+        return true;
     }
 
     public function getContributors(Request $request): void
@@ -178,6 +193,16 @@ class CreateSpectacleAddContributorsController extends Controller
     private static function isManageableSpectacle(string $spectacleId): bool
     {
         return Spectacle::getSpectacleById($spectacleId)->getOwner()->getId() == Session::getSessionId();
+    }
+
+    /**
+     * @param string $userId
+     * @return bool If given scene id is valid (non-negative and non-null integer)
+     */
+    private static function isRetrievableUser(string $userId): bool
+    {
+        return preg_match(self::REGEX_ID_PARAMETER, $userId)
+               && Scene::getSceneById($userId) !== null;
     }
     
 }
