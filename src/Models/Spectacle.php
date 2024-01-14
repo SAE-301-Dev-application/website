@@ -409,6 +409,58 @@ class Spectacle extends Model implements JsonSerializable
     }
 
     /**
+     * @param User $user Searched user object
+     * @return bool If given user is an contributor of current spectacle
+     */
+    public function hasContributor(User $user): bool
+    {
+        $query = "SELECT COUNT(*) as count
+                  FROM spectacle_intervenant si
+                  WHERE si.id_spectacle = ? 
+                  AND si.id_intervenant = ?;";
+
+        $hasContributor = Database::query($query, $this->getId(), $user->getId());
+
+        return $hasContributor->get()["count"];
+    }
+
+    /**
+     * Adds user as contributor.
+     *
+     * @param User $user
+     * @return bool If given user has been added as contributor
+     */
+    public function addContributor(User $user): bool
+    {
+
+        $addSpectacleQuery = "CALL ajouterIntervenant(?, ?);";
+
+        $contributorAdding = Database::query($addSpectacleQuery,
+            $this->getId(),
+            $user->getId());
+
+        return $contributorAdding->getExecutionState();
+    }
+
+    /**
+     * Removes user from organizers.
+     *
+     * @param User $user
+     * @return bool If given user has been removed from contributors
+     */
+    public function removeContributor(User $user): bool
+    {
+
+        $addSpectacleQuery = "CALL supprimerIntervenant(?, ?);";
+
+        $organizerAdding = Database::query($addSpectacleQuery,
+            $this->getId(),
+            $user->getId());
+
+        return $organizerAdding->getExecutionState();
+    }
+
+    /**
      * Attempts to delete a spectacle by its id.
      *
      * @return bool If spectacle is successfully deleted

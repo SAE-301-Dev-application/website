@@ -1,28 +1,42 @@
 #generate_planification_main {
-    > #main {
-        > #planification {
-            > .calendar-container {
-                @apply bg-grey-light p-8 rounded-2xl;
+  > #main {
+    > .title-container {
+      @apply flex flex-wrap items-center gap-10 mb-10;
 
-                > #calendar {
-                    thead {
-                        tr {
-                            @apply align-middle h-14;
-                        }
-                    }
-
-                    // Height of each cell
-                    tbody {
-                        tr {
-                            @apply h-20;
-                        }
-                    }
-
-                    tr, th, td {
-                        @apply border-grey border-2;
-                    }
-                }
-            }
-        }
+      > h3.title {
+        @apply text-3xl font-black;
+      }
     }
+
+    > .spacing {
+      @apply mb-10;
+    }
+
+    > .hidden-list {
+      @apply hidden;
+    }
+
+    > .calendar-container {
+      @apply bg-grey-light p-8 rounded-2xl;
+
+      > #calendar {
+        thead {
+          tr {
+            @apply align-middle h-14;
+          }
+        }
+
+        // Height of each cell
+        tbody {
+        tr {
+            @apply h-20;
+        }
+        }
+
+        tr, th, td {
+          @apply border-grey border-2;
+        }
+      }
+    }
+  }
 }

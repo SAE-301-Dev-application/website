@@ -34,8 +34,10 @@ class GeneratePlanificationController extends Controller
         }
         else
         {
+            $festival = Festival::getFestivalById($festivalId);
+
             View::render("GeneratePlanification", [
-                "id" => $festivalId
+                "festival" => $festival,
             ]);
         }
     }
