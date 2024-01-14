@@ -160,9 +160,8 @@ class CreateFestivalAddSpectaclesController extends Controller
      */
     private static function isManageableFestival(string $festivalId): bool
     {
-        $organizers = Festival::getFestivalById($festivalId)->getOrganizers();
         return Festival::getFestivalById($festivalId)->getOwner()->getId() == Session::getSessionId()
-            || Festival::isOrganizer($organizers,Session::getUserAccount());
+            || Festival::getFestivalById($festivalId)->hasOrganizer(Session::getUserAccount());
     }
 
     /**

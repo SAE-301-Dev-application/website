@@ -168,7 +168,8 @@ class CreateFestivalAddScenesController extends Controller
      */
     private static function isManageableFestival(string $festivalId): bool
     {
-        return Festival::getFestivalById($festivalId)->getOwner()->getId() == Session::getSessionId();
+        return Festival::getFestivalById($festivalId)->getOwner()->getId() == Session::getSessionId()
+            || Festival::getFestivalById($festivalId)->hasOrganizer(Session::getUserAccount());
     }
 
     /**
