@@ -2,6 +2,7 @@
 
 namespace MvcLite\Models;
 
+use JsonSerializable;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Database\Engine\DatabaseQuery;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
@@ -11,7 +12,7 @@ use MvcLite\Models\Engine\Model;
 use MvcLite\Models\Spectacle;
 use MvcLite\Models\Festival;
 
-class User extends Model
+class User extends Model implements JsonSerializable
 {
     public const FIRSTNAME_MAX_LENGTH = 25;
 
@@ -243,6 +244,22 @@ class User extends Model
     }
 
     /**
+     * @param string $search Search value
+     * @return array Results array
+     */
+    public static function searchByName(string $search): array
+    {
+        $query = "SELECT * 
+                  FROM utilisateur
+                  WHERE utilisateur.prenom_uti LIKE ?
+                  OR utilisateur.nom_uti LIKE ?";
+
+        $searchResults = Database::query($query, "%$search%", "%$search%");
+
+        return self::queryToArray($searchResults);
+    }
+
+    /**
      * Attempt to create an account with given information.
      *
      * @param string $name
@@ -343,5 +360,16 @@ class User extends Model
             $modelArray[] = self::getUserById($line["id_utilisateur"]);
         }
         return $modelArray;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            "id" => $this->getId(),
+            "firstname" => $this->getFirstname(),
+            "lastname" => $this->getLastname(),
+            "login" => $this->getLogin(),
+            "email" => $this->getEmail(),
+        ];
     }
 }
