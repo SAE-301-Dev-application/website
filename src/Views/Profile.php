@@ -40,9 +40,11 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
 
   <script defer>  /* Usage d'une balise script pour le code source JS, car présence de PHP. */
       document.addEventListener("DOMContentLoaded", () => {
-          const FESTIVALS_LIST = $("div.festivals-container");
+          const FESTIVALS_LIST = $("div.festivals-container"),
+                SPECTACLES_LIST = $("div.spectacles-container");
 
-          let loadedFestivals = [];
+          let loadedFestivals = [],
+              loadedSpectacles = [];
 
           function updateFestivalsList() {
               $.get("<?= route("profile.getFestivals") ?>", {})
@@ -135,6 +137,100 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                   .done(data => {
                       if (data === "success") {
                           updateFestivalsList();
+
+                      } else {
+                          button.after(`<p class="input-error">${data}</p>`);
+                      }
+                  });
+          });
+
+          function updateSpectaclesList() {
+              $.get("<?= route("profile.getSpectacles") ?>", {})
+                  .done(data => {
+
+                      data = JSON.parse(data);
+
+                      loadedSpectacles = data;
+
+                      SPECTACLES_LIST.empty();
+
+                      if (data.length) {
+
+                      } else {
+                          SPECTACLES_LIST.append(`
+                          <div class="alert alert-grey">
+                            <div class="alert-icon">
+                              <i class="fa-solid fa-info-circle"></i>
+                            </div>
+                            <div class="alert-content">
+                              <p>
+                                Vous n'êtes responsable d'aucun spectacle.
+                              </p>
+                            </div>
+                          </div>
+                          `)
+                      }
+
+                      data.forEach(spectacle => {
+                          let delete_btn = spectacle.id_createur === <?= Session::getSessionId()?>
+                              ? `<button class="button-red" id=\"delete_spectacle_${spectacle.id_spectacle}\">
+                                  <i class="fa-solid fa-trash"></i>
+                                  Supprimer
+                              </button>`
+                              : "";
+
+                          SPECTACLES_LIST.append(`
+                          <div class="festival-preview">
+                            <div class="festival-picture"
+                                 style="background: url('${spectacle.illustration_sp}') center / cover no-repeat;"></div>
+
+                            <div class="festival-identity">
+                              <div class="festival-header">
+                                <div class="festival-name-container">
+                                  <h3 class="festival-name">
+                                      ${spectacle.titre_sp}
+                                  </h3>
+
+                                  <i class="fa-solid fa-warning fa-2xl"></i>
+                                </div>
+
+                                <div class="festival-buttons-container">
+                                  <a href="<?= route("modifySpectacle") ?>?id=${spectacle.id_spectacle}">
+                                    <button class="button-grey">
+                                      <i class="fa-solid fa-pen"></i>
+                                      Éditer
+                                    </button>
+                                  </a>`
+                                   + delete_btn +
+                                `</div>
+                              </div>
+
+                              <p class="festival-description">
+                                  ${spectacle.description_sp}
+                              </p>
+                            </div>
+                          </div>
+                         `);
+                      });
+                  });
+          }
+
+          updateSpectaclesList();
+
+          $(document).on("click", "button[id^='delete_spectacle_']", e => {
+              e.preventDefault();
+
+              let button = $(e.currentTarget),
+                  spectacleId = button.attr("id").split('_')[2];
+
+              $.post("<?= route("post.profile.deleteSpectacle")?>",
+                  {
+                      spectacleId,
+                  })
+
+                  .done(data => {
+                      if (data === "success") {
+                          updateSpectaclesList();
 
                       } else {
                           button.after(`<p class="input-error">${data}</p>`);
@@ -434,62 +530,8 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
             </div>
           </div>
 
-          <div class="festivals-container">
-              <?php
-              if (count($mySpectacles)) {
-                  foreach ($mySpectacles as $spectacle) {
-                      ?>
-                    <div class="festival-preview">
-                      <div class="festival-picture"
-                           style="background: url('<?= $spectacle->getIllustration() ?>') center / cover no-repeat;"></div>
+          <div class="spectacles-container">
 
-                      <div class="festival-identity">
-                        <div class="festival-header">
-                          <div class="festival-name-container">
-                            <h3 class="festival-name">
-                                <?= $spectacle->getTitle() ?>
-                            </h3>
-
-                            <i class="fa-solid fa-warning fa-2xl"></i>
-                          </div>
-
-                          <div class="festival-buttons-container">
-                            <a href="<?= route("modifySpectacle") ?>?id=<?= $spectacle->getId() ?>">
-                              <button class="button-grey">
-                                <i class="fa-solid fa-pen"></i>
-                                Éditer
-                              </button>
-                            </a>
-
-                            <button class="button-red">
-                              <i class="fa-solid fa-trash"></i>
-                              Supprimer
-                            </button>
-                          </div>
-                        </div>
-
-                        <p class="festival-description">
-                            <?= $spectacle->getDescription() ?>
-                        </p>
-                      </div>
-                    </div>
-                      <?php
-                  }
-              } else {
-                  ?>
-                <div class="alert alert-grey">
-                  <div class="alert-icon">
-                    <i class="fa-solid fa-info-circle"></i>
-                  </div>
-                  <div class="alert-content">
-                    <p>
-                      Vous n'êtes responsable d'aucun spectacle.
-                    </p>
-                  </div>
-                </div>
-                  <?php
-              }
-              ?>
           </div>
         </section>
 

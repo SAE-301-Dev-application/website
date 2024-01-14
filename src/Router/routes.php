@@ -88,11 +88,18 @@ Router::get("/grij-festival", CreateFestivalAddGrijController::class, "render")
 Router::get("/profile", ProfileController::class, "render")
     ->setName("profile");
 
-Router::get("/profile/get", ProfileController::class, "getSessionUserFestivals")
+Router::get("/profile/getFestivals", ProfileController::class, "getSessionUserFestivals")
     ->setName("profile.getFestivals");
 
-Router::post("/profile/delete", ProfileController::class, "deleteFestival")
+Router::get("/profile/getSpectacles", ProfileController::class, "getSessionUserSpectacles")
+    ->setName("profile.getSpectacles");
+
+
+Router::post("/profile/deleteFestival", ProfileController::class, "deleteFestival")
     ->setName("post.profile.deleteFestival");
+
+Router::post("/profile/deleteSpectacle", ProfileController::class, "deleteSpectacle")
+    ->setName("post.profile.deleteSpectacle");
 
 Router::post("/profile/general-information/save",
              ProfileController::class,
@@ -123,6 +130,8 @@ Router::get("/informations-spectacle", InformationsSpectacleController::class, "
 Router::get("/modify-festival", ModifyFestivalController::class, "render")
     ->setName("modifyFestival");
 
+Router::post("/modify-festival", ModifyFestivalController::class, "modifyFestival")
+    ->setName("post.modifyFestival");
 
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");

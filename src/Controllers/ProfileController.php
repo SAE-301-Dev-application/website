@@ -93,10 +93,7 @@ class ProfileController extends Controller
     public function render(): void
     {
 
-        View::render("Profile", [
-            "mySpectacles" => self::getSessionUserSpectacles(),
-
-        ]);
+        View::render("Profile",[]);
     }
 
     /**
@@ -225,19 +222,28 @@ class ProfileController extends Controller
         }
     }
 
-    public function deleteSpectacle(Request $request): RedirectResponse
+    /**
+     * Delete a user's spectacle given its id
+     *
+     * @param Request $request
+     */
+    public function deleteSpectacle(Request $request): void
     {
-        $spectacleId = $request->getParameter("spectacleId");
-        $spectacle = Spectacle::getSpectacleById($spectacleId);
-        $isMySpectacle = true;  // TODO STUB
+        $spectacleId = $request->getInput("spectacleId");
 
-        if ($spectacleId !== null && $spectacle !== null && $isMySpectacle)
+        if (!self::isRetrievableSpectacle($spectacleId))
         {
-            $spectacle->delete();
+            echo self::ERROR_IRRETRIEVABLE_FESTIVAL;
+            return;
         }
 
-        return Redirect::route("profile")
-            ->redirect();
+        $spectacle = Spectacle::getSpectacleById($spectacleId);
+
+        if ($spectacleId !== null && $spectacle !== null)
+        {
+            $spectacle->delete();
+            echo "success";
+        }
     }
 
     /**
@@ -269,7 +275,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @return array Session user's festivals
+     * Get Session user's festivals
      */
     public static function getSessionUserFestivals(): void
     {
@@ -277,11 +283,11 @@ class ProfileController extends Controller
     }
 
     /**
-     * @return array Session user's spectacles
+     * Get Session user's spectacles
      */
-    private static function getSessionUserSpectacles(): array
+    public static function getSessionUserSpectacles(): void
     {
-        return Session::getUserAccount()->getUserSpectacles();
+        echo json_encode(Session::getUserAccount()->getUserSpectacles());
     }
 
     /**
@@ -292,5 +298,15 @@ class ProfileController extends Controller
     {
         return preg_match(self::REGEX_ID_PARAMETER, $festivalId)
             && Festival::getFestivalById($festivalId) !== null;
+    }
+
+    /**
+     * @param string $spectacleId
+     * @return bool If given spectacle id is valid (non-negative and non-null integer)
+     */
+    private static function isRetrievableSpectacle(string $spectacleId): bool
+    {
+        return preg_match(self::REGEX_ID_PARAMETER, $spectacleId)
+            && Spectacle::getSpectacleById($spectacleId) !== null;
     }
 }
