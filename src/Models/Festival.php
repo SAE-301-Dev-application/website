@@ -477,6 +477,7 @@ class Festival extends Model implements JsonSerializable
         }
     }
 
+
     /**
      * Attempt to modify a festival's generals parameters
      * and relink categories to it.
@@ -491,20 +492,20 @@ class Festival extends Model implements JsonSerializable
                                                    string $description,
                                                    ?string $illustration,
                                                    string $beginningDate,
-                                                   string $endingDate): void
+                                                   string $endingDate,
+                                                   array $checkedCategories): void
     {
         $addFestivalQuery = "CALL modifierFestival(?, ?, ?, ?, ?, ?);";
 
         $linkCategoryQuery = "CALL ajouterFestivalCategorie(?, ?);";
 
         $festivalId = Database::query($addFestivalQuery,
-                                      $id,
                                       $name,
                                       $description,
                                       $illustration ?? null,
                                       $beginningDate,
                                       $endingDate,
-                                      $this->owner);
+                                      Session::getUserAccount()->getId());
 
         $festivalId = $festivalId->get()["id"];
 
