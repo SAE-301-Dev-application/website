@@ -182,9 +182,13 @@ $orange: #FF7A00;
       }
     }
 
-    > button,
-    > select {
-      @apply w-auto;
+    > .action-container {
+      @apply flex flex-col gap-y-1;
+
+      > button,
+      > select {
+        @apply w-auto;
+      }
     }
   }
 }

@@ -82,8 +82,8 @@ Router::post("/create-scene", CreateSceneController::class, "createScene")
     ->setName("post.createScene");
 
 
-Router::get("/grij-festival", CreateFestivalAddGrijController::class, "render")
-    ->setName("grijFestival");
+Router::get("/add-grij-festival", CreateFestivalAddGrijController::class, "render")
+    ->setName("addGrijFestival");
 
 
 Router::get("/profile", ProfileController::class, "render")
@@ -162,8 +162,8 @@ Router::get("/add-organizer/search", CreateFestivalAddOrganizersController::clas
 Router::post("/add-organizer/add", CreateFestivalAddOrganizersController::class, "addOrganizer")
     ->setName("addOrganizer.addOrganizer");
 
-Router::post("/add-organizer/give", CreateFestivalAddOrganizersController::class, "giveOrganizer")
-    ->setName("addOrganizer.giveOrganizer");
+Router::post("/add-organizer/give", CreateFestivalAddOrganizersController::class, "giveFestivalToOrganizer")
+    ->setName("addOrganizer.giveFestival");
 
 Router::post("/add-organizer/remove", CreateFestivalAddOrganizersController::class, "removeOrganizer")
     ->setName("addOrganizer.removeOrganizer");

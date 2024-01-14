@@ -19,10 +19,10 @@ class DashboardController extends Controller
 
     public function render(): void
     {
-        $festival = new Festival();
+        $lastFestivals = Festival::lastFestivals();
         
         View::render("Dashboard", [
-            "festival" => $festival,
+            "lastFestivals" => $lastFestivals,
         ]);
     }
 }

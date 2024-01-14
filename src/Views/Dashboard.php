@@ -1,9 +1,7 @@
 <?php
-
 use MvcLite\Engine\InternalResources\Storage;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Models\Festival;
-
 ?>
 
 <!doctype html>
@@ -46,8 +44,7 @@ use MvcLite\Models\Festival;
         </h2>
       </div>
         <?php
-        $threeLastFestivals = $festival->lastFestivals();
-        foreach ($threeLastFestivals as $currentFestival) {
+        foreach ($lastFestivals as $currentFestival) {
             $isFestivalInProgress = $currentFestival->isInProgress();
         ?>
           <div class="festivals-list">

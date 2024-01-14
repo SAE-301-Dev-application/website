@@ -260,7 +260,7 @@ class Festival extends Model implements JsonSerializable
      * @return GriJ|null GriJ object if exists;
      *                       else NULL  
      */
-    public function getGriJWithId(): array
+    public function getGriJWithId(): GriJ
     {
         $query = "SELECT *
                   FROM grij
@@ -268,7 +268,7 @@ class Festival extends Model implements JsonSerializable
 
         $getGriJ = Database::query($query, $this->getId());
         
-        return GriJ::queryToArray($getGriJ);  
+        return GriJ::getGriJInstance($getGriJ->get());
 
     }
 
@@ -443,6 +443,24 @@ class Festival extends Model implements JsonSerializable
             $user->getId());
 
         return $organizerAdding->getExecutionState();
+    }
+
+    /**
+     * Gives to given organizer the current festival.
+     *
+     * @param User $user
+     * @return bool If current festival has been given to user
+     */
+    public function giveFestival(User $user): bool
+    {
+
+        $query = "UPDATE festival 
+                  SET id_createur = ? 
+                  WHERE id_festival = ?";
+
+        $festivalGiving = Database::query($query, $user->getId(), $this->getId());
+
+        return $festivalGiving->getExecutionState();
     }
 
     /**
@@ -714,30 +732,17 @@ class Festival extends Model implements JsonSerializable
     /**
      * @return array Three last id of festivals 
      */
-    public function lastFestivals(): array
+    public static function lastFestivals(): array
     {
         $query = "SELECT *
                   FROM festival
                   WHERE date_debut_fe <= CURDATE()
+                  ORDER BY date_debut_fe DESC
                   LIMIT 3;";
         
         $threeLastFestivals = Database::query($query);
 
         return Festival::queryToArray($threeLastFestivals);
-    }
-
-    /**
-     * Searches and returns grij by festival id.
-     */
-    public static function getGrij(int $idFestival): array
-    {
-        $query = "SELECT *
-                  FROM grij
-                  WHERE id_festival = ?";
-
-        $getGrij = Database::query($query, $idFestival);
-
-        return $getGrij->get();
     }
 
     /**

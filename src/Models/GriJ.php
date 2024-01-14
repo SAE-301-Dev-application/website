@@ -210,24 +210,6 @@ class GriJ extends Model implements JsonSerializable
     }
 
     /**
-     * Returns GriJ array by using DatabaseQuery object.
-     *
-     * @param DatabaseQuery $queryObject
-     * @return array GriJ array
-     */
-    public static function queryToArray(DatabaseQuery $queryObject): array
-    {
-        $modelArray = [];
-
-        foreach($queryObject->getAll() as $griJ)
-        {
-            $modelArray[] = self::getGriJInstance($griJ);
-        }
-
-        return $modelArray;
-    }
-
-    /**
      * @return array JSON serializing original array
      */
     public function jsonSerialize(): array

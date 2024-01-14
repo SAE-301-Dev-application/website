@@ -69,7 +69,9 @@ $errors = $props->hasValidator()
                               </ul>
                             </div>
 
-                            ${selector}
+                            <div class="action-container">
+                              ${selector}
+                            </div>
                           </div>
                           `);
                       });
@@ -113,7 +115,9 @@ $errors = $props->hasValidator()
                               </ul>
                             </div>
 
-                            ${selector}
+                            <div class="selector-container">
+                              ${selector}
+                            </div>
                           </div>
                           `);
                       });
@@ -145,9 +149,6 @@ $errors = $props->hasValidator()
                       break;
               }
 
-              updateOrganizersList();
-              searchOrganizer($("#initial_search_organizer_input").val());
-
               function addOrganizer(userId) {
                   $.post("<?= route("addOrganizer.addOrganizer") ?>",
                       {
@@ -157,6 +158,9 @@ $errors = $props->hasValidator()
                       .done(data => {
                           if (data !== "success") {
                               selector.after(`<p class="input-error">${data}</p>`);
+                          } else {
+                              updateOrganizersList();
+                              searchOrganizer($("#initial_search_organizer_input").val());
                           }
                       });
               }
@@ -170,6 +174,9 @@ $errors = $props->hasValidator()
                       .done(data => {
                           if (data !== "success") {
                               selector.after(`<p class="input-error">${data}</p>`);
+                          } else {
+                              window.location
+                                  = "<?= route("informationsFestival") ?>?id=<?= $festival->getId() ?>";
                           }
                       });
               }
@@ -183,6 +190,9 @@ $errors = $props->hasValidator()
                       .done(data => {
                           if (data !== "success") {
                               selector.after(`<p class="input-error">${data}</p>`);
+                          } else {
+                              updateOrganizersList();
+                              searchOrganizer($("#initial_search_organizer_input").val());
                           }
                       });
               }
