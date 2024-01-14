@@ -61,7 +61,7 @@ class RedirectResponse
      */
     public function redirect(): RedirectResponse
     {
-        $parameters = count($this->parameters)
+        $parameters = strlen($this->parameters)
             ? "?" . $this->parameters
             : "";
 
