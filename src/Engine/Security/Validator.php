@@ -529,7 +529,7 @@ class Validator
 
         if ($imageFile->isImage())
         {
-            $image = $imageFile->hasImage();
+            $image = $imageFile->asImage();
             $imageSize = getimagesize($image->getTemporaryName());
 
             $hasGoodSize = $imageSize[0] <= $maxWidth && $imageSize[1] <= $maxHeight;

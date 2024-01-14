@@ -104,7 +104,7 @@ class CreateSpectacleController extends Controller
             }
         }
 
-        $imageFile = $request->getFile("illustration")->hasImage();
+        $imageFile = $request->getFile("illustration")->asImage();
 
         $validation = (new Validator($request))
             ->required([
