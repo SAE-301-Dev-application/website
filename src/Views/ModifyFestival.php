@@ -95,6 +95,9 @@ foreach ($categories as $categorie) {
           <form action="<?= route("post.modifyFestival") ?>"
                 method="post"
                 enctype="multipart/form-data">
+
+            <input type="hidden" name="id" value="<?= $festival->getId() ?>" />
+
             <div class="form-grid">
               <section id="general_information">
                 <div class="form-component">
