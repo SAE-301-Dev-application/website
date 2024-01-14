@@ -1,4 +1,4 @@
-const POPUP = $("#search_scene_popup"),
+const POPUP = $("#search_organizer_popup"),
       POPUP_CLOSE_BUTTON = $(".popup > .popup-close-button");
 
 POPUP_CLOSE_BUTTON.on("click", () => {

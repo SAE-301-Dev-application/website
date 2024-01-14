@@ -46,9 +46,7 @@ $errors = $props->hasValidator()
 
                       SCENES_LIST.empty();
 
-                      if (data.length) {
-
-                      } else {
+                      if (!data.length) {
                           SCENES_LIST.append(`
                           <div class="alert alert-grey">
                             <div class="alert-icon">
@@ -59,7 +57,7 @@ $errors = $props->hasValidator()
                               <p>Aucune scène n'est liée à ce festival.</p>
                             </div>
                           </div>
-                          `)
+                          `);
                       }
 
                       data.forEach(scene => {
@@ -290,7 +288,7 @@ $errors = $props->hasValidator()
     ?>
 
   <div id="main">
-    <section id="add-scene">
+    <section>
       <div class="title-container">
         <h2 class="title">
           Ajouter des scènes

@@ -6,6 +6,7 @@
  */
 
 
+use MvcLite\Controllers\CreateFestivalAddOrganizersController;
 use MvcLite\Controllers\CreateFestivalAddSpectaclesController;
 use MvcLite\Controllers\IndexController;
 use MvcLite\Controllers\CreateFestivalController;
@@ -147,6 +148,25 @@ Router::post("/add-scene/add", CreateFestivalAddScenesController::class, "addSce
 
 Router::post("/add-scene/remove", CreateFestivalAddScenesController::class, "removeScene")
     ->setName("addScene.removeScene");
+
+
+Router::get("/add-organizer", CreateFestivalAddOrganizersController::class, "render")
+    ->setName("addOrganizer");
+
+Router::get("/add-organizer/get", CreateFestivalAddOrganizersController::class, "getOrganizers")
+    ->setName("addOrganizer.getOrganizers");
+
+Router::get("/add-organizer/search", CreateFestivalAddOrganizersController::class, "searchOrganizer")
+    ->setName("addOrganizer.searchOrganizer");
+
+Router::post("/add-organizer/add", CreateFestivalAddOrganizersController::class, "addOrganizer")
+    ->setName("addOrganizer.addOrganizer");
+
+Router::post("/add-organizer/give", CreateFestivalAddOrganizersController::class, "giveOrganizer")
+    ->setName("addOrganizer.giveOrganizer");
+
+Router::post("/add-organizer/remove", CreateFestivalAddOrganizersController::class, "removeOrganizer")
+    ->setName("addOrganizer.removeOrganizer");
 
 
 Router::get("/generate-planification", GeneratePlanificationController::class, "render")

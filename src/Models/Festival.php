@@ -5,13 +5,8 @@ namespace MvcLite\Models;
 use JsonSerializable;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Database\Engine\DatabaseQuery;
-use MvcLite\Engine\DevelopmentUtilities\Debug;
-use MvcLite\Engine\InternalResources\Storage;
-use MvcLite\Engine\Security\Password;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Engine\Model;
-use MvcLite\Models\Scene;
-use MvcLite\Models\Spectacle;
 
 class Festival extends Model implements JsonSerializable
 {
@@ -435,14 +430,16 @@ class Festival extends Model implements JsonSerializable
      *
      * @param int $idUser
      */
-    public function addOrganizer(User $user)
+    public function addOrganizer(User $user): bool
     {
 
         $addFestivalQuery = "CALL ajouterFestivalUtilisateur(?, ?);";
 
-        $festivalId = Database::query($addFestivalQuery,
+        $organizerAdding = Database::query($addFestivalQuery,
             $this->getId(),
             $user->getId());
+
+        return $organizerAdding->getExecutionState();
     }
 
     /**
@@ -659,6 +656,23 @@ class Festival extends Model implements JsonSerializable
                   AND fs.id_scene = ?";
 
         $sceneRemoving = Database::query($query, $this->getId(), $scene->getId());
+
+        return $sceneRemoving->get()["count"];
+    }
+
+    /**
+     * @param User $user Searched user object
+     * @return bool If given user is an organizer of current festival
+     */
+    public function hasOrganizer(User $user): bool
+    {
+        $query = "SELECT COUNT(*) as count
+                  FROM utilisateur
+                  INNER JOIN festiplan.festival f on utilisateur.id_utilisateur = f.id_createur
+                  WHERE f.id_festival = ? 
+                  AND utilisateur.id_utilisateur = ?";
+
+        $sceneRemoving = Database::query($query, $this->getId(), $user->getId());
 
         return $sceneRemoving->get()["count"];
     }
