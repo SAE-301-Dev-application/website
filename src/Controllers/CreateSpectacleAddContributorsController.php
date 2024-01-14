@@ -100,7 +100,7 @@ class CreateSpectacleAddContributorsController extends Controller
             return;
         }
 
-        echo json_encode(User::searchByName($searchValue));
+        echo json_encode(User::search($searchValue));
     }
 
     public function addContributor(Request $request): void

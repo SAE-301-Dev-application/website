@@ -206,8 +206,11 @@ function generateScenesWithColors(scenesData, scenesColors) {
 async function organizeSpectacles(grijData, spectaclesData, scenesData) {
     let organizedSpectacles = [];
     let unorganizedSpectacles = [];
+
     let currentDay = beginningDate;
-    let lastEndTime = null;
+
+    let lastEndTime = null,
+        spectacleEndDate = currentDay;
 
     function canFitInScene(spectacle, scene) {
         return spectacle.taille_scene_sp <= scene.size;
@@ -216,8 +219,7 @@ async function organizeSpectacles(grijData, spectaclesData, scenesData) {
     function getNextAvailableTime() {
         if (!lastEndTime) {
             // If it's the first spectacle, use the Grij beginning date
-            lastEndTime = new Date(beginningDate);
-            return lastEndTime;
+            return beginningDate;
         }
 
         let durationBetweenSpectacles = grijData.duree_min_entre_spectacles,
@@ -234,9 +236,6 @@ async function organizeSpectacles(grijData, spectaclesData, scenesData) {
             // Set the next available time to the beginning of the next day
             currentDay = new Date(currentDay.getTime() + 24 * 60 * 60 * 1000);
             nextAvailableTime = new Date(`${currentDay.toISOString().split('T')[0]}T${startSpectaclesHour}`);
-            lastEndTime = nextAvailableTime;
-        } else {
-            lastEndTime = new Date(nextAvailableTime);
         }
     
         return nextAvailableTime;
@@ -249,18 +248,17 @@ async function organizeSpectacles(grijData, spectaclesData, scenesData) {
     for (const spectacle of spectaclesData) {
         let isSpectacleOrganized = false;
 
+        // Get the next available time based on GriJ constraints
+        let nextAvailableTime = getNextAvailableTime();
+
         // Iterate over scenes to find an appropriate one for the spectacle
         for (let i = 0; i < scenesData.length && !isSpectacleOrganized; i++) {
             const scene = scenesData[i];
 
             // Check if the scene can accommodate the spectacle
             if (canFitInScene(spectacle, scene)) {
-
-                // Get the next available time based on GriJ constraints
-                const nextAvailableTime = getNextAvailableTime();
-
                 // Check if the spectacle can fit within the festival duration
-                const spectacleEndDate = new Date(nextAvailableTime.getTime() + spectacle.duree_sp * 60000);
+                spectacleEndDate = new Date(nextAvailableTime.getTime() + spectacle.duree_sp * 60000);
 
                 if (spectacleEndDate <= endingDate) {
                     // Organize the spectacle in the scene at the calculated time
@@ -287,6 +285,8 @@ async function organizeSpectacles(grijData, spectaclesData, scenesData) {
             // Handle unorganized spectacles as needed
             console.log(`Spectacle "${spectacle.titre_sp}" couldn't be organized.`);
             unorganizedSpectacles.push(spectacle);
+        } else {
+            lastEndTime = spectacleEndDate;
         }
     }
 
@@ -403,10 +403,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     $('.fc-event-content, .fc-event-time, .fc-event-title').css('font-size', '16px');
 
-    // Display a message with unorganized spectacles after 3 seconds
+    // Display a message with unorganized spectacles after a little delay
     setTimeout(() => {
-        if (unorganizedSpectacles.length > 0) {
-            alert(`Spectacles non planifiés (impossible) :\n${unorganizedSpectacles.map(spectacle => spectacle.titre_sp).join('\n')}`);
-        }
-    }, 2000);
+      if (unorganizedSpectacles.length > 0) {
+          $('#unorganized_spectacles').addClass('spacing').removeClass('hidden-list');
+          $('#spectacles_list').html(unorganizedSpectacles.map(spectacle => `<li>${spectacle.titre_sp}</li>`).join(''));
+      }
+    }, 100);
 });
