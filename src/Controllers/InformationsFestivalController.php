@@ -6,6 +6,7 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Controllers\Engine\Controller;
 use MvcLite\Middlewares\AuthMiddleware;
 use MvcLite\Router\Engine\Redirect;
+use MvcLite\Router\Engine\RedirectResponse;
 use MvcLite\Router\Engine\Request;
 use MvcLite\Views\Engine\View;
 use MvcLite\Models\Festival;
@@ -26,16 +27,22 @@ class InformationsFestivalController extends Controller
      * 
      * @param Request $request
      */
-    public function render(Request $request): void
+    public function render(Request $request): RedirectResponse|true
     {
 
         $id = $request->getParameter("id");
-
-        $festival = new Festival();
         $festival = Festival::getFestivalById($id);
-        
+
+        if (!Festival::getFestivalById($id))
+        {
+            return Redirect::route("festivals")
+                ->redirect();
+        }
+
         View::render("InformationsFestival", [
             "festival" => $festival,
         ]);
+
+        return true;
     }
 }
