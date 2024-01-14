@@ -69,32 +69,46 @@ class ModifyFestivalController extends Controller
     /**
      * Festival creation view rendering.
      */
-    public function render(Request $request): void
+    public function render(Request $request): RedirectResponse|true
     {
         $id = $request->getParameter("id");
 
-        $festival = new Festival();
+        if ($id === null)
+        {
+            Redirect::route("festivals")
+                ->redirect();
+        }
+
         $festival = Festival::getFestivalById($id);
+
+        if ($festival === null)
+        {
+            Redirect::route("festivals")
+                ->redirect();
+        }
 
         View::render("ModifyFestival", [
             "festival" => $festival
         ]);
+
+        return true;
     }
 
     /**
      * Attempt to create the festival.
      *
      * @param Request $request
+     * @return RedirectResponse
      */
-    public function ModifyFestival(Request $request): RedirectResponse
+    public function modifyFestival(Request $request): RedirectResponse
     {
-        $categoriesIds = array(
+        $categoriesIds = [
             "music"          => "1",
             "theater"        => "2",
             "circus"         => "3",
             "dance"          => "4",
             "film_screening" => "5"
-        );
+        ];
 
         $checkedCategories = [];
 
@@ -106,7 +120,17 @@ class ModifyFestivalController extends Controller
             }
         }
 
-        $imageFile = $request->getFile("illustration")->hasImage();
+        $festival = Festival::getFestivalById($request->getInput("id"));
+
+        if ($festival === null)
+        {
+            return Redirect::route("festivals")
+                ->redirect();
+        }
+
+        $imageFile = $request
+            ->getFile("illustration")
+            ->asImage();
 
         $validation = (new Validator($request))
             ->required([
@@ -135,7 +159,7 @@ class ModifyFestivalController extends Controller
                           self::ERROR_DISRESPECTED_ILLUSTRATION_MAX_SIZE);
         }
 
-        if (count($checkedCategories) === 0)
+        if (!count($checkedCategories))
         {
             $validation->addError("noCategoryChecked", "categories",
                 self::ERROR_NO_CATEGORY_CHECKED);
@@ -166,13 +190,6 @@ class ModifyFestivalController extends Controller
                 ->futureDate("ending_date", self::ERROR_END_DATE_IN_PAST);
         }
 
-        if (!$validation->hasFailed()
-            && Festival::isNameAlreadyTaken($request->getInput("name")))
-        {
-            $validation->addError("nameAlreadyUsed", "name",
-                self::ERROR_NAME_ALREADY_USED);
-        }
-
         if (!$validation->hasFailed())
         {
             if ($imageFile && $imageFile->getError() === UPLOAD_ERR_OK)
@@ -185,23 +202,22 @@ class ModifyFestivalController extends Controller
                 $uploadPath = Storage::createImage($imageFile, "FestivalsUploads");
             }
 
-            Festival::create($request->getInput("name"),
-                             $request->getInput("description"),
-                             $imageName ?? null,
-                             $request->getInput("beginning_date"),
-                             $request->getInput("ending_date"),
-                             $checkedCategories);
 
-            Redirect::route("festivals") // TODO rediriger vers la page du festival (pour pouvoir le modifier)
-                ->withValidator($validation)
-                ->withRequest($request)
+            $festival->modifyGeneralParameters($request->getInput("name"),
+                                               $request->getInput("description"),
+                                               $imageName ?? null,
+                                               $request->getInput("beginning_date"),
+                                               $request->getInput("ending_date"),
+                                               $checkedCategories);
+
+            return Redirect::to("/informations-festival?id=" . $request->getInput("id"))
                 ->redirect();
         }
         else
         {
-            Redirect::route("createFestival")
-                ->withValidator($validation)
+            return Redirect::to("/modify-festival?id=" . $request->getInput("id"))
                 ->withRequest($request)
+                ->withValidator($validation)
                 ->redirect();
         }
     }
