@@ -134,6 +134,7 @@ Router::get("/modify-festival", ModifyFestivalController::class, "render")
 Router::post("/modify-festival", ModifyFestivalController::class, "modifyFestival")
     ->setName("post.modifyFestival");
 
+
 Router::get("/add-scene", CreateFestivalAddScenesController::class, "render")
     ->setName("addScene");
 
