@@ -11,11 +11,6 @@ require_once "vendor/autoload.php";
 
 require_once "config.php";
 
-echo "<noscript>
-          Veuillez activer le JavaScript.
-          <meta http-equiv=\"refresh\" content=\"0; url=" . ROUTE_PATH_PREFIX . "nojs.php\" />
-      </noscript>";
-
 if (!isset($_SESSION[Delivery::DELIVER_POST_KEY]))
 {
     (new Delivery())

@@ -23,6 +23,11 @@ class View
 
         extract($props);
 
+        echo "<noscript>
+                  Veuillez activer le JavaScript.
+                  <meta http-equiv=\"refresh\" content=\"0; url=" . ROUTE_PATH_PREFIX . "nojs.php\" />
+              </noscript>";
+
         include_once $absoluteViewPath;
 
         (new Delivery())->save();
