@@ -410,14 +410,33 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
-     * Adds a user as organizer.
+     * Adds user as organizer.
      *
-     * @param int $idUser
+     * @param User $user
+     * @return bool If given user has been added as organizer
      */
     public function addOrganizer(User $user): bool
     {
 
         $addFestivalQuery = "CALL ajouterFestivalUtilisateur(?, ?);";
+
+        $organizerAdding = Database::query($addFestivalQuery,
+            $this->getId(),
+            $user->getId());
+
+        return $organizerAdding->getExecutionState();
+    }
+
+    /**
+     * Removes user from organizers.
+     *
+     * @param User $user
+     * @return bool If given user has been removed from organizers
+     */
+    public function removeOrganizer(User $user): bool
+    {
+
+        $addFestivalQuery = "CALL supprimerFestivalUtilisateur(?, ?);";
 
         $organizerAdding = Database::query($addFestivalQuery,
             $this->getId(),
@@ -651,10 +670,9 @@ class Festival extends Model implements JsonSerializable
     public function hasOrganizer(User $user): bool
     {
         $query = "SELECT COUNT(*) as count
-                  FROM utilisateur
-                  INNER JOIN festiplan.festival f on utilisateur.id_utilisateur = f.id_createur
+                  FROM festival_utilisateur f
                   WHERE f.id_festival = ? 
-                  AND utilisateur.id_utilisateur = ?";
+                  AND f.id_utilisateur = ?";
 
         $sceneRemoving = Database::query($query, $this->getId(), $user->getId());
 
