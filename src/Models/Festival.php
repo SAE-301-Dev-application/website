@@ -260,7 +260,7 @@ class Festival extends Model implements JsonSerializable
      * @return GriJ|null GriJ object if exists;
      *                       else NULL  
      */
-    public function getGriJWithId(): array
+    public function getGriJWithId(): GriJ
     {
         $query = "SELECT *
                   FROM grij
@@ -268,7 +268,7 @@ class Festival extends Model implements JsonSerializable
 
         $getGriJ = Database::query($query, $this->getId());
         
-        return GriJ::queryToArray($getGriJ);  
+        return GriJ::getGriJInstance($getGriJ->get());
 
     }
 

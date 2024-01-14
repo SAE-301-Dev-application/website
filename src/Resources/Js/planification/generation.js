@@ -19,8 +19,7 @@ const CALENDAR_DIV = $('.calendar-container > #calendar')[0];
 
 let calendar,
     beginningDate,
-    endingDate,
-    lastEndTime;
+    endingDate;
 
 let festivalData,
     grijData,
@@ -72,7 +71,11 @@ async function getGrij() {
                     console.log(ERROR_GET_DATA_GRIJ + " :\n" + data);
                     resolve(null);
                 } else {
-                    resolve(JSON.parse(data));
+                    let dataObject = JSON.parse(data);
+
+                    dataObject.duree_min_entre_spectacles = stringTimeToSeconds(dataObject.duree_min_entre_spectacles);
+
+                    resolve(dataObject);
                 }
             })
             .fail(() => {
@@ -166,6 +169,19 @@ function formatTime(date) {
 }
 
 /**
+ * Format a time string to a number.
+ * 
+ * @param {string} time 
+ * @returns {number}
+ */
+function stringTimeToSeconds(time) {
+    const hours = time.split(':')[0];
+    const minutes = time.split(':')[1];
+
+    return parseInt(hours) * 3600 + parseInt(minutes) * 60;
+}
+
+/**
  * Generate an array of scenes with associated colors.
  * 
  * @param {Object[]} scenesData Array of scene data.
@@ -191,6 +207,7 @@ async function organizeSpectacles(grijData, spectaclesData, scenesData) {
     let organizedSpectacles = [];
     let unorganizedSpectacles = [];
     let currentDay = beginningDate;
+    let lastEndTime = null;
 
     function canFitInScene(spectacle, scene) {
         return spectacle.taille_scene_sp <= scene.size;
@@ -202,17 +219,21 @@ async function organizeSpectacles(grijData, spectaclesData, scenesData) {
             lastEndTime = new Date(beginningDate);
             return lastEndTime;
         }
-    
+
+        let durationBetweenSpectacles = grijData.duree_min_entre_spectacles,
+            startSpectaclesHour = grijData.heure_debut_spectacles,
+            endSpectaclesHour = grijData.heure_fin_spectacles;
+        
         // Calculate the next available time based on the last spectacle's end time
-        let nextAvailableTime = new Date(lastEndTime.getTime() + grijData.duree_min_entre_spectacles * 60000);
-    
+        let nextAvailableTime = new Date(lastEndTime.getTime() + durationBetweenSpectacles * 1000);
+
         // Verify if the next available time is after the end of the day
-        const grijEndTime = new Date(`${currentDay.toISOString().split('T')[0]}T${grijData.heure_fin_spectacles}`);
+        const grijEndTime = new Date(`${currentDay.toISOString().split('T')[0]}T${endSpectaclesHour}`);
     
         if (nextAvailableTime > grijEndTime) {
             // Set the next available time to the beginning of the next day
             currentDay = new Date(currentDay.getTime() + 24 * 60 * 60 * 1000);
-            nextAvailableTime = new Date(`${currentDay.toISOString().split('T')[0]}T${grijData.heure_debut_spectacles}`);
+            nextAvailableTime = new Date(`${currentDay.toISOString().split('T')[0]}T${startSpectaclesHour}`);
             lastEndTime = nextAvailableTime;
         } else {
             lastEndTime = new Date(nextAvailableTime);
@@ -229,7 +250,8 @@ async function organizeSpectacles(grijData, spectaclesData, scenesData) {
         let isSpectacleOrganized = false;
 
         // Iterate over scenes to find an appropriate one for the spectacle
-        for (const scene of scenesData) {
+        for (let i = 0; i < scenesData.length && !isSpectacleOrganized; i++) {
+            const scene = scenesData[i];
 
             // Check if the scene can accommodate the spectacle
             if (canFitInScene(spectacle, scene)) {
@@ -243,7 +265,7 @@ async function organizeSpectacles(grijData, spectaclesData, scenesData) {
                 if (spectacleEndDate <= endingDate) {
                     // Organize the spectacle in the scene at the calculated time
                     organizedSpectacles.push({
-                        title: spectacle.titre_sp,
+                        title: spectacle.titre_sp + " - " + scene.name,
                         start: nextAvailableTime,
                         end: spectacleEndDate,
                         overlap: 'none',
@@ -356,8 +378,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     spectaclesData = await getSpectacles();
     scenesData = await getScenes();
 
-    if (!festivalData || !grijData || !spectaclesData || !scenesData)
+    if (!festivalData || !grijData || !spectaclesData || !scenesData) {
         return redirectToFestivals();
+    }
 
     beginningDate = new Date(festivalData.date_debut_fe
                              + "T"
@@ -378,7 +401,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     calendar.render();
 
-    $('.fc-event-content, .fc-event-time, .fc-event-title').css('font-size', '20px');
+    $('.fc-event-content, .fc-event-time, .fc-event-title').css('font-size', '16px');
 
     // Display a message with unorganized spectacles after 3 seconds
     setTimeout(() => {
