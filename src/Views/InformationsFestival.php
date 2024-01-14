@@ -140,7 +140,7 @@ use MvcLite\Models\User;
                 <?=
                 $festival->getGriJWithId() !== null
                     ? $festival
-                    ->getGriJWithId()[0]
+                    ->getGriJWithId()
                     ->getBeginningSpectacleHourWithFormat("%Hh%i")
                     : "non défini"
                 ?>
@@ -154,7 +154,7 @@ use MvcLite\Models\User;
                 <?=
                 $festival->getGriJWithId() !== null
                     ? $festival
-                    ->getGriJWithId()[0]
+                    ->getGriJWithId()
                     ->getEndingSpectacleHourWithFormat("%Hh%i")
                     : "non défini"
                 ?>
@@ -168,7 +168,7 @@ use MvcLite\Models\User;
                 <?=
                 $festival->getGriJWithId() !== null
                     ? $festival
-                    ->getGriJWithId()[0]
+                    ->getGriJWithId()
                     ->getMinDurationBetweenSpectacleWithFormat("%H heure(s) %i minute(s)")
                     : "non défini"
                 ?>
