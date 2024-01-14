@@ -107,10 +107,12 @@ $errors = $props->hasValidator()
                               </ul>
                             </div>
 
-                            <button class=\"button-red remove-scene-button\" id=\"remove_scene_${scene.id}\">
-                              <i class=\"fa-solid fa-trash\"></i>
-                              Supprimer
-                            </button>
+                            <div class="action-container">
+                              <button class=\"button-red remove-scene-button\" id=\"remove_scene_${scene.id}\">
+                                <i class=\"fa-solid fa-trash\"></i>
+                                Supprimer
+                              </button>
+                            </div>
                           </div>
                           `);
                       });
@@ -194,7 +196,9 @@ $errors = $props->hasValidator()
                               </ul>
                             </div>
 
-                            ${button}
+                            <div class="action-container">
+                              ${button}
+                            </div>
                           </div>
                           `);
                       });
