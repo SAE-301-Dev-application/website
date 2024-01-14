@@ -31,13 +31,14 @@ class InformationsFestivalController extends Controller
     {
 
         $id = $request->getParameter("id");
-        $festival = Festival::getFestivalById($id);
+
 
         if (!Festival::getFestivalById($id))
         {
             return Redirect::route("festivals")
                 ->redirect();
         }
+        $festival = Festival::getFestivalById($id);
 
         View::render("InformationsFestival", [
             "festival" => $festival,
