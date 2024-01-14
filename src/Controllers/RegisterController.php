@@ -57,7 +57,6 @@ class RegisterController extends Controller
             ->minLength("email", 5, "L'adresse e-mail doit contenir au moins 5 caractères.")
             ->email("email", "L'adresse e-mail renseignée n'est pas valide. Elle doit être au format 'exemple@email.fr'.");
 
-        // TODO: use unique rule!
         if (!$validation->hasError("email", "maxLength"))
         {
             $emailAlreadyTaken = User::emailAlreadyTaken($request->getInput("email"));
@@ -70,7 +69,6 @@ class RegisterController extends Controller
             }
         }
 
-        // TODO: use unique rule!
         if (!$validation->hasError("login", "maxLength"))
         {
             $loginAlreadyTaken = User::loginAlreadyTaken($request->getInput("login"));

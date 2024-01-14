@@ -311,25 +311,6 @@ class Spectacle extends Model implements JsonSerializable
     }
 
     /**
-     * Get path to a spectacle's illustration.
-     * 
-     * @param ?string $name
-     * @return string Spectacle's illustration path
-     */
-    public static function getImagePathByName(?string $name)
-    {
-        // TODO: delete? !!
-        $illustrationPath = ROUTE_PATH_PREFIX
-            . "src/Resources/Medias/Images/";
-
-        $defaultIllustration = "default_illustration.png";
-
-        return !$name || $name === $defaultIllustration
-            ? $illustrationPath . $defaultIllustration
-            : $illustrationPath . "SpectaclesUploads/" . $name;
-    }
-
-    /**
      * Searches and returns Spectacle instance by its data.
      *
      * @param array $spectacleData Spectacle data

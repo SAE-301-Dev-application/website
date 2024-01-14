@@ -108,7 +108,7 @@ class CreateFestivalAddGrijController extends Controller
                              $request->getInput("ending_date"),
                              $checkedCategories);
 
-            Redirect::route("festivals") // TODO rediriger vers la page du festival (pour pouvoir le modifier)
+            Redirect::route("festivals")
                 ->withValidator($validation)
                 ->withRequest($request)
                 ->redirect();

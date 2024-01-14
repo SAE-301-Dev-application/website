@@ -122,7 +122,7 @@ class CreateSceneController extends Controller
                           $request->getInput("latitude"),
                           $request->getInput("longitude"));
 
-            return Redirect::route("dashboard"); // TODO A modifier
+            return Redirect::route("festivals");
         }
         else
         {

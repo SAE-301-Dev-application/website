@@ -41,8 +41,8 @@ use MvcLite\Models\Festival;
 
           <!-- Si l'utilisateur est le créateur du spectacle -->
           <?php if ($spectacle->isOwner()) { ?>
-            <a href="<?= route("")//TODO mettre la route ?>">
-              <button class="button-blue">
+            <a href="#">
+              <button class="button-blue" disabled>
                 <i class="fa-solid fa-plus"></i>
                 Modifier spectacle
               </button>
@@ -98,8 +98,8 @@ use MvcLite\Models\Festival;
                   <h3 class="subtitle">
                     Intervenants:
                   </h3>
-                  <a href="<?= route("")//TODO mettre la route ?>">
-                    <button class="button-blue">
+                  <a href="#">
+                    <button class="button-blue" disabled>
                       <i class="fa-solid fa-plus"></i>
                       Voir plus
                     </button>
