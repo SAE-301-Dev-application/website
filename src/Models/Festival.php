@@ -446,6 +446,24 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
+     * Gives to given organizer the current festival.
+     *
+     * @param User $user
+     * @return bool If current festival has been given to user
+     */
+    public function giveFestival(User $user): bool
+    {
+
+        $query = "UPDATE festival 
+                  SET id_createur = ? 
+                  WHERE id_festival = ?";
+
+        $festivalGiving = Database::query($query, $user->getId(), $this->getId());
+
+        return $festivalGiving->getExecutionState();
+    }
+
+    /**
      * @return bool True if the festival is in progress, false otherwise.
      */
     public function isInProgress(): bool
