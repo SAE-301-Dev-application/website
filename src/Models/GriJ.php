@@ -220,7 +220,7 @@ class GriJ extends Model implements JsonSerializable
     {
         $modelArray = [];
 
-        foreach($queryObject->getAll() as $griJ)
+        foreach($queryObject->get() as $griJ)
         {
             $modelArray[] = self::getGriJInstance($griJ);
         }

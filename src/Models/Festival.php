@@ -727,20 +727,6 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
-     * Searches and returns grij by festival id.
-     */
-    public static function getGrij(int $idFestival): array
-    {
-        $query = "SELECT *
-                  FROM grij
-                  WHERE id_festival = ?";
-
-        $getGrij = Database::query($query, $idFestival);
-
-        return $getGrij->get();
-    }
-
-    /**
      * Returns Festival array by using DatabaseQuery object.
      *
      * @param DatabaseQuery $queryObject

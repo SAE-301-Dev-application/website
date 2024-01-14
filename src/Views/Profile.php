@@ -528,6 +528,12 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
               <h3 class="section-title">
                 Mes spectacles
               </h3>
+
+              <a href="<?= route("createSpectacle") ?>">
+                <button class="button-blue">
+                  Créer un spectacle
+                </button>
+              </a>
             </div>
           </div>
 
