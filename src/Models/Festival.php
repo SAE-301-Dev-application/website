@@ -476,6 +476,18 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
+     * @return bool True if the festival is complete, false otherwise.
+     */
+    public function isComplete(): bool
+    {
+        $query = "SELECT verifierFestivalComplet(?) AS resultat;";
+
+        $result = Database::query($query, $this->getId());
+
+        return $result->get()["resultat"] === 1;
+    }
+
+    /**
      * Attempt to modify a festival's generals parameters
      * and relink categories to it.
      *
