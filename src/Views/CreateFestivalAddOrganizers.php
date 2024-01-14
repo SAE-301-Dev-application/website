@@ -48,7 +48,11 @@ $errors = $props->hasValidator()
 
                       ORGANIZERS_LIST.empty();
 
+                      let selector;
+
                       data.forEach(organizer => {
+                          selector = loadUserSelector(organizer);
+
                           ORGANIZERS_LIST.append(`
                           <div class=\"organizer-container\">
                             <div class=\"organizer-information\">
@@ -65,17 +69,7 @@ $errors = $props->hasValidator()
                               </ul>
                             </div>
 
-                            <select id="manage_organizer_select">
-                              <optgroup label="Sélectionnez une action :">
-                                <option value="give">
-                                  Céder le festival
-                                </option>
-
-                                <option value="remove">
-                                  Supprimer
-                                </option>
-                              </optgroup>
-                            </select>
+                            ${selector}
                           </div>
                           `);
                       });
@@ -98,43 +92,10 @@ $errors = $props->hasValidator()
 
                       ORGANIZER_SEARCHING_LIST.empty();
 
-                      let selector,
-                          dynamicOptions;
-
-                      ORGANIZER_SEARCHING_LIST.empty();
+                      let selector;
 
                       data.forEach(organizer => {
-                          if (loadedOrganizers.find(loadedOrganizer => loadedOrganizer.login === organizer.login)) {
-                              dynamicOptions = `
-                              <option value="give">
-                                Céder le festival
-                              </option>
-
-                              <option value="remove">
-                                Supprimer
-                              </option>
-                              `;
-                          } else {
-                              dynamicOptions = `
-                              <option value="add">
-                                Ajouter
-                              </option>
-                              `;
-                          }
-
-                          selector = organizer.id !== <?= Session::getSessionId() ?>
-                              ? `
-                            <select id="manage_organizer_${organizer.id}">
-                              <optgroup label="Sélectionnez une action :">
-                                <option value="" selected>
-                                  Sélectionnez une action
-                                </option>
-
-                                ${dynamicOptions}
-                              </optgroup>
-                            </select>
-                          `
-                              : "";
+                          selector = loadUserSelector(organizer);
 
                           ORGANIZER_SEARCHING_LIST.append(`
                           <div class=\"organizer-container\">
@@ -184,6 +145,7 @@ $errors = $props->hasValidator()
                       break;
               }
 
+              updateOrganizersList();
               searchOrganizer($("#initial_search_organizer_input").val());
 
               function addOrganizer(userId) {
@@ -193,9 +155,7 @@ $errors = $props->hasValidator()
                           userId,
                       })
                       .done(data => {
-                          if (data === "success") {
-                              updateOrganizersList();
-                          } else {
+                          if (data !== "success") {
                               selector.after(`<p class="input-error">${data}</p>`);
                           }
                       });
@@ -208,9 +168,7 @@ $errors = $props->hasValidator()
                           userId,
                       })
                       .done(data => {
-                          if (data === "success") {
-                              updateOrganizersList();
-                          } else {
+                          if (data !== "success") {
                               selector.after(`<p class="input-error">${data}</p>`);
                           }
                       });
@@ -223,9 +181,7 @@ $errors = $props->hasValidator()
                           userId,
                       })
                       .done(data => {
-                          if (data === "success") {
-                              updateOrganizersList();
-                          } else {
+                          if (data !== "success") {
                               selector.after(`<p class="input-error">${data}</p>`);
                           }
                       });
@@ -241,6 +197,42 @@ $errors = $props->hasValidator()
               ORGANIZER_SEARCHING_POPUP.removeClass("popup-hidden");
               $("body").addClass("body-overflow-clip");
           });
+
+          function loadUserSelector(user) {
+              let dynamicOptions;
+
+              if (loadedOrganizers.find(loadedOrganizer => loadedOrganizer.login === user.login)) {
+                  dynamicOptions = `
+                              <option value="give">
+                                Céder le festival
+                              </option>
+
+                              <option value="remove">
+                                Supprimer
+                              </option>
+                              `;
+              } else {
+                  dynamicOptions = `
+                              <option value="add">
+                                Ajouter
+                              </option>
+                              `;
+              }
+
+              return user.id !== <?= Session::getSessionId() ?>
+                  ? `
+                            <select id="manage_organizer_${user.id}">
+                              <optgroup label="Sélectionnez une action :">
+                                <option value="" selected>
+                                  Sélectionnez une action
+                                </option>
+
+                                ${dynamicOptions}
+                              </optgroup>
+                            </select>
+                          `
+                  : "";
+          }
       });
   </script>
 

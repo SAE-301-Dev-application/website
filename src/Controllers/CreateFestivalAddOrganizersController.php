@@ -24,6 +24,15 @@ class CreateFestivalAddOrganizersController extends Controller
     private const ERROR_IMPOSSIBLE_TO_MANAGE_THIS_FESTIVAL
         = "Vous ne pouvez pas gérer ce festival.";
 
+    private const ERROR_USER_ALREADY_ORGANIZER
+        = "%s %s est déjà un organisateur de ce festival.";
+
+    private const ERROR_NON_ORGANIZER_USER
+        = "%s %s n'est pas un organisateur de ce festival.";
+
+    private const ERROR_OWNER_REMOVES_HIMSELF
+        = "Vous ne pouvez pas vous retirer vous-même du festival.";
+
     public function __construct()
     {
         parent::__construct();
@@ -112,39 +121,49 @@ class CreateFestivalAddOrganizersController extends Controller
         {
             $festival->addOrganizer($user);
             echo "success";
-        }
-    }
-
-    public function removeScene(Request $request): void
-    {
-        $festivalId = $request->getParameter("festival");
-        $sceneId = $request->getInput("sceneId");
-
-        if ($festivalId === null
-            || $sceneId === null
-            || !self::isRetrievableFestival($festivalId)
-            || !self::isManageableFestival($festivalId))
-        {
-            Redirect::route("festivals")
-                ->redirect();
-
             return;
         }
 
-        if (!self::isRetrievableUser($sceneId))
+        echo sprintf(self::ERROR_USER_ALREADY_ORGANIZER, $user->getFirstname(), $user->getLastname());
+    }
+
+    public function removeOrganizer(Request $request): void
+    {
+        $festivalId = $request->getInput("festivalId");
+        $organizerId = $request->getInput("userId");
+
+        if ($festivalId === null
+            || $organizerId === null
+            || !self::isRetrievableFestival($festivalId)
+            || !self::isManageableFestival($festivalId))
+        {
+            echo self::ERROR_IMPOSSIBLE_TO_MANAGE_THIS_FESTIVAL;
+            return;
+        }
+
+        if (!self::isRetrievableUser($organizerId))
         {
             echo self::ERROR_IRRETRIEVABLE_USER;
             return;
         }
 
-        $scene = Scene::getSceneById($sceneId);
+        if ($organizerId == Session::getSessionId())
+        {
+            echo self::ERROR_OWNER_REMOVES_HIMSELF;
+            return;
+        }
+
+        $user = User::getUserById($organizerId);
         $festival = Festival::getFestivalById($festivalId);
 
-        if ($festival->hasScene($scene))
+        if ($festival->hasOrganizer($user))
         {
-            $festival->removeScene($scene);
+            $festival->removeOrganizer($user);
             echo "success";
+            return;
         }
+
+        echo sprintf(self::ERROR_NON_ORGANIZER_USER, $user->getFirstname(), $user->getLastname());
     }
 
     /**
