@@ -266,7 +266,7 @@ use MvcLite\Models\User;
                       </button>
                     </a>
 
-                    <a href="#">
+                    <a href="<?= route("addOrganizer") ?>?festival=<?= $festival->getId() ?>">
                       <button class="button-blue">
                         <i class="fa-solid fa-plus"></i>
                         Ajouter un organisateur
