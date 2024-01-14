@@ -247,12 +247,14 @@ class User extends Model implements JsonSerializable
      * @param string $search Search value
      * @return array Results array
      */
-    public static function searchByName(string $search): array
+    public static function search(string $search): array
     {
+        $search = trim($search);
+
         $query = "SELECT * 
                   FROM utilisateur
-                  WHERE utilisateur.prenom_uti LIKE ?
-                  OR utilisateur.nom_uti LIKE ?";
+                  WHERE utilisateur.email_uti LIKE ?
+                  OR utilisateur.login_uti LIKE ?";
 
         $searchResults = Database::query($query, "%$search%", "%$search%");
 
