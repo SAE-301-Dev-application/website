@@ -89,7 +89,7 @@ class GeneratePlanificationController extends Controller
             return;
         }
         
-        $grij = Festival::getGrij($festival->getId());
+        $grij = $festival->getGriJWithId();
 
         echo json_encode($grij);
     }
