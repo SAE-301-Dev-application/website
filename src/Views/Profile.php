@@ -83,9 +83,9 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                               : "";
 
                           FESTIVALS_LIST.append(`
-                          <div class=\"festival-preview\">
-                            <div class=\"festival-picture\"
-                              style=\"background: url(\'${festival.illustration_fe}\') center / cover no-repeat;\"></div>
+                            <div class=\"festival-preview\">
+                              <div class=\"festival-picture\"
+                                style=\"background: url(\'${festival.illustration_fe}\') center / cover no-repeat;\"></div>
 
                                 <div class=\"festival-identity\">
                                   <div class=\"festival-header\">
@@ -100,14 +100,14 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                                     </div>
 
                                     <div class=\"festival-buttons-container\">
-                                      <a href=\"<?= route("modifyFestival")?>?id=${festival.id_festival}\">
+                                      <a href=\"<?= route("informationsFestival")?>?id=${festival.id_festival}\">
                                         <button class=\"button-grey\" id=\"modify_festival_${festival.id_festival}\">
                                           <i class=\"fa-solid fa-pen\"></i>
                                           Éditer
                                         </button>
                                       </a>`
-                              + delete_btn +
-                              `</div>
+                                      + delete_btn +
+                                    `</div>
                                   </div>
 
                                   <p class=\"festival-description\">
@@ -115,7 +115,8 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                                   </p>
                                 </div>
                               </div>
-                             </div>
+                            </div>
+
                          `);
                       });
                   });
@@ -195,7 +196,7 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                                 </div>
 
                                 <div class="festival-buttons-container">
-                                  <a href="<?= route("modifySpectacle") ?>?id=${spectacle.id_spectacle}">
+                                  <a href="<?= route("informationsSpectacle") ?>?id=${spectacle.id_spectacle}">
                                     <button class="button-grey">
                                       <i class="fa-solid fa-pen"></i>
                                       Éditer

@@ -670,13 +670,13 @@ class Festival extends Model implements JsonSerializable
     public function hasOrganizer(User $user): bool
     {
         $query = "SELECT COUNT(*) as count
-                  FROM festival_utilisateur f
-                  WHERE f.id_festival = ? 
-                  AND f.id_utilisateur = ?";
+                  FROM festival_utilisateur fu
+                  WHERE fu.id_festival = ? 
+                  AND fu.id_utilisateur = ?;";
 
-        $sceneRemoving = Database::query($query, $this->getId(), $user->getId());
+        $hasOrganizer = Database::query($query, $this->getId(), $user->getId());
 
-        return $sceneRemoving->get()["count"];
+        return $hasOrganizer->get()["count"];
     }
 
     /**

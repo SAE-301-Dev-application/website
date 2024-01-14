@@ -4,7 +4,7 @@ namespace MvcLite\Controllers;
 
 use MvcLite\Engine\Security\Validator;
 use MvcLite\Engine\DevelopmentUtilities\Debug;
-use MvcLite\Engine\InternalResources\Storage;
+use MvcLite\Engine\Session\Session;
 use MVCLite\Router\Engine\Request;
 use MVCLite\Router\Engine\RedirectResponse;
 use MvcLite\Controllers\Engine\Controller;
@@ -120,5 +120,15 @@ class CreateFestivalAddGrijController extends Controller
                 ->withRequest($request)
                 ->redirect();
         }
+    }
+
+    /**
+     * @param string $festivalId
+     * @return bool If given festival id corresponds to a festival that current user can manage
+     */
+    private static function isManageableFestival(string $festivalId): bool
+    {
+        return Festival::getFestivalById($festivalId)->getOwner()->getId() == Session::getSessionId()
+            || Festival::getFestivalById($festivalId)->hasOrganizer(Session::getUserAccount());
     }
 }
