@@ -33,6 +33,13 @@ class CreateFestivalAddOrganizersController extends Controller
     private const ERROR_OWNER_REMOVES_HIMSELF
         = "Vous ne pouvez pas vous retirer vous-même du festival.";
 
+    private const ERROR_OWNER_GIVES_HIMSELF
+        = "Vous êtes déjà le responsable de ce festival.";
+
+    private const ERROR_FUTURE_OWNER_NOT_ORGANIZER
+        = "L'utilisateur auquel vous souhaitez transférer le festival
+           doit déjà en être un organisateur.";
+
     public function __construct()
     {
         parent::__construct();
@@ -48,7 +55,8 @@ class CreateFestivalAddOrganizersController extends Controller
             || !self::isRetrievableFestival($festivalId)
             || !self::isManageableFestival($festivalId))
         {
-            echo self::ERROR_IMPOSSIBLE_TO_MANAGE_THIS_FESTIVAL;
+            return Redirect::route("festivals")
+                ->redirect();
         }
         
         $festival = Festival::getFestivalById($festivalId);
@@ -166,6 +174,47 @@ class CreateFestivalAddOrganizersController extends Controller
         echo sprintf(self::ERROR_NON_ORGANIZER_USER, $user->getFirstname(), $user->getLastname());
     }
 
+    public function giveFestivalToOrganizer(Request $request): void
+    {
+        $festivalId = $request->getInput("festivalId");
+        $organizerId = $request->getInput("userId");
+
+        if ($festivalId === null
+            || $organizerId === null
+            || !self::isRetrievableFestival($festivalId)
+            || !self::isManageableFestival($festivalId))
+        {
+            echo self::ERROR_IMPOSSIBLE_TO_MANAGE_THIS_FESTIVAL;
+            return;
+        }
+
+        if (!self::isRetrievableUser($organizerId))
+        {
+            echo self::ERROR_IRRETRIEVABLE_USER;
+            return;
+        }
+
+        if ($organizerId == Session::getSessionId())
+        {
+            echo self::ERROR_OWNER_GIVES_HIMSELF;
+            return;
+        }
+
+        $user = User::getUserById($organizerId);
+        $festival = Festival::getFestivalById($festivalId);
+
+        if ($festival->hasOrganizer($user))
+        {
+            $festival->giveFestival($user);
+            echo "success";
+            return;
+        }
+
+        echo sprintf(self::ERROR_NON_ORGANIZER_USER,
+                     $user->getFirstname(),
+                     $user->getLastname());
+    }
+
     /**
      * @param string $festivalId
      * @return bool If given festival id is valid (non-negative and non-null integer)
@@ -182,7 +231,9 @@ class CreateFestivalAddOrganizersController extends Controller
      */
     private static function isManageableFestival(string $festivalId): bool
     {
-        return Festival::getFestivalById($festivalId)->getOwner()->getId() == Session::getSessionId();
+        return Festival::getFestivalById($festivalId)
+                ->getOwner()
+                ->getId() == Session::getSessionId();
     }
 
     /**
