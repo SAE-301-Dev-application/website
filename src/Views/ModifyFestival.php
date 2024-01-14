@@ -92,7 +92,7 @@ foreach ($categories as $categorie) {
         </div>
 
         <div class="form-container">
-          <form action="<?= route("post.createFestival") ?>"
+          <form action="<?= route("post.modifyFestival") ?>"
                 method="post"
                 enctype="multipart/form-data">
             <div class="form-grid">
