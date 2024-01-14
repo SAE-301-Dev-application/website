@@ -82,8 +82,8 @@ Router::post("/create-scene", CreateSceneController::class, "createScene")
     ->setName("post.createScene");
 
 
-Router::get("/grij-festival", CreateFestivalAddGrijController::class, "render")
-    ->setName("grijFestival");
+Router::get("/add-grij-festival", CreateFestivalAddGrijController::class, "render")
+    ->setName("addGrijFestival");
 
 
 Router::get("/profile", ProfileController::class, "render")
