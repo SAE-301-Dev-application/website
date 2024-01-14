@@ -5,6 +5,7 @@ namespace MvcLite\Models;
 use JsonSerializable;
 use MvcLite\Database\Engine\Database;
 use MvcLite\Database\Engine\DatabaseQuery;
+use MvcLite\Engine\DevelopmentUtilities\Debug;
 use MvcLite\Engine\Session\Session;
 use MvcLite\Models\Engine\Model;
 
@@ -258,18 +259,20 @@ class Festival extends Model implements JsonSerializable
 
     /**
      * @return GriJ|null GriJ object if exists;
-     *                       else NULL  
+     *                   else NULL
      */
-    public function getGriJWithId(): GriJ
+    public function getGriJWithId(): ?GriJ
     {
         $query = "SELECT *
                   FROM grij
                   WHERE id_festival = ?";
 
         $getGriJ = Database::query($query, $this->getId());
+        $grij = $getGriJ->get();
         
-        return GriJ::getGriJInstance($getGriJ->get());
-
+        return $grij
+            ? GriJ::getGriJInstance($grij)
+            : null;
     }
 
     /**
@@ -473,6 +476,44 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
+     * Attempt to modify a festival's generals parameters
+     * and relink categories to it.
+     *
+     * @param string $name
+     * @param string $description
+     * @param string|null $illustration
+     * @param string $beginningDate
+     * @param string $endingDate
+     * @param array $checkedCategories
+     */
+    public function modifyGeneralParameters(string $name,
+                                            string $description,
+                                            ?string $illustration,
+                                            string $beginningDate,
+                                            string $endingDate,
+                                            array $checkedCategories): void
+    {
+        $addFestivalQuery = "CALL modifierFestival(?, ?, ?, ?, ?, ?);";
+
+        $linkCategoryQuery = "CALL ajouterFestivalCategorie(?, ?);";
+
+        Database::query($addFestivalQuery,
+                        $this->getId(),
+                        $name,
+                        $description,
+                        $illustration ?? null,
+                        $beginningDate,
+                        $endingDate);
+
+        foreach ($checkedCategories as $category)
+        {
+            Database::query($linkCategoryQuery,
+                            $this->getId(),
+                            $category);
+        }
+    }
+
+    /**
      * Attempt to create a festival and link categories to it.
      *
      * @param string $name
@@ -508,46 +549,6 @@ class Festival extends Model implements JsonSerializable
             Database::query($linkCategoryQuery,
                             $festivalId,
                             $category);
-        }
-    }
-
-
-    /**
-     * Attempt to modify a festival's generals parameters
-     * and relink categories to it.
-     *
-     * @param string $name
-     * @param string $description
-     * @param string|null $illustration
-     * @param string $beginningDate
-     * @param string $endingDate
-     */
-    public static function modifyGeneralParameters(string $name,
-                                                   string $description,
-                                                   ?string $illustration,
-                                                   string $beginningDate,
-                                                   string $endingDate,
-                                                   array $checkedCategories): void
-    {
-        $addFestivalQuery = "CALL modifierFestival(?, ?, ?, ?, ?, ?);";
-
-        $linkCategoryQuery = "CALL ajouterFestivalCategorie(?, ?);";
-
-        $festivalId = Database::query($addFestivalQuery,
-                                      $name,
-                                      $description,
-                                      $illustration ?? null,
-                                      $beginningDate,
-                                      $endingDate,
-                                      Session::getUserAccount()->getId());
-
-        $festivalId = $festivalId->get()["id"];
-
-        foreach ($categories as $categorie)
-        {
-            Database::query($linkCategoryQuery,
-                            $festivalId,
-                            $categorie);
         }
     }
 
