@@ -43,7 +43,7 @@ use MvcLite\Models\User;
           </h2>
 
           <?php
-          if ($festival->getGriJWIthId() !== null)
+          if ($festival->getGriJWithId() !== null)
           {
           ?>
           <div class="buttons">
@@ -120,9 +120,9 @@ use MvcLite\Models\User;
                 </strong>
 
                 <?=
-                $festival->getGriJWIthId() !== null
+                $festival->getGriJWithId() !== null
                     ? $festival
-                        ->getGriJWIthId()[0]
+                        ->getGriJWithId()[0]
                         ->getBeginningSpectacleHourWithFormat("%Hh%i")
                     : "non défini"
                 ?>
@@ -134,9 +134,9 @@ use MvcLite\Models\User;
                 </strong>
 
                 <?=
-                $festival->getGriJWIthId() !== null
+                $festival->getGriJWithId() !== null
                     ? $festival
-                        ->getGriJWIthId()[0]
+                        ->getGriJWithId()[0]
                         ->getEndingSpectacleHourWithFormat("%Hh%i")
                     : "non défini"
                 ?>
@@ -148,9 +148,9 @@ use MvcLite\Models\User;
                 </strong>
 
                 <?=
-                $festival->getGriJWIthId() !== null
+                $festival->getGriJWithId() !== null
                     ? $festival
-                        ->getGriJWIthId()[0]
+                        ->getGriJWithId()[0]
                         ->getMinDurationBetweenSpectacleWithFormat("%H heure(s) %i minute(s)")
                     : "non défini"
                 ?>

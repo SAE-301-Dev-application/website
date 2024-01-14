@@ -265,7 +265,7 @@ class Festival extends Model implements JsonSerializable
      * @return GriJ|null GriJ object if exists;
      *                       else NULL  
      */
-    public function getGriJWIthId(): array
+    public function getGriJWithId(): array
     {
         $query = "SELECT *
                   FROM grij
