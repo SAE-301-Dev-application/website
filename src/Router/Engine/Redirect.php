@@ -19,12 +19,15 @@ class Redirect
      */
     public static function to(string $path): RedirectResponse
     {
+        $pathSplit = explode('?', $path);
+        $path = $pathSplit[0];
+        $parameters = $pathSplit[1] ?? "";
+
+        $_POST = $_GET = [];
+
         $route = Router::getRouteByPath($path);
 
-        $redirection = new RedirectResponse($route);
-        $redirection->redirect();
-
-        return $redirection;
+        return new RedirectResponse($route, $parameters);
     }
 
     /**
@@ -37,8 +40,6 @@ class Redirect
     {
         $route = Router::getRouteByName($name);
 
-        $redirection = new RedirectResponse($route);
-
-        return $redirection;
+        return new RedirectResponse($route);
     }
 }

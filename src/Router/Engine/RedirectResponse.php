@@ -19,10 +19,13 @@ class RedirectResponse
     /** Current delivery object. */
     private Delivery $currentDelivery;
 
-    public function __construct(Route $route)
+    private string $parameters;
+
+    public function __construct(Route $route, string $parameters = "")
     {
         $this->route = $route;
         $this->currentDelivery = new Delivery();
+        $this->parameters = $parameters;
     }
 
     /**
@@ -58,7 +61,9 @@ class RedirectResponse
      */
     public function redirect(): RedirectResponse
     {
-        header("Location: " . $this->route->getCompletePath());
+        $parameters = "?" . $this->parameters;
+
+        header("Location: " . $this->route->getCompletePath() . $parameters);
 
         return $this;
     }
