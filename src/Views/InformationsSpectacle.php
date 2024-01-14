@@ -54,12 +54,13 @@ use MvcLite\Models\Festival;
           <div class="left-side">
             <p class="categorie">
               (<?php
-                  foreach ($spectacle->getCategories() as $categorie) {
-                      echo $categorie->getName() . " ";
-                      if ($categorie != $spectacle->getCategories()[count($spectacle->getCategories())-1]) {
-                        echo ", ";
-                      }
-                  }
+                $categoriesNames = [];
+
+                foreach ($spectacle->getCategories() as $categorie) {
+                    $categoriesNames[] = $categorie->getName();
+                }
+
+                echo implode(', ', $categoriesNames);
               ?>)
             </p>
 
@@ -77,7 +78,7 @@ use MvcLite\Models\Festival;
                   Description:
                 </h3>
                 <p class="description-value">
-                  <?= "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat nisl libero, et bibendum dolor mattis at. Aenean tincidunt sit amet neque vitae varius. Aenean a pulvinar risus. In dignissim faucibus urna, et bibendum elit luctus in. In hac habitasse platea dictumst. Vivamus risus ligula, viverra vel maximus a, tincidunt et augue. Sed leo nisl, euismod id ni"//$spectacle->getDescription() ?>
+                  <?=$spectacle->getDescription();?>
                 </p>
               </div>
               <div class="spectacle-duration">
