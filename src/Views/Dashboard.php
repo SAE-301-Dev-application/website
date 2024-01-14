@@ -43,15 +43,16 @@ use MvcLite\Models\Festival;
           Derniers festivals
         </h2>
       </div>
+      <div class="festivals-list">
         <?php
         foreach ($lastFestivals as $currentFestival) {
             $isFestivalInProgress = $currentFestival->isInProgress();
         ?>
-          <div class="festivals-list">
+          <a href="<?= route("informationsFestival") ?>?id=<?= $currentFestival->getId() ?>">
             <div class="festival-preview">
               <div class="festival-picture<?= $isFestivalInProgress ? " border-in-progress" : "" ?>"
-                   style="background: url('<?= $currentFestival->getIllustration() ?>') center / cover no-repeat;"
-                   alt="logo festival">
+                    style="background: url('<?= $currentFestival->getIllustration() ?>') center / cover no-repeat;"
+                    alt="logo festival">
                   <?php if ($isFestivalInProgress) { ?>
                     <div class="filter-in-progress">
                       <p>en cours</p>
@@ -85,8 +86,9 @@ use MvcLite\Models\Festival;
                 </div>
               </div>
             </div>
-          </div>
+          </a>
         <?php } ?>
+      </div>
     </section>
   </div>
 
