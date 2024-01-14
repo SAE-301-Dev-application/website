@@ -32,7 +32,7 @@ class CreateFestivalAddSpectaclesController extends Controller
     public function render(Request $request): RedirectResponse|true
     {
         $festivalId = $request->getParameter("festival");
-
+        
         if ($festivalId == null
             || !self::isRetrievableFestival($festivalId)
             || !self::isManageableFestival($festivalId))
@@ -160,7 +160,9 @@ class CreateFestivalAddSpectaclesController extends Controller
      */
     private static function isManageableFestival(string $festivalId): bool
     {
-        return Festival::getFestivalById($festivalId)->getOwner()->getId() == Session::getSessionId();
+        $organizers = Festival::getFestivalById($festivalId)->getOrganizers();
+        return Festival::getFestivalById($festivalId)->getOwner()->getId() == Session::getSessionId()
+            || Festival::isOrganizer($organizers,Session::getUserAccount());
     }
 
     /**
