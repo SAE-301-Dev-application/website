@@ -396,6 +396,22 @@ class Festival extends Model implements JsonSerializable
     }
 
     /**
+     * @param $organizers array of organizers
+     * @param $user User to search in $organizers
+     * @return bool true if user is an organizer, else false
+     */
+    public static function isOrganizer(array $organizers, User $user): bool
+    {
+        foreach ($organizers as $u){
+            if ($u->getId() == $user->getId())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * @param int $limit Limit row returned
      * @return array Festival's organizers with limit
      */
