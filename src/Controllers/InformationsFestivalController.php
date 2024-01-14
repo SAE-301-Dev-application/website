@@ -37,12 +37,12 @@ class InformationsFestivalController extends Controller
 
         $id = $request->getParameter("id");
 
-
-        if (!Festival::getFestivalById($id))
+        if ($id === null || !Festival::getFestivalById($id))
         {
             return Redirect::route("festivals")
                 ->redirect();
         }
+
         $festival = Festival::getFestivalById($id);
         $isOrganizer = self::isManageableFestival($id);
 
