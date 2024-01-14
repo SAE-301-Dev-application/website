@@ -6,7 +6,8 @@ $orange: #FF7A00;
 #add_scene,
 #add_spectacle,
 #create_scene,
-#add_organizer {
+#add_organizer,
+#add_contributor {
   #main {
     @apply pt-24;
 
@@ -108,13 +109,15 @@ $orange: #FF7A00;
 
         &#initial_search_scene,
         &#initial_search_spectacle,
-        &#initial_search_organizer {
+        &#initial_search_organizer,
+        &#initial_search_contributor {
           @apply mb-10;
         }
 
         &#current_scenes,
         &#current_spectacles,
-        &#current_organizers {
+        &#current_organizers,
+        &#current_contributor {
           @apply flex flex-col gap-y-5;
         }
       }
@@ -140,34 +143,41 @@ $orange: #FF7A00;
 
 #add_scene,
 #add_spectacle,
-#add_organizer {
+#add_organizer,
+#add_contributor {
   #search_scene_popup,
   #search_spectacle_popup,
-  #search_organizer_popup {
+  #search_organizer_popup,
+  #search_contributor_popup {
     #scene_searching_results,
     #spectacle_searching_results,
-    #organizer_searching_results {
+    #organizer_searching_results,
+    #contributor_searching_results {
       @apply flex flex-col gap-y-5;
     }
   }
 
   .scene-container,
   .spectacle-container,
-  .organizer-container {
+  .organizer-container,
+  .contributor-container {
     @apply flex justify-between items-start gap-x-3;
 
     > .scene-information,
     > .spectacle-information,
-    > .organizer-information {
+    > .organizer-information,
+    > .contributor-information {
       > h3.scene-name,
       > h3.spectacle-name,
-      > h3.organizer-name {
+      > h3.organizer-name,
+      > h3.contributor-name{
         @apply font-black text-3xl mb-1;
       }
 
       > ul.scene-details,
       > ul.spectacle-details,
-      > ul.organizer-details {
+      > ul.organizer-details,
+      > ul.contributor-details {
         @apply text-grey text-sm;
       }
     }

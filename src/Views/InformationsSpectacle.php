@@ -107,7 +107,7 @@ use MvcLite\Models\Festival;
       
                   <!-- Si l'utilisateur est le créateur du spectacle -->
                   <?php if ($spectacle->isOwner()) { ?>
-                    <a href="<?= route("addIntervenants")?>?id=<?= $spectacle->getId() ?>">
+                    <a href="<?= route("addContributors")?>?id=<?= $spectacle->getId() ?>">
                       <button class="button-blue">
                         <i class="fa-solid fa-plus"></i>
                         Ajouter intervenants

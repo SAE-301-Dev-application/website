@@ -24,7 +24,7 @@ use MvcLite\Controllers\ModifyFestivalController;
 use MvcLite\Controllers\RegisterController;
 use MvcLite\Controllers\SessionController;
 use MvcLite\Controllers\SpectaclesController;
-use MvcLite\Controllers\CreateSpectacleAddIntervenantsController;
+use MvcLite\Controllers\CreateSpectacleAddContributorsController;
 
 use MvcLite\Router\Engine\Router;
 
@@ -169,6 +169,25 @@ Router::post("/add-organizer/remove", CreateFestivalAddOrganizersController::cla
     ->setName("addOrganizer.removeOrganizer");
 
 
+Router::get("/add-contributor", CreateSpectacleAddContributorsController::class, "render")
+    ->setName("addContributors");
+
+Router::get("/add-contributor/get", CreateFestivalAddContributorsController::class, "getContributors")
+    ->setName("addContributor.getContributors");
+
+Router::get("/add-contributor/search", CreateFestivalAddContributorsController::class, "searchContributor")
+    ->setName("addContributor.searchContributor");
+
+Router::post("/add-contributor/add", CreateFestivalAddContributorsController::class, "addContributor")
+    ->setName("addContributor.addContributor");
+
+Router::post("/add-contributor/give", CreateFestivalAddContributorsController::class, "giveContributor")
+    ->setName("addContributor.giveContributor");
+
+Router::post("/add-contributor/remove", CreateFestivalAddContributorsController::class, "removeContributor")
+    ->setName("addContributor.removeContributor");
+
+
 Router::get("/generate-planification", GeneratePlanificationController::class, "render")
     ->setName("generatePlanification");
 
@@ -200,9 +219,6 @@ Router::post("/add-spectacle/add", CreateFestivalAddSpectaclesController::class,
 Router::post("/add-spectacle/remove", CreateFestivalAddSpectaclesController::class, "removeSpectacle")
     ->setName("post.addSpectacle.removeSpectacle");
 
-
-Router::get("/add-intervenants", CreateSpectacleAddIntervenantsController::class, "render")
-    ->setName("addIntervenants");
 
 // Page pas encore créée, route pour redirection "Profil" → "Modifier spectacle"
 Router::get("/modify-spectacle", ModifySpectacleController::class, "render")
