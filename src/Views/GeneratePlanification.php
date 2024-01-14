@@ -40,18 +40,23 @@ use MvcLite\DevelomentUtilities\Debug;
   ?>
 
   <div id="main">
-    <section id="planification">
-      <div class="title-container">
-        <h2 class="title">
-          Génération de la planification
-        </h2>
+    <div class="title-container">
+      <h3 class="title">
+        Génération de la planification : <?= $festival->getName() ?>
+      </h3>
+    </div>
 
-      </div>
+    <div class="hidden-list" id="unorganized_spectacles">
+      <h5>Spectacles non organisés :</h5>
 
-      <div class="calendar-container">
-        <div id='calendar'></div>
-      </div>
-    </section>
+      <ul id="spectacles_list">
+        <!-- JS will add spectacles here -->
+      </ul>
+    </div>
+
+    <div class="calendar-container">
+      <div id='calendar'></div>
+    </div>
   </div>
 
   <?php
