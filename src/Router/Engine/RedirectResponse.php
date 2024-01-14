@@ -61,7 +61,9 @@ class RedirectResponse
      */
     public function redirect(): RedirectResponse
     {
-        $parameters = "?" . $this->parameters;
+        $parameters = count($this->parameters)
+            ? "?" . $this->parameters
+            : "";
 
         header("Location: " . $this->route->getCompletePath() . $parameters);
 
