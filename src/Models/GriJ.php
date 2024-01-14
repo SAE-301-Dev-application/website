@@ -75,7 +75,7 @@ class GriJ extends Model implements JsonSerializable
      * @param int $id New GriJ's beginningSpectacleHour
      * @return int New GriJ's beginningSpectacleHour
      */
-    private function setBginningSpectacleHour(string $beginningSpectacleHour): string
+    private function setBeginningSpectacleHour(string $beginningSpectacleHour): string
     {
         return $this->beginningSpectacleHour = $beginningSpectacleHour;
     }
@@ -172,7 +172,7 @@ class GriJ extends Model implements JsonSerializable
                                   string $minDurationBetweenSpectacle,
                                   string $festivalId): void
     {
-        $addGriJQuery = "SELECT ajouterGriJ(?, ?, ?, ?);";
+        $addGriJQuery = "CALL ajouterGriJ(?, ?, ?, ?);";
 
         $griJId = Database::query($addGriJQuery,
                                   $beginningSpectacleHour,
@@ -195,7 +195,7 @@ class GriJ extends Model implements JsonSerializable
             ->setId($grijData["id_grij"]);
 
         $griJInstance
-            ->setBginningSpectacleHour($grijData["heure_debut_spectacles"]);
+            ->setBeginningSpectacleHour($grijData["heure_debut_spectacles"]);
 
         $griJInstance
             ->setEndingSpectacleHour($grijData["heure_fin_spectacles"]);

@@ -4,17 +4,11 @@ use MvcLite\Engine\DevelopmentUtilities\Debug;
 
 $errors = $props->getValidator()->getErrors() ?? [];
 
-$beginningHour = $grij->getBeginningSpectacleHour();
+$beginningHour = $grij ? $grij->getBeginningSpectacleHour() : null;
 
-$endingHour = $grij->getEndingSpectacleHour();
+$endingHour = $grij ? $grij->getEndingSpectacleHour() : null;
 
-$pauseValue = $grij->getMinDurationBetweenSpectacle();
-
-// $beginningHour = $props->getRequest()->getInput("beginning_hour") ?? "";
-
-// $endingHour = $props->getRequest()->getInput("ending_hour") ?? "";
-
-// $pauseValue = $props->getRequest()->getInput("pause_value") ?? "";
+$pauseValue = $grij ? $grij->getMinDurationBetweenSpectacle() : null;
 ?>
 
 <!doctype html>
@@ -24,7 +18,7 @@ $pauseValue = $grij->getMinDurationBetweenSpectacle();
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Créer un festival - Festiplan</title>
+  <title>Paramétrer la planification - Festiplan</title>
 
   <!-- CSS -->
   <?php
@@ -58,8 +52,8 @@ $pauseValue = $grij->getMinDurationBetweenSpectacle();
         </div>
 
         <div class="form-container">
-          <form action="<?= route("horairesFestival") ?>"
-                method="get"
+          <form action="<?= route("post.addGrijFestival") ?>?festival=<?= $festival->getId() ?>"
+                method="post"
                 enctype="multipart/form-data">
             <div class="form-grid">
               <section id="general_information">
@@ -79,7 +73,7 @@ $pauseValue = $grij->getMinDurationBetweenSpectacle();
                       <?php
                       Storage::component("InputErrorComponent", [
                           "errors" => $errors,
-                          "input" => "beginning_date",
+                          "input" => "beginning_hour",
                       ]);
                       ?>
                     </label>
@@ -100,7 +94,7 @@ $pauseValue = $grij->getMinDurationBetweenSpectacle();
                       <?php
                       Storage::component("InputErrorComponent", [
                           "errors" => $errors,
-                          "input" => "ending_date",
+                          "input" => "ending_hour",
                       ]);
                       ?>
                     </label>

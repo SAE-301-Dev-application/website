@@ -85,6 +85,9 @@ Router::post("/create-scene", CreateSceneController::class, "createScene")
 Router::get("/add-grij-festival", CreateFestivalAddGrijController::class, "render")
     ->setName("addGrijFestival");
 
+Router::post("/add-grij-festival", CreateFestivalAddGrijController::class, "confirmGriJ")
+    ->setName("post.addGrijFestival");
+
 
 Router::get("/profile", ProfileController::class, "render")
     ->setName("profile");
@@ -116,8 +119,6 @@ Router::post("/profile/delete-account/confirm",
              ProfileController::class,
              "confirmDeleteAccount")
     ->setName("post.profile.deleteAccount.confirm");
-
-
 
     
 Router::get("/informations-festival", InformationsFestivalController::class, "render")
