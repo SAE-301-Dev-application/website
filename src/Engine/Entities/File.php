@@ -116,7 +116,7 @@ class File
         return $contentType && explode('/', $contentType)[0] == "image";
     }
 
-    public function hasImage(): ?Image
+    public function asImage(): ?Image
     {
         if (!$this->isImage())
         {
