@@ -714,11 +714,12 @@ class Festival extends Model implements JsonSerializable
     /**
      * @return array Three last id of festivals 
      */
-    public function lastFestivals(): array
+    public static function lastFestivals(): array
     {
         $query = "SELECT *
                   FROM festival
                   WHERE date_debut_fe <= CURDATE()
+                  ORDER BY date_debut_fe DESC
                   LIMIT 3;";
         
         $threeLastFestivals = Database::query($query);
