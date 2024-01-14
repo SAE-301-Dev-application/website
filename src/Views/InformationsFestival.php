@@ -34,39 +34,44 @@ use MvcLite\Models\User;
 </head>
 <body>
 <div id="informations_festival_main">
-
-    <?php
-    Storage::component("HeaderComponent");
-    ?>
+  <?php
+  Storage::component("HeaderComponent");
+  ?>
 
   <div id="main">
     <section id="festival">
       <div class="title-container no-mb">
         <h2 class="title">
-            <?= $festival->getName() ?>
+          <?= $festival->getName() ?>
         </h2>
 
+        <div class="buttons">
           <?php
-          if ($festival->getGriJWithId() !== null) {
-              ?>
-            <div class="buttons">
-              <a href="<?= route("generatePlanification") ?>?id=<?= $festival->getId() ?>">
-                <button class="button-blue">
-                  <i class="fa-regular fa-calendar-days"></i>
-                  Voir la planification
-                </button>
-              </a>
+          if ($festival->getGriJWithId() !== null)
+          {
+          ?>
+          <a href="<?= route("generatePlanification") ?>?id=<?= $festival->getId() ?>">
+            <button class="button-blue">
+              <i class="fa-regular fa-calendar-days"></i>
+              Voir la planification
+            </button>
+          </a>
+          <?php
+          }
 
-              <a href="<?= route("modifyFestival") ?>?id=<?= $festival->getId() ?>">
-                <button class="button-grey">
-                  <i class="fa-solid fa-pen"></i>
-                  Modifier le festival
-                </button>
-              </a>
-            </div>
-              <?php
+          if ($isOrganizer)
+          {
+          ?>
+          <a href="<?= route("modifyFestival") ?>?id=<?= $festival->getId() ?>">
+            <button class="button-grey">
+              <i class="fa-solid fa-pen"></i>
+              Modifier le festival
+            </button>
+          </a>
+          <?php
           }
           ?>
+        </div>
       </div>
 
       <p class="festival-categories">
@@ -247,26 +252,27 @@ use MvcLite\Models\User;
 
             <div class="spectacles-grid">
                 <?php
-                foreach ($festival->getSpectacles() as $spectacle) {
-                    ?>
-                  <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
-                    <div class="spectacle-card">
-                      <div class="spectacle-picture"
-                           style="background-image: url('<?= $spectacle->getIllustration() ?>')"></div>
+                foreach ($festival->getSpectacles() as $spectacle)
+                {
+                ?>
+                <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
+                  <div class="spectacle-card">
+                    <div class="spectacle-picture"
+                         style="background-image: url('<?= $spectacle->getIllustration() ?>')"></div>
 
-                      <div class="spectacle-presentation">
-                        <h4 class="spectacle-name">
-                            <?= $spectacle->getTitle() ?>
-                        </h4>
+                    <div class="spectacle-presentation">
+                      <h4 class="spectacle-name">
+                          <?= $spectacle->getTitle() ?>
+                      </h4>
 
-                        <p class="spectacle-location">
-                          <i class="fa-solid fa-location-dot"></i>
-                          spectacle_location
-                        </p>
-                      </div>
+                      <p class="spectacle-location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        spectacle_location
+                      </p>
                     </div>
-                  </a>
-                    <?php
+                  </div>
+                </a>
+                <?php
                 }
                 ?>
             </div>
