@@ -47,7 +47,7 @@ use MvcLite\Models\User;
 
         <div class="buttons">
           <?php
-          if ($festival->getGriJWithId() !== null)
+          if ($festival->isComplete())
           {
           ?>
           <a href="<?= route("generatePlanification") ?>?id=<?= $festival->getId() ?>">
@@ -66,6 +66,13 @@ use MvcLite\Models\User;
             <button class="button-grey">
               <i class="fa-solid fa-pen"></i>
               Modifier le festival
+            </button>
+          </a>
+
+          <a href="<?= route("addScene") ?>?festival=<?= $festival->getId() ?>">
+            <button class="button-blue">
+              <i class="fa-solid fa-plus"></i>
+              Ajouter une scène
             </button>
           </a>
           <?php
