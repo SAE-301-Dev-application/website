@@ -9,23 +9,30 @@ Le principal avantage du site est la génération d'un planning après les infor
 Ce site à été réalisé en PHP, HTML, CSS et JavaScript en utilisant le framework MVCLite.
 
 ## Installation du projet
-Pour installer le projet, clônez le dépot GitHub et déplacez-vous sur la branche version-mvclite.
+Pour installer le projet, clônez le dépot GitHub dans un dossier avec la commande `git clone https://github.com/SAE-301-Dev-application/website.git`.
+Si vous utilisez UwAmp en tant que serveur local, clônez le dossier "website" dans le dossier "www".
 
-Télécharger Node.js et Composer (si vous ne l'avez pas déjà).
+Connectez-vous à votre SGBD, via le panel phpMyAdmin par exemple, et exécutez le [script SQL de création de la base de données](https://drive.google.com/file/d/1fTX8Qq5t0OjFGtOYTDCt6fh9DNuaD3RE/view?usp=sharing).
 
+Téléchargez et configurez [Node.js](https://nodejs.org/en/download) et [Composer](https://getcomposer.org/download/).
+Vous aurez besoin d'ajouter [php8.3.0](https://www.php.net/downloads.php) (minimum) lors de la configuration de Composer.
+Si vous êtes sur Windows, pensez à ajouter php au PATH avant d'installer Composer.
 
-Une fois ceci fait, ouvrez un terminal ciblant le dossier racine du dossier 
-créé par le clônage, et lancez la commande `npm install`, `npm run tailwindcss`.
-
+Une fois ceci fait, ouvrez un terminal ciblant le dossier racine du dossier créé par le clônage.
+Exécutez les commandes `npm install` puis `composer install`.
 
 ## Compilation pré-processeur du CSS.
-Nous utilisons **SCSS** pour la définition du style des interfaces. Il 
-s'agit d'un langage dit **pré-processeur**, c'est-à-dire qu'il est ensuite 
-converti en **CSS** pur. Il permet une légèreté d'écriture grâce à l'apport 
-des imbrications, variables et références aux éléments parents.
+Nous utilisons **SCSS** pour la définition du style des interfaces.
+Il s'agit d'un langage dit **pré-processeur**, c'est-à-dire qu'il est ensuite converti en **CSS** pur.
+Il permet une légèreté d'écriture grâce à l'apport des imbrications, variables et références aux éléments parents.
 
-Afin de lancer le convertisseur **SCSS → CSS**, ouvrez un terminal ciblant 
-la racine du projet clôné, et lancez la commande `npm run dev`.
+Sur Visual Studio Code, installez l'extension **Live Sass Compiler**.
+Commencez par créer dans le dossier `src\Resources\Css\Views` les fichiers CSS avec le même nom que ceux de type SCSS ignorés dans le fichier *.gitignore*.
+
+L'extension *Live Sass* vous permettra de compiler vos fichiers SCSS en fichiers CSS en cliquant sur `F1` puis en écrivant et exécutant `Live Sass: Watch Sass`.
+Vous pouvez également re-compiler manuellement un fichier SCSS en CSS via la commande `Live Sass: Compile Current Sass File`.
+
+Afin de lancer le framework CSS utilisé, ouvrez un terminal ciblant la racine du projet clôné, et exécutez la commande `npm run tailwindcss`.
 
 ### Technologies utilisées
 - Framework MVC : [MVCLite](https://github.com/belicfr/MVCLite)
@@ -45,18 +52,20 @@ la racine du projet clôné, et lancez la commande `npm run dev`.
 
 | Sprints   | Florian       | Loïc          | Jonathan      | Simon         | Samuel         |
 |-----------|---------------|---------------|---------------|---------------|----------------|
-| Sprint 0  | Développeur   | SCRUM master  | Développeur   | Product Owner |  Développeur   |
+| Sprint 0  | Développeur   | SCRUM Master  | Développeur   | Product Owner |  Développeur   |
 | Sprint 1  | Product Owner |  Développeur  | Développeur   | SCRUM master  |  Développeur   |
 | Sprint 2  | SCRUM master  | Développeur   | Product Owner | Développeur   |  Développeur   |
 
 
 ## Liens
 
-- Github :
+- GitHub :
   - Repository : https://github.com/SAE-301-Dev-application/website
   - Board agile : https://github.com/orgs/SAE-301-Dev-application/projects/5
 - Google Drive : https://drive.google.com/drive/u/1/folders/0AIv7Byh6nxapUk9PVA
 - Serveur Discord de discussions : https://discord.gg/jhcd7aprgZ
+
+- Repository GitHub du projet Java : https://github.com/SAE-301-Dev-application/java-app
 
 
 
