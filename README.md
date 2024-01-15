@@ -66,6 +66,7 @@ Afin de lancer le framework CSS utilisé, ouvrez un terminal ciblant la racine d
   - Board agile : https://github.com/orgs/SAE-301-Dev-application/projects/5
 - Google Drive : https://drive.google.com/drive/u/1/folders/0AIv7Byh6nxapUk9PVA
 - Serveur Discord de discussions : https://discord.gg/jhcd7aprgZ
+- Site internet Festiplan : https://festiplan-a2.000webhostapp.com/website
 
 - Repository GitHub du projet Java : https://github.com/SAE-301-Dev-application/java-app
 
