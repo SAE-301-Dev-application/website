@@ -51,7 +51,8 @@ $orange: #FF7A00;
                         }
                     }
 
-                    > .festivals-container {
+                    > .festivals-container, 
+                    > .spectacles-container {
                         @apply flex flex-col gap-y-5;
 
                         > .festival-preview {
