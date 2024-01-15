@@ -369,14 +369,6 @@ class Festival extends Model implements JsonSerializable
      */
     public function getOrganizers(): array
     {
-
-        $getOwnerQuery
-            = "SELECT ut.*
-               FROM festival fe
-               INNER JOIN utilisateur ut
-               ON fe.id_createur = ut.id_utilisateur
-               WHERE fe.id_festival = ?";
-
         $getOrganizersQuery
             = "SELECT ut.*
                FROM utilisateur ut
@@ -384,13 +376,9 @@ class Festival extends Model implements JsonSerializable
                ON ut.id_utilisateur = fu.id_utilisateur
                WHERE id_festival = ?";
 
-
-        $resultOwner = Database::query($getOwnerQuery, $this->getId());
         $resultOrga = Database::query($getOrganizersQuery, $this->getId());
 
-        $result = array_merge(User::queryToArray($resultOwner), User::queryToArray($resultOrga));
-
-        return $result;
+        return User::queryToArray($resultOrga);
     }
 
     /**
