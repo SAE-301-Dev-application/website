@@ -87,11 +87,11 @@ try
 
     fwrite($file, "DELIMITER //\n\n");
 
-    // Récupérer les noms des procédures stockées
+    // Retrieve stored procedure names
     $procedureQuery = $pdo->query("SHOW PROCEDURE STATUS WHERE Db = '$dbName'");
     $procedures = $procedureQuery->fetchAll(PDO::FETCH_ASSOC);
 
-    // Ajouter le code source des procédures au fichier
+    // Add the source code of the procedures to the file
     foreach ($procedures as $procedure) {
         $procedureName = $procedure['Name'];
         $procedureCreateQuery = $pdo->query("SHOW CREATE PROCEDURE $procedureName");
@@ -101,11 +101,11 @@ try
         fwrite($file, "$procedureCreate//\n\n");
     }
 
-    // Récupérer les noms des fonctions stockées
+    // Retrieve stored function names
     $functionQuery = $pdo->query("SHOW FUNCTION STATUS WHERE Db = '$dbName'");
     $functions = $functionQuery->fetchAll(PDO::FETCH_ASSOC);
 
-    // Ajouter le code source des fonctions au fichier
+    // Add function source code to file
     foreach ($functions as $function) {
         $functionName = $function['Name'];
         $functionCreateQuery = $pdo->query("SHOW CREATE FUNCTION $functionName");
