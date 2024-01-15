@@ -129,8 +129,7 @@ use MvcLite\Models\User;
                   ?>
                 <div class="right-side">
                   <div class="buttons">
-                    <a href="<?= route("addGrijFestival") ?>?festival=<?= $festival->getId() ?>"
-                       target="_blank">
+                    <a href="<?= route("addGrijFestival") ?>?festival=<?= $festival->getId() ?>">
                       <button class="button-blue">
                         <i class="fa-solid fa-plus"></i>
                         Ajouter une GriJ
@@ -243,8 +242,7 @@ use MvcLite\Models\User;
                     <?php
                     if ($isOrganizer) {
                     ?>
-                  <a href="<?= route("addSpectacle") ?>?festival=<?= $festival->getId() ?>"
-                     target="_blank">
+                  <a href="<?= route("addSpectacle") ?>?festival=<?= $festival->getId() ?>">
                     <button class="button-blue">
                       <i class="fa-solid fa-plus"></i>
                       Ajouter un spectacle

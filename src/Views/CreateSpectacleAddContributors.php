@@ -260,7 +260,7 @@ $errors = $props->hasValidator()
           Ajouter des intervenants
         </h2>
 
-        <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>" target="_blank">
+        <a href="<?= route("informationsSpectacle") ?>?id=<?= $spectacle->getId() ?>">
           <button class="button-grey">
             <i class="fa-solid fa-eye"></i>
             Voir le spectacle

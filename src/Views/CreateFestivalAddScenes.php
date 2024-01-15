@@ -298,7 +298,7 @@ $errors = $props->hasValidator()
           Ajouter des scènes
         </h2>
 
-        <a href="<?= route("informationsFestival") ?>?id=<?= $festival->getId() ?>" target="_blank">
+        <a href="<?= route("informationsFestival") ?>?id=<?= $festival->getId() ?>">
           <button class="button-grey">
             <i class="fa-solid fa-eye"></i>
             Voir le festival

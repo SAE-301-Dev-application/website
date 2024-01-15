@@ -56,9 +56,8 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
 
                       FESTIVALS_LIST.empty();
 
-                      if (data.length) {
+                      if (!data.length) {
 
-                      } else {
                           FESTIVALS_LIST.append(`
                           <div class="alert alert-grey">
                             <div class="alert-icon">
@@ -94,9 +93,7 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                                           ${festival.nom_fe}
                                       </h3>
 
-                                      <i class=\"fa-solid fa-warning fa-2xl\"
-                                        title=\"La configuration de ce festival n'est pas terminée !\">
-                                      </i>
+                                     
                                     </div>
 
                                     <div class=\"festival-buttons-container\">
@@ -155,9 +152,8 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
 
                       SPECTACLES_LIST.empty();
 
-                      if (data.length) {
+                      if (!data.length) {
 
-                      } else {
                           SPECTACLES_LIST.append(`
                           <div class="alert alert-grey">
                             <div class="alert-icon">
@@ -192,7 +188,7 @@ $email = $props->getRequest()->getInput("email") ?? Session::getUserAccount()->g
                                       ${spectacle.titre_sp}
                                   </h3>
 
-                                  <i class="fa-solid fa-warning fa-2xl"></i>
+                                  
                                 </div>
 
                                 <div class="festival-buttons-container">
