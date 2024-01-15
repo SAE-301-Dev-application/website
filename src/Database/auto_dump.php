@@ -85,6 +85,38 @@ try
         }
     }
 
+    fwrite($file, "DELIMITER //\n\n");
+
+    // Récupérer les noms des procédures stockées
+    $procedureQuery = $pdo->query("SHOW PROCEDURE STATUS WHERE Db = '$dbName'");
+    $procedures = $procedureQuery->fetchAll(PDO::FETCH_ASSOC);
+
+    // Ajouter le code source des procédures au fichier
+    foreach ($procedures as $procedure) {
+        $procedureName = $procedure['Name'];
+        $procedureCreateQuery = $pdo->query("SHOW CREATE PROCEDURE $procedureName");
+        $procedureCreateResult = $procedureCreateQuery->fetch(PDO::FETCH_NUM);
+        $procedureCreate = $procedureCreateResult[2];
+        fwrite($file, "-- Procedure $procedureName\n");
+        fwrite($file, "$procedureCreate//\n\n");
+    }
+
+    // Récupérer les noms des fonctions stockées
+    $functionQuery = $pdo->query("SHOW FUNCTION STATUS WHERE Db = '$dbName'");
+    $functions = $functionQuery->fetchAll(PDO::FETCH_ASSOC);
+
+    // Ajouter le code source des fonctions au fichier
+    foreach ($functions as $function) {
+        $functionName = $function['Name'];
+        $functionCreateQuery = $pdo->query("SHOW CREATE FUNCTION $functionName");
+        $functionCreateResult = $functionCreateQuery->fetch(PDO::FETCH_NUM);
+        $functionCreate = $functionCreateResult[2];
+        fwrite($file, "-- Function $functionName\n");
+        fwrite($file, "$functionCreate//\n\n");
+    }
+
+    fwrite($file, "DELIMITER ;\n");
+
     // Close the file
     fclose($file);
 

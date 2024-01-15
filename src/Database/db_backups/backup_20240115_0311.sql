@@ -376,3 +376,507 @@ INSERT INTO spectacle_intervenant (id_spectacle, id_intervenant, type_inter) VAL
 INSERT INTO spectacle_intervenant (id_spectacle, id_intervenant, type_inter) VALUES ('14', '2', '2');
 INSERT INTO spectacle_intervenant (id_spectacle, id_intervenant, type_inter) VALUES ('15', '2', '2');
 
+DELIMITER //
+
+-- Procedure afficherCategoriesFestival
+CREATE DEFINER=`root`@`localhost` PROCEDURE `afficherCategoriesFestival`(
+    IN id_festival INT
+)
+BEGIN
+    SELECT c.nom_cat
+    FROM festival_categorie fc
+             INNER JOIN categorie c ON fc.id_categorie = c.id_categorie
+    WHERE fc.id_festival = id_festival;
+END//
+
+-- Procedure afficherSpectaclesFestival
+CREATE DEFINER=`root`@`localhost` PROCEDURE `afficherSpectaclesFestival`(
+    IN id_festival INT
+)
+BEGIN
+    SELECT s.titre_sp
+    FROM festival_spectacle fs
+             INNER JOIN spectacle s ON fs.id_spectacle = s.id_spectacle
+    WHERE fs.id_festival = id_festival;
+END//
+
+-- Procedure ajouterFestivalCategorie
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajouterFestivalCategorie`(
+    IN id_festival INT,
+    IN id_categorie INT
+)
+BEGIN
+    INSERT INTO festival_categorie (id_festival, id_categorie)
+    VALUES (id_festival, id_categorie);
+END//
+
+-- Procedure ajouterFestivalScene
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajouterFestivalScene`(
+    IN id_festival INT,
+    IN id_scene INT
+)
+BEGIN
+    INSERT INTO festival_scene (id_festival, id_scene)
+    VALUES (id_festival, id_scene);
+END//
+
+-- Procedure ajouterFestivalSpectacle
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajouterFestivalSpectacle`(
+    IN id_festival INT,
+    IN id_spectacle INT
+)
+BEGIN
+    INSERT INTO festival_spectacle (id_festival, id_spectacle)
+    VALUES (id_festival, id_spectacle);
+END//
+
+-- Procedure ajouterFestivalUtilisateur
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajouterFestivalUtilisateur`(
+    IN id_festival INT,
+    IN id_utilisateur INT
+)
+BEGIN
+    INSERT INTO festival_utilisateur (id_festival, id_utilisateur)
+    VALUES (id_festival, id_utilisateur);
+END//
+
+-- Procedure ajouterGrij
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajouterGrij`(
+    heuredebutspectacles TIME,
+    heurefinspectacles TIME,
+    dureeminentrespectacles TIME,
+    idfestival INT
+)
+BEGIN
+    IF heuredebutspectacles > heurefinspectacles THEN
+        -- 45000 est pour un code d'erreur personnalisé pour date_deb > date_fin
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La date de début doit être inférieure à la date de fin';
+    END IF;
+
+    INSERT INTO grij (heure_debut_spectacles, heure_fin_spectacles, duree_min_entre_spectacles, id_festival)
+    VALUES (heuredebutspectacles, heurefinspectacles, dureeminentrespectacles, idfestival);
+END//
+
+-- Procedure ajouterIntervenant
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajouterIntervenant`(
+    IN nom_inter VARCHAR(50),
+    IN prenom_inter VARCHAR(25),
+    IN email_inter VARCHAR(255)
+)
+BEGIN
+    INSERT INTO intervenant (nom_inter, prenom_inter, email_inter)
+    VALUES (nom_inter, prenom_inter, email_inter);
+END//
+
+-- Procedure ajouterScene
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajouterScene`(
+    IN nom_sc VARCHAR(25),
+    IN taille_sc INT,
+    IN nb_max_spectateurs INT,
+    IN latitude_sc FLOAT(5),
+    IN longitude_sc FLOAT(5)
+)
+BEGIN
+    INSERT INTO scene (nom_sc, taille_sc, nb_max_spectateurs, latitude_sc, longitude_sc)
+    VALUES (nom_sc, taille_sc, nb_max_spectateurs, latitude_sc, longitude_sc);
+END//
+
+-- Procedure ajouterSpectacleCategorie
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajouterSpectacleCategorie`(
+    IN id_spectacle INT,
+    IN id_categorie INT
+)
+BEGIN
+    INSERT INTO spectacle_categorie (id_spectacle, id_categorie)
+    VALUES (id_spectacle, id_categorie);
+END//
+
+-- Procedure ajouterSpectacleIntervenant
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajouterSpectacleIntervenant`(
+    IN id_spectacle INT,
+    IN id_intervenant INT,
+    IN type_inter INT
+)
+BEGIN
+    IF type_inter != 1 AND type_inter != 2 THEN
+        -- 45000 est pour un code d'erreur personnalisé pour type_inter != 1 ou 2
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le type doit être 1 pour hors scène ou 2 pour sur scène';
+    END IF;
+    INSERT INTO spectacle_intervenant (id_spectacle, id_intervenant, type_inter)
+    VALUES (id_spectacle, id_intervenant, type_inter);
+END//
+
+-- Procedure ajouterUtilisateur
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ajouterUtilisateur`(
+    IN nom_uti VARCHAR(50),
+    IN prenom_uti VARCHAR(25),
+    IN email_uti VARCHAR(255),
+    IN login_uti VARCHAR(25),
+    IN mdp_uti VARCHAR(70)
+)
+BEGIN
+    INSERT INTO utilisateur (nom_uti, prenom_uti, email_uti, login_uti, mdp_uti)
+    VALUES (nom_uti, prenom_uti, email_uti, login_uti, mdp_uti);
+END//
+
+-- Procedure modifierFestival
+CREATE DEFINER=`root`@`localhost` PROCEDURE `modifierFestival`(
+    idfestival INT,
+    nomfe VARCHAR(50),
+    descriptionfe VARCHAR(1000),
+    illustrationfe TEXT,
+    datedebutfe DATE,
+    datefinfe DATE
+)
+BEGIN
+    IF datedebutfe > datefinfe THEN
+        -- 45000 est pour un code d'erreur personnalisé pour datedeb > datefin
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La date de début doit être inférieure à la date de fin';
+    END IF;
+
+    UPDATE festival
+    SET nom_fe          = nomfe,
+        description_fe  = descriptionfe,
+        illustration_fe = illustrationfe,
+        date_debut_fe   = datedebutfe,
+        date_fin_fe     = datefinfe
+    WHERE id_festival = idfestival;
+END//
+
+-- Procedure sauvegarderBdd
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sauvegarderBdd`()
+BEGIN
+
+    -- TODO
+
+END//
+
+-- Procedure supprimerFestival
+CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerFestival`(
+    idfestival INT
+)
+BEGIN
+    DELETE
+    FROM festival
+    WHERE id_festival = idfestival;
+END//
+
+-- Procedure supprimerFestivalScene
+CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerFestivalScene`(
+    idfestival INT,
+    idscene INT
+)
+BEGIN
+    DELETE
+    FROM festival_scene
+    WHERE id_festival = idfestival
+      AND id_scene = idscene;
+END//
+
+-- Procedure supprimerFestivalSpectacles
+CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerFestivalSpectacles`(
+    idfestival INT,
+    idspectacle INT
+)
+BEGIN
+    DELETE
+    FROM festival_spectacle
+    WHERE id_festival = idfestival
+      AND id_spectacle = idspectacle;
+END//
+
+-- Procedure supprimerFestivalUtilisateur
+CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerFestivalUtilisateur`(
+    idfestival INT,
+    idutilisateur INT
+)
+BEGIN
+    DELETE
+    FROM festival_utilisateur
+    WHERE id_festival = idfestival
+      AND id_utilisateur = idutilisateur;
+END//
+
+-- Procedure supprimerScene
+CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerScene`(
+    idscene INT
+)
+BEGIN
+    DELETE
+    FROM scene
+    WHERE id_scene = idscene;
+END//
+
+-- Procedure supprimerSpectacle
+CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerSpectacle`(
+    idspectacle INT
+)
+BEGIN
+    DELETE
+    FROM spectacle
+    WHERE id_spectacle = idspectacle;
+END//
+
+-- Procedure supprimerUtilisateur
+CREATE DEFINER=`root`@`localhost` PROCEDURE `supprimerUtilisateur`(
+    IN idutilisateur INT
+)
+BEGIN
+    DELETE
+    FROM utilisateur
+    WHERE id_utilisateur = idutilisateur;
+END//
+
+-- Function ajouterFestival
+CREATE DEFINER=`root`@`localhost` FUNCTION `ajouterFestival`(
+    nomfe VARCHAR(50),
+    descriptionfe VARCHAR(1000),
+    illustrationfe TEXT,
+    datedebutfe DATE,
+    datefinfe DATE,
+    idcreateur INT
+) RETURNS int(11)
+BEGIN
+    DECLARE idFestival INT;
+
+    IF datedebutfe > datefinfe THEN
+        -- 45000 est pour un code d'erreur personnalisé pour date_deb > date_fin
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La date de début doit être inférieure à la date de fin';
+    END IF;
+
+    INSERT INTO festival (nom_fe, description_fe, illustration_fe, date_debut_fe, date_fin_fe, id_createur)
+    VALUES (nomfe, descriptionfe, illustrationfe, datedebutfe, datefinfe, idcreateur);
+
+    -- Récupérer l'ID généré par l'insertion
+    SET idFestival = LAST_INSERT_ID();
+
+    RETURN idFestival;
+END//
+
+-- Function ajouterSpectacle
+CREATE DEFINER=`root`@`localhost` FUNCTION `ajouterSpectacle`(
+    titre_sp VARCHAR(50),
+    description_sp VARCHAR(1000),
+    illustration_sp TEXT,
+    duree_sp INT,
+    taille_scene_sp INT,
+    id_createur INT
+) RETURNS int(11)
+BEGIN
+    DECLARE idSpectacle INT;
+
+    INSERT INTO spectacle (titre_sp, description_sp, illustration_sp, duree_sp, taille_scene_sp, id_createur)
+    VALUES (titre_sp, description_sp, illustration_sp, duree_sp, taille_scene_sp, id_createur);
+
+    -- Récupérer l'ID généré par l'insertion
+    SET idSpectacle = LAST_INSERT_ID();
+
+    RETURN idSpectacle;
+END//
+
+-- Function recupererIdFestival
+CREATE DEFINER=`root`@`localhost` FUNCTION `recupererIdFestival`(
+    nom_fe VARCHAR(50)
+) RETURNS int(11)
+BEGIN
+    DECLARE idFestival INT;
+
+    SELECT fe.id_festival
+    INTO idFestival
+    FROM festival fe
+    WHERE fe.nom_fe = nom_fe;
+
+    RETURN idFestival;
+END//
+
+-- Function verifierFestivalComplet
+CREATE DEFINER=`root`@`localhost` FUNCTION `verifierFestivalComplet`(
+    id_festival INT
+) RETURNS tinyint(1)
+BEGIN
+    DECLARE valide BOOLEAN;
+
+    IF verifierSceneFestival(id_festival)
+        AND verifierSpectacleFestival(id_festival)
+        AND verifierGrijFestival(id_festival) THEN
+        SET valide = true;
+    ELSE
+        SET valide = false;
+    END IF;
+
+    RETURN valide;
+END//
+
+-- Function verifierFestivalExiste
+CREATE DEFINER=`root`@`localhost` FUNCTION `verifierFestivalExiste`(
+    nomFestival VARCHAR(50)
+) RETURNS tinyint(1)
+BEGIN
+    DECLARE resultat INT;
+
+    SELECT COUNT(nom_fe)
+    INTO resultat
+    FROM festival
+    WHERE nom_fe = nomFestival;
+
+    IF resultat > 0 THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+
+END//
+
+-- Function verifierGrijFestival
+CREATE DEFINER=`root`@`localhost` FUNCTION `verifierGrijFestival`(
+    id_festival INT
+) RETURNS tinyint(1)
+BEGIN
+    DECLARE nb_grij INT;
+
+    SELECT COUNT(*)
+    INTO nb_grij
+    FROM grij g
+    WHERE g.id_festival = id_festival;
+
+    IF nb_grij > 0 THEN
+        RETURN true;
+    ELSE
+        RETURN false;
+    END IF;
+END//
+
+-- Function verifierOrganisateurFestival
+CREATE DEFINER=`root`@`localhost` FUNCTION `verifierOrganisateurFestival`(
+    id_festival INT
+) RETURNS tinyint(1)
+BEGIN
+    DECLARE nb_organisateur INT;
+
+    SELECT COUNT(*)
+    INTO nb_organisateur
+    FROM festival_utilisateur fu
+    WHERE fu.id_festival = id_festival;
+
+    IF nb_organisateur > 0 THEN
+        RETURN true;
+    ELSE
+        RETURN false;
+    END IF;
+END//
+
+-- Function verifierSceneFestival
+CREATE DEFINER=`root`@`localhost` FUNCTION `verifierSceneFestival`(
+    id_festival INT
+) RETURNS tinyint(1)
+BEGIN
+    DECLARE nb_scene INT;
+
+    SELECT COUNT(*)
+    INTO nb_scene
+    FROM festival_scene fs
+    WHERE fs.id_festival = id_festival;
+
+    IF nb_scene > 0 THEN
+        RETURN true;
+    ELSE
+        RETURN false;
+    END IF;
+END//
+
+-- Function verifierSpectacleExiste
+CREATE DEFINER=`root`@`localhost` FUNCTION `verifierSpectacleExiste`(
+    titreSpectacle VARCHAR(50)
+) RETURNS tinyint(1)
+BEGIN
+    DECLARE resultat INT;
+
+    SELECT COUNT(titre_sp)
+    INTO resultat
+    FROM spectacle
+    WHERE titre_sp = titreSpectacle;
+
+    IF resultat > 0 THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+
+END//
+
+-- Function verifierSpectacleFestival
+CREATE DEFINER=`root`@`localhost` FUNCTION `verifierSpectacleFestival`(
+    id_festival INT
+) RETURNS tinyint(1)
+BEGIN
+    DECLARE nb_spectacle INT;
+
+    SELECT COUNT(*)
+    INTO nb_spectacle
+    FROM festival_spectacle fs
+    WHERE fs.id_festival = id_festival;
+
+    IF nb_spectacle > 0 THEN
+        RETURN true;
+    ELSE
+        RETURN false;
+    END IF;
+END//
+
+-- Function verifierTailleScene
+CREATE DEFINER=`root`@`localhost` FUNCTION `verifierTailleScene`(
+    id_spectacle INT,
+    id_scene INT
+) RETURNS tinyint(1)
+BEGIN
+    DECLARE taille_scene_spectacle INT;
+    DECLARE taille_scene INT;
+
+    SELECT s.taille_scene_sp
+    INTO taille_scene_spectacle
+    FROM spectacle s
+    WHERE s.id_spectacle = id_spectacle;
+
+    SELECT sc.taille_sc
+    INTO taille_scene
+    FROM scene sc
+    WHERE sc.id_scene = id_scene;
+
+    IF taille_scene_spectacle > taille_scene THEN
+        RETURN false;
+    ELSE
+        RETURN true;
+    END IF;
+END//
+
+-- Function verifierUsageEmail
+CREATE DEFINER=`root`@`localhost` FUNCTION `verifierUsageEmail`(
+    email VARCHAR(255)
+) RETURNS tinyint(4)
+BEGIN
+    DECLARE presence_email TINYINT;
+
+    SELECT COUNT(*) as count
+    INTO presence_email
+    FROM utilisateur
+    WHERE email_uti = email;
+
+    RETURN presence_email;
+END//
+
+-- Function verifierUsageLogin
+CREATE DEFINER=`root`@`localhost` FUNCTION `verifierUsageLogin`(
+    loginuti VARCHAR(25)
+) RETURNS tinyint(4)
+BEGIN
+    DECLARE presence_login TINYINT;
+
+    SELECT COUNT(*) as count
+    INTO presence_login
+    FROM utilisateur
+    WHERE login_uti = loginuti;
+
+    RETURN presence_login;
+END//
+
+DELIMITER ;
