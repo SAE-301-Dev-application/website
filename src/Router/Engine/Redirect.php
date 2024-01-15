@@ -23,7 +23,7 @@ class Redirect
         $path = $pathSplit[0];
         $parameters = $pathSplit[1] ?? "";
 
-        $_POST = $_GET = [];
+        $_POST = [];
 
         $route = Router::getRouteByPath($path);
 
