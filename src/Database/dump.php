@@ -1,32 +1,68 @@
 <?php
+echo "Start of the database backup...<br><br>";
+
+$backup_dir = $_SERVER["DOCUMENT_ROOT"] . 'website/src/Database/db_backups/';
 
 // Informations de connexion MySQL
 $dbHost = 'localhost';
-$dbUser = 'admin';
-$dbPass = '4DDminF3.st1.plan1345a';
-$dbName = 'bjharysm_festiplan';
+// $dbUser = 'admin';
+// $dbPass = '4DDminF3.st1.plan1345a';
+// $dbName = 'bjharysm_festiplan';
+$dbName = 'festiplan';
+$dbUser = 'root';
+$dbPass = 'root';
 
 // Informations de connexion FTP
-$ftpHost = 'node97-eu.n0c.com';
-$ftpUser = 'ftp@festiplan.go.yj.fr';
-$ftpPass = ':(9~~6M:aa9zC8748h';
-$ftpDir = '/home/bjharysm/';
+$ftp_server = '185.221.182.245';
+$ftp_user_name = 'ftp@festiplan.go.yj.fr';
+$ftp_user_pass = ':(9~~6M:aa9zC8748h';
 
-// Chemin de sauvegarde local
-$backupDir = '/db_backups';
+$file_name = 'backup_' . date('Ymd_hi') . '.sql';
 
-// Nom du fichier de sauvegarde
-$backupFile = 'backup_' . date('Ymd') . '.sql';
+$server_file_path = "db_backups/$file_name";
+$local_backup_file = $backup_dir . $file_name;
 
-// Commande mysqldump
-$command = "mysqldump -u $dbUser -p$dbPass -h $dbHost $dbName > $backupDir/$backupFile";
-exec($command);
+try
+{
+    $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
 
-// Connexion FTP et transfert du fichier
-$ftpCommand = "lftp -u $ftpUser,$ftpPass $ftpHost -e 'set ftp:ssl-allow no; cd $ftpDir; put $backupDir/$backupFile; bye'";
+    $query = $pdo->prepare("SELECT * INTO OUTFILE '$local_backup_file' FROM utilisateur");
+    
+    $query->execute();
 
-exec($ftpCommand);
+    // set up basic connection
+    $ftp = ftp_connect($ftp_server);
+    if (!$ftp) {
+        throw new Exception("FTP connection failed");
+    }
 
-echo "La sauvegarde de la base de données est terminée.";
+    // login with username and password
+    $login_result = ftp_login($ftp, $ftp_user_name, $ftp_user_pass);
+    if (!$login_result) {
+        throw new Exception("FTP login failed");
+    }
+
+    // switch to passive mode
+    if (!ftp_pasv($ftp, true)) {
+        throw new Exception("Failed to enable passive mode");
+    }
+
+    // check connection
+    echo "Connected to $ftp_server, for user $ftp_user_name<br><br>";
+
+    // upload a file
+    $upload_result = ftp_put($ftp, $server_file_path, $local_backup_file, FTP_BINARY);
+    if ($upload_result) {
+        echo "Successfully uploaded $local_backup_file\n";
+    } else {
+        $error_message = error_get_last()['message'] ?? 'Unknown error';
+        throw new Exception("There was a problem while uploading $local_backup_file. Error: $error_message");
+    }
+
+    // close the connection
+    ftp_close($ftp);
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
+}
 
 ?>
