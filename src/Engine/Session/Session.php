@@ -85,7 +85,9 @@ class Session
     public static function logout(): void
     {
         session_destroy();
-        Redirect::to("/index");
+        
+        Redirect::to("/")
+            ->redirect();
     }
 
     /**
